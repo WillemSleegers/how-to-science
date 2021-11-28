@@ -1,0 +1,17 @@
+bookdown::gitbook:
+  css: style.css
+  config:
+    toc:
+      before: |
+        <li class="title">
+          <a href="./index.html">Methodology and Statistics</a>
+        </li>
+      after: |
+        <li>  
+          <a href="https://github.com/rstudio/bookdown" target="blank">
+            Published with bookdown
+          </a>
+        </li>
+    edit: https://github.com/USERNAME/REPO/edit/BRANCH/%s
+    download: ["epub"]
+bookdown::epub_book: default
