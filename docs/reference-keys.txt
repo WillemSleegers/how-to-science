@@ -14,5 +14,3 @@ reliability
 examples
 r-packages
 useful-links
-survey-design
-number-of-response-options

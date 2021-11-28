@@ -1,5 +1,5 @@
 --- 
-title: "Methodology and Statistics"
+title: "How to Science"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 documentclass: book

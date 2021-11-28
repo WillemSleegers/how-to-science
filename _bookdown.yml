@@ -1,5 +1,4 @@
 delete_merged_file: true
-rmd_subdir: true
 output_dir: "docs"
 language:
   ui:

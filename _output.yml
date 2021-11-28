@@ -4,7 +4,7 @@ bookdown::gitbook:
     toc:
       before: |
         <li class="title">
-          <a href="./index.html">Methodology and Statistics</a>
+          <a href="./index.html">How to Science</a>
         </li>
       after: |
         <li>  
