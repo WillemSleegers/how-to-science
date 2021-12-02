@@ -4,6 +4,10 @@
 
 The goal of an exploratory factor analysis (EFA) is to study the latent factors that underlie responses to a larger number of measures items. It is a popular technique in the development and validation of assessment instruments. Unlike confirmatory factor analysis, EFA is used when there is little or no a priori justification for specifying a particular structural model. This means that the number of underlying factors is determined mostly empirically, rather than theoretically.
 
+### Principal Components vs. Factor Analysis
+
+The partitioning of variance differentiates a principal components analysis from what we call common factor analysis. Both methods try to reduce the dimensionality of the dataset down to fewer unobserved variables, but whereas PCA assumes that there common variances takes up all of total variance, common factor analysis assumes that total variance can be partitioned into common and unique variance. It is usually more reasonable to assume that you have not measured your set of items perfectly. The unobserved or latent variable that makes up common variance is called a factor, hence the name factor analysis. The other main difference between PCA and factor analysis lies in the goal of your analysis. If your goal is to simply reduce your variable list down into a linear combination of smaller components then PCA is the way to go. However, if you believe there is some latent construct that defines the interrelationship among items, then factor analysis may be more appropriate.
+
 ### Sample size
 
 #### Rules of thumb
@@ -59,11 +63,37 @@ The KMO value ranges from 0 to 1, with 0.60 considered suitable for factor analy
 
 Bartlett's (1954) test of sphericity is a notoriously sensitive test of the hypothesis that the correlations in a correlation matrix are zero. Because of its sensitivity and its dependence on N, the test is likely to be significant with samples of substantial size even if correlations are very low. Therefore, use of the test is recommended only if there are fewer than, say, five cases per variable [@tabachnick2013].
 
-### Principal Components vs. Factor Analysis
+### Outlier removal
 
-Use factor analysis.
+Should you remove outliers?
 
-The partitioning of variance differentiates a principal components analysis from what we call common factor analysis. Both methods try to reduce the dimensionality of the dataset down to fewer unobserved variables, but whereas PCA assumes that there common variances takes up all of total variance, common factor analysis assumes that total variance can be partitioned into common and unique variance. It is usually more reasonable to assume that you have not measured your set of items perfectly. The unobserved or latent variable that makes up common variance is called a factor, hence the name factor analysis. The other main difference between PCA and factor analysis lies in the goal of your analysis. If your goal is to simply reduce your variable list down into a linear combination of smaller components then PCA is the way to go. However, if you believe there is some latent construct that defines the interrelationship among items, then factor analysis may be more appropriate.
+### Number of factors to retain
+
+There are several methods to determine how many factors to retain:
+
+-   Kaiser criterion (eigenvalues greater than 1; Kaiser, 1960)
+
+-   Scree test (Cattell, 1966)
+
+-   Parallel analysis (Horn, 1965)
+
+-   Velicer's multiple average partial (MAP) procedure (Velicer, 1976)
+
+-   Akaike information criterion (AIC; Akaike, 1974)
+
+-   Bayesian information criterion (BIC; Schwarz, 1978)
+
+-   Comparison data (CD; @ruscio2012)
+
+-   Very Simple Structure (VSS)
+
+The default in most statistical software packages is to retain all factors with eigenvalues greater than 1. There is broad consensus in the literature that this is among the least accurate methods for selecting the number of factors to retain (Velicer & Jackson, 1990).
+
+Zwick and Velicer (1986) tested the scree test, Horn's parallel test, and Velicer's MAP test (among others) in simulation studies using a data set with a clear factor structure. Both the parallel test and the minimum average partial test seemed to work well.
+
+@ruscio2012 notes that PA is considered to be the method of choice among methodologists and recommend that researchers take advantage of PA as a starting point, perhaps supplemented by CD. They note that researchers can also use more than one method. Similarly, several prominent authors and journals have endorsed this as the most robust and accurate process for determining the number of factors to extract (Ledesma & Valero-Mora, 2007; Velicer et al., 2000).
+
+@osborne2014 notes that MAP has been considered superior to the "classic" criteria, and probably is superior to parallel analysis, although neither is perfect, and all must be used in the context of a search for conceptually interpretable factors. He recommends to use parallel analysis or MAP criteria, along with theory (and any of the classic criteria that suits you and is defensible).
 
 ### Factor Extraction Method
 
@@ -83,15 +113,7 @@ There are multiple factor extract methods, such as:
 
 -   image factoring.
 
-Advice is to use the maximum likelihood method if the data is generally normally distributed and to use principal axis factoring if the data is non-normal [@costello2005].
-
-### Number of factors to retain
-
-The default in most statistical software packages is to retain all factors with eigenvalues greater than 1. There is broad consensus in the literature that this is among the least accurate methods for selecting the number of factors to retain (Velicer & Jackson, 1990).
-
-Alternate tests for factor retention include the scree test, Velicer's MAP criteria, and parallel analysis (Velicer & Jackson, 1990).
-
-Zwick and Velicer (1986) tested the scree test, Horn's parallel test, and Velicer's MAP test (among others) in simulation studies using a data set with a clear factor structure. Both the parallel test and the minimum average partial test seemed to work well.
+Advice is to use the maximum likelihood method if the data is generally normally distributed and to use principal axis factoring if the data is non-normal (@costello2005, @osborne2014).
 
 ### Rotation methods
 
@@ -135,11 +157,12 @@ Comrey and Lee (1992) suggest that loadings in excess of .71 (50% overlapping va
 
 ## Confirmatory factor analysis
 
-Sample size
+For confirmatory factor analyses there are also several ways to determine the sample size, including:
 
 1.  Rules of thumb
 2.  Satorra-Saris method
 3.  Monte Carlo approach
+4.  
 
 ### Estimator
 
@@ -165,23 +188,62 @@ In case of violations, the following estimators can be used:
 
 Mardia calculation to determine violations from normal distribution. It can be noted that not only is this standardized coefficient statistically significant, but its value is greater than 5, which is the threshold value beyond which multivariate normality seems to fail \[KLI 16\].
 
-| Data type and normality assumption   | Recommended estimator                            |
-|--------------------------------------|--------------------------------------------------|
-| Continuous data                      |                                                  |
-| 1- Approximately normal distribution | ML                                               |
-| 2- Violation of normality assumption | ML (in case of moderate violation)               |
-|                                      | MLM, MLR, Bootstrap                              |
-| Ordinal/categorical data             |                                                  |
-| 1- Approximately normal distribution | ML (if at least 6 response categories)           |
-|                                      | MLM, MLR (if at least 4 response categories)     |
-|                                      | WLSMV (binary response or 3 response categories) |
-| 2- Violation of normality assumption | ML (if at least 6 response categories)           |
-|                                      | MLM, MLR (if at least 4 response categories)     |
-|                                      | WLSMV (in case of severe violation)              |
-|                                      |                                                  |
-|                                      |                                                  |
++------------------------------------+--------------------------------------------------+
+| Data type and normality assumption | Recommended estimator                            |
++====================================+==================================================+
+| *Continuous data*                  |                                                  |
++------------------------------------+--------------------------------------------------+
+| Approximately normal distribution  | ML                                               |
++------------------------------------+--------------------------------------------------+
+| Violation of normality assumption  | ML (in case of moderate violation)               |
++------------------------------------+--------------------------------------------------+
+|                                    | MLM, MLR, Bootstrap                              |
++------------------------------------+--------------------------------------------------+
+| *Ordinal/categorical data*         |                                                  |
++------------------------------------+--------------------------------------------------+
+| Approximately normal distribution  | ML (if at least 6 response categories)           |
++------------------------------------+--------------------------------------------------+
+|                                    | MLM, MLR (if at least 4 response categories)     |
++------------------------------------+--------------------------------------------------+
+|                                    | WLSMV (binary response or 3 response categories) |
++------------------------------------+--------------------------------------------------+
+| Violation of normality assumption  | ML (if at least 6 response categories)           |
++------------------------------------+--------------------------------------------------+
+|                                    | MLM, MLR (if at least 4 response categories)     |
++------------------------------------+--------------------------------------------------+
+|                                    | WLSMV (in case of severe violation)              |
++------------------------------------+--------------------------------------------------+
 
 : Recommendations concerning the main estimators available in lavaan according to the type of data (Gana & Broc).
+
+### Fit indices
+
+The only advice we can afford to give, however, is to closely follow developments concerning fit indices. In the meantime, you can carefully follow the recommendations of Hu and Bentler \[HU 99\] or Schreiber and his co-authors \[SCH 06\] who suggest the following guidelines for judging a model goodness-of-fit (based on the hypothesis where the maximum likelihood method is the estimation method): 1) RMSEA value ≤ 0.06, with confidence interval at 90% values should be between 0 and 1.00; 2) SRMR value ≤ 0.08; and 3) CFI and TLI values ≥ 0.95.
+
++--------------+----------+--------------------------------------------------------------------------+
+| Fit Type     | Index    | Benchmark                                                                |
++==============+==========+==========================================================================+
+| Absolute     | RMR/SRMR | ≤ 0.08 = good fit                                                        |
++--------------+----------+--------------------------------------------------------------------------+
+|              | WRMR     | ≤ 1.00 = good fit                                                        |
++--------------+----------+--------------------------------------------------------------------------+
+| Parsimonious | PRATIO   | Between 0.00 (saturated model) and 1.00 (parsimonious model)             |
++--------------+----------+--------------------------------------------------------------------------+
+|              | RMSEA    | ≤ 0.05 = very good fit\                                                  |
+|              |          | ≤ 0.06 and ≤ 0.08 = good fit                                             |
++--------------+----------+--------------------------------------------------------------------------+
+|              | AIC      | Comparative index: the lower value of this index, the better the fit     |
++--------------+----------+--------------------------------------------------------------------------+
+|              | BIC      | Comparative index: the lower value of this BIC index, the better the fit |
++--------------+----------+--------------------------------------------------------------------------+
+| Incremental  | CFI      | ≥ 0.90 and ≤ 0.94 = good fit\                                            |
+|              |          | ≥ 0.95 = very good fit                                                   |
++--------------+----------+--------------------------------------------------------------------------+
+|              | TLI      | ≥ 0.90 and ≤ 0.94 = good fit\                                            |
+|              |          | ≥ 0.95 = very good fit                                                   |
++--------------+----------+--------------------------------------------------------------------------+
+
+: Fit indices guidance from @gana2019
 
 ### Reliability
 

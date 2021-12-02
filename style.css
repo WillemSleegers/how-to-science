@@ -27,3 +27,17 @@ pre code {
 .title + .divider {
   margin-top: -1px !important;
 }
+
+/* Tables */
+
+table {
+  font-size: 1.25rem;
+}
+
+table caption {
+  font-size: 1.5rem;
+}
+
+#likert-labels-table {
+  overflow-x: auto;
+}

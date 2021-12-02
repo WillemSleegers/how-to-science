@@ -1,9 +1,0 @@
----
-draft: true
----
-
-# Survey design
-
-## Number of response options
-
-[@simms2019]

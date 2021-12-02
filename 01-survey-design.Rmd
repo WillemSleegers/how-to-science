@@ -1,0 +1,93 @@
+# Survey design
+
+## Response options
+
+In the case of a Likert scale, labelled response options can range from 2 to 11 (see Table 1).
+
+::: {#likert-labels-table}
+| Label                      | 2-point | 3-point | 4-point | 5-point | 6-point | 7-point | 8-point | 9-point | 10-point | 11-point |
+|----------------------------|---------|---------|---------|---------|---------|---------|---------|---------|----------|----------|
+| Very strongly disagree     |         |         |         |         |         |         | x       | x       | x        | x        |
+| Strongly disagree          |         |         | x       | x       | x       | x       | x       | x       | x        | x        |
+| Disagree                   | x       | x       | x       | x       | x       | x       | x       | x       | x        | x        |
+| Mostly disagree            |         |         |         |         |         |         |         |         | x        | x        |
+| Slightly disagree          |         |         |         |         | x       | x       | x       | x       | x        | x        |
+| Neither agree nor disagree |         | x       |         | x       |         | x       |         | x       |          | x        |
+| Slightly agree             |         |         |         |         | x       | x       | x       | x       | x        | x        |
+| Mostly agree               |         |         |         |         |         |         |         |         | x        | x        |
+| Agree                      | x       | x       | x       | x       | x       | x       | x       | x       | x        | x        |
+| Strongly agree             |         |         | x       | x       | x       | x       | x       | x       | x        | x        |
+| Very strongly agree        |         |         |         |         |         |         | x       | x       | x        | x        |
+
+: Table 1: Likert response labels from @simms2019
+:::
+
+The question of how many response options to use centers around two main concerns. The first is that more options means you can obtain a more fine-grained assessment of the characteristic that is being evaluated (e.g., attitude). In other words, your assessment is more precise. However, the question is how the number of options affects the reliability and the validity of the measurement. With more options, it becomes more difficult for people to distinguish between the different options (e.g., is "Strongly agree" reliably different from "Very strongly agree"?).
+
++----------------+------------------------------------+---------------------------------+
+| Source         | Comparisons                        | Conclusion                      |
++================+====================================+=================================+
+| @simms2019     | 2- to 11-point Likert + VAS        | 6-point Likert                  |
++----------------+------------------------------------+---------------------------------+
+| @alwin1997     | 7- and 11-point Likert             | 11-point Likert                 |
++----------------+------------------------------------+---------------------------------+
+| @eutsler2015   | 5-, 7-, 9-, and 11-point Likert    | 7-point Likert                  |
++----------------+------------------------------------+---------------------------------+
+| @matell1971    | 2-point to 18-point Likert         | No difference                   |
++----------------+------------------------------------+---------------------------------+
+| @janhunen2012  | 7-point Likert and 30-point VAR    | VAR                             |
++----------------+------------------------------------+---------------------------------+
+| @sung2018      | 5-point Likert and VAS-RRP         | VAS-RPP                         |
++----------------+------------------------------------+---------------------------------+
+| @jaeschke1990  | 7-point Likert and VAS             | No difference\                  |
+|                |                                    | (slightly favor 7-point Likert) |
++----------------+------------------------------------+---------------------------------+
+| @kuhlmann2017  | 5-point Likert and VAS             | No difference                   |
++----------------+------------------------------------+---------------------------------+
+| @lewis2017     | 7-, 11-point Likert and VAS        | No difference                   |
++----------------+------------------------------------+---------------------------------+
+| @donnellan2020 | 2- to 7-, and 11-point Likert      | 5-point Likert or higher        |
++----------------+------------------------------------+---------------------------------+
+| @hilbert2016   | 2- and 5-point and VAS             | It depends                      |
++----------------+------------------------------------+---------------------------------+
+| @finn2015      | 2- and 4-point Likert              | 4-point Likert                  |
++----------------+------------------------------------+---------------------------------+
+| @flamer1983    | 2- and 9-point Likert              | 9-point Likert                  |
++----------------+------------------------------------+---------------------------------+
+| @weng2004      | 3- to 9-point Likert               | 5-point or higher               |
++----------------+------------------------------------+---------------------------------+
+| @bendig1954    | 2-, 3-, 5-, 7-, and 9-point Likert | No difference\                  |
+|                |                                    | (maybe 3-point or higher)       |
++----------------+------------------------------------+---------------------------------+
+| @preston2000   | 2- to 11-point Likert and VAS      | 7-, 9-, or 10-point Likert      |
++----------------+------------------------------------+---------------------------------+
+| @capik2015     | 2- and 5-point Likert              | No difference                   |
++----------------+------------------------------------+---------------------------------+
+| @cox2012       | 2- and 4-point Likert              | 4-point Likert                  |
++----------------+------------------------------------+---------------------------------+
+| @cox2017       | 2- and 4-point Likert              | Mixed                           |
++----------------+------------------------------------+---------------------------------+
+| @dawes2008     | 5-, 7-, and 10-point Likert        | No difference                   |
++----------------+------------------------------------+---------------------------------+
+
+There are also simulation studies in which the effect of different response options are compared, but these are not included here because they are not likely to address the plausible psychological limitation of people to distinguish between many options.
+
+There are also several review paper who offer advice. @krosnick2010 suggest that 7-point Likert scales are probably optimal. @lietz2010 concludes a desirable Likert-scale consists of 5 to 8 response options. Similarly, @coxiii1980 recommends to use between 5 and 9 response options. @symonds1924, in 1924, claims the optimum number is 7.
+
+Besides psychometric properties it may also be worth taking into account respondent preference. This involves ease of use of the scale and whether the response options allow for sufficient variation for respondents to express their view. @preston2000 found that respondents found scales with 5, 7, and 10 points easy to use (compared to fewer options and a VAS) and that they preferred scales with more response options to allow them to express themselves (7 or more). Other studies also show that respondents favor more options [@cox2017].
+
+Note that if time is of the essence, fewer response options are preferred.
+
+**Conclusion**: It appears that few response options (2 or 3) should definitely be avoided. More response options therefore seems better, but benefits seem to quickly level off. Given other concerns, such as ease of use and interpretability, a 7-point Likert scale seems to be preferred.
+
+## Odd vs. even response options
+
+The middle option of a scale can have an ambiguous meaning. Participants may use it to indicate a moderate standing on the issue, to indicate uncertainty, to indicate confusion, or to signal context dependence (e.g., "it depends").
+
+The middle option may also be used for social desirable responding.
+
+**Conclusion**: If it is possible that respondents may have a moderate view, it seems crucial for it to be possible to capture this view. Limitations of a middle option could then be addressed in other ways (e.g., clear questions).
+
+## Response option labeling
+
+There are several studies that show all response options should be labelled, rather than only labeling the end points [@weng2004, @krosnick1993].
