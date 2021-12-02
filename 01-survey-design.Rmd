@@ -90,4 +90,4 @@ The middle option may also be used for social desirable responding.
 
 ## Response option labeling
 
-There are several studies that show all response options should be labelled, rather than only labeling the end points [@weng2004, @krosnick1993].
+There are several studies that show all response options should be labelled, rather than only labeling the end points [@weng2004; @krosnick1993].
