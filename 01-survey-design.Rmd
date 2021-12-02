@@ -2,27 +2,9 @@
 
 ## Response options
 
-In the case of a Likert scale, labelled response options can range from 2 to 11 (see Table 1).
-
-::: {#likert-labels-table}
-| Label                      | 2-point | 3-point | 4-point | 5-point | 6-point | 7-point | 8-point | 9-point | 10-point | 11-point |
-|----------------------------|---------|---------|---------|---------|---------|---------|---------|---------|----------|----------|
-| Very strongly disagree     |         |         |         |         |         |         | x       | x       | x        | x        |
-| Strongly disagree          |         |         | x       | x       | x       | x       | x       | x       | x        | x        |
-| Disagree                   | x       | x       | x       | x       | x       | x       | x       | x       | x        | x        |
-| Mostly disagree            |         |         |         |         |         |         |         |         | x        | x        |
-| Slightly disagree          |         |         |         |         | x       | x       | x       | x       | x        | x        |
-| Neither agree nor disagree |         | x       |         | x       |         | x       |         | x       |          | x        |
-| Slightly agree             |         |         |         |         | x       | x       | x       | x       | x        | x        |
-| Mostly agree               |         |         |         |         |         |         |         |         | x        | x        |
-| Agree                      | x       | x       | x       | x       | x       | x       | x       | x       | x        | x        |
-| Strongly agree             |         |         | x       | x       | x       | x       | x       | x       | x        | x        |
-| Very strongly agree        |         |         |         |         |         |         | x       | x       | x        | x        |
-
-: Table 1: Likert response labels from @simms2019
-:::
-
 The question of how many response options to use centers around two main concerns. The first is that more options means you can obtain a more fine-grained assessment of the characteristic that is being evaluated (e.g., attitude). In other words, your assessment is more precise. However, the question is how the number of options affects the reliability and the validity of the measurement. With more options, it becomes more difficult for people to distinguish between the different options (e.g., is "Strongly agree" reliably different from "Very strongly agree"?).
+
+Table 1 shows an overview of various studies in which the topic of response options was addressed. The studies vary in many ways, so the final conclusion should be a holistic interpretation of the results, rather than a simple tallying of the results. Note also that only empirical studies are included and not simulation studies. Simulation studies seem limited because they cannot address the plausible psychological limitation of people being unable to distinguish between many options.
 
 +----------------+------------------------------------+---------------------------------+
 | Source         | Comparisons                        | Conclusion                      |
@@ -70,7 +52,7 @@ The question of how many response options to use centers around two main concern
 | @dawes2008     | 5-, 7-, and 10-point Likert        | No difference                   |
 +----------------+------------------------------------+---------------------------------+
 
-There are also simulation studies in which the effect of different response options are compared, but these are not included here because they are not likely to address the plausible psychological limitation of people to distinguish between many options.
+: Table 1: Overview of empirical studies on the topic of response options.
 
 There are also several review papers on the topic. @krosnick2010 suggest that 7-point Likert scales are probably optimal. @lietz2010 concludes a desirable Likert-scale consists of 5 to 8 response options. Similarly, @coxiii1980 recommends to use between 5 and 9 response options. @symonds1924, in 1924, claims the optimum number is 7.
 
@@ -91,3 +73,23 @@ The middle option may also be used for social desirable responding.
 ## Response option labeling
 
 There are several studies that show all response options should be labelled, rather than only labeling the end points [@weng2004; @krosnick1993].
+
+For an example of labels for a 2- to 11-point Likert scale, see Table 1.
+
+::: {#likert-labels-table}
+| Label                      | 2-point | 3-point | 4-point | 5-point | 6-point | 7-point | 8-point | 9-point | 10-point | 11-point |
+|----------------------------|---------|---------|---------|---------|---------|---------|---------|---------|----------|----------|
+| Very strongly disagree     |         |         |         |         |         |         | x       | x       | x        | x        |
+| Strongly disagree          |         |         | x       | x       | x       | x       | x       | x       | x        | x        |
+| Disagree                   | x       | x       | x       | x       | x       | x       | x       | x       | x        | x        |
+| Mostly disagree            |         |         |         |         |         |         |         |         | x        | x        |
+| Slightly disagree          |         |         |         |         | x       | x       | x       | x       | x        | x        |
+| Neither agree nor disagree |         | x       |         | x       |         | x       |         | x       |          | x        |
+| Slightly agree             |         |         |         |         | x       | x       | x       | x       | x        | x        |
+| Mostly agree               |         |         |         |         |         |         |         |         | x        | x        |
+| Agree                      | x       | x       | x       | x       | x       | x       | x       | x       | x        | x        |
+| Strongly agree             |         |         | x       | x       | x       | x       | x       | x       | x        | x        |
+| Very strongly agree        |         |         |         |         |         |         | x       | x       | x        | x        |
+
+: Table 1: Likert response labels from @simms2019
+:::
