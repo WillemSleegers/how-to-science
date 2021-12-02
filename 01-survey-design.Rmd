@@ -72,7 +72,7 @@ The question of how many response options to use centers around two main concern
 
 There are also simulation studies in which the effect of different response options are compared, but these are not included here because they are not likely to address the plausible psychological limitation of people to distinguish between many options.
 
-There are also several review paper who offer advice. @krosnick2010 suggest that 7-point Likert scales are probably optimal. @lietz2010 concludes a desirable Likert-scale consists of 5 to 8 response options. Similarly, @coxiii1980 recommends to use between 5 and 9 response options. @symonds1924, in 1924, claims the optimum number is 7.
+There are also several review papers on the topic. @krosnick2010 suggest that 7-point Likert scales are probably optimal. @lietz2010 concludes a desirable Likert-scale consists of 5 to 8 response options. Similarly, @coxiii1980 recommends to use between 5 and 9 response options. @symonds1924, in 1924, claims the optimum number is 7.
 
 Besides psychometric properties it may also be worth taking into account respondent preference. This involves ease of use of the scale and whether the response options allow for sufficient variation for respondents to express their view. @preston2000 found that respondents found scales with 5, 7, and 10 points easy to use (compared to fewer options and a VAS) and that they preferred scales with more response options to allow them to express themselves (7 or more). Other studies also show that respondents favor more options [@cox2017].
 
