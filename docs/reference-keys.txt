@@ -1,7 +1,7 @@
 survey-design
-response-options
-odd-vs.-even-response-options
-response-option-labeling
+steps
+item-development
+recommended-reading
 factor-analysis
 exploratory-factor-analyses
 principal-components-vs.-factor-analysis
