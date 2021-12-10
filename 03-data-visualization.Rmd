@@ -1,0 +1,60 @@
+# Data Visualization
+
+```{r, setup, include=FALSE}
+# Load packages
+library(tidyverse)
+library(plotly)
+
+fill_choices <- c("<10 years" = "#3d98b2", "10-19 years" = "grey40", "20+ years" = "#ca6144")
+```
+
+## Bar charts
+
+```{r}
+p <- ggplot(mpg, aes(x = class, color = class, fill = class)) +
+  geom_bar(alpha = .75) +
+  scale_color_viridis_d() +
+  scale_fill_viridis_d() +
+  theme_minimal()
+
+ggplotly(p)
+```
+
+## Line charts
+
+```{r}
+p <- ggplot(economics, aes(x = date, y = unemploy)) + 
+  geom_line(alpha = .75) +
+  theme_minimal()
+
+ggplotly(p)
+```
+
+```{r}
+p <- ggplot(economics_long, aes(x = date, y = value01, 
+    color = variable)) +
+  geom_line(alpha = .75) +
+  scale_color_viridis_d() +
+  theme_minimal()
+
+ggplotly(p)
+```
+
+## Scatter plots
+
+```{r}
+p <- ggplot(mtcars, aes(x = wt, y = mpg)) +
+  geom_point(alpha = .75) +
+  theme_minimal()
+
+ggplotly(p)
+```
+
+```{r}
+p <- ggplot(mtcars, aes(x = wt, y = mpg, color = factor(cyl))) +
+  geom_point(alpha = .75) +
+  scale_color_viridis_d() +
+  theme_minimal()
+
+ggplotly(p)
+```

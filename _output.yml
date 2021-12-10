@@ -1,6 +1,9 @@
-bookdown::gitbook:
+bookdown::bs4_book:
   css: style.css
+  #template: templates/gitbook.html
   config:
+    fontsettings:
+      theme: night
     toc:
       before: |
         <li class="title">
@@ -14,4 +17,3 @@ bookdown::gitbook:
         </li>
     edit: https://github.com/USERNAME/REPO/edit/BRANCH/%s
     download: ["epub"]
-bookdown::epub_book: default

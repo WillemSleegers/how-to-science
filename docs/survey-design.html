@@ -1,174 +1,67 @@
 <!DOCTYPE html>
-<html lang="" xml:lang="">
+<html lang="en">
 <head>
-
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 1 Survey design | How to Science</title>
-  <meta name="description" content="<p>This is a minimal example of using the bookdown package to write a book.
-The HTML output format for this example is bookdown::gitbook,
-set in the _output.yml file.</p>" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
-
-  <meta property="og:title" content="Chapter 1 Survey design | How to Science" />
-  <meta property="og:type" content="book" />
-  
-  
-  <meta property="og:description" content="<p>This is a minimal example of using the bookdown package to write a book.
-The HTML output format for this example is bookdown::gitbook,
-set in the _output.yml file.</p>" />
-  <meta name="github-repo" content="rstudio/bookdown-demo" />
-
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 1 Survey design | How to Science" />
-  
-  <meta name="twitter:description" content="<p>This is a minimal example of using the bookdown package to write a book.
-The HTML output format for this example is bookdown::gitbook,
-set in the _output.yml file.</p>" />
-  
-
-
-
-<meta name="date" content="2021-12-06" />
-
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-  
-  
-<link rel="prev" href="index.html"/>
-<link rel="next" href="factor-analysis.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
-<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
-<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
-
-
-
-
-
-
-
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
-
-
-
-<style type="text/css">
-/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}
-</style>
-
-<link rel="stylesheet" href="style.css" type="text/css" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 1 Survey design | How to Science</title>
+<meta name="description" content="This chapter is about best practices and common issues in designing surveys.  1.1 Steps As suggested in some review papers (e.g., Gehlbach and Brinkworth (2011)), the construction of a new...">
+<meta name="generator" content="bookdown 0.24 with bs4_book()">
+<meta property="og:title" content="Chapter 1 Survey design | How to Science">
+<meta property="og:type" content="book">
+<meta property="og:description" content="This chapter is about best practices and common issues in designing surveys.  1.1 Steps As suggested in some review papers (e.g., Gehlbach and Brinkworth (2011)), the construction of a new...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 1 Survey design | How to Science">
+<meta name="twitter:description" content="This chapter is about best practices and common issues in designing surveys.  1.1 Steps As suggested in some review papers (e.g., Gehlbach and Brinkworth (2011)), the construction of a new...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.11/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script><script src="libs/plotly-binding-4.10.0/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script><link href="libs/plotly-htmlwidgets-css-2.5.1/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="libs/plotly-main-2.5.1/plotly-latest.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="style.css">
 </head>
+<body data-spy="scroll" data-target="#toc">
 
-<body>
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
 
-
-
-  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
-
-    <div class="book-summary">
-      <nav role="navigation">
-
-<ul class="summary">
-<li class="title">
-  <a href="./index.html">How to Science</a>
-</li>
-
-<li class="divider"></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>About</a></li>
-<li class="chapter" data-level="1" data-path="survey-design.html"><a href="survey-design.html"><i class="fa fa-check"></i><b>1</b> Survey design</a>
-<ul>
-<li class="chapter" data-level="1.1" data-path="survey-design.html"><a href="survey-design.html#steps"><i class="fa fa-check"></i><b>1.1</b> Steps</a></li>
-<li class="chapter" data-level="1.2" data-path="survey-design.html"><a href="survey-design.html#item-development"><i class="fa fa-check"></i><b>1.2</b> Item development</a>
-<ul>
-<li class="chapter" data-level="" data-path="survey-design.html"><a href="survey-design.html#reverse-scored-items"><i class="fa fa-check"></i>Reverse-scored items</a></li>
-<li class="chapter" data-level="" data-path="survey-design.html"><a href="survey-design.html#response-options"><i class="fa fa-check"></i>Response options</a></li>
-<li class="chapter" data-level="" data-path="survey-design.html"><a href="survey-design.html#odd-vs.-even-response-options"><i class="fa fa-check"></i>Odd vs. even response options</a></li>
-<li class="chapter" data-level="" data-path="survey-design.html"><a href="survey-design.html#response-option-labeling"><i class="fa fa-check"></i>Response option labeling</a></li>
-</ul></li>
-<li class="chapter" data-level="1.3" data-path="survey-design.html"><a href="survey-design.html#recommended-reading"><i class="fa fa-check"></i><b>1.3</b> Recommended reading</a></li>
-</ul></li>
-<li class="chapter" data-level="2" data-path="factor-analysis.html"><a href="factor-analysis.html"><i class="fa fa-check"></i><b>2</b> Factor analysis</a>
-<ul>
-<li class="chapter" data-level="2.1" data-path="factor-analysis.html"><a href="factor-analysis.html#exploratory-factor-analyses"><i class="fa fa-check"></i><b>2.1</b> Exploratory factor analyses</a>
-<ul>
-<li class="chapter" data-level="2.1.1" data-path="factor-analysis.html"><a href="factor-analysis.html#principal-components-vs.-factor-analysis"><i class="fa fa-check"></i><b>2.1.1</b> Principal Components vs. Factor Analysis</a></li>
-<li class="chapter" data-level="2.1.2" data-path="factor-analysis.html"><a href="factor-analysis.html#sample-size"><i class="fa fa-check"></i><b>2.1.2</b> Sample size</a></li>
-<li class="chapter" data-level="2.1.3" data-path="factor-analysis.html"><a href="factor-analysis.html#sampling-adequacy"><i class="fa fa-check"></i><b>2.1.3</b> Sampling Adequacy</a></li>
-<li class="chapter" data-level="2.1.4" data-path="factor-analysis.html"><a href="factor-analysis.html#outlier-removal"><i class="fa fa-check"></i><b>2.1.4</b> Outlier removal</a></li>
-<li class="chapter" data-level="2.1.5" data-path="factor-analysis.html"><a href="factor-analysis.html#number-of-factors-to-retain"><i class="fa fa-check"></i><b>2.1.5</b> Number of factors to retain</a></li>
-<li class="chapter" data-level="2.1.6" data-path="factor-analysis.html"><a href="factor-analysis.html#factor-extraction-method"><i class="fa fa-check"></i><b>2.1.6</b> Factor Extraction Method</a></li>
-<li class="chapter" data-level="2.1.7" data-path="factor-analysis.html"><a href="factor-analysis.html#rotation-methods"><i class="fa fa-check"></i><b>2.1.7</b> Rotation methods</a></li>
-<li class="chapter" data-level="2.1.8" data-path="factor-analysis.html"><a href="factor-analysis.html#factor-structure"><i class="fa fa-check"></i><b>2.1.8</b> Factor structure</a></li>
-</ul></li>
-<li class="chapter" data-level="2.2" data-path="factor-analysis.html"><a href="factor-analysis.html#confirmatory-factor-analysis"><i class="fa fa-check"></i><b>2.2</b> Confirmatory factor analysis</a>
-<ul>
-<li class="chapter" data-level="2.2.1" data-path="factor-analysis.html"><a href="factor-analysis.html#estimator"><i class="fa fa-check"></i><b>2.2.1</b> Estimator</a></li>
-<li class="chapter" data-level="2.2.2" data-path="factor-analysis.html"><a href="factor-analysis.html#fit-indices"><i class="fa fa-check"></i><b>2.2.2</b> Fit indices</a></li>
-<li class="chapter" data-level="2.2.3" data-path="factor-analysis.html"><a href="factor-analysis.html#reliability"><i class="fa fa-check"></i><b>2.2.3</b> Reliability</a></li>
-</ul></li>
-<li class="chapter" data-level="2.3" data-path="factor-analysis.html"><a href="factor-analysis.html#examples"><i class="fa fa-check"></i><b>2.3</b> Examples</a></li>
-<li class="chapter" data-level="2.4" data-path="factor-analysis.html"><a href="factor-analysis.html#r-packages"><i class="fa fa-check"></i><b>2.4</b> R packages</a></li>
-<li class="chapter" data-level="2.5" data-path="factor-analysis.html"><a href="factor-analysis.html#useful-links"><i class="fa fa-check"></i><b>2.5</b> Useful links</a></li>
-</ul></li>
-<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
-<li class="divider"></li>
-<li>  
-  <a href="https://github.com/rstudio/bookdown" target="blank">
-    Published with bookdown
-  </a>
-</li>
-
-</ul>
-
-      </nav>
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">How to Science</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
     </div>
 
-    <div class="book-body">
-      <div class="body-inner">
-        <div class="book-header" role="navigation">
-          <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">How to Science</a>
-          </h1>
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">About</a></li>
+<li><a class="active" href="survey-design.html"><span class="header-section-number">1</span> Survey design</a></li>
+<li><a class="" href="factor-analysis.html"><span class="header-section-number">2</span> Factor analysis</a></li>
+<li><a class="" href="data-visualization.html"><span class="header-section-number">3</span> Data Visualization</a></li>
+<li><a class="" href="references.html">References</a></li>
+</ul>
+
+        <div class="book-extra">
+          
         </div>
-
-        <div class="page-wrapper" tabindex="-1" role="main">
-          <div class="page-inner">
-
-            <section class="normal" id="section-">
-<div id="survey-design" class="section level1" number="1">
-<h1><span class="header-section-number">Chapter 1</span> Survey design</h1>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="survey-design" class="section level1" number="1">
+<h1>
+<span class="header-section-number">1</span> Survey design<a class="anchor" aria-label="anchor" href="#survey-design"><i class="fas fa-link"></i></a>
+</h1>
 <p>This chapter is about best practices and common issues in designing surveys.</p>
 <div id="steps" class="section level2" number="1.1">
-<h2><span class="header-section-number">1.1</span> Steps</h2>
-<p>As suggested in some review papers (e.g., <span class="citation"><a href="#ref-gehlbach2011" role="doc-biblioref">Gehlbach and Brinkworth</a> (<a href="#ref-gehlbach2011" role="doc-biblioref">2011</a>)</span>), the construction of a new survey/scale is best done in several steps:</p>
+<h2>
+<span class="header-section-number">1.1</span> Steps<a class="anchor" aria-label="anchor" href="#steps"><i class="fas fa-link"></i></a>
+</h2>
+<p>As suggested in some review papers (e.g., <span class="citation"><a href="references.html#ref-gehlbach2011" role="doc-biblioref">Gehlbach and Brinkworth</a> (<a href="references.html#ref-gehlbach2011" role="doc-biblioref">2011</a>)</span>), the construction of a new survey/scale is best done in several steps:</p>
 <ul>
 <li><p>Review the literature to define the construct of interest and to find existing or related measures of the construct</p></li>
 <li><p>Interview respondents to see whether respondents think the same way about the construct as you do</p></li>
@@ -180,167 +73,171 @@ div.csl-indent {
 </ul>
 </div>
 <div id="item-development" class="section level2" number="1.2">
-<h2><span class="header-section-number">1.2</span> Item development</h2>
+<h2>
+<span class="header-section-number">1.2</span> Item development<a class="anchor" aria-label="anchor" href="#item-development"><i class="fas fa-link"></i></a>
+</h2>
 <div id="reverse-scored-items" class="section level3 unnumbered">
-<h3>Reverse-scored items</h3>
-<p>Reverse-scored items can be included to determine whether participants are paying attention and don’t just select the same response on each item. However, there is some evidence that reverse-scored items reduce the reliability of the scale or produce an unexpected factor structure <span class="citation">(<a href="#ref-swain2008" role="doc-biblioref">Swain, Weathers, and Niedrich 2008</a>)</span>.</p>
+<h3>Reverse-scored items<a class="anchor" aria-label="anchor" href="#reverse-scored-items"><i class="fas fa-link"></i></a>
+</h3>
+<p>Reverse-scored items can be included to determine whether participants are paying attention and don’t just select the same response on each item. However, there is some evidence that reverse-scored items reduce the reliability of the scale or produce an unexpected factor structure <span class="citation">(<a href="references.html#ref-swain2008" role="doc-biblioref">Swain, Weathers, and Niedrich 2008</a>)</span>.</p>
 </div>
 <div id="response-options" class="section level3 unnumbered">
-<h3>Response options</h3>
+<h3>Response options<a class="anchor" aria-label="anchor" href="#response-options"><i class="fas fa-link"></i></a>
+</h3>
 <p>The question of how many response options to use centers around two main concerns. The first is that more options means you can obtain a more fine-grained assessment of the characteristic that is being evaluated (e.g., attitude). In other words, your assessment is more precise. However, the question is how the number of options affects the reliability and the validity of the measurement. With more options, it becomes more difficult for people to distinguish between the different options (e.g., is “Strongly agree” reliably different from “Very strongly agree?”).</p>
 <p>Table 1 shows an overview of various studies in which the topic of response options was addressed. The studies vary in many ways, so the final conclusion should be a holistic interpretation of the results, rather than a simple tallying of the results. Note also that only empirical studies are included and not simulation studies. Simulation studies seem limited because they cannot address the plausible psychological limitation of people being unable to distinguish between many options.</p>
-<table>
+<div class="inline-table"><table class="table table-sm">
 <caption>Table 1: Overview of empirical studies on the topic of response options.</caption>
 <colgroup>
-<col width="19%" />
-<col width="42%" />
-<col width="38%" />
+<col width="19%">
+<col width="42%">
+<col width="38%">
 </colgroup>
-<thead>
-<tr class="header">
+<thead><tr class="header">
 <th>Source</th>
 <th>Comparisons</th>
 <th>Conclusion</th>
-</tr>
-</thead>
+</tr></thead>
 <tbody>
 <tr class="odd">
-<td><span class="citation"><a href="#ref-donnellan2020" role="doc-biblioref">Donnellan and Rakhshani</a> (<a href="#ref-donnellan2020" role="doc-biblioref">2020</a>)</span></td>
+<td><span class="citation"><a href="references.html#ref-donnellan2020" role="doc-biblioref">Donnellan and Rakhshani</a> (<a href="references.html#ref-donnellan2020" role="doc-biblioref">2020</a>)</span></td>
 <td>2- to 7-, and 11-point Likert</td>
 <td>5-point Likert or higher</td>
 </tr>
 <tr class="even">
-<td><span class="citation"><a href="#ref-simms2019" role="doc-biblioref">Simms et al.</a> (<a href="#ref-simms2019" role="doc-biblioref">2019</a>)</span></td>
+<td><span class="citation"><a href="references.html#ref-simms2019" role="doc-biblioref">Simms et al.</a> (<a href="references.html#ref-simms2019" role="doc-biblioref">2019</a>)</span></td>
 <td>2- to 11-point Likert + VAS</td>
 <td>6-point Likert</td>
 </tr>
 <tr class="odd">
-<td><span class="citation"><a href="#ref-sung2018" role="doc-biblioref">Sung and Wu</a> (<a href="#ref-sung2018" role="doc-biblioref">2018</a>)</span></td>
+<td><span class="citation"><a href="references.html#ref-sung2018" role="doc-biblioref">Sung and Wu</a> (<a href="references.html#ref-sung2018" role="doc-biblioref">2018</a>)</span></td>
 <td>5-point Likert and VAS-RRP</td>
 <td>VAS-RPP</td>
 </tr>
 <tr class="even">
-<td><span class="citation"><a href="#ref-cox2017" role="doc-biblioref">Cox et al.</a> (<a href="#ref-cox2017" role="doc-biblioref">2017</a>)</span></td>
+<td><span class="citation"><a href="references.html#ref-cox2017" role="doc-biblioref">Cox et al.</a> (<a href="references.html#ref-cox2017" role="doc-biblioref">2017</a>)</span></td>
 <td>2- and 4-point Likert</td>
 <td>Mixed</td>
 </tr>
 <tr class="odd">
-<td><span class="citation"><a href="#ref-lewis2017" role="doc-biblioref">Lewis</a> (<a href="#ref-lewis2017" role="doc-biblioref">2017</a>)</span></td>
+<td><span class="citation"><a href="references.html#ref-lewis2017" role="doc-biblioref">Lewis</a> (<a href="references.html#ref-lewis2017" role="doc-biblioref">2017</a>)</span></td>
 <td>7-, 11-point Likert and VAS</td>
 <td>No difference</td>
 </tr>
 <tr class="even">
-<td><span class="citation"><a href="#ref-kuhlmann2017" role="doc-biblioref">Kuhlmann, Dantlgraber, and Reips</a> (<a href="#ref-kuhlmann2017" role="doc-biblioref">2017</a>)</span></td>
+<td><span class="citation"><a href="references.html#ref-kuhlmann2017" role="doc-biblioref">Kuhlmann, Dantlgraber, and Reips</a> (<a href="references.html#ref-kuhlmann2017" role="doc-biblioref">2017</a>)</span></td>
 <td>5-point Likert and VAS</td>
 <td>No difference</td>
 </tr>
 <tr class="odd">
-<td><span class="citation"><a href="#ref-hilbert2016" role="doc-biblioref">Hilbert</a> (<a href="#ref-hilbert2016" role="doc-biblioref">2016</a>)</span></td>
+<td><span class="citation"><a href="references.html#ref-hilbert2016" role="doc-biblioref">Hilbert</a> (<a href="references.html#ref-hilbert2016" role="doc-biblioref">2016</a>)</span></td>
 <td>2- and 5-point and VAS</td>
 <td>It depends</td>
 </tr>
 <tr class="even">
-<td><span class="citation"><a href="#ref-capik2015" role="doc-biblioref">Capik and Gozum</a> (<a href="#ref-capik2015" role="doc-biblioref">2015</a>)</span></td>
+<td><span class="citation"><a href="references.html#ref-capik2015" role="doc-biblioref">Capik and Gozum</a> (<a href="references.html#ref-capik2015" role="doc-biblioref">2015</a>)</span></td>
 <td>2- and 5-point Likert</td>
 <td>No difference</td>
 </tr>
 <tr class="odd">
-<td><span class="citation"><a href="#ref-eutsler2015" role="doc-biblioref">Eutsler and Lang</a> (<a href="#ref-eutsler2015" role="doc-biblioref">2015</a>)</span></td>
+<td><span class="citation"><a href="references.html#ref-eutsler2015" role="doc-biblioref">Eutsler and Lang</a> (<a href="references.html#ref-eutsler2015" role="doc-biblioref">2015</a>)</span></td>
 <td>5-, 7-, 9-, and 11-point Likert</td>
 <td>7-point Likert</td>
 </tr>
 <tr class="even">
-<td><span class="citation"><a href="#ref-finn2015" role="doc-biblioref">Finn, Ben-Porath, and Tellegen</a> (<a href="#ref-finn2015" role="doc-biblioref">2015</a>)</span></td>
+<td><span class="citation"><a href="references.html#ref-finn2015" role="doc-biblioref">Finn, Ben-Porath, and Tellegen</a> (<a href="references.html#ref-finn2015" role="doc-biblioref">2015</a>)</span></td>
 <td>2- and 4-point Likert</td>
 <td>4-point Likert</td>
 </tr>
 <tr class="odd">
-<td><span class="citation"><a href="#ref-cox2012" role="doc-biblioref">Cox et al.</a> (<a href="#ref-cox2012" role="doc-biblioref">2012</a>)</span></td>
+<td><span class="citation"><a href="references.html#ref-cox2012" role="doc-biblioref">Cox et al.</a> (<a href="references.html#ref-cox2012" role="doc-biblioref">2012</a>)</span></td>
 <td>2- and 4-point Likert</td>
 <td>4-point Likert</td>
 </tr>
 <tr class="even">
-<td><span class="citation"><a href="#ref-janhunen2012" role="doc-biblioref">Janhunen</a> (<a href="#ref-janhunen2012" role="doc-biblioref">2012</a>)</span></td>
+<td><span class="citation"><a href="references.html#ref-janhunen2012" role="doc-biblioref">Janhunen</a> (<a href="references.html#ref-janhunen2012" role="doc-biblioref">2012</a>)</span></td>
 <td>7-point Likert and 30-point VAR</td>
 <td>VAR</td>
 </tr>
 <tr class="odd">
-<td><span class="citation"><a href="#ref-dawes2008" role="doc-biblioref">Dawes</a> (<a href="#ref-dawes2008" role="doc-biblioref">2008</a>)</span></td>
+<td><span class="citation"><a href="references.html#ref-dawes2008" role="doc-biblioref">Dawes</a> (<a href="references.html#ref-dawes2008" role="doc-biblioref">2008</a>)</span></td>
 <td>5-, 7-, and 10-point Likert</td>
 <td>No difference</td>
 </tr>
 <tr class="even">
-<td><span class="citation"><a href="#ref-weng2004" role="doc-biblioref">Weng</a> (<a href="#ref-weng2004" role="doc-biblioref">2004</a>)</span></td>
+<td><span class="citation"><a href="references.html#ref-weng2004" role="doc-biblioref">Weng</a> (<a href="references.html#ref-weng2004" role="doc-biblioref">2004</a>)</span></td>
 <td>3- to 9-point Likert</td>
 <td>5-point or higher</td>
 </tr>
 <tr class="odd">
-<td><span class="citation"><a href="#ref-preston2000" role="doc-biblioref">Preston and Colman</a> (<a href="#ref-preston2000" role="doc-biblioref">2000</a>)</span></td>
+<td><span class="citation"><a href="references.html#ref-preston2000" role="doc-biblioref">Preston and Colman</a> (<a href="references.html#ref-preston2000" role="doc-biblioref">2000</a>)</span></td>
 <td>2- to 11-point Likert and VAS</td>
 <td>7-, 9-, or 10-point Likert</td>
 </tr>
 <tr class="even">
-<td><span class="citation"><a href="#ref-alwin1997" role="doc-biblioref">Alwin</a> (<a href="#ref-alwin1997" role="doc-biblioref">1997</a>)</span></td>
+<td><span class="citation"><a href="references.html#ref-alwin1997" role="doc-biblioref">Alwin</a> (<a href="references.html#ref-alwin1997" role="doc-biblioref">1997</a>)</span></td>
 <td>7- and 11-point Likert</td>
 <td>11-point Likert</td>
 </tr>
 <tr class="odd">
-<td><span class="citation"><a href="#ref-jaeschke1990" role="doc-biblioref">Jaeschke, Singer, and Guyatt</a> (<a href="#ref-jaeschke1990" role="doc-biblioref">1990</a>)</span></td>
+<td><span class="citation"><a href="references.html#ref-jaeschke1990" role="doc-biblioref">Jaeschke, Singer, and Guyatt</a> (<a href="references.html#ref-jaeschke1990" role="doc-biblioref">1990</a>)</span></td>
 <td>7-point Likert and VAS</td>
-<td>No difference<br />
+<td>No difference<br>
 (slightly favor 7-point Likert)</td>
 </tr>
 <tr class="even">
-<td><span class="citation"><a href="#ref-flamer1983" role="doc-biblioref">Flamer</a> (<a href="#ref-flamer1983" role="doc-biblioref">1983</a>)</span></td>
+<td><span class="citation"><a href="references.html#ref-flamer1983" role="doc-biblioref">Flamer</a> (<a href="references.html#ref-flamer1983" role="doc-biblioref">1983</a>)</span></td>
 <td>2- and 9-point Likert</td>
 <td>9-point Likert</td>
 </tr>
 <tr class="odd">
-<td><span class="citation"><a href="#ref-matell1971" role="doc-biblioref">Matell and Jacoby</a> (<a href="#ref-matell1971" role="doc-biblioref">1971</a>)</span></td>
+<td><span class="citation"><a href="references.html#ref-matell1971" role="doc-biblioref">Matell and Jacoby</a> (<a href="references.html#ref-matell1971" role="doc-biblioref">1971</a>)</span></td>
 <td>2-point to 18-point Likert</td>
 <td>No difference</td>
 </tr>
 <tr class="even">
-<td><span class="citation"><a href="#ref-bendig1954" role="doc-biblioref">Bendig</a> (<a href="#ref-bendig1954" role="doc-biblioref">1954</a>)</span></td>
+<td><span class="citation"><a href="references.html#ref-bendig1954" role="doc-biblioref">Bendig</a> (<a href="references.html#ref-bendig1954" role="doc-biblioref">1954</a>)</span></td>
 <td>2-, 3-, 5-, 7-, and 9-point Likert</td>
-<td>No difference<br />
+<td>No difference<br>
 (maybe 3-point or higher)</td>
 </tr>
 </tbody>
-</table>
-<p>There are also several review papers on the topic. <span class="citation"><a href="#ref-krosnick2010" role="doc-biblioref">Krosnick and Presser</a> (<a href="#ref-krosnick2010" role="doc-biblioref">2010</a>)</span> suggest that 7-point Likert scales are probably optimal. <span class="citation"><a href="#ref-lietz2010" role="doc-biblioref">Lietz</a> (<a href="#ref-lietz2010" role="doc-biblioref">2010</a>)</span> concludes a desirable Likert-scale consists of 5 to 8 response options. Similarly, <span class="citation"><a href="#ref-coxiii1980" role="doc-biblioref">Cox III</a> (<a href="#ref-coxiii1980" role="doc-biblioref">1980</a>)</span> recommends to use between 5 and 9 response options. <span class="citation"><a href="#ref-symonds1924" role="doc-biblioref">Symonds</a> (<a href="#ref-symonds1924" role="doc-biblioref">1924</a>)</span>, in 1924, claims the optimum number is 7. <span class="citation"><a href="#ref-gehlbach2011" role="doc-biblioref">Gehlbach and Brinkworth</a> (<a href="#ref-gehlbach2011" role="doc-biblioref">2011</a>)</span> recommends using 5-points for unipolar items and 7-point for biopolar items.</p>
-<p>Besides psychometric properties it may also be worth taking into account respondent preference. This involves ease of use of the scale and whether the response options allow for sufficient variation for respondents to express their view. <span class="citation"><a href="#ref-preston2000" role="doc-biblioref">Preston and Colman</a> (<a href="#ref-preston2000" role="doc-biblioref">2000</a>)</span> found that respondents found scales with 5, 7, and 10 points easy to use (compared to fewer options and a VAS) and that they preferred scales with more response options to allow them to express themselves (7 or more). Other studies also show that respondents favor more options <span class="citation">(<a href="#ref-cox2017" role="doc-biblioref">Cox et al. 2017</a>)</span>.</p>
+</table></div>
+<p>There are also several review papers on the topic. <span class="citation"><a href="references.html#ref-krosnick2010" role="doc-biblioref">Krosnick and Presser</a> (<a href="references.html#ref-krosnick2010" role="doc-biblioref">2010</a>)</span> suggest that 7-point Likert scales are probably optimal. <span class="citation"><a href="references.html#ref-lietz2010" role="doc-biblioref">Lietz</a> (<a href="references.html#ref-lietz2010" role="doc-biblioref">2010</a>)</span> concludes a desirable Likert-scale consists of 5 to 8 response options. Similarly, <span class="citation"><a href="references.html#ref-coxiii1980" role="doc-biblioref">Cox III</a> (<a href="references.html#ref-coxiii1980" role="doc-biblioref">1980</a>)</span> recommends to use between 5 and 9 response options. <span class="citation"><a href="references.html#ref-symonds1924" role="doc-biblioref">Symonds</a> (<a href="references.html#ref-symonds1924" role="doc-biblioref">1924</a>)</span>, in 1924, claims the optimum number is 7. <span class="citation"><a href="references.html#ref-gehlbach2011" role="doc-biblioref">Gehlbach and Brinkworth</a> (<a href="references.html#ref-gehlbach2011" role="doc-biblioref">2011</a>)</span> recommends using 5-points for unipolar items and 7-point for biopolar items.</p>
+<p>Besides psychometric properties it may also be worth taking into account respondent preference. This involves ease of use of the scale and whether the response options allow for sufficient variation for respondents to express their view. <span class="citation"><a href="references.html#ref-preston2000" role="doc-biblioref">Preston and Colman</a> (<a href="references.html#ref-preston2000" role="doc-biblioref">2000</a>)</span> found that respondents found scales with 5, 7, and 10 points easy to use (compared to fewer options and a VAS) and that they preferred scales with more response options to allow them to express themselves (7 or more). Other studies also show that respondents favor more options <span class="citation">(<a href="references.html#ref-cox2017" role="doc-biblioref">Cox et al. 2017</a>)</span>.</p>
 <p>Note that if time is of the essence, fewer response options are preferred.</p>
 <p><strong>Conclusion</strong>: It appears that few response options (2 or 3) should definitely be avoided. More response options therefore seems better, but benefits seem to quickly level off. Given other concerns, such as ease of use and interpretability, a 7-point Likert scale seems to be preferred.</p>
 </div>
 <div id="odd-vs.-even-response-options" class="section level3 unnumbered">
-<h3>Odd vs. even response options</h3>
+<h3>Odd vs. even response options<a class="anchor" aria-label="anchor" href="#odd-vs.-even-response-options"><i class="fas fa-link"></i></a>
+</h3>
 <p>The middle option of a scale can have an ambiguous meaning. Participants may use it to indicate a moderate standing on the issue, to indicate uncertainty, to indicate confusion, or to signal context dependence (e.g., “it depends”).</p>
 <p>The middle option may also be used for social desirable responding.</p>
 <p><strong>Conclusion</strong>: If it is possible that respondents may have a moderate view, it seems crucial for it to be possible to capture this view. Limitations of a middle option could then be addressed in other ways (e.g., clear questions).</p>
 </div>
 <div id="response-option-labeling" class="section level3 unnumbered">
-<h3>Response option labeling</h3>
-<p>There are several studies that show all response options should be labelled, rather than only labeling the end points <span class="citation">(<a href="#ref-weng2004" role="doc-biblioref">Weng 2004</a>; <a href="#ref-krosnick1993" role="doc-biblioref">Krosnick and Berent 1993</a>)</span>.</p>
+<h3>Response option labeling<a class="anchor" aria-label="anchor" href="#response-option-labeling"><i class="fas fa-link"></i></a>
+</h3>
+<p>There are several studies that show all response options should be labelled, rather than only labeling the end points <span class="citation">(<a href="references.html#ref-weng2004" role="doc-biblioref">Weng 2004</a>; <a href="references.html#ref-krosnick1993" role="doc-biblioref">Krosnick and Berent 1993</a>)</span>.</p>
 <p>For an example of biopolar labels for a 2- to 11-point Likert scale, see Table 1.</p>
 <div id="likert-labels-table">
-<table style="width:100%;">
-<caption>Table 1: Likert response labels from <span class="citation"><a href="#ref-simms2019" role="doc-biblioref">Simms et al.</a> (<a href="#ref-simms2019" role="doc-biblioref">2019</a>)</span></caption>
+<div class="inline-table"><table style="width:100%;" class="table table-sm">
+<caption>Table 1: Likert response labels from <span class="citation"><a href="references.html#ref-simms2019" role="doc-biblioref">Simms et al.</a> (<a href="references.html#ref-simms2019" role="doc-biblioref">2019</a>)</span>
+</caption>
 <colgroup>
-<col width="23%" />
-<col width="7%" />
-<col width="7%" />
-<col width="7%" />
-<col width="7%" />
-<col width="7%" />
-<col width="7%" />
-<col width="7%" />
-<col width="7%" />
-<col width="8%" />
-<col width="8%" />
+<col width="23%">
+<col width="7%">
+<col width="7%">
+<col width="7%">
+<col width="7%">
+<col width="7%">
+<col width="7%">
+<col width="7%">
+<col width="7%">
+<col width="8%">
+<col width="8%">
 </colgroup>
-<thead>
-<tr class="header">
+<thead><tr class="header">
 <th>Label</th>
 <th>2-point</th>
 <th>3-point</th>
@@ -352,8 +249,7 @@ div.csl-indent {
 <th>9-point</th>
 <th>10-point</th>
 <th>11-point</th>
-</tr>
-</thead>
+</tr></thead>
 <tbody>
 <tr class="odd">
 <td>Very strongly disagree</td>
@@ -499,166 +395,64 @@ div.csl-indent {
 <td>x</td>
 </tr>
 </tbody>
-</table>
+</table></div>
 </div>
-<p>It is also recommended to avoid agree-disagree response labels because asking respondents to rate their level of agreement is a cognitively demanding task that increases respondent error and reduces responding effort <span class="citation">(<a href="#ref-gehlbach2011" role="doc-biblioref">Gehlbach and Brinkworth 2011</a>)</span>.</p>
+<p>It is also recommended to avoid agree-disagree response labels because asking respondents to rate their level of agreement is a cognitively demanding task that increases respondent error and reduces responding effort <span class="citation">(<a href="references.html#ref-gehlbach2011" role="doc-biblioref">Gehlbach and Brinkworth 2011</a>)</span>.</p>
 </div>
 </div>
 <div id="recommended-reading" class="section level2" number="1.3">
-<h2><span class="header-section-number">1.3</span> Recommended reading</h2>
+<h2>
+<span class="header-section-number">1.3</span> Recommended reading<a class="anchor" aria-label="anchor" href="#recommended-reading"><i class="fas fa-link"></i></a>
+</h2>
 <p>The following papers are useful overview or review papers that are, in my mind, particular useful to read.</p>
 <ul>
-<li>Measure twice, cut down error: A process for enhancing the validity of survey scales by <span class="citation"><a href="#ref-gehlbach2011" role="doc-biblioref">Gehlbach and Brinkworth</a> (<a href="#ref-gehlbach2011" role="doc-biblioref">2011</a>)</span></li>
+<li>Measure twice, cut down error: A process for enhancing the validity of survey scales by <span class="citation"><a href="references.html#ref-gehlbach2011" role="doc-biblioref">Gehlbach and Brinkworth</a> (<a href="references.html#ref-gehlbach2011" role="doc-biblioref">2011</a>)</span>
+</li>
+</ul>
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="index.html">About</a></div>
+<div class="next"><a href="factor-analysis.html"><span class="header-section-number">2</span> Factor analysis</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#survey-design"><span class="header-section-number">1</span> Survey design</a></li>
+<li><a class="nav-link" href="#steps"><span class="header-section-number">1.1</span> Steps</a></li>
+<li>
+<a class="nav-link" href="#item-development"><span class="header-section-number">1.2</span> Item development</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#reverse-scored-items">Reverse-scored items</a></li>
+<li><a class="nav-link" href="#response-options">Response options</a></li>
+<li><a class="nav-link" href="#odd-vs.-even-response-options">Odd vs. even response options</a></li>
+<li><a class="nav-link" href="#response-option-labeling">Response option labeling</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#recommended-reading"><span class="header-section-number">1.3</span> Recommended reading</a></li>
 </ul>
 
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
 </div>
+    </nav>
 </div>
-<h3>References</h3>
-<div id="refs" class="references csl-bib-body hanging-indent">
-<div id="ref-alwin1997" class="csl-entry">
-Alwin, Duane F. 1997. <span>“Feeling Thermometers Versus 7-Point Scales: Which Are Better?”</span> <em>Sociological Methods &amp; Research</em> 25 (3): 318–40. <a href="https://doi.org/10.1177/0049124197025003003">https://doi.org/10.1177/0049124197025003003</a>.
-</div>
-<div id="ref-bendig1954" class="csl-entry">
-Bendig, A. W. 1954. <span>“Reliability and the Number of Rating-Scale Categories.”</span> <em>Journal of Applied Psychology</em> 38 (1): 38–40. <a href="https://doi.org/10.1037/h0055647">https://doi.org/10.1037/h0055647</a>.
-</div>
-<div id="ref-capik2015" class="csl-entry">
-Capik, Canturk, and Sebahat Gozum. 2015. <span>“Psychometric Features of an Assessment Instrument with Likert and Dichotomous Response Formats.”</span> <em>Public Health Nursing</em> 32 (1): 81–86. <a href="https://doi.org/10.1111/phn.12156">https://doi.org/10.1111/phn.12156</a>.
-</div>
-<div id="ref-cox2017" class="csl-entry">
-Cox, Andrew, Seth C. Courrégé, Abigail H. Feder, and Nathan C. Weed. 2017. <span>“Effects of Augmenting Response Options of the MMPI-2-RF: An Extension of Previous Findings.”</span> Edited by Kulbir Singh Birak. <em>Cogent Psychology</em> 4 (1): 1323988. <a href="https://doi.org/10.1080/23311908.2017.1323988">https://doi.org/10.1080/23311908.2017.1323988</a>.
-</div>
-<div id="ref-cox2012" class="csl-entry">
-Cox, Andrew, Hina Pant, Allison N. Gilson, Jessica L. Rodriguez, Kevin R. Young, Sangil Kwon, and Nathan C. Weed. 2012. <span>“Effects of Augmenting Response Options on MMPI<span></span>2 RC Scale Psychometrics.”</span> <em>Journal of Personality Assessment</em> 94 (6): 613–19. <a href="https://doi.org/10.1080/00223891.2012.700464">https://doi.org/10.1080/00223891.2012.700464</a>.
-</div>
-<div id="ref-coxiii1980" class="csl-entry">
-Cox III, Eli P. 1980. <span>“The Optimal Number of Response Alternatives for a Scale: A Review.”</span> <em>Journal of Marketing Research</em> 17 (4): 407. <a href="https://doi.org/10.2307/3150495">https://doi.org/10.2307/3150495</a>.
-</div>
-<div id="ref-dawes2008" class="csl-entry">
-Dawes, John. 2008. <span>“Do Data Characteristics Change According to the Number of Scale Points Used? An Experiment Using 5-Point, 7-Point and 10-Point Scales.”</span> <em>International Journal of Market Research</em> 50 (1): 61–104. <a href="https://doi.org/10.1177/147078530805000106">https://doi.org/10.1177/147078530805000106</a>.
-</div>
-<div id="ref-donnellan2020" class="csl-entry">
-Donnellan, Brent, and Andrew Rakhshani. 2020. <span>“How Does the Number of Response Options Impact the Psychometric Properties of the Rosenberg Self-Esteem Scale?”</span> November. <a href="https://doi.org/10.31234/osf.io/fnywz">https://doi.org/10.31234/osf.io/fnywz</a>.
-</div>
-<div id="ref-eutsler2015" class="csl-entry">
-Eutsler, Jared, and Bradley Lang. 2015. <span>“Rating Scales in Accounting Research: The Impact of Scale Points and Labels.”</span> <em>Behavioral Research in Accounting</em> 27 (2): 35–51. <a href="https://doi.org/10.2308/bria-51219">https://doi.org/10.2308/bria-51219</a>.
-</div>
-<div id="ref-finn2015" class="csl-entry">
-Finn, Jacob A., Yossef S. Ben-Porath, and Auke Tellegen. 2015. <span>“Dichotomous versus polytomous response options in psychopathology assessment: method or meaningful variance?”</span> <em>Psychological Assessment</em> 27 (1): 184–93. <a href="https://doi.org/10.1037/pas0000044">https://doi.org/10.1037/pas0000044</a>.
-</div>
-<div id="ref-flamer1983" class="csl-entry">
-Flamer, Stephen. 1983. <span>“Assessment of the Multitrait-Multimethod Matrix Validity of Likert Scales via Confirmatory Factor Analysis.”</span> <em>Multivariate Behavioral Research</em> 18 (3): 275–306. <a href="https://doi.org/10.1207/s15327906mbr1803_3">https://doi.org/10.1207/s15327906mbr1803_3</a>.
-</div>
-<div id="ref-gehlbach2011" class="csl-entry">
-Gehlbach, Hunter, and Maureen E. Brinkworth. 2011. <span>“Measure Twice, Cut down Error: A Process for Enhancing the Validity of Survey Scales.”</span> <em>Review of General Psychology</em> 15 (4): 380–87. <a href="https://doi.org/10.1037/a0025704">https://doi.org/10.1037/a0025704</a>.
-</div>
-<div id="ref-hilbert2016" class="csl-entry">
-Hilbert, Sven. 2016. <span>“The Influence of the Response Format in a Personality Questionnaire: An Analysis of a Dichotomous, a Likert-Type, and a Visual Analogue Scale.”</span> <em>TPM - Testing, Psychometrics, Methodology in Applied Psychology</em>, no. 1: 3–24. <a href="https://doi.org/10.4473/TPM23.1.1">https://doi.org/10.4473/TPM23.1.1</a>.
-</div>
-<div id="ref-jaeschke1990" class="csl-entry">
-Jaeschke, Roman, Joel Singer, and Gordon H. Guyatt. 1990. <span>“A Comparison of Seven-Point and Visual Analogue Scales: Data from a Randomized Trial.”</span> <em>Controlled Clinical Trials</em> 11 (1): 43–51. <a href="https://doi.org/10.1016/0197-2456(90)90031-V">https://doi.org/10.1016/0197-2456(90)90031-V</a>.
-</div>
-<div id="ref-janhunen2012" class="csl-entry">
-Janhunen, Kristiina. 2012. <span>“A Comparison of Likert-Type Rating and Visually-Aided Rating in a Simple Moral Judgment Experiment.”</span> <em>Quality &amp; Quantity</em> 46 (5): 1471–77. <a href="https://doi.org/10.1007/s11135-011-9461-x">https://doi.org/10.1007/s11135-011-9461-x</a>.
-</div>
-<div id="ref-krosnick1993" class="csl-entry">
-Krosnick, Jon A., and Matthew K. Berent. 1993. <span>“Comparisons of Party Identification and Policy Preferences: The Impact of Survey Question Format.”</span> <em>American Journal of Political Science</em> 37 (3): 941. <a href="https://doi.org/10.2307/2111580">https://doi.org/10.2307/2111580</a>.
-</div>
-<div id="ref-krosnick2010" class="csl-entry">
-Krosnick, Jon A., and Stanley Presser. 2010. <span>“Question and Questionnaire Design.”</span> In, Second edition. Bingley, UK: Emerald.
-</div>
-<div id="ref-kuhlmann2017" class="csl-entry">
-Kuhlmann, Tim, Michael Dantlgraber, and Ulf-Dietrich Reips. 2017. <span>“Investigating Measurement Equivalence of Visual Analogue Scales and Likert-Type Scales in Internet-Based Personality Questionnaires.”</span> <em>Behavior Research Methods</em> 49 (6): 2173–81. <a href="https://doi.org/10.3758/s13428-016-0850-x">https://doi.org/10.3758/s13428-016-0850-x</a>.
-</div>
-<div id="ref-lewis2017" class="csl-entry">
-Lewis, James R. 2017. <span>“User Experience Rating Scales with 7, 11, or 101 Points: Does It Matter?”</span> <em>Journal of Usability Studies</em> 12 (2): 19.
-</div>
-<div id="ref-lietz2010" class="csl-entry">
-Lietz, Petra. 2010. <span>“Research into Questionnaire Design: A Summary of the Literature.”</span> <em>International Journal of Market Research</em> 52 (2): 249–72. <a href="https://doi.org/10.2501/S147078530920120X">https://doi.org/10.2501/S147078530920120X</a>.
-</div>
-<div id="ref-matell1971" class="csl-entry">
-Matell, Michael S., and Jacob Jacoby. 1971. <span>“Is There an Optimal Number of Alternatives for Likert Scale Items? Study I: Reliability and Validity.”</span> <em>Educational and Psychological Measurement</em> 31 (3): 657–74. <a href="https://doi.org/10.1177/001316447103100307">https://doi.org/10.1177/001316447103100307</a>.
-</div>
-<div id="ref-preston2000" class="csl-entry">
-Preston, Carolyn C, and Andrew M Colman. 2000. <span>“Optimal Number of Response Categories in Rating Scales: Reliability, Validity, Discriminating Power, and Respondent Preferences.”</span> <em>Acta Psychologica</em> 104 (1): 1–15. <a href="https://doi.org/10.1016/S0001-6918(99)00050-5">https://doi.org/10.1016/S0001-6918(99)00050-5</a>.
-</div>
-<div id="ref-simms2019" class="csl-entry">
-Simms, Leonard J., Kerry Zelazny, Trevor F. Williams, and Lee Bernstein. 2019. <span>“Does the Number of Response Options Matter? Psychometric Perspectives Using Personality Questionnaire Data.”</span> <em>Psychological Assessment</em> 31 (4): 557–66. <a href="https://doi.org/10.1037/pas0000648">https://doi.org/10.1037/pas0000648</a>.
-</div>
-<div id="ref-sung2018" class="csl-entry">
-Sung, Yao-Ting, and Jeng-Shin Wu. 2018. <span>“The Visual Analogue Scale for Rating, Ranking and Paired-Comparison (VAS-RRP): A New Technique for Psychological Measurement.”</span> <em>Behavior Research Methods</em> 50 (4): 1694–1715. <a href="https://doi.org/10.3758/s13428-018-1041-8">https://doi.org/10.3758/s13428-018-1041-8</a>.
-</div>
-<div id="ref-swain2008" class="csl-entry">
-Swain, Scott D., Danny Weathers, and Ronald W. Niedrich. 2008. <span>“Assessing Three Sources of Misresponse to Reversed Likert Items.”</span> <em>Journal of Marketing Research</em> 45 (1): 116–31. <a href="https://doi.org/10.1509/jmkr.45.1.116">https://doi.org/10.1509/jmkr.45.1.116</a>.
-</div>
-<div id="ref-symonds1924" class="csl-entry">
-Symonds, P. M. 1924. <span>“On the Loss of Reliability in Ratings Due to Coarseness of the Scale.”</span> <em>Journal of Experimental Psychology</em> 7 (6): 456–61. <a href="https://doi.org/10.1037/h0074469">https://doi.org/10.1037/h0074469</a>.
-</div>
-<div id="ref-weng2004" class="csl-entry">
-Weng, Li-Jen. 2004. <span>“Impact of the Number of Response Categories and Anchor Labels on Coefficient Alpha and Test-Retest Reliability.”</span> <em>Educational and Psychological Measurement</em> 64 (6): 956–72. <a href="https://doi.org/10.1177/0013164404268674">https://doi.org/10.1177/0013164404268674</a>.
-</div>
-</div>
-            </section>
 
-          </div>
-        </div>
-      </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="factor-analysis.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
-    </div>
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>How to Science</strong>" was written by . It was last built on 2021-12-10.</p>
   </div>
-<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
-<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
-<script>
-gitbook.require(["gitbook"], function(gitbook) {
-gitbook.start({
-"sharing": {
-"github": false,
-"facebook": true,
-"twitter": true,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": "https://github.com/USERNAME/REPO/edit/BRANCH/01-survey-design.Rmd",
-"text": "Edit"
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": ["_main.epub"],
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "subsection"
-}
-});
-});
-</script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
@@ -670,7 +464,22 @@ gitbook.start({
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
 </script>
 </body>
-
 </html>

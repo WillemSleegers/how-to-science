@@ -20,3 +20,7 @@ reliability
 examples
 r-packages
 useful-links
+data-visualization
+bar-charts
+line-charts
+scatter-plots
