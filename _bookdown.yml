@@ -1,5 +1,6 @@
 delete_merged_file: true
 output_dir: "docs"
+rmd_subdir: true
 language:
   ui:
     chapter_name: "Chapter "

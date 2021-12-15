@@ -3,19 +3,24 @@
 ```{r, setup, include=FALSE}
 # Load packages
 library(tidyverse)
+library(viridis)
 library(plotly)
 
-fill_choices <- c("<10 years" = "#3d98b2", "10-19 years" = "grey40", "20+ years" = "#ca6144")
+theme_rethink <- function() {
+  theme(panel.background = element_rect(fill = "gray95"))
+}
+
+colors <- c("#0B0405FF", "#291A31FF", "#3D3165FF", "#3E5095FF", "#3573A1FF", 
+  "#3496A9FF", "#40B7ADFF", "#76D5AEFF", "#C4EAD0FF")
 ```
 
 ## Bar charts
 
 ```{r}
-p <- ggplot(mpg, aes(x = class, color = class, fill = class)) +
-  geom_bar(alpha = .75) +
-  scale_color_viridis_d() +
-  scale_fill_viridis_d() +
-  theme_minimal()
+p <- ggplot(mpg, aes(x = class, fill = class)) +
+  geom_bar() +
+  scale_fill_viridis(discrete = TRUE, option = "mako") +
+  theme_rethink()
 
 ggplotly(p)
 ```
@@ -33,8 +38,8 @@ ggplotly(p)
 ```{r}
 p <- ggplot(economics_long, aes(x = date, y = value01, 
     color = variable)) +
-  geom_line(alpha = .75) +
-  scale_color_viridis_d() +
+  geom_line() +
+  scale_color_viridis(discrete = TRUE, option = "mako") +
   theme_minimal()
 
 ggplotly(p)

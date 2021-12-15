@@ -1,6 +1,8 @@
 bookdown::bs4_book:
   css: style.css
   #template: templates/gitbook.html
+  theme:
+    primary: "#42708e"  
   config:
     fontsettings:
       theme: night
