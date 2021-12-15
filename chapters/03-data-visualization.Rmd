@@ -19,7 +19,7 @@ colors <- c("#0B0405FF", "#291A31FF", "#3D3165FF", "#3E5095FF", "#3573A1FF",
 ```{r}
 p <- ggplot(mpg, aes(x = class, fill = class)) +
   geom_bar(alpha = .85) +
-  scale_fill_viridis(discrete = TRUE, option = "mako") +
+  scale_fill_viridis(discrete = TRUE, option = "mako", end = .95) +
   theme_rethink()
 
 ggplotly(p)
@@ -39,7 +39,7 @@ ggplotly(p)
 p <- ggplot(economics_long, aes(x = date, y = value01, 
     color = variable)) +
   geom_line() +
-  scale_color_viridis(discrete = TRUE, option = "mako") +
+  scale_color_viridis(discrete = TRUE, option = "mako", end = .95) +
   theme_rethink()
 
 ggplotly(p)
@@ -49,17 +49,17 @@ ggplotly(p)
 
 ```{r}
 p <- ggplot(mtcars, aes(x = wt, y = mpg)) +
-  geom_point(alpha = .75) +
-  theme_minimal()
+  geom_point(alpha = .85) +
+  theme_rethink()
 
 ggplotly(p)
 ```
 
 ```{r}
 p <- ggplot(mtcars, aes(x = wt, y = mpg, color = factor(cyl))) +
-  geom_point(alpha = .75) +
-  scale_color_viridis_d() +
-  theme_minimal()
+  geom_point(alpha = .85) +
+  scale_color_viridis(discrete = TRUE, option = "mako", end = .95) +
+  theme_rethink()
 
 ggplotly(p)
 ```
