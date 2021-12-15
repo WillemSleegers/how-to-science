@@ -18,7 +18,7 @@ colors <- c("#0B0405FF", "#291A31FF", "#3D3165FF", "#3E5095FF", "#3573A1FF",
 
 ```{r}
 p <- ggplot(mpg, aes(x = class, fill = class)) +
-  geom_bar() +
+  geom_bar(alpha = .85) +
   scale_fill_viridis(discrete = TRUE, option = "mako") +
   theme_rethink()
 
@@ -29,8 +29,8 @@ ggplotly(p)
 
 ```{r}
 p <- ggplot(economics, aes(x = date, y = unemploy)) + 
-  geom_line(alpha = .75) +
-  theme_minimal()
+  geom_line() +
+  theme_rethink()
 
 ggplotly(p)
 ```
@@ -40,7 +40,7 @@ p <- ggplot(economics_long, aes(x = date, y = value01,
     color = variable)) +
   geom_line() +
   scale_color_viridis(discrete = TRUE, option = "mako") +
-  theme_minimal()
+  theme_rethink()
 
 ggplotly(p)
 ```

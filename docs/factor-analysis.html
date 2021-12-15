@@ -65,6 +65,8 @@
 <h3>
 <span class="header-section-number">2.1.1</span> Principal Components vs. Factor Analysis<a class="anchor" aria-label="anchor" href="#principal-components-vs.-factor-analysis"><i class="fas fa-link"></i></a>
 </h3>
+<p>An important consideration is whether to use Principal Components Analyses (PCA) or factor analyses.</p>
+<p>PCA is a data reduction technique. It conceptualizes constructs as causally determined by the observations (Edwards &amp; Bagozzi, 2000). This is likely not what you want because this means that “principal component scores are”caused” by their indicators in much the same way that sumscores are “caused” by item scores.” <span class="math display">\[@borsboom2006\]</span>. Instead, you likely want the opposite causal relationship in which a latent factor causes the indicator scores.</p>
 <p>The partitioning of variance differentiates a principal components analysis from what we call common factor analysis. Both methods try to reduce the dimensionality of the dataset down to fewer unobserved variables, but whereas PCA assumes that there common variances takes up all of total variance, common factor analysis assumes that total variance can be partitioned into common and unique variance. It is usually more reasonable to assume that you have not measured your set of items perfectly. The unobserved or latent variable that makes up common variance is called a factor, hence the name factor analysis. The other main difference between PCA and factor analysis lies in the goal of your analysis. If your goal is to simply reduce your variable list down into a linear combination of smaller components then PCA is the way to go. However, if you believe there is some latent construct that defines the interrelationship among items, then factor analysis may be more appropriate.</p>
 </div>
 <div id="sample-size" class="section level3" number="2.1.2">
@@ -172,6 +174,7 @@
 <p>Zwick and Velicer (1986) tested the scree test, Horn’s parallel test, and Velicer’s MAP test (among others) in simulation studies using a data set with a clear factor structure. Both the parallel test and the minimum average partial test seemed to work well.</p>
 <p><span class="citation"><a href="references.html#ref-ruscio2012" role="doc-biblioref">Ruscio and Brendan Roche</a> (<a href="references.html#ref-ruscio2012" role="doc-biblioref">2012</a>)</span> notes that PA is considered to be the method of choice among methodologists and recommend that researchers take advantage of PA as a starting point, perhaps supplemented by CD. They note that researchers can also use more than one method. Similarly, several prominent authors and journals have endorsed this as the most robust and accurate process for determining the number of factors to extract (Ledesma &amp; Valero-Mora, 2007; Velicer et al., 2000).</p>
 <p><span class="citation"><a href="references.html#ref-osborne2014" role="doc-biblioref">Osborne</a> (<a href="references.html#ref-osborne2014" role="doc-biblioref">2014</a>)</span> notes that MAP has been considered superior to the “classic” criteria, and probably is superior to parallel analysis, although neither is perfect, and all must be used in the context of a search for conceptually interpretable factors. He recommends to use parallel analysis or MAP criteria, along with theory (and any of the classic criteria that suits you and is defensible).</p>
+<p><strong>TODO</strong>: Look into VSS.</p>
 </div>
 <div id="factor-extraction-method" class="section level3" number="2.1.6">
 <h3>
@@ -318,8 +321,8 @@
 </caption>
 <colgroup>
 <col width="14%">
-<col width="10%">
-<col width="74%">
+<col width="11%">
+<col width="73%">
 </colgroup>
 <thead><tr class="header">
 <th>Fit Type</th>
@@ -453,7 +456,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>How to Science</strong>" was written by . It was last built on 2021-12-14.</p>
+    <p>"<strong>How to Science</strong>" was written by . It was last built on 2021-12-15.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
