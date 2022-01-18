@@ -1,0 +1,105 @@
+<header>
+  <script type="module" src="assets/js/bigfoot.min.js"></script>
+  <script type="module">
+    function toggleAllCode() {
+      // Find all the sourceCode elements
+      const elements = document.getElementsByClassName("sourceCode")
+      
+      // Loop over the elements and toggle the 'hidden' class if the element
+      // is a div
+      for (let element of elements) {
+        if (element.nodeName == "DIV") {
+          if (element.classList.contains("sourceCode")) {
+            element.classList.toggle("hidden")
+          }  
+        }
+      }
+      
+      // Update the button text
+      const button = document.getElementById("toggle-code-button")
+      
+      // Toggle the button's class
+      button.classList.toggle("code-hidden")
+
+      // Update the button text
+      if (button.classList.contains("code-hidden")) {
+        button.textContent = "Show All Code"
+      } else {
+        button.textContent = "Hide All Code"
+      }
+    }
+
+    function toggleText() {
+      // Find the foldable div this button belongs to
+      const div = this.parentNode;
+
+      // Loop over the elements and toggle the folded class
+      for (child of div.children) {
+        child.classList.toggle("folded")
+      }
+
+      // Toggle the text of the button
+      const button = this
+      if (button.textContent == "Show me more") {
+        button.textContent = "Show me less"
+      } else {
+        button.textContent = "Show me more"
+      }
+    }
+
+    function addFoldButtons() {
+      // Create a fold button
+      const button = document.createElement("button")
+      button.textContent = "Show me more"
+      button.className = "btn foldable-button"
+      button.onclick = toggleText
+
+      // Find all foldable divs
+      const foldableDivs = document.getElementsByClassName("foldable")
+      
+      // Loop over the foldable divs to add a folded class to each child and 
+      // add a foldable button at the bottom
+      for (let div of foldableDivs) {
+        const children = div.children;
+        for (let child of children) {
+          child.classList.toggle("folded")
+        }
+
+        div.insertBefore(button, div.firstChild)
+      }
+    }
+
+    window.onload = function() {
+      // Check if there are any code sections on the page
+      const codeBlocks = document.getElementsByClassName("sourceCode")
+      
+      // Add toggle code button, but only if there are code blocks
+      if (codeBlocks.length > 0) {
+        // Find the book header at the top of the page
+        const header = document.getElementsByClassName("book-header").item(0)
+        
+        // Create a link element
+        const link = document.createElement("a")
+        link.className = "btn pull-left js-toolbar-action"
+        link.title = "Toggle code"
+        link.onclick = toggleAllCode
+        
+        // Create an icon element
+        const icon = document.createElement("i")
+        icon.className = "fa fa-code"
+        
+        // Add the icon to the link
+        link.appendChild(icon)
+      
+        // Add the link to the header
+        header.appendChild(link)
+      }
+
+      // Add foldable text buttons
+      addFoldButtons()
+      
+      $.bigfoot();
+    }
+</script>
+  
+</header>

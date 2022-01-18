@@ -1,6 +1,4 @@
 delete_merged_file: true
 output_dir: "docs"
-rmd_subdir: true
-language:
-  ui:
-    chapter_name: "Chapter "
+rmd_files: ["index.Rmd", "chapters/test.Rmd", 
+  "chapters/survey-design.Rmd", "chapters/factor-analysis.Rmd"]

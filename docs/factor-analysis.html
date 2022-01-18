@@ -1,202 +1,351 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="" xml:lang="">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Chapter 2 Factor analysis | How to Science</title>
-<meta name="description" content="2.1 Exploratory factor analyses The goal of an exploratory factor analysis (EFA) is to study the latent factors that underlie responses to a larger number of measures items. It is a popular...">
-<meta name="generator" content="bookdown 0.24 with bs4_book()">
-<meta property="og:title" content="Chapter 2 Factor analysis | How to Science">
-<meta property="og:type" content="book">
-<meta property="og:description" content="2.1 Exploratory factor analyses The goal of an exploratory factor analysis (EFA) is to study the latent factors that underlie responses to a larger number of measures items. It is a popular...">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 2 Factor analysis | How to Science">
-<meta name="twitter:description" content="2.1 Exploratory factor analyses The goal of an exploratory factor analysis (EFA) is to study the latent factors that underlie responses to a larger number of measures items. It is a popular...">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.11/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script><script src="libs/plotly-binding-4.10.0/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
-<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script><link href="libs/plotly-htmlwidgets-css-2.5.1/plotly-htmlwidgets.css" rel="stylesheet">
-<script src="libs/plotly-main-2.5.1/plotly-latest.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="style.css">
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>3 Factor analysis | How to Science</title>
+  <meta name="description" content="<p>This is a book to organize my conclusions about topics in methodology and
+statistics.</p>" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="3 Factor analysis | How to Science" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:image" content="/assets/img/cover.jpg" />
+  <meta property="og:description" content="<p>This is a book to organize my conclusions about topics in methodology and
+statistics.</p>" />
+  <meta name="github-repo" content="willemsleegers/how-to-science" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="3 Factor analysis | How to Science" />
+  
+  <meta name="twitter:description" content="<p>This is a book to organize my conclusions about topics in methodology and
+statistics.</p>" />
+  <meta name="twitter:image" content="/assets/img/cover.jpg" />
+
+<meta name="author" content="Willem Sleegers" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="survey-design.html"/>
+
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<script src="libs/viz-1.8.2/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.6.1/grViz.js"></script>
+<header>
+  <script type="module" src="assets/js/bigfoot.min.js"></script>
+  <script type="module">
+    function toggleAllCode() {
+      // Find all the sourceCode elements
+      const elements = document.getElementsByClassName("sourceCode")
+      
+      // Loop over the elements and toggle the 'hidden' class if the element
+      // is a div
+      for (let element of elements) {
+        if (element.nodeName == "DIV") {
+          if (element.classList.contains("sourceCode")) {
+            element.classList.toggle("hidden")
+          }  
+        }
+      }
+      
+      // Update the button text
+      const button = document.getElementById("toggle-code-button")
+      
+      // Toggle the button's class
+      button.classList.toggle("code-hidden")
+
+      // Update the button text
+      if (button.classList.contains("code-hidden")) {
+        button.textContent = "Show All Code"
+      } else {
+        button.textContent = "Hide All Code"
+      }
+    }
+
+    function toggleText() {
+      // Find the foldable div this button belongs to
+      const div = this.parentNode;
+
+      // Loop over the elements and toggle the folded class
+      for (child of div.children) {
+        child.classList.toggle("folded")
+      }
+
+      // Toggle the text of the button
+      const button = this
+      if (button.textContent == "Show me more") {
+        button.textContent = "Show me less"
+      } else {
+        button.textContent = "Show me more"
+      }
+    }
+
+    function addFoldButtons() {
+      // Create a fold button
+      const button = document.createElement("button")
+      button.textContent = "Show me more"
+      button.className = "btn foldable-button"
+      button.onclick = toggleText
+
+      // Find all foldable divs
+      const foldableDivs = document.getElementsByClassName("foldable")
+      
+      // Loop over the foldable divs to add a folded class to each child and 
+      // add a foldable button at the bottom
+      for (let div of foldableDivs) {
+        const children = div.children;
+        for (let child of children) {
+          child.classList.toggle("folded")
+        }
+
+        div.insertBefore(button, div.firstChild)
+      }
+    }
+
+    window.onload = function() {
+      // Check if there are any code sections on the page
+      const codeBlocks = document.getElementsByClassName("sourceCode")
+      
+      // Add toggle code button, but only if there are code blocks
+      if (codeBlocks.length > 0) {
+        // Find the book header at the top of the page
+        const header = document.getElementsByClassName("book-header").item(0)
+        
+        // Create a link element
+        const link = document.createElement("a")
+        link.className = "btn pull-left js-toolbar-action"
+        link.title = "Toggle code"
+        link.onclick = toggleAllCode
+        
+        // Create an icon element
+        const icon = document.createElement("i")
+        icon.className = "fa fa-code"
+        
+        // Add the icon to the link
+        link.appendChild(icon)
+      
+        // Add the link to the header
+        header.appendChild(link)
+      }
+
+      // Add foldable text buttons
+      addFoldButtons()
+      
+      $.bigfoot();
+    }
+</script>
+  
+</header>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="assets/css/style.css" type="text/css" />
+<link rel="stylesheet" href="assets/css/bigfoot-default.css" type="text/css" />
 </head>
-<body data-spy="scroll" data-target="#toc">
 
-<div class="container-fluid">
-<div class="row">
-  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+<body>
 
-    <div class="d-flex align-items-start justify-content-between">
-      <h1>
-        <a href="index.html" title="">How to Science</a>
-      </h1>
-      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<div class="toc-before">
+  <img src="assets/img/logo.png"/>
+  <span>How to Science</span>
+</div>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>About</a></li>
+<li class="chapter" data-level="1" data-path="r-markdown.html"><a href="r-markdown.html"><i class="fa fa-check"></i><b>1</b> R Markdown</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="r-markdown.html"><a href="r-markdown.html#including-plots"><i class="fa fa-check"></i><b>1.1</b> Including Plots</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="survey-design.html"><a href="survey-design.html"><i class="fa fa-check"></i><b>2</b> Survey design</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="survey-design.html"><a href="survey-design.html#steps"><i class="fa fa-check"></i><b>2.1</b> Steps</a></li>
+<li class="chapter" data-level="2.2" data-path="survey-design.html"><a href="survey-design.html#item-development"><i class="fa fa-check"></i><b>2.2</b> Item development</a></li>
+<li class="chapter" data-level="2.3" data-path="survey-design.html"><a href="survey-design.html#number-of-items"><i class="fa fa-check"></i><b>2.3</b> Number of items</a></li>
+<li class="chapter" data-level="2.4" data-path="survey-design.html"><a href="survey-design.html#recommended-reading"><i class="fa fa-check"></i><b>2.4</b> Recommended reading</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="factor-analysis.html"><a href="factor-analysis.html"><i class="fa fa-check"></i><b>3</b> Factor analysis</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="factor-analysis.html"><a href="factor-analysis.html#exploratory-factor-analyses"><i class="fa fa-check"></i><b>3.1</b> Exploratory factor analyses</a></li>
+<li class="chapter" data-level="3.2" data-path="factor-analysis.html"><a href="factor-analysis.html#confirmatory-factor-analysis"><i class="fa fa-check"></i><b>3.2</b> Confirmatory factor analysis</a></li>
+<li class="chapter" data-level="3.3" data-path="factor-analysis.html"><a href="factor-analysis.html#examples"><i class="fa fa-check"></i><b>3.3</b> Examples</a></li>
+<li class="chapter" data-level="3.4" data-path="factor-analysis.html"><a href="factor-analysis.html#r-packages"><i class="fa fa-check"></i><b>3.4</b> R packages</a></li>
+<li class="chapter" data-level="3.5" data-path="factor-analysis.html"><a href="factor-analysis.html#useful-links"><i class="fa fa-check"></i><b>3.5</b> Useful links</a></li>
+</ul></li>
+</ul>
+
+      </nav>
     </div>
 
-    <div id="main-nav" class="collapse-lg">
-      <form role="search">
-        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
-</form>
-
-      <nav aria-label="Table of contents"><h2>Table of contents</h2>
-        <ul class="book-toc list-unstyled">
-<li><a class="" href="index.html">About</a></li>
-<li><a class="" href="survey-design.html"><span class="header-section-number">1</span> Survey design</a></li>
-<li><a class="active" href="factor-analysis.html"><span class="header-section-number">2</span> Factor analysis</a></li>
-<li><a class="" href="data-visualization.html"><span class="header-section-number">3</span> Data Visualization</a></li>
-<li><a class="" href="references.html">References</a></li>
-</ul>
-
-        <div class="book-extra">
-          
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">How to Science</a>
+          </h1>
         </div>
-      </nav>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="factor-analysis" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Factor analysis</h1>
+<div id="exploratory-factor-analyses" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Exploratory factor analyses</h2>
+<p>The goal of an exploratory factor analysis (EFA) is to study the latent factors that underlie responses to a larger number of items. In other words, the goal is to <em>explore</em> the data and <em>reduce</em> the number of variables. It is a popular technique in the development and validation of assessment instruments. Unlike confirmatory factor analysis (CFA), EFA is used when there is little or no a priori justification for specifying a particular structural model. This means that there is reasonable uncertainty about the number of underlying factors and which items load on which factor. The hope is to resolve some of that uncertainty empirically.</p>
+<div id="principal-components-vs.-factor-analysis" class="section level3" number="3.1.1">
+<h3><span class="header-section-number">3.1.1</span> Principal Components vs. Factor Analysis</h3>
+<p>An important consideration is whether to use a principal components analysis (PCA) or a factor analysis.</p>
+<p>PCA is a data reduction technique. PCA computes the analysis without regard to the underlying latent structure of the variables, using all the variance in the manifest variables. When the goal is to develop a (psychological) scale, this is likely not what you want. With PCA, the variables are themselves of interest, rather than some hypothetical latent construct. Another way of describing it is that PCA conceptualizes constructs as causally determined by the observations (Edwards &amp; Bagozzi, 2000). Again, this is likely not what you want because this means that “principal component scores are”caused” by their indicators in much the same way that sumscores are “caused” by item scores.” <span class="citation">(<a href="#ref-borsboom2006" role="doc-biblioref">Borsboom 2006</a>)</span>. Instead, you likely want the opposite causal relationship in which a latent factor causes the indicator scores.</p>
+<div id="htmlwidget-8eb7348bf04db34bf545" style="width:672px;height:480px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-8eb7348bf04db34bf545">{"x":{"diagram":"\ndigraph dot {\n\ngraph [layout = dot,\n       rankdir = LR]\n\nnode [shape = square,\n      color = black,\n      label = \"\"]\n\nvar1 [label = \"variable 1\"]\nvar2 [label = \"variable 2\"]\nvar3 [label = \"variable 3\"]\nvar4 [label = \"variable 4\"]\nvar5 [label = \"variable 5\"]\nvar6 [label = \"variable 6\"]  \nvar7 [label = \"variable 7\"]  \nvar8 [label = \"variable 8\"]\n    \nnode [label = \"component A\"]\ncomp1\n\nnode [label = \"component B\"]\ncomp2\n\nedge [color = black, minlen = 3]\n{var1 var2 var3 var4} -> comp1\n{var5 var6 var7 var8} -> comp2\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<p>While common factor analysis assumes that total variance can be partitioned into common and unique variance, PCA assumes that there common variances takes up all of total variance. This means that PCA assumes that all variables are measured without error. It is usually more reasonable to assume that you have not measured your set of items perfectly. Although some argue that the two methods have the same results, there is also evidence that factor analysis has better results than PCA (Widaman, 1993). See <span class="citation"><a href="#ref-russell2002" role="doc-biblioref">Russell</a> (<a href="#ref-russell2002" role="doc-biblioref">2002</a>)</span> for a discussion.</p>
+<p><strong>Conclusion</strong>: Do not use PCA.</p>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="factor-analysis" class="section level1" number="2">
-<h1>
-<span class="header-section-number">2</span> Factor analysis<a class="anchor" aria-label="anchor" href="#factor-analysis"><i class="fas fa-link"></i></a>
-</h1>
-<div id="exploratory-factor-analyses" class="section level2" number="2.1">
-<h2>
-<span class="header-section-number">2.1</span> Exploratory factor analyses<a class="anchor" aria-label="anchor" href="#exploratory-factor-analyses"><i class="fas fa-link"></i></a>
-</h2>
-<p>The goal of an exploratory factor analysis (EFA) is to study the latent factors that underlie responses to a larger number of measures items. It is a popular technique in the development and validation of assessment instruments. Unlike confirmatory factor analysis, EFA is used when there is little or no a priori justification for specifying a particular structural model. This means that the number of underlying factors is determined mostly empirically, rather than theoretically.</p>
-<div id="principal-components-vs.-factor-analysis" class="section level3" number="2.1.1">
-<h3>
-<span class="header-section-number">2.1.1</span> Principal Components vs. Factor Analysis<a class="anchor" aria-label="anchor" href="#principal-components-vs.-factor-analysis"><i class="fas fa-link"></i></a>
-</h3>
-<p>An important consideration is whether to use Principal Components Analyses (PCA) or factor analyses.</p>
-<p>PCA is a data reduction technique. It conceptualizes constructs as causally determined by the observations (Edwards &amp; Bagozzi, 2000). This is likely not what you want because this means that “principal component scores are”caused” by their indicators in much the same way that sumscores are “caused” by item scores.” <span class="math display">\[@borsboom2006\]</span>. Instead, you likely want the opposite causal relationship in which a latent factor causes the indicator scores.</p>
-<p>The partitioning of variance differentiates a principal components analysis from what we call common factor analysis. Both methods try to reduce the dimensionality of the dataset down to fewer unobserved variables, but whereas PCA assumes that there common variances takes up all of total variance, common factor analysis assumes that total variance can be partitioned into common and unique variance. It is usually more reasonable to assume that you have not measured your set of items perfectly. The unobserved or latent variable that makes up common variance is called a factor, hence the name factor analysis. The other main difference between PCA and factor analysis lies in the goal of your analysis. If your goal is to simply reduce your variable list down into a linear combination of smaller components then PCA is the way to go. However, if you believe there is some latent construct that defines the interrelationship among items, then factor analysis may be more appropriate.</p>
-</div>
-<div id="sample-size" class="section level3" number="2.1.2">
-<h3>
-<span class="header-section-number">2.1.2</span> Sample size<a class="anchor" aria-label="anchor" href="#sample-size"><i class="fas fa-link"></i></a>
-</h3>
-<div id="rules-of-thumb" class="section level4" number="2.1.2.1">
-<h4>
-<span class="header-section-number">2.1.2.1</span> Rules of thumb<a class="anchor" aria-label="anchor" href="#rules-of-thumb"><i class="fas fa-link"></i></a>
-</h4>
-<p>The general consensus seems to be that rules of thumb are a bad idea. The reason for that is that these rules only involve one of two factors. Common rules of thumb consist of going for a set number of participants or a particular participant-to-item ratio.</p>
-<div class="inline-table"><table class="table table-sm">
-<caption>Table: Examples of rules of thumb.</caption>
-<colgroup>
-<col width="35%">
-<col width="22%">
-<col width="42%">
-</colgroup>
-<thead><tr class="header">
-<th>Type</th>
-<th>Source</th>
-<th>Rule</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td><em>Participant-only</em></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td></td>
-<td><span class="citation"><a href="references.html#ref-comrey1992" role="doc-biblioref">Comrey and Lee</a> (<a href="references.html#ref-comrey1992" role="doc-biblioref">1992</a>)</span></td>
-<td>50 = very poor<br>
-100 = poor<br>
-200 = fair<br>
-300 = good<br>
-500 = very good<br>
-1000+ = excellent</td>
-</tr>
-<tr class="odd">
-<td></td>
-<td>Cattell (1978)</td>
-<td>250</td>
-</tr>
-<tr class="even">
-<td><em>Participant:item ratio</em></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td></td>
-<td><span class="citation"><a href="references.html#ref-gorsuch2015" role="doc-biblioref">Gorsuch</a> (<a href="references.html#ref-gorsuch2015" role="doc-biblioref">2015</a>)</span></td>
-<td>5:1 (100 participants minimum)</td>
-</tr>
-<tr class="even">
-<td></td>
-<td><span class="citation"><a href="references.html#ref-everitt1975" role="doc-biblioref">Everitt</a> (<a href="references.html#ref-everitt1975" role="doc-biblioref">1975</a>)</span></td>
-<td>10:1 (optimistically)</td>
-</tr>
-</tbody>
-</table></div>
-<p>The reality is that the sample size is dependent on:</p>
-<ul>
-<li><p>the study design (e.g., cross-sectional vs. longitudinal)</p></li>
-<li><p>the size of the relationships among the indicators (e.g., high communalities without cross loadings; strong loadings)</p></li>
-<li><p>the reliability of the indicators</p></li>
-<li><p>the scaling (e.g., categorical, continuous) and distribution of the indicators</p></li>
-<li><p>estimator type (e.g., ML, robust ML, WLSMV)</p></li>
-<li><p>the amount and patterns of missing data</p></li>
-<li><p>the size of the model (model complexity)</p></li>
-</ul>
-<p>Costello and Osborne <span class="citation">(<a href="references.html#ref-costello2005" role="doc-biblioref">2005</a>)</span> caution researchers to remember that EFA is a large-sample procedure and that generalizable or replicable results are unlikely if the sample is too small. They found that a ratio of 20:1 produces error rates well above the standard alpha (5%) level.</p>
-</div>
-</div>
-<div id="sampling-adequacy" class="section level3" number="2.1.3">
-<h3>
-<span class="header-section-number">2.1.3</span> Sampling Adequacy<a class="anchor" aria-label="anchor" href="#sampling-adequacy"><i class="fas fa-link"></i></a>
-</h3>
-<p>The Kaiser–Meyer–Olkin (KMO) test is a statistical measure to determine how suited data is for factor analysis. The test measures sampling adequacy for each variable in the model and the complete model. The statistic is a measure of the proportion of variance among variables that might be common variance. The lower the proportion, the higher the KMO value, the more suited the data is to factor analysis</p>
-<p>The KMO value ranges from 0 to 1, with 0.60 considered suitable for factor analysis <span class="citation"><a href="references.html#ref-tabachnick2013" role="doc-biblioref">Tabachnick and Fidell</a> (<a href="references.html#ref-tabachnick2013" role="doc-biblioref">2013</a>)</span>. Kaiser himself <span class="citation">(<a href="references.html#ref-kaiser1974" role="doc-biblioref">1974</a>)</span> suggested that KMO &gt; .9 were marvelous, in the .80s, mertitourious, in the .70s, middling, in the .60s, medicore, in the 50s, miserable, and less than .5, unacceptable.</p>
-<p>Bartlett’s (1954) test of sphericity is a notoriously sensitive test of the hypothesis that the correlations in a correlation matrix are zero. Because of its sensitivity and its dependence on N, the test is likely to be significant with samples of substantial size even if correlations are very low. Therefore, use of the test is recommended only if there are fewer than, say, five cases per variable <span class="citation">(<a href="references.html#ref-tabachnick2013" role="doc-biblioref">Tabachnick and Fidell 2013</a>)</span>.</p>
-</div>
-<div id="outlier-removal" class="section level3" number="2.1.4">
-<h3>
-<span class="header-section-number">2.1.4</span> Outlier removal<a class="anchor" aria-label="anchor" href="#outlier-removal"><i class="fas fa-link"></i></a>
-</h3>
-<p>Should you remove outliers?</p>
-</div>
-<div id="number-of-factors-to-retain" class="section level3" number="2.1.5">
-<h3>
-<span class="header-section-number">2.1.5</span> Number of factors to retain<a class="anchor" aria-label="anchor" href="#number-of-factors-to-retain"><i class="fas fa-link"></i></a>
-</h3>
-<p>There are several methods to determine how many factors to retain:</p>
-<ul>
-<li><p>Kaiser criterion (eigenvalues greater than 1; Kaiser, 1960)</p></li>
-<li><p>Scree test (Cattell, 1966)</p></li>
-<li><p>Parallel analysis (Horn, 1965)</p></li>
-<li><p>Velicer’s multiple average partial (MAP) procedure (Velicer, 1976)</p></li>
-<li><p>Akaike information criterion (AIC; Akaike, 1974)</p></li>
-<li><p>Bayesian information criterion (BIC; Schwarz, 1978)</p></li>
-<li><p>Comparison data (CD; <span class="citation"><a href="references.html#ref-ruscio2012" role="doc-biblioref">Ruscio and Brendan Roche</a> (<a href="references.html#ref-ruscio2012" role="doc-biblioref">2012</a>)</span>)</p></li>
-<li><p>Very Simple Structure (VSS)</p></li>
-</ul>
-<p>The default in most statistical software packages is to retain all factors with eigenvalues greater than 1. There is broad consensus in the literature that this is among the least accurate methods for selecting the number of factors to retain (Velicer &amp; Jackson, 1990).</p>
-<p>Zwick and Velicer (1986) tested the scree test, Horn’s parallel test, and Velicer’s MAP test (among others) in simulation studies using a data set with a clear factor structure. Both the parallel test and the minimum average partial test seemed to work well.</p>
-<p><span class="citation"><a href="references.html#ref-ruscio2012" role="doc-biblioref">Ruscio and Brendan Roche</a> (<a href="references.html#ref-ruscio2012" role="doc-biblioref">2012</a>)</span> notes that PA is considered to be the method of choice among methodologists and recommend that researchers take advantage of PA as a starting point, perhaps supplemented by CD. They note that researchers can also use more than one method. Similarly, several prominent authors and journals have endorsed this as the most robust and accurate process for determining the number of factors to extract (Ledesma &amp; Valero-Mora, 2007; Velicer et al., 2000).</p>
-<p><span class="citation"><a href="references.html#ref-osborne2014" role="doc-biblioref">Osborne</a> (<a href="references.html#ref-osborne2014" role="doc-biblioref">2014</a>)</span> notes that MAP has been considered superior to the “classic” criteria, and probably is superior to parallel analysis, although neither is perfect, and all must be used in the context of a search for conceptually interpretable factors. He recommends to use parallel analysis or MAP criteria, along with theory (and any of the classic criteria that suits you and is defensible).</p>
-<p><strong>TODO</strong>: Look into VSS.</p>
-</div>
-<div id="factor-extraction-method" class="section level3" number="2.1.6">
-<h3>
-<span class="header-section-number">2.1.6</span> Factor Extraction Method<a class="anchor" aria-label="anchor" href="#factor-extraction-method"><i class="fas fa-link"></i></a>
-</h3>
+<div id="factor-extraction-method" class="section level3" number="3.1.2">
+<h3><span class="header-section-number">3.1.2</span> Factor Extraction Method</h3>
+<p>Extraction is the general term for the process of reducing the number of dimensions being analyzed from the number of variables in the data set (and matrix of associations) into a smaller number of factors.</p>
 <p>There are multiple factor extract methods, such as:</p>
 <ul>
 <li><p>minres</p></li>
-<li><p>unweighted least squares</p></li>
-<li><p>generalized least squares</p></li>
+<li><p>unweighted least squares (ULS)</p></li>
+<li><p>generalized least squares (GLS)</p></li>
 <li><p>maximum likelihood</p></li>
-<li><p>principal axis factoring</p></li>
-<li><p>alpha factoring</p></li>
-<li><p>image factoring.</p></li>
+<li><p>principal axis factor(ing)</p></li>
+<li><p>alpha factor(ing)</p></li>
+<li><p>image factor(ing)</p></li>
 </ul>
-<p>Advice is to use the maximum likelihood method if the data is generally normally distributed and to use principal axis factoring if the data is non-normal (<span class="citation"><a href="references.html#ref-costello2005" role="doc-biblioref">Costello and Osborne</a> (<a href="references.html#ref-costello2005" role="doc-biblioref">2005</a>)</span>, <span class="citation"><a href="references.html#ref-osborne2014" role="doc-biblioref">Osborne</a> (<a href="references.html#ref-osborne2014" role="doc-biblioref">2014</a>)</span>).</p>
+<p>It’s not entirely clear which factor extraction method is the best and some authors use different terms for some of the methods, making it more difficult to compare them.</p>
+<p>Fabrigar, Wegener, MacCallum and Strahan (1999) argued that if data are relatively normally distributed, maximum likelihood is the best choice because “it allows for the computation of a wide range of indexes of the goodness of fit of the model <span class="math display">\[and\]</span> permits statistical significance testing of factor loadings and correlations among factors and the computation of confidence intervals.” (p. 277). In case the data is not generally normally distributed, they recommend principal axis factoring. This is recommended in several sources (<span class="citation"><a href="#ref-costello2005" role="doc-biblioref">Costello and Osborne</a> (<a href="#ref-costello2005" role="doc-biblioref">2005</a>)</span>, <span class="citation"><a href="#ref-osborne2014" role="doc-biblioref">Osborne</a> (<a href="#ref-osborne2014" role="doc-biblioref">2014</a>)</span>).</p>
+<p><strong>Conclusion</strong>: Use the maximum likelihood method if the data is generally normally distributed and to use principal axis factoring if the data is non-normal.</p>
 </div>
-<div id="rotation-methods" class="section level3" number="2.1.7">
-<h3>
-<span class="header-section-number">2.1.7</span> Rotation methods<a class="anchor" aria-label="anchor" href="#rotation-methods"><i class="fas fa-link"></i></a>
-</h3>
-<p>There are several rotation methods. They can be categorized into one of the categories: orthogonal or oblique.</p>
+<div id="rotation-methods" class="section level3" number="3.1.3">
+<h3><span class="header-section-number">3.1.3</span> Rotation methods</h3>
+<p>The goal of rotation is to clarify the factor structure and make the results of the EFA more interpretable.</p>
+<p>Rotation methods can be categorized into one of two categories: orthogonal or oblique. Orthogonal rotations keep axes at a 90 degree angle, forcing the factors to be uncorrelated. Oblique rotations allow angles that are not 90 degree , thus allowing factors to be correlated if that is optimal for the solution.</p>
 <p>Orthogonal rotation methods include:</p>
 <ul>
 <li><p>varimax</p></li>
@@ -209,41 +358,218 @@
 <li><p>quartimin</p></li>
 <li><p>promax</p></li>
 </ul>
-<p>In the social sciences we generally expect some correlation among factors, since behavior is rarely partitioned into neatly packaged units that function independently of one another. Therefore using orthogonal rotation results in a loss of valuable information if the factors are correlated, and oblique rotation should theoretically render a more accurate, and perhaps more reproducible, solution. If the factors are truly uncorrelated, orthogonal and oblique rotation produce nearly identical results. Since oblique rotation will reproduce an orthogonal solution but not vice versa, we recommend oblique rotation.</p>
-<p>There is no widely preferred method of oblique rotation; all tend to produce similar results (Fabrigar et al., 1999)</p>
+<p>In the social sciences, we generally expect some correlation among factors, since behavior is rarely partitioned into neatly packaged units that function independently of one another. Therefore using orthogonal rotation results in a loss of valuable information if the factors are correlated, and oblique rotation should theoretically render a more accurate, and perhaps more reproducible, solution. If the factors are truly uncorrelated, orthogonal and oblique rotation produce nearly identical results. Since oblique rotation will reproduce an orthogonal solution but not vice versa, it makes sense to go for oblique rotation.</p>
+<p>There is no widely preferred method of oblique rotation; all tend to produce similar results (Fabrigar et al., 1999).</p>
+<p><strong>Conclusion</strong>: Use any oblique rotation.</p>
 </div>
-<div id="factor-structure" class="section level3" number="2.1.8">
-<h3>
-<span class="header-section-number">2.1.8</span> Factor structure<a class="anchor" aria-label="anchor" href="#factor-structure"><i class="fas fa-link"></i></a>
-</h3>
+<div id="number-of-factors-to-retain" class="section level3" number="3.1.4">
+<h3><span class="header-section-number">3.1.4</span> Number of factors to retain</h3>
+<p>There are several methods to determine how many factors to retain:</p>
+<ul>
+<li><p>Theory</p></li>
+<li><p>Kaiser criterion (eigenvalues greater than 1; Kaiser, 1960)</p></li>
+<li><p>Scree test (Cattell, 1966)</p></li>
+<li><p>Parallel analysis (Horn, 1965)</p></li>
+<li><p>Velicer’s multiple average partial (MAP) procedure (Velicer, 1976)</p></li>
+<li><p>Akaike information criterion (AIC; Akaike, 1974)</p></li>
+<li><p>Bayesian information criterion (BIC; Schwarz, 1978)</p></li>
+<li><p>Comparison data (CD; <span class="citation"><a href="#ref-ruscio2012" role="doc-biblioref">Ruscio and Brendan Roche</a> (<a href="#ref-ruscio2012" role="doc-biblioref">2012</a>)</span>)</p></li>
+<li><p>Very Simple Structure (VSS)</p></li>
+</ul>
+<p>If the theoretical framework for the instrument is sound, we should start with the expectation that we should see that structure in the data. Instruments are rarely perfect (especially the first time it is examined), and theoretical expectations are not always supported. But unless one is on a fishing expedition in a data set with no a priori ideas about how the analysis should turn out, 12 this is as good a place as any to start.</p>
+<p>The default in most statistical software packages is to use the Kaiser criterion. It makes some sense, as an eigenvalue represents the sum of the squared factor loadings in a column, and to get a sum of 1.0 or more, one must have rather large factor loadings to square and sum. However, this is easily achieved with more items and there are now alternative methods. Hence, there is broad consensus in the literature that this is among the least accurate methods for selecting the number of factors to retain (Velicer &amp; Jackson, 1990).</p>
+<p>The scree test involves examining the graph of the eigenvalues (available via every software package) and looking for the natural bend or “elbow” in the data where the slope of the curve changes (flattens) markedly. Although the scree plot itself is not considered sufficient to determine how many factors should be extracted (Velicer et al., 2000), many suggest that researchers examine solutions extracting the number of factors ranging from one to two factors above the elbow to one or two below.</p>
+<p>Parallel analysis involves generating random uncorrelated data, and comparing eigenvalues from the EFA to those eigenvalues from those random data. Using this process, only factors with eigenvalues that are significantly above the mean (or preferably, the 95 th percentile) of those random eigenvalues should be retained. Several prominent authors and journals have endorsed this as the most robust and accurate process for determining the number of factors to extract (Ledesma &amp; Valero-Mora, 2007; Velicer et al., 2000).</p>
+<p>The Minimum Average Partial (MAP) criterion involves partialing out common variance as each successive component is created. As each successive component is partialed out, common variance will decrease to a minimum. Velicer argued that minimum point should be considered the criterion for the number of factors to extract.</p>
+<p>VSS involves degrading the initial rotated factor solution by <strong>assuming</strong> that the nonsalient loadings are zero, even though in actuality they rarely are. What VSS does is test how well the factor matrix we <strong>think</strong> abaut and talk about actually fits the correlation matrix. It is not a confirmatory procedure for testing the significance of a particular loading, but rather it is an exploratory procedure for testing the relative utility of <strong>interpreting</strong> the correlation matrix in terms of a family of increasingly more complex factor models. The simplest model tasted by VSS is that each item is of complexity one, and that all items are embedded in a more complex factor matrix of rank k. This is the model most appropriate for scale construction and is the one we use most frequently when we talk about factor solutions. More complicated models may also be evaluated by VSS.</p>
+<p>Zwick and Velicer (1986) tested the scree test, Horn’s parallel test, and Velicer’s MAP test (among others) in simulation studies using a data set with a clear factor structure. Both the parallel test and MAP test seemed to work well.</p>
+<p><span class="citation"><a href="#ref-ruscio2012" role="doc-biblioref">Ruscio and Brendan Roche</a> (<a href="#ref-ruscio2012" role="doc-biblioref">2012</a>)</span> notes that PA is considered to be the method of choice among methodologists and recommend that researchers take advantage of PA as a starting point, perhaps supplemented by CD. They note that researchers can also use more than one method. Similarly, several prominent authors and journals have endorsed this as the most robust and accurate process for determining the number of factors to extract (Ledesma &amp; Valero-Mora, 2007; Velicer et al., 2000).</p>
+<p><span class="citation"><a href="#ref-osborne2014" role="doc-biblioref">Osborne</a> (<a href="#ref-osborne2014" role="doc-biblioref">2014</a>)</span> notes that MAP has been considered superior to the “classic” criteria, and probably is superior to parallel analysis, although neither is perfect, and all must be used in the context of a search for conceptually interpretable factors. He recommends to use parallel analysis or MAP criteria, along with theory (and any of the classic criteria that suits you and is defensible).</p>
+<p><strong>Conclusion:</strong> Use multiple criteria and theory to make a judgment call about how many factors to extract.</p>
+</div>
+<div id="sample" class="section level3" number="3.1.5">
+<h3><span class="header-section-number">3.1.5</span> Sample</h3>
+<p>Make sure to target participants that are likely to vary in the attitude that you’re interested in measuring.</p>
+<p>Make sure the sample is representative of the population that you’re interested in.</p>
+</div>
+<div id="sample-size" class="section level3" number="3.1.6">
+<h3><span class="header-section-number">3.1.6</span> Sample size</h3>
+<div id="rules-of-thumb" class="section level4" number="3.1.6.1">
+<h4><span class="header-section-number">3.1.6.1</span> Rules of thumb</h4>
+<p>The general consensus seems to be that rules of thumb are a bad idea. The reason for that is that these rules only involve one of two factors. Common rules of thumb consist of going for a set number of participants or a particular participant-to-item ratio.</p>
+<table>
+<caption>Table: Examples of rules of thumb.</caption>
+<colgroup>
+<col width="32%" />
+<col width="28%" />
+<col width="39%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Type</th>
+<th>Source</th>
+<th>Rule</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><em>Participant-only</em></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td><span class="citation"><a href="#ref-comrey1992" role="doc-biblioref">Comrey and Lee</a> (<a href="#ref-comrey1992" role="doc-biblioref">1992</a>)</span></td>
+<td>50 = very poor<br />
+100 = poor<br />
+200 = fair<br />
+300 = good<br />
+500 = very good<br />
+1000+ = excellent</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>Barrett &amp; Kline, 1981</td>
+<td>50</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>Aleamoni, 1976</td>
+<td>400</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><em>Participant:item ratio</em></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td><span class="citation"><a href="#ref-gorsuch2015" role="doc-biblioref">Gorsuch</a> (<a href="#ref-gorsuch2015" role="doc-biblioref">2015</a>)</span>, p.332</td>
+<td>5:1 (100 participants minimum)</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>Hatcher 1994, p.73</td>
+<td>5:1 (minimum)</td>
+</tr>
+<tr class="even">
+<td></td>
+<td><span class="citation"><a href="#ref-everitt1975" role="doc-biblioref">Everitt</a> (<a href="#ref-everitt1975" role="doc-biblioref">1975</a>)</span></td>
+<td>10:1 (optimistically)</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>Nunally (1978), p.421</td>
+<td>10:1</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>The reality is that the sample size is dependent on:</p>
+<ul>
+<li><p>the study design (e.g., cross-sectional vs. longitudinal)</p></li>
+<li><p>the size of the relationships among the indicators (e.g., high communalities without cross loadings; strong loadings)</p></li>
+<li><p>the reliability of the indicators</p></li>
+<li><p>the scaling (e.g., categorical, continuous) and distribution of the indicators</p></li>
+<li><p>estimator type (e.g., ML, robust ML, WLSMV)</p></li>
+<li><p>the amount and patterns of missing data</p></li>
+<li><p>the size of the model (model complexity)</p></li>
+</ul>
+<p>For example, MacCallum, Widaman, Zhang, and Hong (1999) found that results were consistent with population loadings with sample sizes as low as 60 cases if the communalities of the items were high (.60 or greater). With lower communality levels (around .50), samples of 100 to 200 cases were required.</p>
+<p>Costello and Osborne <span class="citation">(<a href="#ref-costello2005" role="doc-biblioref">2005</a>)</span> caution researchers to remember that EFA is a large-sample procedure and that generalizable or replicable results are unlikely if the sample is too small. They found that a ratio of 20:1 produces error rates well above the standard alpha (5%) level. They also say that researchers should realize that EFA is exploratory and should be used only for exploring data, not hypothesis or theory testing.</p>
+</div>
+<div id="number-of-indicators" class="section level4" number="3.1.6.2">
+<h4><span class="header-section-number">3.1.6.2</span> Number of indicators</h4>
+<p>At least three items per factor are required for a factor model to be identified; more items per factor results in overidentification of the model. A number of writers recommend that four or more items per factor be included in the factor analysis to ensure an adequate identification of the factors (Comrey &amp; Lee, 1992; Fabrigar et al., 1999; Gorsuch, 1988).</p>
+<p>MacCallum et al. (1999) found that in addition to the communality of the measures, the results were more accurate for given sample sizes if there were more measures per factor included in the analysis.</p>
+<p>Some additional arguments for why multiple indicators per factor are useful:</p>
+<ul>
+<li><p>People read items incorrectly or sometimes just don’t understand an item (despite all efforts to make them as clear as possible), so having a sample of items can counteract the idiosyncratic mistakes of respondents</p></li>
+<li><p>With complicated topics, having multiple items also adds clarity about the overall goal of the scale. Each item is an indicator to the participant about what the purpose of the scale is.</p></li>
+</ul>
+</div>
+</div>
+<div id="sampling-adequacy" class="section level3" number="3.1.7">
+<h3><span class="header-section-number">3.1.7</span> Sampling Adequacy</h3>
+<p>The Kaiser–Meyer–Olkin (KMO) test is a statistical measure to determine how suited data is for factor analysis. The test measures sampling adequacy for each variable in the model and the complete model. The statistic is a measure of the proportion of variance among variables that might be common variance. The lower the proportion, the higher the KMO value, the more suited the data is to factor analysis</p>
+<p>The KMO value ranges from 0 to 1, with 0.60 considered suitable for factor analysis <span class="citation"><a href="#ref-tabachnick2013" role="doc-biblioref">Tabachnick and Fidell</a> (<a href="#ref-tabachnick2013" role="doc-biblioref">2013</a>)</span>. Kaiser himself <span class="citation">(<a href="#ref-kaiser1974" role="doc-biblioref">1974</a>)</span> suggested that KMO &gt; .9 were marvelous, in the .80s, mertitourious, in the .70s, middling, in the .60s, medicore, in the 50s, miserable, and less than .5, unacceptable.</p>
+<p>Bartlett’s (1954) test of sphericity is a notoriously sensitive test of the hypothesis that the correlations in a correlation matrix are zero. Because of its sensitivity and its dependence on N, the test is likely to be significant with samples of substantial size even if correlations are very low. Therefore, use of the test is recommended only if there are fewer than, say, five cases per variable <span class="citation">(<a href="#ref-tabachnick2013" role="doc-biblioref">Tabachnick and Fidell 2013</a>)</span>.</p>
+</div>
+<div id="outlier-removal" class="section level3" number="3.1.8">
+<h3><span class="header-section-number">3.1.8</span> Outlier removal</h3>
+<p>Should you remove outliers?</p>
+</div>
+<div id="factor-structure" class="section level3" number="3.1.9">
+<h3><span class="header-section-number">3.1.9</span> Factor structure</h3>
 <p>Tabachnick and Fidell (2001) cite .32 as a good rule of thumb for the minimum loading of an item. Others say item loadings above .30 (Costello).</p>
 <p>Others say a factor loading coefficient ≥ 0.40 is considered necessary to judge the quality (validity) of an item as an indicator of one factor or another. Some may think that this criterion is quite lax since a factor loading of 0.40 means that only 16% of the explained variance depends on the factor of which one item is the indicator (Gana &amp; Broc)</p>
 <p>Some psychometricians (for example, <span class="math display">\[COM 92, TAB 07\]</span>) recommend that we choose items whose R² is greater than 0.40 (thus showing a factorial factor loading greater than 0.63).</p>
 <ul>
-<li>
-<p>A “crossloading” item is an item that loads at .32 or higher on two or more factors. The researcher needs to decide whether a crossloading item should be dropped from the analysis, which may be a good choice if there are several adequate to strong loaders (.50 or better) on each factor.</p>
-<p>A factor with fewer than three items is generally weak and unstable; 5 or more strongly loading items (.50 or better) are desirable and indicate a solid factor.</p>
-</li>
-<li><p>, it is important for the latent variable to have at least four indicators (for example: four items). In effect, with only three indicators, the measurement model is just-identified, thus making useless its testability. (Gana &amp; Broc)</p></li>
+<li><p>A “crossloading” item is an item that loads at .32 or higher on two or more factors. The researcher needs to decide whether a crossloading item should be dropped from the analysis, which may be a good choice if there are several adequate to strong loaders (.50 or better) on each factor.</p>
+<p>A factor with fewer than three items is generally weak and unstable; 5 or more strongly loading items (.50 or better) are desirable and indicate a solid factor.</p></li>
 </ul>
 <p>Comrey and Lee (1992) suggest that loadings in excess of .71 (50% overlapping variance) are considered excellent, .63 (40% overlapping variance) very good, .55 (30% overlapping variance) good, .45 (20% overlapping variance) fair, and .32 (10% overlapping variance) poor.</p>
+<div id="number-of-indicators-to-keep" class="section level4" number="3.1.9.1">
+<h4><span class="header-section-number">3.1.9.1</span> Number of indicators to keep</h4>
+<ul>
+<li>, it is important for the latent variable to have at least four indicators (for example: four items). In effect, with only three indicators, the measurement model is just-identified, thus making useless its testability. (Gana &amp; Broc)</li>
+</ul>
 </div>
 </div>
-<div id="confirmatory-factor-analysis" class="section level2" number="2.2">
-<h2>
-<span class="header-section-number">2.2</span> Confirmatory factor analysis<a class="anchor" aria-label="anchor" href="#confirmatory-factor-analysis"><i class="fas fa-link"></i></a>
-</h2>
+<div id="interpretation" class="section level3" number="3.1.10">
+<h3><span class="header-section-number">3.1.10</span> Interpretation</h3>
+<p>Remember that the goal of exploratory factor analysis is to explore whether your data fits a model that makes sense. Ideally, you have a conceptual or theoretical framework for the analysis- a theory or body of literature guiding the development of an instrument, for example. Even if you do not, the results should be sensible in some way. You should be able to construct a simple narrative describing how each factor, and its constituent variables, makes sense and is easily labeled.</p>
+</div>
+<div id="additional-reading" class="section level3" number="3.1.11">
+<h3><span class="header-section-number">3.1.11</span> Additional reading</h3>
+<p>The summaries and conclusions above were largely taken from the following sources:</p>
+<ul>
+<li>Best Practices in Exploratory Factor Analysis by <span class="citation"><a href="#ref-osborne2014" role="doc-biblioref">Osborne</a> (<a href="#ref-osborne2014" role="doc-biblioref">2014</a>)</span></li>
+</ul>
+<!-- -->
+<ul>
+<li>In Search of Underlying Dimensions: The Use (and Abuse) of Factor Analysis in Personality and Social Psychology Bulletin by <span class="citation"><a href="#ref-russell2002" role="doc-biblioref">Russell</a> (<a href="#ref-russell2002" role="doc-biblioref">2002</a>)</span></li>
+</ul>
+</div>
+</div>
+<div id="confirmatory-factor-analysis" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> Confirmatory factor analysis</h2>
 <p>For confirmatory factor analyses there are also several ways to determine the sample size, including:</p>
 <ol style="list-style-type: decimal">
 <li>Rules of thumb</li>
 <li>Satorra-Saris method</li>
 <li>Monte Carlo approach</li>
-<li>
 </ol>
-<div id="estimator" class="section level3" number="2.2.1">
-<h3>
-<span class="header-section-number">2.2.1</span> Estimator<a class="anchor" aria-label="anchor" href="#estimator"><i class="fas fa-link"></i></a>
-</h3>
+<div id="number-of-indicators-1" class="section level3" number="3.2.1">
+<h3><span class="header-section-number">3.2.1</span> Number of indicators</h3>
+<p>Some argue that when it comes to the number of indicators, more is better <span class="citation"><a href="#ref-marsh1998" role="doc-biblioref">Marsh et al.</a> (<a href="#ref-marsh1998" role="doc-biblioref">1998</a>)</span>.</p>
+</div>
+<div id="estimator" class="section level3" number="3.2.2">
+<h3><span class="header-section-number">3.2.2</span> Estimator</h3>
 <p>If the data is normally distributed, use the ML estimator.</p>
 <p>the findings of Chou and Bentler <span class="math display">\[CHO 95\]</span> make it possible to qualify these remarks. These authors showed that in the presence of a sufficiently large sample, maximum likelihood estimation method and generalized least squares method do not make the results suffer, even when the multivariate normality is slightly violated.</p>
 <p>In case of violations, the following estimators can be used:</p>
@@ -257,12 +583,14 @@
 <li><p>bootstrapping: Not recommended for dichotomous and ordinal measures with few response categories)</p></li>
 </ul>
 <p>Mardia calculation to determine violations from normal distribution. It can be noted that not only is this standardized coefficient statistically significant, but its value is greater than 5, which is the threshold value beyond which multivariate normality seems to fail <span class="math display">\[KLI 16\]</span>.</p>
-<div class="inline-table"><table class="table table-sm">
+<table>
 <caption>Recommendations concerning the main estimators available in lavaan according to the type of data (Gana &amp; Broc).</caption>
-<thead><tr class="header">
+<thead>
+<tr class="header">
 <th>Data type and normality assumption</th>
 <th>Recommended estimator</th>
-</tr></thead>
+</tr>
+</thead>
 <tbody>
 <tr class="odd">
 <td><em>Continuous data</em></td>
@@ -309,26 +637,25 @@
 <td>WLSMV (in case of severe violation)</td>
 </tr>
 </tbody>
-</table></div>
+</table>
 </div>
-<div id="fit-indices" class="section level3" number="2.2.2">
-<h3>
-<span class="header-section-number">2.2.2</span> Fit indices<a class="anchor" aria-label="anchor" href="#fit-indices"><i class="fas fa-link"></i></a>
-</h3>
+<div id="fit-indices" class="section level3" number="3.2.3">
+<h3><span class="header-section-number">3.2.3</span> Fit indices</h3>
 <p>The only advice we can afford to give, however, is to closely follow developments concerning fit indices. In the meantime, you can carefully follow the recommendations of Hu and Bentler <span class="math display">\[HU 99\]</span> or Schreiber and his co-authors <span class="math display">\[SCH 06\]</span> who suggest the following guidelines for judging a model goodness-of-fit (based on the hypothesis where the maximum likelihood method is the estimation method): 1) RMSEA value ≤ 0.06, with confidence interval at 90% values should be between 0 and 1.00; 2) SRMR value ≤ 0.08; and 3) CFI and TLI values ≥ 0.95.</p>
-<div class="inline-table"><table class="table table-sm">
-<caption>Fit indices guidance from <span class="citation"><a href="references.html#ref-gana2019" role="doc-biblioref">Gana and Broc</a> (<a href="references.html#ref-gana2019" role="doc-biblioref">2019</a>)</span>
-</caption>
+<table>
+<caption>Fit indices guidance from <span class="citation"><a href="#ref-gana2019" role="doc-biblioref">Gana and Broc</a> (<a href="#ref-gana2019" role="doc-biblioref">2019</a>)</span></caption>
 <colgroup>
-<col width="14%">
-<col width="11%">
-<col width="73%">
+<col width="14%" />
+<col width="10%" />
+<col width="74%" />
 </colgroup>
-<thead><tr class="header">
+<thead>
+<tr class="header">
 <th>Fit Type</th>
 <th>Index</th>
 <th>Benchmark</th>
-</tr></thead>
+</tr>
+</thead>
 <tbody>
 <tr class="odd">
 <td>Absolute</td>
@@ -348,7 +675,7 @@
 <tr class="even">
 <td></td>
 <td>RMSEA</td>
-<td>≤ 0.05 = very good fit<br>
+<td>≤ 0.05 = very good fit<br />
 ≤ 0.06 and ≤ 0.08 = good fit</td>
 </tr>
 <tr class="odd">
@@ -364,37 +691,31 @@
 <tr class="odd">
 <td>Incremental</td>
 <td>CFI</td>
-<td>≥ 0.90 and ≤ 0.94 = good fit<br>
+<td>≥ 0.90 and ≤ 0.94 = good fit<br />
 ≥ 0.95 = very good fit</td>
 </tr>
 <tr class="even">
 <td></td>
 <td>TLI</td>
-<td>≥ 0.90 and ≤ 0.94 = good fit<br>
+<td>≥ 0.90 and ≤ 0.94 = good fit<br />
 ≥ 0.95 = very good fit</td>
 </tr>
 </tbody>
-</table></div>
+</table>
 </div>
-<div id="reliability" class="section level3" number="2.2.3">
-<h3>
-<span class="header-section-number">2.2.3</span> Reliability<a class="anchor" aria-label="anchor" href="#reliability"><i class="fas fa-link"></i></a>
-</h3>
+<div id="reliability" class="section level3" number="3.2.4">
+<h3><span class="header-section-number">3.2.4</span> Reliability</h3>
 <p>Reliability increases the closer the value gets to 1.00, with an acceptability threshold of 0.70.</p>
 </div>
 </div>
-<div id="examples" class="section level2" number="2.3">
-<h2>
-<span class="header-section-number">2.3</span> Examples<a class="anchor" aria-label="anchor" href="#examples"><i class="fas fa-link"></i></a>
-</h2>
+<div id="examples" class="section level2" number="3.3">
+<h2><span class="header-section-number">3.3</span> Examples</h2>
 <ul>
 <li>Beyond Sacrificial Harm: A Two-Dimensional Model of Utilitarian Psychology</li>
 </ul>
 </div>
-<div id="r-packages" class="section level2" number="2.4">
-<h2>
-<span class="header-section-number">2.4</span> R packages<a class="anchor" aria-label="anchor" href="#r-packages"><i class="fas fa-link"></i></a>
-</h2>
+<div id="r-packages" class="section level2" number="3.4">
+<h2><span class="header-section-number">3.4</span> R packages</h2>
 <ul>
 <li><p>lavaan</p></li>
 <li><p>lavaan.survey</p></li>
@@ -402,69 +723,240 @@
 <li><p>semPower</p></li>
 </ul>
 </div>
-<div id="useful-links" class="section level2" number="2.5">
-<h2>
-<span class="header-section-number">2.5</span> Useful links<a class="anchor" aria-label="anchor" href="#useful-links"><i class="fas fa-link"></i></a>
-</h2>
+<div id="useful-links" class="section level2" number="3.5">
+<h2><span class="header-section-number">3.5</span> Useful links</h2>
 <ul>
 <li><a href="https://stats.idre.ucla.edu/spss/seminars/introduction-to-factor-analysis/a-practical-introduction-to-factor-analysis/" class="uri">https://stats.idre.ucla.edu/spss/seminars/introduction-to-factor-analysis/a-practical-introduction-to-factor-analysis/</a></li>
 </ul>
-</div>
-</div>
-  <div class="chapter-nav">
-<div class="prev"><a href="survey-design.html"><span class="header-section-number">1</span> Survey design</a></div>
-<div class="next"><a href="data-visualization.html"><span class="header-section-number">3</span> Data Visualization</a></div>
-</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
-    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav">
-<li><a class="nav-link" href="#factor-analysis"><span class="header-section-number">2</span> Factor analysis</a></li>
-<li>
-<a class="nav-link" href="#exploratory-factor-analyses"><span class="header-section-number">2.1</span> Exploratory factor analyses</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#principal-components-vs.-factor-analysis"><span class="header-section-number">2.1.1</span> Principal Components vs. Factor Analysis</a></li>
-<li><a class="nav-link" href="#sample-size"><span class="header-section-number">2.1.2</span> Sample size</a></li>
-<li><a class="nav-link" href="#sampling-adequacy"><span class="header-section-number">2.1.3</span> Sampling Adequacy</a></li>
-<li><a class="nav-link" href="#outlier-removal"><span class="header-section-number">2.1.4</span> Outlier removal</a></li>
-<li><a class="nav-link" href="#number-of-factors-to-retain"><span class="header-section-number">2.1.5</span> Number of factors to retain</a></li>
-<li><a class="nav-link" href="#factor-extraction-method"><span class="header-section-number">2.1.6</span> Factor Extraction Method</a></li>
-<li><a class="nav-link" href="#rotation-methods"><span class="header-section-number">2.1.7</span> Rotation methods</a></li>
-<li><a class="nav-link" href="#factor-structure"><span class="header-section-number">2.1.8</span> Factor structure</a></li>
-</ul>
-</li>
-<li>
-<a class="nav-link" href="#confirmatory-factor-analysis"><span class="header-section-number">2.2</span> Confirmatory factor analysis</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#estimator"><span class="header-section-number">2.2.1</span> Estimator</a></li>
-<li><a class="nav-link" href="#fit-indices"><span class="header-section-number">2.2.2</span> Fit indices</a></li>
-<li><a class="nav-link" href="#reliability"><span class="header-section-number">2.2.3</span> Reliability</a></li>
-</ul>
-</li>
-<li><a class="nav-link" href="#examples"><span class="header-section-number">2.3</span> Examples</a></li>
-<li><a class="nav-link" href="#r-packages"><span class="header-section-number">2.4</span> R packages</a></li>
-<li><a class="nav-link" href="#useful-links"><span class="header-section-number">2.5</span> Useful links</a></li>
-</ul>
 
-      <div class="book-extra">
-        <ul class="list-unstyled">
-          
-        </ul>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div class="csl-entry">
+Alwin, Duane F. 1997. <span>“Feeling Thermometers Versus 7-Point Scales: Which Are Better?”</span> <em>Sociological Methods &amp; Research</em> 25 (3): 318–40. <a href="https://doi.org/10.1177/0049124197025003003">https://doi.org/10.1177/0049124197025003003</a>.
 </div>
-    </nav>
+<div class="csl-entry">
+Bendig, A. W. 1954. <span>“Reliability and the Number of Rating-Scale Categories.”</span> <em>Journal of Applied Psychology</em> 38 (1): 38–40. <a href="https://doi.org/10.1037/h0055647">https://doi.org/10.1037/h0055647</a>.
+</div>
+<div class="csl-entry">
+Borsboom, Denny. 2006. <span>“The Attack of the Psychometricians.”</span> <em>Psychometrika</em> 71 (3): 425. <a href="https://doi.org/10.1007/s11336-006-1447-6">https://doi.org/10.1007/s11336-006-1447-6</a>.
+</div>
+<div class="csl-entry">
+Capik, Canturk, and Sebahat Gozum. 2015. <span>“Psychometric Features of an Assessment Instrument with Likert and Dichotomous Response Formats.”</span> <em>Public Health Nursing</em> 32 (1): 81–86. <a href="https://doi.org/10.1111/phn.12156">https://doi.org/10.1111/phn.12156</a>.
+</div>
+<div class="csl-entry">
+Comrey, Andrew Laurence, and Howard B. Lee. 1992. <em>A First Course in Factor Analysis</em>. 2nd ed. Hillsdale, NJ: Lawrence Erlbaum Associates.
+</div>
+<div class="csl-entry">
+Costello, Anna, and Jason Osborne. 2005. <span>“Best Practices in Exploratory Factor Analysis: Four Recommendations for Getting the Most from Your Analysis.”</span> <em>Practical Assessment, Research, and Evaluation</em> 10 (1). <a href="https://doi.org/10.7275/jyj1-4868">https://doi.org/10.7275/jyj1-4868</a>.
+</div>
+<div class="csl-entry">
+Cox, Andrew, Seth C. Courrégé, Abigail H. Feder, and Nathan C. Weed. 2017. <span>“Effects of Augmenting Response Options of the MMPI-2-RF: An Extension of Previous Findings.”</span> Edited by Kulbir Singh Birak. <em>Cogent Psychology</em> 4 (1): 1323988. <a href="https://doi.org/10.1080/23311908.2017.1323988">https://doi.org/10.1080/23311908.2017.1323988</a>.
+</div>
+<div class="csl-entry">
+Cox, Andrew, Hina Pant, Allison N. Gilson, Jessica L. Rodriguez, Kevin R. Young, Sangil Kwon, and Nathan C. Weed. 2012. <span>“Effects of Augmenting Response Options on MMPI<span></span>2 RC Scale Psychometrics.”</span> <em>Journal of Personality Assessment</em> 94 (6): 613–19. <a href="https://doi.org/10.1080/00223891.2012.700464">https://doi.org/10.1080/00223891.2012.700464</a>.
+</div>
+<div class="csl-entry">
+Cox III, Eli P. 1980. <span>“The Optimal Number of Response Alternatives for a Scale: A Review.”</span> <em>Journal of Marketing Research</em> 17 (4): 407. <a href="https://doi.org/10.2307/3150495">https://doi.org/10.2307/3150495</a>.
+</div>
+<div class="csl-entry">
+Dawes, John. 2008. <span>“Do Data Characteristics Change According to the Number of Scale Points Used? An Experiment Using 5-Point, 7-Point and 10-Point Scales.”</span> <em>International Journal of Market Research</em> 50 (1): 61–104. <a href="https://doi.org/10.1177/147078530805000106">https://doi.org/10.1177/147078530805000106</a>.
+</div>
+<div class="csl-entry">
+Donnellan, Brent, and Andrew Rakhshani. 2020. <span>“How Does the Number of Response Options Impact the Psychometric Properties of the Rosenberg Self-Esteem Scale?”</span> November. <a href="https://doi.org/10.31234/osf.io/fnywz">https://doi.org/10.31234/osf.io/fnywz</a>.
+</div>
+<div class="csl-entry">
+Eutsler, Jared, and Bradley Lang. 2015. <span>“Rating Scales in Accounting Research: The Impact of Scale Points and Labels.”</span> <em>Behavioral Research in Accounting</em> 27 (2): 35–51. <a href="https://doi.org/10.2308/bria-51219">https://doi.org/10.2308/bria-51219</a>.
+</div>
+<div class="csl-entry">
+Everitt, B. S. 1975. <span>“Multivariate Analysis: The Need for Data, and Other Problems.”</span> <em>British Journal of Psychiatry</em> 126 (3): 237–40. <a href="https://doi.org/10.1192/bjp.126.3.237">https://doi.org/10.1192/bjp.126.3.237</a>.
+</div>
+<div class="csl-entry">
+Finn, Jacob A., Yossef S. Ben-Porath, and Auke Tellegen. 2015. <span>“Dichotomous versus polytomous response options in psychopathology assessment: method or meaningful variance?”</span> <em>Psychological Assessment</em> 27 (1): 184–93. <a href="https://doi.org/10.1037/pas0000044">https://doi.org/10.1037/pas0000044</a>.
+</div>
+<div class="csl-entry">
+Flamer, Stephen. 1983. <span>“Assessment of the Multitrait-Multimethod Matrix Validity of Likert Scales via Confirmatory Factor Analysis.”</span> <em>Multivariate Behavioral Research</em> 18 (3): 275–306. <a href="https://doi.org/10.1207/s15327906mbr1803_3">https://doi.org/10.1207/s15327906mbr1803_3</a>.
+</div>
+<div class="csl-entry">
+Gana, Kamel, and Guillaume Broc. 2019. <em>Structural Equation Modeling with Lavaan</em>. Vol. 1. Hoboken, NJ: Wiley &amp; Sons.
+</div>
+<div class="csl-entry">
+Gehlbach, Hunter, and Maureen E. Brinkworth. 2011. <span>“Measure Twice, Cut down Error: A Process for Enhancing the Validity of Survey Scales.”</span> <em>Review of General Psychology</em> 15 (4): 380–87. <a href="https://doi.org/10.1037/a0025704">https://doi.org/10.1037/a0025704</a>.
+</div>
+<div class="csl-entry">
+Gorsuch, Richard L. 2015. <em>Factor Analysis</em>. Classic. New York, NY: Routledge.
+</div>
+<div class="csl-entry">
+Hilbert, Sven. 2016. <span>“The Influence of the Response Format in a Personality Questionnaire: An Analysis of a Dichotomous, a Likert-Type, and a Visual Analogue Scale.”</span> <em>TPM - Testing, Psychometrics, Methodology in Applied Psychology</em>, no. 1: 3–24. <a href="https://doi.org/10.4473/TPM23.1.1">https://doi.org/10.4473/TPM23.1.1</a>.
+</div>
+<div class="csl-entry">
+Jaeschke, Roman, Joel Singer, and Gordon H. Guyatt. 1990. <span>“A Comparison of Seven-Point and Visual Analogue Scales: Data from a Randomized Trial.”</span> <em>Controlled Clinical Trials</em> 11 (1): 43–51. <a href="https://doi.org/10.1016/0197-2456(90)90031-V">https://doi.org/10.1016/0197-2456(90)90031-V</a>.
+</div>
+<div class="csl-entry">
+Janhunen, Kristiina. 2012. <span>“A Comparison of Likert-Type Rating and Visually-Aided Rating in a Simple Moral Judgment Experiment.”</span> <em>Quality &amp; Quantity</em> 46 (5): 1471–77. <a href="https://doi.org/10.1007/s11135-011-9461-x">https://doi.org/10.1007/s11135-011-9461-x</a>.
+</div>
+<div class="csl-entry">
+Kaiser, Henry F. 1974. <span>“An Index of Factorial Simplicity.”</span> <em>Psychometrika</em> 39 (1): 31–36. <a href="https://doi.org/10.1007/BF02291575">https://doi.org/10.1007/BF02291575</a>.
+</div>
+<div class="csl-entry">
+Krosnick, Jon A., and Matthew K. Berent. 1993. <span>“Comparisons of Party Identification and Policy Preferences: The Impact of Survey Question Format.”</span> <em>American Journal of Political Science</em> 37 (3): 941. <a href="https://doi.org/10.2307/2111580">https://doi.org/10.2307/2111580</a>.
+</div>
+<div class="csl-entry">
+Krosnick, Jon A., and Stanley Presser. 2010. <span>“Question and Questionnaire Design.”</span> In, Second edition. Bingley, UK: Emerald.
+</div>
+<div class="csl-entry">
+Kuhlmann, Tim, Michael Dantlgraber, and Ulf-Dietrich Reips. 2017. <span>“Investigating Measurement Equivalence of Visual Analogue Scales and Likert-Type Scales in Internet-Based Personality Questionnaires.”</span> <em>Behavior Research Methods</em> 49 (6): 2173–81. <a href="https://doi.org/10.3758/s13428-016-0850-x">https://doi.org/10.3758/s13428-016-0850-x</a>.
+</div>
+<div class="csl-entry">
+Lewis, James R. 2017. <span>“User Experience Rating Scales with 7, 11, or 101 Points: Does It Matter?”</span> <em>Journal of Usability Studies</em> 12 (2): 19.
+</div>
+<div class="csl-entry">
+Lietz, Petra. 2010. <span>“Research into Questionnaire Design: A Summary of the Literature.”</span> <em>International Journal of Market Research</em> 52 (2): 249–72. <a href="https://doi.org/10.2501/S147078530920120X">https://doi.org/10.2501/S147078530920120X</a>.
+</div>
+<div class="csl-entry">
+Marsh, Herbert W., Kit-Tai Hau, John R. Balla, and David Grayson. 1998. <span>“Is More Ever Too Much? The Number of Indicators Per Factor in Confirmatory Factor Analysis.”</span> <em>Multivariate Behavioral Research</em> 33 (2): 181–220. <a href="https://doi.org/10.1207/s15327906mbr3302_1">https://doi.org/10.1207/s15327906mbr3302_1</a>.
+</div>
+<div class="csl-entry">
+Matell, Michael S., and Jacob Jacoby. 1971. <span>“Is There an Optimal Number of Alternatives for Likert Scale Items? Study I: Reliability and Validity.”</span> <em>Educational and Psychological Measurement</em> 31 (3): 657–74. <a href="https://doi.org/10.1177/001316447103100307">https://doi.org/10.1177/001316447103100307</a>.
+</div>
+<div class="csl-entry">
+Osborne, Jason W. 2014. <em>Best Practices in Exploratory Factor Analysis</em>. Createspace publishing.
+</div>
+<div class="csl-entry">
+Preston, Carolyn C, and Andrew M Colman. 2000. <span>“Optimal Number of Response Categories in Rating Scales: Reliability, Validity, Discriminating Power, and Respondent Preferences.”</span> <em>Acta Psychologica</em> 104 (1): 1–15. <a href="https://doi.org/10.1016/S0001-6918(99)00050-5">https://doi.org/10.1016/S0001-6918(99)00050-5</a>.
+</div>
+<div class="csl-entry">
+Ruscio, John, and Brendan Roche. 2012. <span>“Determining the Number of Factors to Retain in an Exploratory Factor Analysis Using Comparison Data of Known Factorial Structure.”</span> <em>Psychological Assessment</em> 24 (2): 282–92. <a href="https://doi.org/10.1037/a0025697">https://doi.org/10.1037/a0025697</a>.
+</div>
+<div class="csl-entry">
+Russell, Daniel W. 2002. <span>“In Search of Underlying Dimensions: The Use (and Abuse) of Factor Analysis in Personality and Social Psychology Bulletin.”</span> <em>Personality and Social Psychology Bulletin</em> 28 (12): 1629–46. <a href="https://doi.org/10.1177/014616702237645">https://doi.org/10.1177/014616702237645</a>.
+</div>
+<div class="csl-entry">
+Simms, Leonard J., Kerry Zelazny, Trevor F. Williams, and Lee Bernstein. 2019. <span>“Does the Number of Response Options Matter? Psychometric Perspectives Using Personality Questionnaire Data.”</span> <em>Psychological Assessment</em> 31 (4): 557–66. <a href="https://doi.org/10.1037/pas0000648">https://doi.org/10.1037/pas0000648</a>.
+</div>
+<div class="csl-entry">
+Sung, Yao-Ting, and Jeng-Shin Wu. 2018. <span>“The Visual Analogue Scale for Rating, Ranking and Paired-Comparison (VAS-RRP): A New Technique for Psychological Measurement.”</span> <em>Behavior Research Methods</em> 50 (4): 1694–1715. <a href="https://doi.org/10.3758/s13428-018-1041-8">https://doi.org/10.3758/s13428-018-1041-8</a>.
+</div>
+<div class="csl-entry">
+Swain, Scott D., Danny Weathers, and Ronald W. Niedrich. 2008. <span>“Assessing Three Sources of Misresponse to Reversed Likert Items.”</span> <em>Journal of Marketing Research</em> 45 (1): 116–31. <a href="https://doi.org/10.1509/jmkr.45.1.116">https://doi.org/10.1509/jmkr.45.1.116</a>.
+</div>
+<div class="csl-entry">
+Symonds, P. M. 1924. <span>“On the Loss of Reliability in Ratings Due to Coarseness of the Scale.”</span> <em>Journal of Experimental Psychology</em> 7 (6): 456–61. <a href="https://doi.org/10.1037/h0074469">https://doi.org/10.1037/h0074469</a>.
+</div>
+<div class="csl-entry">
+Tabachnick, Barbara G., and Linda S. Fidell. 2013. <em>Using Multivariate Statistics</em>. Sixth. <span>Boston</span>: <span>Pearson</span>.
+</div>
+<div class="csl-entry">
+Weng, Li-Jen. 2004. <span>“Impact of the Number of Response Categories and Anchor Labels on Coefficient Alpha and Test-Retest Reliability.”</span> <em>Educational and Psychological Measurement</em> 64 (6): 956–72. <a href="https://doi.org/10.1177/0013164404268674">https://doi.org/10.1177/0013164404268674</a>.
+</div>
+</div>
+</div>
 </div>
 
+
+
+
+
+
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-borsboom2006" class="csl-entry">
+Borsboom, Denny. 2006. <span>“The Attack of the Psychometricians.”</span> <em>Psychometrika</em> 71 (3): 425. <a href="https://doi.org/10.1007/s11336-006-1447-6">https://doi.org/10.1007/s11336-006-1447-6</a>.
 </div>
-</div> <!-- .container -->
+<div id="ref-comrey1992" class="csl-entry">
+Comrey, Andrew Laurence, and Howard B. Lee. 1992. <em>A First Course in Factor Analysis</em>. 2nd ed. Hillsdale, NJ: Lawrence Erlbaum Associates.
+</div>
+<div id="ref-costello2005" class="csl-entry">
+Costello, Anna, and Jason Osborne. 2005. <span>“Best Practices in Exploratory Factor Analysis: Four Recommendations for Getting the Most from Your Analysis.”</span> <em>Practical Assessment, Research, and Evaluation</em> 10 (1). <a href="https://doi.org/10.7275/jyj1-4868">https://doi.org/10.7275/jyj1-4868</a>.
+</div>
+<div id="ref-everitt1975" class="csl-entry">
+Everitt, B. S. 1975. <span>“Multivariate Analysis: The Need for Data, and Other Problems.”</span> <em>British Journal of Psychiatry</em> 126 (3): 237–40. <a href="https://doi.org/10.1192/bjp.126.3.237">https://doi.org/10.1192/bjp.126.3.237</a>.
+</div>
+<div id="ref-gana2019" class="csl-entry">
+Gana, Kamel, and Guillaume Broc. 2019. <em>Structural Equation Modeling with Lavaan</em>. Vol. 1. Hoboken, NJ: Wiley &amp; Sons.
+</div>
+<div id="ref-gorsuch2015" class="csl-entry">
+Gorsuch, Richard L. 2015. <em>Factor Analysis</em>. Classic. New York, NY: Routledge.
+</div>
+<div id="ref-kaiser1974" class="csl-entry">
+Kaiser, Henry F. 1974. <span>“An Index of Factorial Simplicity.”</span> <em>Psychometrika</em> 39 (1): 31–36. <a href="https://doi.org/10.1007/BF02291575">https://doi.org/10.1007/BF02291575</a>.
+</div>
+<div id="ref-marsh1998" class="csl-entry">
+Marsh, Herbert W., Kit-Tai Hau, John R. Balla, and David Grayson. 1998. <span>“Is More Ever Too Much? The Number of Indicators Per Factor in Confirmatory Factor Analysis.”</span> <em>Multivariate Behavioral Research</em> 33 (2): 181–220. <a href="https://doi.org/10.1207/s15327906mbr3302_1">https://doi.org/10.1207/s15327906mbr3302_1</a>.
+</div>
+<div id="ref-osborne2014" class="csl-entry">
+Osborne, Jason W. 2014. <em>Best Practices in Exploratory Factor Analysis</em>. Createspace publishing.
+</div>
+<div id="ref-ruscio2012" class="csl-entry">
+Ruscio, John, and Brendan Roche. 2012. <span>“Determining the Number of Factors to Retain in an Exploratory Factor Analysis Using Comparison Data of Known Factorial Structure.”</span> <em>Psychological Assessment</em> 24 (2): 282–92. <a href="https://doi.org/10.1037/a0025697">https://doi.org/10.1037/a0025697</a>.
+</div>
+<div id="ref-russell2002" class="csl-entry">
+Russell, Daniel W. 2002. <span>“In Search of Underlying Dimensions: The Use (and Abuse) of Factor Analysis in Personality and Social Psychology Bulletin.”</span> <em>Personality and Social Psychology Bulletin</em> 28 (12): 1629–46. <a href="https://doi.org/10.1177/014616702237645">https://doi.org/10.1177/014616702237645</a>.
+</div>
+<div id="ref-tabachnick2013" class="csl-entry">
+Tabachnick, Barbara G., and Linda S. Fidell. 2013. <em>Using Multivariate Statistics</em>. Sixth. <span>Boston</span>: <span>Pearson</span>.
+</div>
+</div>
+            </section>
 
-<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+          </div>
+        </div>
+      </div>
+<a href="survey-design.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 
-  <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>How to Science</strong>" was written by . It was last built on 2021-12-15.</p>
+    </div>
   </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": false,
+"twitter": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": false
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
 
-  <div class="col-12 col-md-6 mt-3">
-    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
-  </div>
-
-</div></div>
-</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
@@ -476,22 +968,7 @@
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
-</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
-for (let popover of popovers) {
-  const div = document.createElement('div');
-  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
-  div.innerHTML = popover.getAttribute('data-content');
-
-  var has_math = div.querySelector("span.math");
-  if (has_math) {
-    document.body.appendChild(div);
-    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
-    MathJax.Hub.Queue(function() {
-      popover.setAttribute('data-content', div.innerHTML);
-      document.body.removeChild(div);
-    })
-  }
-}
 </script>
 </body>
+
 </html>

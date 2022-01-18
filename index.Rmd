@@ -1,27 +1,17 @@
 --- 
 title: "How to Science"
-date: "`r Sys.Date()`"
-site: bookdown::bookdown_site
+author: "Willem Sleegers"
 documentclass: book
-bibliography: [book.bib, packages.bib]
+bibliography: [book.bib]
 # url: your book url like https://bookdown.org/yihui/bookdown
-# cover-image: path to the social sharing image like images/cover.jpg
+cover-image: "assets/img/cover.jpg"
 description: |
-  This is a minimal example of using the bookdown package to write a book.
-  The HTML output format for this example is bookdown::gitbook,
-  set in the _output.yml file.
+  This is a book to organize my conclusions about topics in methodology and 
+  statistics.
 link-citations: yes
-github-repo: rstudio/bookdown-demo
+github-repo: willemsleegers/how-to-science
 ---
 
 # About {-}
 
 This is a book to organize my conclusions about topics in methodology and statistics.
-
-```{r include=FALSE}
-# Automatically create a bib database for R packages
-knitr::write_bib(
-  x = c(.packages(), "bookdown", "knitr", "rmarkdown"), 
-  file = "packages.bib"
-)
-```

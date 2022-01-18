@@ -1,0 +1,137 @@
+# Survey design
+
+This chapter is about best practices and common issues in designing surveys. ^[Or is it?!]
+
+## Steps
+
+As suggested in some review papers (e.g., @gehlbach2011), the construction of a new survey/scale is best done in several steps:
+
+-   Review the literature to define the construct of interest and to find existing or related measures of the construct
+
+-   Interview respondents to see whether respondents think the same way about the construct as you do
+
+-   Reconcile potential differences between the literature review and the interview data
+
+-   Develop items (see next sections for more details on how to best design items)
+
+-   Validate with experts
+
+-   Do cognitive pretesting to see how respondents understand and respond to each item
+
+-   Run large-scaled reliability and validity tests
+
+## Item development
+
+### Reverse-scored items {.unnumbered}
+
+Reverse-scored or reverse worded items can be included to determine whether participants are paying attention and don't just select the same response on each item. However, there is some evidence that reverse-scored items reduce the reliability of the scale or produce an unexpected factor structure [@swain2008].
+
+Another important consideration is that reverse-worded items can affect the model fit. Factor analyses of scales with some RW items frequently indicate the presence of method covariance obscuring or confounding substantive covariance (e.g., Brown, 2003; Roszkowski & Soven, 2010).
+
+### Response options {.unnumbered}
+
+The question of how many response options to use centers around two main concerns. The first is that more options means you can obtain a more fine-grained assessment of the characteristic that is being evaluated (e.g., attitude). In other words, your assessment is more precise. However, the question is how the number of options affects the reliability and the validity of the measurement. With more options, it becomes more difficult for people to distinguish between the different options (e.g., is "Strongly agree" reliably different from "Very strongly agree"?).
+
+Table 1 shows an overview of various studies in which the topic of response options was addressed. The studies vary in many ways, so the final conclusion should be a holistic interpretation of the results, rather than a simple tallying of the results. Note also that only empirical studies are included and not simulation studies. Simulation studies seem limited because they cannot address the plausible psychological limitation of people being unable to distinguish between many options.
+
++----------------+------------------------------------+---------------------------------+
+| Source         | Comparisons                        | Conclusion                      |
++================+====================================+=================================+
+| @donnellan2020 | 2- to 7-, and 11-point Likert      | 5-point Likert or higher        |
++----------------+------------------------------------+---------------------------------+
+| @simms2019     | 2- to 11-point Likert + VAS        | 6-point Likert                  |
++----------------+------------------------------------+---------------------------------+
+| @sung2018      | 5-point Likert and VAS-RRP         | VAS-RPP                         |
++----------------+------------------------------------+---------------------------------+
+| @cox2017       | 2- and 4-point Likert              | Mixed                           |
++----------------+------------------------------------+---------------------------------+
+| @lewis2017     | 7-, 11-point Likert and VAS        | No difference                   |
++----------------+------------------------------------+---------------------------------+
+| @kuhlmann2017  | 5-point Likert and VAS             | No difference                   |
++----------------+------------------------------------+---------------------------------+
+| @hilbert2016   | 2- and 5-point and VAS             | It depends                      |
++----------------+------------------------------------+---------------------------------+
+| @capik2015     | 2- and 5-point Likert              | No difference                   |
++----------------+------------------------------------+---------------------------------+
+| @eutsler2015   | 5-, 7-, 9-, and 11-point Likert    | 7-point Likert                  |
++----------------+------------------------------------+---------------------------------+
+| @finn2015      | 2- and 4-point Likert              | 4-point Likert                  |
++----------------+------------------------------------+---------------------------------+
+| @cox2012       | 2- and 4-point Likert              | 4-point Likert                  |
++----------------+------------------------------------+---------------------------------+
+| @janhunen2012  | 7-point Likert and 30-point VAR    | VAR                             |
++----------------+------------------------------------+---------------------------------+
+| @dawes2008     | 5-, 7-, and 10-point Likert        | No difference                   |
++----------------+------------------------------------+---------------------------------+
+| @weng2004      | 3- to 9-point Likert               | 5-point or higher               |
++----------------+------------------------------------+---------------------------------+
+| @preston2000   | 2- to 11-point Likert and VAS      | 7-, 9-, or 10-point Likert      |
++----------------+------------------------------------+---------------------------------+
+| @alwin1997     | 7- and 11-point Likert             | 11-point Likert                 |
++----------------+------------------------------------+---------------------------------+
+| @jaeschke1990  | 7-point Likert and VAS             | No difference\                  |
+|                |                                    | (slightly favor 7-point Likert) |
++----------------+------------------------------------+---------------------------------+
+| @flamer1983    | 2- and 9-point Likert              | 9-point Likert                  |
++----------------+------------------------------------+---------------------------------+
+| @matell1971    | 2-point to 18-point Likert         | No difference                   |
++----------------+------------------------------------+---------------------------------+
+| @bendig1954    | 2-, 3-, 5-, 7-, and 9-point Likert | No difference\                  |
+|                |                                    | (maybe 3-point or higher)       |
++----------------+------------------------------------+---------------------------------+
+
+: Table 1: Overview of empirical studies on the topic of response options.
+
+There are also several review papers on the topic. @krosnick2010 suggest that 7-point Likert scales are probably optimal. @lietz2010 concludes a desirable Likert-scale consists of 5 to 8 response options. Similarly, @coxiii1980 recommends to use between 5 and 9 response options. @symonds1924, in 1924, claims the optimum number is 7. @gehlbach2011 recommends using 5-points for unipolar items and 7-point for biopolar items.
+
+Besides psychometric properties it may also be worth taking into account respondent preference. This involves ease of use of the scale and whether the response options allow for sufficient variation for respondents to express their view. @preston2000 found that respondents found scales with 5, 7, and 10 points easy to use (compared to fewer options and a VAS) and that they preferred scales with more response options to allow them to express themselves (7 or more). Other studies also show that respondents favor more options [@cox2017].
+
+Note that if time is of the essence, fewer response options are preferred.
+
+**Conclusion**: It appears that few response options (2 or 3) should definitely be avoided. More response options therefore seems better, but benefits seem to quickly level off. Given other concerns, such as ease of use and interpretability, a 7-point Likert scale seems to be preferred.
+
+### Odd vs. even response options {.unnumbered}
+
+The middle option of a scale can have an ambiguous meaning. Participants may use it to indicate a moderate standing on the issue, to indicate uncertainty, to indicate confusion, or to signal context dependence (e.g., "it depends").
+
+The middle option may also be used for social desirable responding.
+
+**Conclusion**: If it is possible that respondents may have a moderate view, it seems crucial for it to be possible to capture this view. Limitations of a middle option could then be addressed in other ways (e.g., clear questions).
+
+### Response option labeling {.unnumbered}
+
+There are several studies that show all response options should be labelled, rather than only labeling the end points [@weng2004; @krosnick1993].
+
+For an example of biopolar labels for a 2- to 11-point Likert scale, see Table 1.
+
+::: {#likert-labels-table}
+| Label                      | 2-point | 3-point | 4-point | 5-point | 6-point | 7-point | 8-point | 9-point | 10-point | 11-point |
+|----------------------------|---------|---------|---------|---------|---------|---------|---------|---------|----------|----------|
+| Very strongly disagree     |         |         |         |         |         |         | x       | x       | x        | x        |
+| Strongly disagree          |         |         | x       | x       | x       | x       | x       | x       | x        | x        |
+| Disagree                   | x       | x       | x       | x       | x       | x       | x       | x       | x        | x        |
+| Mostly disagree            |         |         |         |         |         |         |         |         | x        | x        |
+| Slightly disagree          |         |         |         |         | x       | x       | x       | x       | x        | x        |
+| Neither agree nor disagree |         | x       |         | x       |         | x       |         | x       |          | x        |
+| Slightly agree             |         |         |         |         | x       | x       | x       | x       | x        | x        |
+| Mostly agree               |         |         |         |         |         |         |         |         | x        | x        |
+| Agree                      | x       | x       | x       | x       | x       | x       | x       | x       | x        | x        |
+| Strongly agree             |         |         | x       | x       | x       | x       | x       | x       | x        | x        |
+| Very strongly agree        |         |         |         |         |         |         | x       | x       | x        | x        |
+
+: Table 1: Likert response labels from @simms2019
+:::
+
+It is also recommended to avoid agree-disagree response labels because asking respondents to rate their level of agreement is a cognitively demanding task that increases respondent error and reduces responding effort [@gehlbach2011].
+
+## Number of items
+
+There are no hard-and-fast rules guiding this decision, but keeping a measure short is an effective means of minimizing response biases caused by boredom or fatigue (Schmitt & Stults, 1985; Schriesheim & Eisenbach, 1990). Additional items also demand more time in both the development and administration of a measure (Carmines & Zeller, 1979). Harvey, Billings, and Nilan (1985) suggest that at least four items per scale are needed to test the homogeneity of items within each latent construct. Adequate internal consistency reliabilities can be obtained with as few as three items (Cook et al., 1981), and adding items indefinitely makes progressively less impact on scale reliability (Carmines & Zeller, 1979). It is difficult to improve on the internal consistency reliabilities of five appropriate items by adding items to a scale (Hinkin, 1985; Hinkin & Schriesheim, 1989; Schriesheim & Hinkin, 1990). Cortina (1993) found that scales with many
+
+items may have high internal consistency reliabilities even if item intercorrelations are low, an argument in favor of shorter scales with high internal consistency. It is also important to assure that the domain has been adequately sampled, as inadequate sampling is a primary source of measurement error (Churchill, 1979). As Thurstone (1947) points out, scales should possess simple structure, or parsimony. Not only should any one measure have the simplest possible factor constitution, but any scale should require the contribution of a minimum number of items that adequately tap the domain of interest. These findings would suggest that the eventual goal will be the retention of four to six items for most constructs, but the final determination must be made only with accumulated evidence in support of the construct validity of the measure. It should be anticipated that approximately one half of the created items will be retained for use in the final scales, so at least twice as many items as will be needed in the final scales should be generated to be administered in a survey questionnaire.
+
+## Recommended reading
+
+The following papers are useful overview or review papers that are, in my mind, particular useful to read.
+
+-   Measure twice, cut down error: A process for enhancing the validity of survey scales by @gehlbach2011
