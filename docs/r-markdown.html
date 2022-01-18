@@ -55,13 +55,9 @@ statistics.</p>" />
 
 <link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
-<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
-<script src="libs/viz-1.8.2/viz.js"></script>
-<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
-<script src="libs/grViz-binding-1.0.6.1/grViz.js"></script>
 <header>
-  <script type="module" src="assets/js/bigfoot.min.js"></script>
-  <script type="module">
+  <script src="assets/js/bigfoot.min.js"></script>
+  <script>
     function toggleAllCode() {
       // Find all the sourceCode elements
       const elements = document.getElementsByClassName("sourceCode")
@@ -119,7 +115,7 @@ statistics.</p>" />
       const foldableDivs = document.getElementsByClassName("foldable")
       
       // Loop over the foldable divs to add a folded class to each child and 
-      // add a foldable button at the bottom
+      // add a foldable button at the top
       for (let div of foldableDivs) {
         const children = div.children;
         for (let child of children) {
@@ -231,28 +227,6 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<style type="text/css">
-/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}
-</style>
 
 <link rel="stylesheet" href="assets/css/style.css" type="text/css" />
 <link rel="stylesheet" href="assets/css/bigfoot-default.css" type="text/css" />
@@ -331,8 +305,15 @@ div.csl-indent {
 <p>You can also embed plots, for example:</p>
 <p><img src="_main_files/figure-html/pressure-1.png" width="672" /></p>
 <p>Note that the <code>echo = FALSE</code> parameter was added to the code chunk to prevent printing of the R code that generated the plot.</p>
+<p>There is also footnote support.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
 
 </div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="1">
+<li id="fn1"><p>I’m not kidding!<a href="r-markdown.html#fnref1" class="footnote-back">↩︎</a></p></li>
+</ol>
 </div>
             </section>
 
@@ -394,20 +375,6 @@ gitbook.start({
 });
 </script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 </body>
 
 </html>
