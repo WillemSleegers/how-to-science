@@ -12,7 +12,7 @@ statistics.</p>" />
   <meta property="og:title" content="3 Factor analysis | How to Science" />
   <meta property="og:type" content="book" />
   
-  <meta property="og:image" content="/assets/img/cover.jpg" />
+  
   <meta property="og:description" content="<p>This is a book to organize my conclusions about topics in methodology and
 statistics.</p>" />
   <meta name="github-repo" content="willemsleegers/how-to-science" />
@@ -22,7 +22,7 @@ statistics.</p>" />
   
   <meta name="twitter:description" content="<p>This is a book to organize my conclusions about topics in methodology and
 statistics.</p>" />
-  <meta name="twitter:image" content="/assets/img/cover.jpg" />
+  
 
 <meta name="author" content="Willem Sleegers" />
 
@@ -94,41 +94,30 @@ statistics.</p>" />
       // Find the foldable div this button belongs to
       const div = this.parentNode;
 
-      // Loop over the elements and toggle the folded class
+      // Loop over the elements and 
       for (child of div.children) {
-        child.classList.toggle("folded")
+        console.log(child)
+        console.log(child.style.display)
+        
+        if (child.style.display === "block") {
+          child.style.display = "none"
+        } else {
+          child.style.display = "block"
+        }
+        
       }
 
       // Toggle the text of the button
       const button = this
-      if (button.textContent == "Show me more") {
-        button.textContent = "Show me less"
-      } else {
+      console.log(this)
+      if (button.textContent == "Show me less") {
         button.textContent = "Show me more"
+      } else {
+        button.textContent = "Show me less"
       }
     }
 
-    function addFoldButtons() {
-      // Create a fold button
-      const button = document.createElement("button")
-      button.textContent = "Show me more"
-      button.className = "btn foldable-button"
-      button.onclick = toggleText
-
-      // Find all foldable divs
-      const foldableDivs = document.getElementsByClassName("foldable")
-      
-      // Loop over the foldable divs to add a folded class to each child and 
-      // add a foldable button at the top
-      for (let div of foldableDivs) {
-        const children = div.children;
-        for (let child of children) {
-          child.classList.toggle("folded")
-        }
-
-        div.insertBefore(button, div.firstChild)
-      }
-    }
+    
 
     window.onload = function() {
       // Check if there are any code sections on the page
@@ -155,10 +144,21 @@ statistics.</p>" />
         // Add the link to the header
         header.appendChild(link)
       }
-
-      // Add foldable text buttons
-      addFoldButtons()
       
+      // Find all foldable sections
+      const foldBlocks = document.getElementsByClassName("foldable")
+      
+      if (foldBlocks.length > 0) {
+        // Loop over the fold blocks, check if there is a button, if so, add the
+        // fold text function
+        for (block of foldBlocks) {
+          const button = block.getElementsByClassName("fold-button").item(0)
+          
+          if (button) button.onclick = toggleText
+        }
+      }
+      
+      // Initiate bigfoot to add popover footnotes
       $.bigfoot();
     }
 </script>
@@ -320,8 +320,8 @@ div.csl-indent {
 <h3><span class="header-section-number">3.1.1</span> Principal Components vs. Factor Analysis</h3>
 <p>An important consideration is whether to use a principal components analysis (PCA) or a factor analysis.</p>
 <p>PCA is a data reduction technique. PCA computes the analysis without regard to the underlying latent structure of the variables, using all the variance in the manifest variables. When the goal is to develop a (psychological) scale, this is likely not what you want. With PCA, the variables are themselves of interest, rather than some hypothetical latent construct. Another way of describing it is that PCA conceptualizes constructs as causally determined by the observations (Edwards &amp; Bagozzi, 2000). Again, this is likely not what you want because this means that “principal component scores are”caused” by their indicators in much the same way that sumscores are “caused” by item scores.” <span class="citation">(<a href="#ref-borsboom2006" role="doc-biblioref">Borsboom 2006</a>)</span>. Instead, you likely want the opposite causal relationship in which a latent factor causes the indicator scores.</p>
-<div id="htmlwidget-c552679939d562f85587" style="width:672px;height:480px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-c552679939d562f85587">{"x":{"diagram":"\ndigraph dot {\n\ngraph [layout = dot,\n       rankdir = LR]\n\nnode [shape = square,\n      color = black,\n      label = \"\"]\n\nvar1 [label = \"variable 1\"]\nvar2 [label = \"variable 2\"]\nvar3 [label = \"variable 3\"]\nvar4 [label = \"variable 4\"]\nvar5 [label = \"variable 5\"]\nvar6 [label = \"variable 6\"]  \nvar7 [label = \"variable 7\"]  \nvar8 [label = \"variable 8\"]\n    \nnode [label = \"component A\"]\ncomp1\n\nnode [label = \"component B\"]\ncomp2\n\nedge [color = black, minlen = 3]\n{var1 var2 var3 var4} -> comp1\n{var5 var6 var7 var8} -> comp2\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-690c0c4d0f6832482803" style="width:672px;height:480px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-690c0c4d0f6832482803">{"x":{"diagram":"\ndigraph dot {\n\ngraph [layout = dot,\n       rankdir = LR]\n\nnode [shape = square,\n      color = black,\n      label = \"\"]\n\nvar1 [label = \"variable 1\"]\nvar2 [label = \"variable 2\"]\nvar3 [label = \"variable 3\"]\nvar4 [label = \"variable 4\"]\nvar5 [label = \"variable 5\"]\nvar6 [label = \"variable 6\"]  \nvar7 [label = \"variable 7\"]  \nvar8 [label = \"variable 8\"]\n    \nnode [label = \"component A\"]\ncomp1\n\nnode [label = \"component B\"]\ncomp2\n\nedge [color = black, minlen = 3]\n{var1 var2 var3 var4} -> comp1\n{var5 var6 var7 var8} -> comp2\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 <p>While common factor analysis assumes that total variance can be partitioned into common and unique variance, PCA assumes that there common variances takes up all of total variance. This means that PCA assumes that all variables are measured without error. It is usually more reasonable to assume that you have not measured your set of items perfectly. Although some argue that the two methods have the same results, there is also evidence that factor analysis has better results than PCA (Widaman, 1993). See <span class="citation"><a href="#ref-russell2002" role="doc-biblioref">Russell</a> (<a href="#ref-russell2002" role="doc-biblioref">2002</a>)</span> for a discussion.</p>
 <p><strong>Conclusion</strong>: Do not use PCA.</p>
 </div>
@@ -850,6 +850,7 @@ Weng, Li-Jen. 2004. <span>“Impact of the Number of Response Categories and Anc
 </div>
 </div>
 </div>
+
 
 
 

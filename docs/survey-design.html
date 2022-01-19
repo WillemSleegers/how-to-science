@@ -12,7 +12,7 @@ statistics.</p>" />
   <meta property="og:title" content="2 Survey design | How to Science" />
   <meta property="og:type" content="book" />
   
-  <meta property="og:image" content="/assets/img/cover.jpg" />
+  
   <meta property="og:description" content="<p>This is a book to organize my conclusions about topics in methodology and
 statistics.</p>" />
   <meta name="github-repo" content="willemsleegers/how-to-science" />
@@ -22,7 +22,7 @@ statistics.</p>" />
   
   <meta name="twitter:description" content="<p>This is a book to organize my conclusions about topics in methodology and
 statistics.</p>" />
-  <meta name="twitter:image" content="/assets/img/cover.jpg" />
+  
 
 <meta name="author" content="Willem Sleegers" />
 
@@ -94,41 +94,30 @@ statistics.</p>" />
       // Find the foldable div this button belongs to
       const div = this.parentNode;
 
-      // Loop over the elements and toggle the folded class
+      // Loop over the elements and 
       for (child of div.children) {
-        child.classList.toggle("folded")
+        console.log(child)
+        console.log(child.style.display)
+        
+        if (child.style.display === "block") {
+          child.style.display = "none"
+        } else {
+          child.style.display = "block"
+        }
+        
       }
 
       // Toggle the text of the button
       const button = this
-      if (button.textContent == "Show me more") {
-        button.textContent = "Show me less"
-      } else {
+      console.log(this)
+      if (button.textContent == "Show me less") {
         button.textContent = "Show me more"
+      } else {
+        button.textContent = "Show me less"
       }
     }
 
-    function addFoldButtons() {
-      // Create a fold button
-      const button = document.createElement("button")
-      button.textContent = "Show me more"
-      button.className = "btn foldable-button"
-      button.onclick = toggleText
-
-      // Find all foldable divs
-      const foldableDivs = document.getElementsByClassName("foldable")
-      
-      // Loop over the foldable divs to add a folded class to each child and 
-      // add a foldable button at the top
-      for (let div of foldableDivs) {
-        const children = div.children;
-        for (let child of children) {
-          child.classList.toggle("folded")
-        }
-
-        div.insertBefore(button, div.firstChild)
-      }
-    }
+    
 
     window.onload = function() {
       // Check if there are any code sections on the page
@@ -155,10 +144,21 @@ statistics.</p>" />
         // Add the link to the header
         header.appendChild(link)
       }
-
-      // Add foldable text buttons
-      addFoldButtons()
       
+      // Find all foldable sections
+      const foldBlocks = document.getElementsByClassName("foldable")
+      
+      if (foldBlocks.length > 0) {
+        // Loop over the fold blocks, check if there is a button, if so, add the
+        // fold text function
+        for (block of foldBlocks) {
+          const button = block.getElementsByClassName("fold-button").item(0)
+          
+          if (button) button.onclick = toggleText
+        }
+      }
+      
+      // Initiate bigfoot to add popover footnotes
       $.bigfoot();
     }
 </script>
@@ -313,7 +313,7 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="survey-design" class="section level1" number="2">
 <h1><span class="header-section-number">2</span> Survey design</h1>
-<p>This chapter is about best practices and common issues in designing surveys.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
+<p>This chapter is about best practices and common issues in designing surveys.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
 <div id="steps" class="section level2" number="2.1">
 <h2><span class="header-section-number">2.1</span> Steps</h2>
 <p>As suggested in some review papers (e.g., <span class="citation"><a href="#ref-gehlbach2011" role="doc-biblioref">Gehlbach and Brinkworth</a> (<a href="#ref-gehlbach2011" role="doc-biblioref">2011</a>)</span>), the construction of a new survey/scale is best done in several steps:</p>
@@ -753,8 +753,8 @@ Weng, Li-Jen. 2004. <span>“Impact of the Number of Response Categories and Anc
 </div>
 <div class="footnotes">
 <hr />
-<ol start="1">
-<li id="fn1"><p>Or is it?!<a href="survey-design.html#fnref1" class="footnote-back">↩︎</a></p></li>
+<ol start="2">
+<li id="fn2"><p>Or is it?!<a href="survey-design.html#fnref2" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

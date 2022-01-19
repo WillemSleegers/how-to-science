@@ -4,7 +4,6 @@ author: "Willem Sleegers"
 documentclass: book
 bibliography: [book.bib]
 # url: your book url like https://bookdown.org/yihui/bookdown
-cover-image: "assets/img/cover.jpg"
 description: |
   This is a book to organize my conclusions about topics in methodology and 
   statistics.

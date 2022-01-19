@@ -1,0 +1,102 @@
+# Basic plots 
+
+```{r}
+library(tidyverse)
+library(viridis)
+library(rethinkpriorities)
+library(plotly)
+
+# Load the custom rethink ggplot theme
+theme_rethink <- function() {
+  theme(
+    panel.background = element_rect(fill = "gray95")
+  )
+}
+```
+
+## Bar plots
+
+```{r}
+p <- ggplot(mpg, aes(x = class, fill = class)) +
+  geom_bar(alpha = .75) +
+  scale_fill_viridis(discrete = TRUE, option = "mako", end = .95) +
+  theme_rethink()
+
+ggplotly(p, tooltip = "x")
+```
+
+### Stacked bar plots
+
+Stacked bar plots can be used to add additional information to a bar plot.
+
+```{r collapse=TRUE}
+head(beaver1, n = 5)
+```
+
+The following graph is a stacked bar plot.
+
+```{r}
+p <- ggplot(mpg, aes(x = class, fill = drv)) +
+  geom_bar(alpha = .75) +
+  scale_fill_viridis(discrete = TRUE, option = "mako", end = .95) +
+  theme_rethink()
+
+ggplotly(p)
+```
+
+## Scatter plots
+
+### Simple scatter plot
+
+```{r}
+p <- ggplot(mtcars, aes(x = wt, y = mpg)) +
+  geom_point(alpha = .85) +
+  theme_rethink()
+
+ggplotly(p)
+```
+
+### Jittered scatter plot
+
+```{r}
+p <- ggplot(mtcars, aes(x = wt, y = mpg)) +
+  geom_jitter(alpha = .85, width = 0.5, height = 0.5) +
+  theme_rethink()
+
+ggplotly(p, tooltip = "none")
+```
+
+### Multiple scatter plot
+
+```{r}
+p <- ggplot(mtcars, aes(x = wt, y = mpg, color = factor(cyl))) +
+  geom_point(alpha = .85) +
+  scale_color_viridis(discrete = TRUE, option = "mako", end = .95) +
+  theme_rethink()
+
+ggplotly(p)
+```
+
+## Line plots
+
+### Simple line plot
+
+```{r}
+p <- ggplot(economics, aes(x = date, y = unemploy)) + 
+  geom_line() +
+  theme_rethink()
+
+ggplotly(p)
+```
+
+### Multiple lines plot 
+
+```{r}
+p <- ggplot(economics_long, aes(x = date, y = value01, 
+    color = variable)) +
+  geom_line() +
+  scale_color_viridis(discrete = TRUE, option = "mako", end = .95) +
+  theme_rethink()
+
+ggplotly(p)
+```

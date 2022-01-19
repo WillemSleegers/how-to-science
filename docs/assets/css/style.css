@@ -1,3 +1,7 @@
+:root {
+  --sidebar-width: 250px;
+}
+
 p.caption {
   color: #777;
   margin-top: 10px;
@@ -41,8 +45,8 @@ button {
 }
 
 .toc-before img {
-  width: 40px;
-  height: 25px;
+  max-width: 40px;
+  max-height: 25px;
 }
 
 .book-header h1 {
@@ -52,48 +56,35 @@ button {
 .book .book-summary {
   font-size: 1.25rem;
   background-color: rgb(245, 247, 249);  
+  width: var(--sidebar-width);
 }
 
-.book-summary {
-  width: 300px;
-}
-
-.book .book-body.fixed {
-  top: 0;
-}
-
-.book .book-body.fixed .body-inner {
-  top: 0;
-}
-  
-@media (max-width: 1240px) {
-  .book .book-body.fixed {
-    top: 0;
+@media (min-width: 600px) {
+  book.with-summary .book-body {
+    left: var(--sidebar-width);
   }
   
-  .book .book-body.fixed .body-inner {
-    top: 0;
+  .book.with-summary .book-header.fixed {
+    left: var(--sidebar-width);
   }
 }
 
 @media (max-width: 600px) {
   .book .book-summary {
-    width: 300px;
+    width: var(--sidebar-width);
     bottom: 0;
     left: -100%;
-  }  
-}
-
-@media (max-width: 600px) {
+  }
+  
   .book.with-summary .book-header.fixed {
-    left: 300px;
-    min-width: 300px;
+    left: var(--sidebar-width);
+    min-width: var(--sidebar-width);
   }
   
   .book.with-summary .book-body {
     transform: none;
-    left: 300px;
-    min-width: 300px;
+    left: var(--sidebar-width) !important;
+    min-width: var(--sidebar-width);
   }
 }
 
@@ -106,28 +97,23 @@ button {
   background-color: #f7f7f7;
 }
 
-
-.foldable-button {
-  display: block !important;
-  padding-left: 0;
-  color: #4183c4;
-}
-
-.foldable-button:hover {
-  color: #4183c4;
-  text-decoration: underline;
-}
-
-.foldable-button:focus {
-  box-shadow: none;
-}
-
 .foldable p {
+  display: none;
+  
   margin-top: 0.85em !important;
   margin-bottom: 0 !important;
 }
 
-.folded {
-  display: none;
+.fold-button {
+  display: block !important;
+  padding-left: 0;
+  font-weight: bold;
 }
 
+.fold-button:hover {
+  text-decoration: underline;
+}
+
+.fold-button:focus {
+  box-shadow: none;
+}

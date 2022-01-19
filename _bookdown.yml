@@ -1,4 +1,5 @@
 delete_merged_file: true
 output_dir: "docs"
-rmd_files: ["index.Rmd", "chapters/test.Rmd", 
-  "chapters/survey-design.Rmd", "chapters/factor-analysis.Rmd"]
+rmd_files: ["index.Rmd", "chapters/how-to.Rmd", 
+  "chapters/footnotes.Rmd", "chapters/foldable-sections.Rmd", 
+  "chapters/basic-plots.Rmd"]
