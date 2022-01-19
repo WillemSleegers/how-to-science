@@ -13,6 +13,12 @@ body {
   color: #212529;
 }
 
+@media (min-width: 1200px) {
+  .book.font-size-2 .book-body .page-inner section {
+    font-size: 18px;
+  }
+}
+
 p.caption {
   margin-top: 10px;
 }
@@ -49,7 +55,7 @@ button {
 .toc-before span {
   margin-left: 1rem;
   font-weight: bold;
-  font-size: 1.5rem;
+  font-size: 1.8rem;
 }
 
 .toc-before img {
@@ -66,7 +72,7 @@ button {
 }
 
 .book .book-summary {
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   /*background-color: rgb(245, 247, 249); */
   background-color: transparent;
   border-right: none;

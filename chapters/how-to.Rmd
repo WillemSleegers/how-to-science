@@ -1,4 +1,4 @@
-# How to use this template
+# How to use
 
 The goal of this template is to make it easy to get started on writing a `bookdown` book. The word 'book' might be a misnomer because you can also use it to write notes, a manual (similar to this bookdown), a thesis, and many other things.
 

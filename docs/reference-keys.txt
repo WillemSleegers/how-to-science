@@ -1,4 +1,4 @@
-how-to-use-this-template
+how-to-use
 setup
 usage
 footnotes-hoverable
