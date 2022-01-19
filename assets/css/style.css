@@ -43,11 +43,13 @@ button {
   
   padding-top: 7px;
   padding-left: 15px;
+  margin-bottom: 2rem;
 }
 
 .toc-before span {
-  padding-left: 1rem;
+  margin-left: 1rem;
   font-weight: bold;
+  font-size: 1.5rem;
 }
 
 .toc-before img {
@@ -59,10 +61,28 @@ button {
   display: none;
 }
 
+.summary > li {
+  margin-left: 4rem;
+}
+
 .book .book-summary {
   font-size: 1.25rem;
-  background-color: rgb(245, 247, 249);  
+  /*background-color: rgb(245, 247, 249); */
+  background-color: transparent;
+  border-right: none;
   width: var(--sidebar-width);
+}
+
+.book .book-summary ul.summary li a, .book .book-summary ul.summary li span {
+  padding: 6px 15px;
+}
+
+.divider {
+  display: none;
+}
+
+.book .book-header.fixed {
+  border-bottom: none;
 }
 
 @media (min-width: 600px) {
