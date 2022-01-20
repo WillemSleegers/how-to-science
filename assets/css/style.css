@@ -1,16 +1,27 @@
 :root {
-  --sidebar-width: 250px;
-}
-
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+  --sidebar-width: 290px;
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, 
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", 
     "Noto Color Emoji";
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.5;
-  color: #212529;
+}
+
+::placeholder {
+  overflow: visible; /* To give more space to the placeholder text */
+}
+
+/* Fonts */
+
+body {
+  font-family: var(--font);
+}
+
+.book.font-family-1 {
+  font-family: var(--font);
+}
+
+.book .book-summary {
+  font-family: var(--font);
 }
 
 @media (min-width: 1200px) {
@@ -19,35 +30,47 @@ body {
   }
 }
 
-p.caption {
-  margin-top: 10px;
-}
-p code {
-  white-space: inherit;
-}
-pre {
-  word-break: normal;
-  word-wrap: normal;
-}
-pre code {
-  white-space: inherit;
+/* Positioning */
+
+.book .book-summary {
+  width: var(--sidebar-width);
 }
 
-button {
-  background: transparent;
-  border: none;
-  color: rgb(59, 69, 78);
+@media (min-width: 600px) {
+  .book.with-summary .book-body {
+    left: var(--sidebar-width);
+  }
+  
+  .book.with-summary .book-header.fixed {
+    left: var(--sidebar-width);
+  }
+}
+
+@media (max-width: 600px) {
+  .book .book-summary {
+    width: var(--sidebar-width);
+  }
+  
+  .book.with-summary .book-header.fixed {
+    left: var(--sidebar-width);
+    min-width: var(--sidebar-width);
+  }
+  
+  .book.with-summary .book-body {
+    left: var(--sidebar-width) !important;
+    min-width: var(--sidebar-width);
+  }
 }
 
 /* TOC */
+
 .toc-before {
-  min-height: 42px; /* Match height of the navigation bar */
+  min-height: 50px; /* Match height of the navigation bar */
   
   display: flex;
   flex-direction: row;
   align-items: center;
   
-  padding-top: 7px;
   padding-left: 15px;
   margin-bottom: 2rem;
 }
@@ -63,10 +86,6 @@ button {
   max-height: 25px;
 }
 
-.book-header h1 {
-  display: none;
-}
-
 .summary > li {
   margin-left: 4rem;
 }
@@ -76,48 +95,54 @@ button {
   /*background-color: rgb(245, 247, 249); */
   background-color: transparent;
   border-right: none;
-  width: var(--sidebar-width);
 }
 
 .book .book-summary ul.summary li a, .book .book-summary ul.summary li span {
-  padding: 6px 15px;
+  padding: 8px 15px;
 }
 
 .divider {
-  display: none;
+  display: none !important;
+}
+
+.book .book-summary .book-search input, 
+.book .book-summary .book-search input:focus, 
+.book .book-summary .book-search input:hover {
+  font-size: 14px;
+  padding: 7px 7px;
+}
+
+/* Navigation bar */
+
+.book-header h1 {
+  display: none; /* Remove the page title */
 }
 
 .book .book-header.fixed {
   border-bottom: none;
 }
 
-@media (min-width: 600px) {
-  book.with-summary .book-body {
-    left: var(--sidebar-width);
-  }
-  
-  .book.with-summary .book-header.fixed {
-    left: var(--sidebar-width);
-  }
+/* Code */
+
+p code {
+  white-space: inherit;
 }
 
-@media (max-width: 600px) {
-  .book .book-summary {
-    width: var(--sidebar-width);
-    bottom: 0;
-    left: -100%;
-  }
-  
-  .book.with-summary .book-header.fixed {
-    left: var(--sidebar-width);
-    min-width: var(--sidebar-width);
-  }
-  
-  .book.with-summary .book-body {
-    transform: none;
-    left: var(--sidebar-width) !important;
-    min-width: var(--sidebar-width);
-  }
+pre {
+  word-break: normal;
+  word-wrap: normal;
+}
+
+pre code {
+  white-space: inherit;
+}
+
+/* Buttons */
+
+button {
+  background: transparent;
+  border: none;
+  color: rgb(59, 69, 78);
 }
 
 /* Foldable sections */

@@ -99,28 +99,21 @@ statistics.</p>" />
 
       // Loop over the elements and 
       for (child of div.children) {
-        console.log(child)
-        console.log(child.style.display)
-        
         if (child.style.display === "block") {
           child.style.display = "none"
         } else {
           child.style.display = "block"
         }
-        
       }
 
       // Toggle the text of the button
       const button = this
-      console.log(this)
       if (button.textContent == "Show me less") {
         button.textContent = "Show me more"
       } else {
         button.textContent = "Show me less"
       }
     }
-
-    
 
     window.onload = function() {
       // Check if there are any code sections on the page
@@ -162,10 +155,11 @@ statistics.</p>" />
       }
       
       // Initiate bigfoot to add popover footnotes
-      $.bigfoot();
+      $.bigfoot()
+      
+        
     }
-</script>
-  
+  </script>
 </header>
 
 
