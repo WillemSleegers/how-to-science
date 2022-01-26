@@ -2,30 +2,18 @@
   <script src="assets/js/bigfoot.min.js"></script>
   <script>
     function toggleAllCode() {
-      // Find all the sourceCode elements
-      const elements = document.getElementsByClassName("sourceCode")
+      // Find all the r class elements
+      const elements = document.getElementsByClassName("r")
       
       // Loop over the elements and toggle the 'hidden' class if the element
       // is a div
       for (let element of elements) {
-        if (element.nodeName == "DIV") {
-          if (element.classList.contains("sourceCode")) {
-            element.classList.toggle("hidden")
-          }  
+        console.log(element)
+        if (element.style.display === "block") {
+          element.style.display = "none"
+        } else {
+          element.style.display = "block"
         }
-      }
-      
-      // Update the button text
-      const button = document.getElementById("toggle-code-button")
-      
-      // Toggle the button's class
-      button.classList.toggle("code-hidden")
-
-      // Update the button text
-      if (button.classList.contains("code-hidden")) {
-        button.textContent = "Show All Code"
-      } else {
-        button.textContent = "Hide All Code"
       }
     }
 
