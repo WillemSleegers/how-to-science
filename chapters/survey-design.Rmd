@@ -1,6 +1,8 @@
 # Survey design
 
-This chapter is about best practices and common issues in designing surveys. ^[Or is it?!]
+This chapter is about best practices and common issues in designing surveys. [^survey-design-1]
+
+[^survey-design-1]: Or is it?!
 
 ## Steps
 
@@ -88,13 +90,23 @@ Besides psychometric properties it may also be worth taking into account respond
 
 Note that if time is of the essence, fewer response options are preferred.
 
-**Conclusion**: It appears that few response options (2 or 3) should definitely be avoided. More response options therefore seems better, but benefits seem to quickly level off. Given other concerns, such as ease of use and interpretability, a 7-point Likert scale seems to be preferred.
+Another relevant factor is whether the scale is bipolar or unipolar. Bipolar scales are symmetrical which means the number of options naturally increase as they need to match both sides of the spectrum. Unipolar items are only about one side, usually ranging from the absence of something to the presence of something (to a certain degree). Since it is harder to label a larger number of options for a unipolar scale, the number of options are likely to be smaller.
+
+**Conclusion**: It appears that few response options (2 or 3) should definitely be avoided. More response options therefore seems better, but benefits seem to quickly level off. Given other concerns, such as ease of use and interpretability, a 7-point Likert scale seems to be preferred for bipolar scales and a 5-point Likert scale for unipolar scales.
 
 ### Odd vs. even response options {.unnumbered}
 
-The middle option of a scale can have an ambiguous meaning. Participants may use it to indicate a moderate standing on the issue, to indicate uncertainty, to indicate confusion, or to signal context dependence (e.g., "it depends").
+The middle option of a scale can have an ambiguous meaning. Participants may use it to indicate a moderate standing on the issue (Rugg and Cantril, 1944), a lack of an opinion (Nadler, Weston, and Voyles, 2014), ambivalence (Klopfer and Madden, 1980; Schaeﬀer and Presser, 2003; Nadler, Weston, and Voyles, 2014), indifference (Schaeﬀer and Presser, 2003; Nadler, Weston, and Voyles, 2014), uncertainty (Baka, Figgou, and Triga, 2012; Nadler, Weston, and Voyles, 2014), confusion, or to signal context dependence (e.g., "it depends" or disputing the question, see Baka, Figgou, and Triga, 2012).
 
-The middle option may also be used for social desirable responding.
+The middle option may also be used for certain response styles, such as socially desirable responding (Sturgis, Roberts, and Smith, 2012) or satisficing (Krosnick, 1991), although there is not much research showing it actually leads to satisficing @wang2020.
+
+Af a middle alternative is explicitly oﬀered, the proportion endorsing it increases dramatically (e.g. Ayidiya & McClendon, 1990; Bishop, 1987; Bishop, Hippler, Schwarz, & Strack, 1988; Kalton, Collins, & Brook, 1978; Kalton, Roberts, & Holt, 1980; Rugg & Cantril, 1944).
+
+Some studies show that not including a middle option decreases validity and increases measurement error (O'Muircheartaigh, Krosnick, and Helic, 1999; Kahn, and Dhar, 2002)
+
+Recent study on this: @wang2020
+
+An alternative approach to this issue is to use branching. Respondents could first be asked whether they fall at the midpoint or on one side, followed by a question about their extremity on a side. This approach was found to be more reliable and valid than using a 7-point scale (Krosnick and Berent, 1993; Malhotra, Krosnick, and Thomas, 2009).
 
 **Conclusion**: If it is possible that respondents may have a moderate view, it seems crucial for it to be possible to capture this view. Limitations of a middle option could then be addressed in other ways (e.g., clear questions).
 
@@ -123,6 +135,8 @@ For an example of biopolar labels for a 2- to 11-point Likert scale, see Table 1
 :::
 
 It is also recommended to avoid agree-disagree response labels because asking respondents to rate their level of agreement is a cognitively demanding task that increases respondent error and reduces responding effort [@gehlbach2011].
+
+### Acquiescence and response options
 
 ## Number of items
 
