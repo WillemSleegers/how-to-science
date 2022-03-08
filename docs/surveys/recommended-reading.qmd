@@ -1,0 +1,7 @@
+---
+title: "Recommended Reading"
+---
+
+The following papers are useful overview or review papers that are, in my mind, particular useful to read.
+
+-   Measure twice, cut down error: A process for enhancing the validity of survey scales by @gehlbach2011

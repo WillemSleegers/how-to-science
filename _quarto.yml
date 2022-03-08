@@ -1,0 +1,50 @@
+project:
+  type: website
+  output-dir: _site
+
+website:
+  title: "How to Science"
+  page-navigation: true
+  reader-mode: true
+  navbar:
+    background: dark
+    foreground: light
+    pinned: false
+    collapse: true
+    collapse-below: sm # sm, md, lg, xl, or xxl
+    logo: assets/img/logo.png
+    left:
+      - text: "About"
+        href: index.qmd
+      - text: "Survey Design"
+        href: docs/surveys/index.qmd
+      - text: "Statistics"
+        href: docs/statistics/index.qmd
+
+  sidebar:
+    - id: surveys
+      title: "Survey Design"
+      style: "docked" # floating, docked
+      collapse-level: 2
+      align: left
+      contents:
+        - docs/surveys/index.qmd
+        - docs/surveys/item-development.qmd
+        - docs/surveys/response-options.qmd
+        - docs/surveys/recommended-reading.qmd
+
+    - id: statistics
+      title: "Statistics"
+      contents:
+        - docs/statistics/index.qmd
+        - section: "Factor Analysis"
+          contents:
+            - docs/statistics/EFA.qmd
+            - docs/statistics/CFA.qmd
+
+format:
+  html:
+    theme: cosmo
+    css: assets/css/styles.css
+
+editor: visual

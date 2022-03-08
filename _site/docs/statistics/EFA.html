@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+  <meta charset="utf-8">
+  <meta name="generator" content="quarto-0.9.34">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>How to Science - Exploratory Factor Analysis</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+
+  <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+  <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+  <script src="../../site_libs/clipboard/clipboard.min.js"></script>
+  <meta name="quarto:offset" content="../../">
+  <script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+  <script src="../../site_libs/quarto-search/fuse.min.js"></script>
+  <script src="../../site_libs/quarto-search/quarto-search.js"></script>
+  <link href="../../docs/statistics/CFA.html" rel="next">
+  <link href="../../docs/statistics/index.html" rel="prev">
+  <script src="../../site_libs/quarto-html/quarto.js"></script>
+  <script src="../../site_libs/quarto-html/popper.min.js"></script>
+  <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+  <script src="../../site_libs/quarto-html/anchor.min.js"></script>
+  <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+  <link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet">
+  <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+  <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+  <link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+  <script id="quarto-search-options" type="application/json">{
+    "location": "navbar",
+    "copy-button": false,
+    "collapse-after": 2,
+    "panel-placement": "end",
+    "type": "overlay",
+    "limit": 20,
+    "language": {
+      "search-no-results-text": "No results",
+      "search-matching-documents-text": "matching documents",
+      "search-copy-link-title": "Copy link to search",
+      "search-hide-matches-text": "Hide additional matches",
+      "search-more-match-text": "more match in this document",
+      "search-more-matches-text": "more matches in this document",
+      "search-clear-button-title": "Clear",
+      "search-detached-cancel-button-title": "Cancel",
+      "search-submit-button-title": "Submit"
+    }
+  }</script>
+  <script src="../../site_libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+  <script src="../../site_libs/viz-1.8.2/viz.js"></script>
+  <link href="../../site_libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
+  <script src="../../site_libs/grViz-binding-1.0.9/grViz.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  <link rel="stylesheet" href="../../assets/css/styles.css">
+</head>
+<body class="docked">
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-sm navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="../../index.html">
+    <img src="../../assets/img/logo.png" alt="">
+    <span class="navbar-title">How to Science</span>
+  </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">About</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../docs/surveys/index.html">Survey Design</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="../../docs/statistics/index.html" aria-current="page">Statistics</a>
+  </li>  
+</ul>
+              <div class="quarto-toggle-container">
+                  <a href="" class="quarto-reader-toggle nav-link" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+              </div>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">Exploratory Factor Analysis</h1>
+      <button type="button" class="quarto-btn-toggle btn">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../docs/statistics/index.html" class="sidebar-item-text sidebar-link">About</a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-factor-analysis" aria-expanded="true">Factor Analysis</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-factor-analysis" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-factor-analysis" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../docs/statistics/EFA.html" class="sidebar-item-text sidebar-link active">Exploratory Factor Analysis</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../docs/statistics/CFA.html" class="sidebar-item-text sidebar-link">CFA</a>
+  </div>
+</li>
+    </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+<h2 id="toc-title">On this page</h2>
+<ul>
+<li><a href="#principal-components-vs.-factor-analysis" class="nav-link active" data-scroll-target="#principal-components-vs.-factor-analysis">Principal Components vs.&nbsp;Factor Analysis</a></li>
+<li><a href="#factor-extraction-method" class="nav-link" data-scroll-target="#factor-extraction-method">Factor Extraction Method</a></li>
+<li><a href="#rotation-methods" class="nav-link" data-scroll-target="#rotation-methods">Rotation methods</a></li>
+<li><a href="#number-of-factors-to-retain" class="nav-link" data-scroll-target="#number-of-factors-to-retain">Number of factors to retain</a></li>
+<li><a href="#sample" class="nav-link" data-scroll-target="#sample">Sample</a></li>
+<li><a href="#sample-size" class="nav-link" data-scroll-target="#sample-size">Sample size</a></li>
+<li><a href="#sampling-adequacy" class="nav-link" data-scroll-target="#sampling-adequacy">Sampling Adequacy</a></li>
+<li><a href="#outlier-removal" class="nav-link" data-scroll-target="#outlier-removal">Outlier removal</a></li>
+<li><a href="#factor-structure" class="nav-link" data-scroll-target="#factor-structure">Factor structure</a></li>
+<li><a href="#interpretation" class="nav-link" data-scroll-target="#interpretation">Interpretation</a></li>
+<li><a href="#additional-reading" class="nav-link" data-scroll-target="#additional-reading">Additional reading</a></li>
+</ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+<header id="title-block-header">
+<h1 class="title d-none d-lg-block display-7">Exploratory Factor Analysis</h1>
+</header>
+
+<p>The goal of an exploratory factor analysis (EFA) is to study the latent factors that underlie responses to a larger number of items. In other words, the goal is to <em>explore</em> the data and <em>reduce</em> the number of variables. It is a popular technique in the development and validation of assessment instruments. Unlike confirmatory factor analysis (CFA), EFA is used when there is little or no a priori justification for specifying a particular structural model. This means that there is reasonable uncertainty about the number of underlying factors and which items load on which factor. The hope is to resolve some of that uncertainty empirically.</p>
+<section id="principal-components-vs.-factor-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="principal-components-vs.-factor-analysis">Principal Components vs.&nbsp;Factor Analysis</h3>
+<p>An important consideration is whether to use a principal components analysis (PCA) or a factor analysis.</p>
+<p>PCA is a data reduction technique. PCA computes the analysis without regard to the underlying latent structure of the variables, using all the variance in the manifest variables. When the goal is to develop a (psychological) scale, this is likely not what you want. With PCA, the variables are themselves of interest, rather than some hypothetical latent construct. Another way of describing it is that PCA conceptualizes constructs as causally determined by the observations (Edwards &amp; Bagozzi, 2000). Again, this is likely not what you want because this means that “principal component scores are”caused” by their indicators in much the same way that sumscores are “caused” by item scores.” <span class="citation" data-cites="borsboom2006">[@borsboom2006]</span>. Instead, you likely want the opposite causal relationship in which a latent factor causes the indicator scores.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="htmlwidget-2603aeb673ca6cbe2fab" style="width:100%;height:464px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2603aeb673ca6cbe2fab">{"x":{"diagram":"\ndigraph dot {\n\ngraph [layout = dot,\n       rankdir = LR]\n\nnode [shape = square,\n      color = black,\n      label = \"\"]\n\nvar1 [label = \"variable 1\"]\nvar2 [label = \"variable 2\"]\nvar3 [label = \"variable 3\"]\nvar4 [label = \"variable 4\"]\nvar5 [label = \"variable 5\"]\nvar6 [label = \"variable 6\"]  \nvar7 [label = \"variable 7\"]  \nvar8 [label = \"variable 8\"]\n    \nnode [label = \"component A\"]\ncomp1\n\nnode [label = \"component B\"]\ncomp2\n\nedge [color = black, minlen = 3]\n{var1 var2 var3 var4} -> comp1\n{var5 var6 var7 var8} -> comp2\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p>While common factor analysis assumes that total variance can be partitioned into common and unique variance, PCA assumes that there common variances takes up all of total variance. This means that PCA assumes that all variables are measured without error. It is usually more reasonable to assume that you have not measured your set of items perfectly. Although some argue that the two methods have the same results, there is also evidence that factor analysis has better results than PCA (Widaman, 1993). See <span class="citation" data-cites="russell2002">@russell2002</span> for a discussion.</p>
+<p><strong>Conclusion</strong>: Do not use PCA.</p>
+</section>
+<section id="factor-extraction-method" class="level3">
+<h3 class="anchored" data-anchor-id="factor-extraction-method">Factor Extraction Method</h3>
+<p>Extraction is the general term for the process of reducing the number of dimensions being analyzed from the number of variables in the data set (and matrix of associations) into a smaller number of factors.</p>
+<p>There are multiple factor extract methods, such as:</p>
+<ul>
+<li><p>minres</p></li>
+<li><p>unweighted least squares (ULS)</p></li>
+<li><p>generalized least squares (GLS)</p></li>
+<li><p>maximum likelihood</p></li>
+<li><p>principal axis factor(ing)</p></li>
+<li><p>alpha factor(ing)</p></li>
+<li><p>image factor(ing)</p></li>
+</ul>
+<p>It’s not entirely clear which factor extraction method is the best and some authors use different terms for some of the methods, making it more difficult to compare them.</p>
+<p>Fabrigar, Wegener, MacCallum and Strahan (1999) argued that if data are relatively normally distributed, maximum likelihood is the best choice because “it allows for the computation of a wide range of indexes of the goodness of fit of the model <span class="math display">\[and\]</span> permits statistical significance testing of factor loadings and correlations among factors and the computation of confidence intervals.” (p.&nbsp;277). In case the data is not generally normally distributed, they recommend principal axis factoring. This is recommended in several sources (<span class="citation" data-cites="costello2005">@costello2005</span>, <span class="citation" data-cites="osborne2014">@osborne2014</span>).</p>
+<p><strong>Conclusion</strong>: Use the maximum likelihood method if the data is generally normally distributed and to use principal axis factoring if the data is non-normal.</p>
+</section>
+<section id="rotation-methods" class="level3">
+<h3 class="anchored" data-anchor-id="rotation-methods">Rotation methods</h3>
+<p>The goal of rotation is to clarify the factor structure and make the results of the EFA more interpretable.</p>
+<p>Rotation methods can be categorized into one of two categories: orthogonal or oblique. Orthogonal rotations keep axes at a 90 degree angle, forcing the factors to be uncorrelated. Oblique rotations allow angles that are not 90 degree , thus allowing factors to be correlated if that is optimal for the solution.</p>
+<p>Orthogonal rotation methods include:</p>
+<ul>
+<li><p>varimax</p></li>
+<li><p>quartimax</p></li>
+<li><p>equamax</p></li>
+</ul>
+<p>Oblique rotation methods include:</p>
+<ul>
+<li><p>direct oblimin</p></li>
+<li><p>quartimin</p></li>
+<li><p>promax</p></li>
+</ul>
+<p>In the social sciences, we generally expect some correlation among factors, since behavior is rarely partitioned into neatly packaged units that function independently of one another. Therefore using orthogonal rotation results in a loss of valuable information if the factors are correlated, and oblique rotation should theoretically render a more accurate, and perhaps more reproducible, solution. If the factors are truly uncorrelated, orthogonal and oblique rotation produce nearly identical results. Since oblique rotation will reproduce an orthogonal solution but not vice versa, it makes sense to go for oblique rotation.</p>
+<p>There is no widely preferred method of oblique rotation; all tend to produce similar results (Fabrigar et al., 1999).</p>
+<p><strong>Conclusion</strong>: Use any oblique rotation.</p>
+</section>
+<section id="number-of-factors-to-retain" class="level3">
+<h3 class="anchored" data-anchor-id="number-of-factors-to-retain">Number of factors to retain</h3>
+<p>There are several methods to determine how many factors to retain:</p>
+<ul>
+<li><p>Theory</p></li>
+<li><p>Kaiser criterion (eigenvalues greater than 1; Kaiser, 1960)</p></li>
+<li><p>Scree test (Cattell, 1966)</p></li>
+<li><p>Parallel analysis (Horn, 1965)</p></li>
+<li><p>Velicer’s multiple average partial (MAP) procedure (Velicer, 1976)</p></li>
+<li><p>Akaike information criterion (AIC; Akaike, 1974)</p></li>
+<li><p>Bayesian information criterion (BIC; Schwarz, 1978)</p></li>
+<li><p>Comparison data (CD; <span class="citation" data-cites="ruscio2012">@ruscio2012</span>)</p></li>
+<li><p>Very Simple Structure (VSS)</p></li>
+</ul>
+<p>If the theoretical framework for the instrument is sound, we should start with the expectation that we should see that structure in the data. Instruments are rarely perfect (especially the first time it is examined), and theoretical expectations are not always supported. But unless one is on a fishing expedition in a data set with no a priori ideas about how the analysis should turn out, 12 this is as good a place as any to start.</p>
+<p>The default in most statistical software packages is to use the Kaiser criterion. It makes some sense, as an eigenvalue represents the sum of the squared factor loadings in a column, and to get a sum of 1.0 or more, one must have rather large factor loadings to square and sum. However, this is easily achieved with more items and there are now alternative methods. Hence, there is broad consensus in the literature that this is among the least accurate methods for selecting the number of factors to retain (Velicer &amp; Jackson, 1990).</p>
+<p>The scree test involves examining the graph of the eigenvalues (available via every software package) and looking for the natural bend or “elbow” in the data where the slope of the curve changes (flattens) markedly. Although the scree plot itself is not considered sufficient to determine how many factors should be extracted (Velicer et al., 2000), many suggest that researchers examine solutions extracting the number of factors ranging from one to two factors above the elbow to one or two below.</p>
+<p>Parallel analysis involves generating random uncorrelated data, and comparing eigenvalues from the EFA to those eigenvalues from those random data. Using this process, only factors with eigenvalues that are significantly above the mean (or preferably, the 95 th percentile) of those random eigenvalues should be retained. Several prominent authors and journals have endorsed this as the most robust and accurate process for determining the number of factors to extract (Ledesma &amp; Valero-Mora, 2007; Velicer et al., 2000).</p>
+<p>The Minimum Average Partial (MAP) criterion involves partialing out common variance as each successive component is created. As each successive component is partialed out, common variance will decrease to a minimum. Velicer argued that minimum point should be considered the criterion for the number of factors to extract.</p>
+<p>VSS involves degrading the initial rotated factor solution by <strong>assuming</strong> that the nonsalient loadings are zero, even though in actuality they rarely are. What VSS does is test how well the factor matrix we <strong>think</strong> abaut and talk about actually fits the correlation matrix. It is not a confirmatory procedure for testing the significance of a particular loading, but rather it is an exploratory procedure for testing the relative utility of <strong>interpreting</strong> the correlation matrix in terms of a family of increasingly more complex factor models. The simplest model tasted by VSS is that each item is of complexity one, and that all items are embedded in a more complex factor matrix of rank k. This is the model most appropriate for scale construction and is the one we use most frequently when we talk about factor solutions. More complicated models may also be evaluated by VSS.</p>
+<p>Zwick and Velicer (1986) tested the scree test, Horn’s parallel test, and Velicer’s MAP test (among others) in simulation studies using a data set with a clear factor structure. Both the parallel test and MAP test seemed to work well.</p>
+<p><span class="citation" data-cites="ruscio2012">@ruscio2012</span> notes that PA is considered to be the method of choice among methodologists and recommend that researchers take advantage of PA as a starting point, perhaps supplemented by CD. They note that researchers can also use more than one method. Similarly, several prominent authors and journals have endorsed this as the most robust and accurate process for determining the number of factors to extract (Ledesma &amp; Valero-Mora, 2007; Velicer et al., 2000).</p>
+<p><span class="citation" data-cites="osborne2014">@osborne2014</span> notes that MAP has been considered superior to the “classic” criteria, and probably is superior to parallel analysis, although neither is perfect, and all must be used in the context of a search for conceptually interpretable factors. He recommends to use parallel analysis or MAP criteria, along with theory (and any of the classic criteria that suits you and is defensible).</p>
+<p><strong>Conclusion:</strong> Use multiple criteria and theory to make a judgment call about how many factors to extract.</p>
+</section>
+<section id="sample" class="level3">
+<h3 class="anchored" data-anchor-id="sample">Sample</h3>
+<p>Make sure to target participants that are likely to vary in the attitude that you’re interested in measuring.</p>
+<p>Make sure the sample is representative of the population that you’re interested in.</p>
+</section>
+<section id="sample-size" class="level3">
+<h3 class="anchored" data-anchor-id="sample-size">Sample size</h3>
+<section id="rules-of-thumb" class="level4">
+<h4 class="anchored" data-anchor-id="rules-of-thumb">Rules of thumb</h4>
+<p>The general consensus seems to be that rules of thumb are a bad idea. The reason for that is that these rules only involve one of two factors. Common rules of thumb consist of going for a set number of participants or a particular participant-to-item ratio.</p>
+<table class="table">
+<caption>Table: Examples of rules of thumb.</caption>
+<colgroup>
+<col style="width: 32%">
+<col style="width: 28%">
+<col style="width: 39%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Type</th>
+<th>Source</th>
+<th>Rule</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><em>Participant-only</em></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td><span class="citation" data-cites="comrey1992">@comrey1992</span></td>
+<td>50 = very poor<br>
+100 = poor<br>
+200 = fair<br>
+300 = good<br>
+500 = very good<br>
+1000+ = excellent</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>Barrett &amp; Kline, 1981</td>
+<td>50</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>Aleamoni, 1976</td>
+<td>400</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><em>Participant:item ratio</em></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td><span class="citation" data-cites="gorsuch2015">@gorsuch2015</span>, p.332</td>
+<td>5:1 (100 participants minimum)</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>Hatcher 1994, p.73</td>
+<td>5:1 (minimum)</td>
+</tr>
+<tr class="even">
+<td></td>
+<td><span class="citation" data-cites="everitt1975">@everitt1975</span></td>
+<td>10:1 (optimistically)</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>Nunally (1978), p.421</td>
+<td>10:1</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>The reality is that the sample size is dependent on:</p>
+<ul>
+<li><p>the study design (e.g., cross-sectional vs.&nbsp;longitudinal)</p></li>
+<li><p>the size of the relationships among the indicators (e.g., high communalities without cross loadings; strong loadings)</p></li>
+<li><p>the reliability of the indicators</p></li>
+<li><p>the scaling (e.g., categorical, continuous) and distribution of the indicators</p></li>
+<li><p>estimator type (e.g., ML, robust ML, WLSMV)</p></li>
+<li><p>the amount and patterns of missing data</p></li>
+<li><p>the size of the model (model complexity)</p></li>
+</ul>
+<p>For example, MacCallum, Widaman, Zhang, and Hong (1999) found that results were consistent with population loadings with sample sizes as low as 60 cases if the communalities of the items were high (.60 or greater). With lower communality levels (around .50), samples of 100 to 200 cases were required.</p>
+<p>Costello and Osborne <span class="citation" data-cites="costello2005">[-@costello2005]</span> caution researchers to remember that EFA is a large-sample procedure and that generalizable or replicable results are unlikely if the sample is too small. They found that a ratio of 20:1 produces error rates well above the standard alpha (5%) level. They also say that researchers should realize that EFA is exploratory and should be used only for exploring data, not hypothesis or theory testing.</p>
+</section>
+<section id="number-of-indicators" class="level4">
+<h4 class="anchored" data-anchor-id="number-of-indicators">Number of indicators</h4>
+<p>At least three items per factor are required for a factor model to be identified; more items per factor results in overidentification of the model. A number of writers recommend that four or more items per factor be included in the factor analysis to ensure an adequate identification of the factors (Comrey &amp; Lee, 1992; Fabrigar et al., 1999; Gorsuch, 1988).</p>
+<p>MacCallum et al.&nbsp;(1999) found that in addition to the communality of the measures, the results were more accurate for given sample sizes if there were more measures per factor included in the analysis.</p>
+<p>Some additional arguments for why multiple indicators per factor are useful:</p>
+<ul>
+<li><p>People read items incorrectly or sometimes just don’t understand an item (despite all efforts to make them as clear as possible), so having a sample of items can counteract the idiosyncratic mistakes of respondents</p></li>
+<li><p>With complicated topics, having multiple items also adds clarity about the overall goal of the scale. Each item is an indicator to the participant about what the purpose of the scale is.</p></li>
+</ul>
+</section>
+</section>
+<section id="sampling-adequacy" class="level3">
+<h3 class="anchored" data-anchor-id="sampling-adequacy">Sampling Adequacy</h3>
+<p>The Kaiser–Meyer–Olkin (KMO) test is a statistical measure to determine how suited data is for factor analysis. The test measures sampling adequacy for each variable in the model and the complete model. The statistic is a measure of the proportion of variance among variables that might be common variance. The lower the proportion, the higher the KMO value, the more suited the data is to factor analysis</p>
+<p>The KMO value ranges from 0 to 1, with 0.60 considered suitable for factor analysis <span class="citation" data-cites="tabachnick2013">@tabachnick2013</span>. Kaiser himself <span class="citation" data-cites="kaiser1974">[-@kaiser1974]</span> suggested that KMO &gt; .9 were marvelous, in the .80s, mertitourious, in the .70s, middling, in the .60s, medicore, in the 50s, miserable, and less than .5, unacceptable.</p>
+<p>Bartlett’s (1954) test of sphericity is a notoriously sensitive test of the hypothesis that the correlations in a correlation matrix are zero. Because of its sensitivity and its dependence on N, the test is likely to be significant with samples of substantial size even if correlations are very low. Therefore, use of the test is recommended only if there are fewer than, say, five cases per variable <span class="citation" data-cites="tabachnick2013">[@tabachnick2013]</span>.</p>
+</section>
+<section id="outlier-removal" class="level3">
+<h3 class="anchored" data-anchor-id="outlier-removal">Outlier removal</h3>
+<p>Should you remove outliers?</p>
+</section>
+<section id="factor-structure" class="level3">
+<h3 class="anchored" data-anchor-id="factor-structure">Factor structure</h3>
+<p>Tabachnick and Fidell (2001) cite .32 as a good rule of thumb for the minimum loading of an item. Others say item loadings above .30 (Costello).</p>
+<p>Others say a factor loading coefficient ≥ 0.40 is considered necessary to judge the quality (validity) of an item as an indicator of one factor or another. Some may think that this criterion is quite lax since a factor loading of 0.40 means that only 16% of the explained variance depends on the factor of which one item is the indicator (Gana &amp; Broc)</p>
+<p>Some psychometricians (for example, <span class="math display">\[COM 92, TAB 07\]</span>) recommend that we choose items whose R² is greater than 0.40 (thus showing a factorial factor loading greater than 0.63).</p>
+<ul>
+<li><p>A “crossloading” item is an item that loads at .32 or higher on two or more factors. The researcher needs to decide whether a crossloading item should be dropped from the analysis, which may be a good choice if there are several adequate to strong loaders (.50 or better) on each factor.</p>
+<p>A factor with fewer than three items is generally weak and unstable; 5 or more strongly loading items (.50 or better) are desirable and indicate a solid factor.</p></li>
+</ul>
+<p>Comrey and Lee (1992) suggest that loadings in excess of .71 (50% overlapping variance) are considered excellent, .63 (40% overlapping variance) very good, .55 (30% overlapping variance) good, .45 (20% overlapping variance) fair, and .32 (10% overlapping variance) poor.</p>
+<section id="number-of-indicators-to-keep" class="level4">
+<h4 class="anchored" data-anchor-id="number-of-indicators-to-keep">Number of indicators to keep</h4>
+<ul>
+<li>, it is important for the latent variable to have at least four indicators (for example: four items). In effect, with only three indicators, the measurement model is just-identified, thus making useless its testability. (Gana &amp; Broc)</li>
+</ul>
+</section>
+</section>
+<section id="interpretation" class="level3">
+<h3 class="anchored" data-anchor-id="interpretation">Interpretation</h3>
+<p>Remember that the goal of exploratory factor analysis is to explore whether your data fits a model that makes sense. Ideally, you have a conceptual or theoretical framework for the analysis- a theory or body of literature guiding the development of an instrument, for example. Even if you do not, the results should be sensible in some way. You should be able to construct a simple narrative describing how each factor, and its constituent variables, makes sense and is easily labeled.</p>
+</section>
+<section id="additional-reading" class="level3">
+<h3 class="anchored" data-anchor-id="additional-reading">Additional reading</h3>
+<p>The summaries and conclusions above were largely taken from the following sources:</p>
+<ul>
+<li>Best Practices in Exploratory Factor Analysis by <span class="citation" data-cites="osborne2014">@osborne2014</span></li>
+</ul>
+<!-- -->
+<ul>
+<li>In Search of Underlying Dimensions: The Use (and Abuse) of Factor Analysis in Personality and Social Psychology Bulletin by <span class="citation" data-cites="russell2002">@russell2002</span></li>
+</ul>
+
+
+</section>
+</main> <!-- /main -->
+<script type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    setTimeout(function() {
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../docs/statistics/index.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">About</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../docs/statistics/CFA.html" class="pagination-link">
+        <span class="nav-page-text">CFA</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+</body></html>

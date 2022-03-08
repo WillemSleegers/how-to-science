@@ -1,0 +1,24 @@
+---
+title: "About"
+sidebar: false
+---
+
+This is a book to organize my conclusions about topics in methodology and statistics.
+
+The book is divided up into multiple sections. At this moment, there is a section on survey design and a section on statistics. The survey design section is about various issues pertaining to designing surveys, such as how to create items, what kind of response options to use, and so on. The statistics section is currently only about factor analyses, including both exploratory and confirmatory factor analyses.
+
+More sections will be added in the future.
+
+## Contribute
+
+This book will forever be a work in progress because the content will be about what are currently regarded as best practices. These are likely to change over time, so the book will have to change with it.
+
+It's also very likely that there are mistakes in this book. It's possible to comment on these by clicking on the Github link on each page and creating an Issue.
+
+## Acknowledgements
+
+The following people have contributed to this book:
+
+-   [Willem Sleegers](https://www.willemsleegers.com "Willem Sleegers' personal website.")
+
+If I've missed your contributions and you deserve to be on this list, please don't hesitate to contact me or add yourself via a Pull Request on GitHub!
