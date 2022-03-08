@@ -1,6 +1,6 @@
 project:
   type: website
-  output-dir: _site
+  output-dir: docs
 
 website:
   title: "How to Science"
@@ -17,9 +17,9 @@ website:
       - text: "About"
         href: index.qmd
       - text: "Survey Design"
-        href: docs/surveys/index.qmd
+        href: chapters/surveys/index.qmd
       - text: "Statistics"
-        href: docs/statistics/index.qmd
+        href: chapters/statistics/index.qmd
 
   sidebar:
     - id: surveys
@@ -28,19 +28,19 @@ website:
       collapse-level: 2
       align: left
       contents:
-        - docs/surveys/index.qmd
-        - docs/surveys/item-development.qmd
-        - docs/surveys/response-options.qmd
-        - docs/surveys/recommended-reading.qmd
+        - chapters/surveys/index.qmd
+        - chapters/surveys/item-development.qmd
+        - chapters/surveys/response-options.qmd
+        - chapters/surveys/recommended-reading.qmd
 
     - id: statistics
       title: "Statistics"
       contents:
-        - docs/statistics/index.qmd
+        - chapters/statistics/index.qmd
         - section: "Factor Analysis"
           contents:
-            - docs/statistics/EFA.qmd
-            - docs/statistics/CFA.qmd
+            - chapters/statistics/EFA.qmd
+            - chapters/statistics/CFA.qmd
 
 format:
   html:
