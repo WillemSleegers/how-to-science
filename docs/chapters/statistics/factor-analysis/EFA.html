@@ -11,26 +11,45 @@
     div.column{display: inline-block; vertical-align: top; width: 50%;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+    }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
   </style>
 
-  <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
-  <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
-  <script src="../../site_libs/clipboard/clipboard.min.js"></script>
-  <meta name="quarto:offset" content="../../">
-  <script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
-  <script src="../../site_libs/quarto-search/fuse.min.js"></script>
-  <script src="../../site_libs/quarto-search/quarto-search.js"></script>
-  <link href="../../chapters/statistics/CFA.html" rel="next">
-  <link href="../../chapters/statistics/index.html" rel="prev">
-  <script src="../../site_libs/quarto-html/quarto.js"></script>
-  <script src="../../site_libs/quarto-html/popper.min.js"></script>
-  <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
-  <script src="../../site_libs/quarto-html/anchor.min.js"></script>
-  <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-  <link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet">
-  <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
-  <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-  <link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+  <script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+  <script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+  <script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+  <meta name="quarto:offset" content="../../../">
+  <script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+  <script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+  <script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+  <link href="../../../chapters/statistics/factor-analysis/CFA.html" rel="next">
+  <link href="../../../chapters/statistics/index.html" rel="prev">
+  <script src="../../../site_libs/quarto-html/quarto.js"></script>
+  <script src="../../../site_libs/quarto-html/popper.min.js"></script>
+  <script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+  <script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+  <link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+  <link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet">
+  <script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+  <link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+  <link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
   <script id="quarto-search-options" type="application/json">{
     "location": "navbar",
     "copy-button": false,
@@ -50,23 +69,23 @@
       "search-submit-button-title": "Submit"
     }
   }</script>
-  <script src="../../site_libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
-  <script src="../../site_libs/viz-1.8.2/viz.js"></script>
-  <link href="../../site_libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
-  <script src="../../site_libs/grViz-binding-1.0.9/grViz.js"></script>
+  <script src="../../../site_libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+  <script src="../../../site_libs/viz-1.8.2/viz.js"></script>
+  <link href="../../../site_libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
+  <script src="../../../site_libs/grViz-binding-1.0.9/grViz.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
   <![endif]-->
-  <link rel="stylesheet" href="../../assets/css/styles.css">
+  <link rel="stylesheet" href="../../../assets/css/styles.css">
 </head>
 <body class="docked">
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-sm navbar-dark ">
       <div class="navbar-container container-fluid">
-      <a class="navbar-brand" href="../../index.html">
-    <img src="../../assets/img/logo.png" alt="">
+      <a class="navbar-brand" href="../../../index.html">
+    <img src="../../../assets/img/logo.png" alt="">
     <span class="navbar-title">How to Science</span>
   </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
@@ -75,13 +94,13 @@
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html">About</a>
+    <a class="nav-link" href="../../../index.html">About</a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../chapters/surveys/index.html">Survey Design</a>
+    <a class="nav-link" href="../../../chapters/surveys/index.html">Survey Design</a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="../../chapters/statistics/index.html" aria-current="page">Statistics</a>
+    <a class="nav-link active" href="../../../chapters/statistics/index.html" aria-current="page">Statistics</a>
   </li>  
 </ul>
               <div class="quarto-toggle-container">
@@ -112,7 +131,7 @@
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/statistics/index.html" class="sidebar-item-text sidebar-link">About</a>
+  <a href="../../../chapters/statistics/index.html" class="sidebar-item-text sidebar-link">Overview</a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -125,12 +144,27 @@
     <ul id="quarto-sidebar-section-factor-analysis" class="collapse list-unstyled sidebar-section depth1 show">  
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/statistics/EFA.html" class="sidebar-item-text sidebar-link active">Exploratory Factor Analysis</a>
+  <a href="../../../chapters/statistics/factor-analysis/EFA.html" class="sidebar-item-text sidebar-link active">Exploratory Factor Analysis</a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../chapters/statistics/CFA.html" class="sidebar-item-text sidebar-link">CFA</a>
+  <a href="../../../chapters/statistics/factor-analysis/CFA.html" class="sidebar-item-text sidebar-link">CFA</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../chapters/statistics/factor-analysis/r-packages.html" class="sidebar-item-text sidebar-link">R-packages</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../chapters/statistics/factor-analysis/examples.html" class="sidebar-item-text sidebar-link">Examples</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../chapters/statistics/factor-analysis/recommended-reading.html" class="sidebar-item-text sidebar-link">Recommended reading</a>
   </div>
 </li>
     </ul>
@@ -155,7 +189,7 @@
 <li><a href="#interpretation" class="nav-link" data-scroll-target="#interpretation">Interpretation</a></li>
 <li><a href="#additional-reading" class="nav-link" data-scroll-target="#additional-reading">Additional reading</a></li>
 </ul>
-</nav>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/willemsleegers/how-to-science/edit/main/chapters/statistics/factor-analysis/EFA.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/willemsleegers/how-to-science/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -167,14 +201,14 @@
 <section id="principal-components-vs.-factor-analysis" class="level3">
 <h3 class="anchored" data-anchor-id="principal-components-vs.-factor-analysis">Principal Components vs.&nbsp;Factor Analysis</h3>
 <p>An important consideration is whether to use a principal components analysis (PCA) or a factor analysis.</p>
-<p>PCA is a data reduction technique. PCA computes the analysis without regard to the underlying latent structure of the variables, using all the variance in the manifest variables. When the goal is to develop a (psychological) scale, this is likely not what you want. With PCA, the variables are themselves of interest, rather than some hypothetical latent construct. Another way of describing it is that PCA conceptualizes constructs as causally determined by the observations (Edwards &amp; Bagozzi, 2000). Again, this is likely not what you want because this means that “principal component scores are”caused” by their indicators in much the same way that sumscores are “caused” by item scores.” <span class="citation" data-cites="borsboom2006">[@borsboom2006]</span>. Instead, you likely want the opposite causal relationship in which a latent factor causes the indicator scores.</p>
+<p>PCA is a data reduction technique. PCA computes the analysis without regard to the underlying latent structure of the variables, using all the variance in the manifest variables. When the goal is to develop a (psychological) scale, this is likely not what you want. With PCA, the variables are themselves of interest, rather than some hypothetical latent construct. Another way of describing it is that PCA conceptualizes constructs as causally determined by the observations (Edwards &amp; Bagozzi, 2000). Again, this is likely not what you want because this means that “principal component scores are”caused” by their indicators in much the same way that sumscores are “caused” by item scores.” <span class="citation" data-cites="borsboom2006">(<a href="#ref-borsboom2006" role="doc-biblioref">Borsboom 2006</a>)</span>. Instead, you likely want the opposite causal relationship in which a latent factor causes the indicator scores.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="htmlwidget-f25e059ae1b6a176ff65" style="width:100%;height:464px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-f25e059ae1b6a176ff65">{"x":{"diagram":"\ndigraph dot {\n\ngraph [layout = dot,\n       rankdir = LR]\n\nnode [shape = square,\n      color = black,\n      label = \"\"]\n\nvar1 [label = \"variable 1\"]\nvar2 [label = \"variable 2\"]\nvar3 [label = \"variable 3\"]\nvar4 [label = \"variable 4\"]\nvar5 [label = \"variable 5\"]\nvar6 [label = \"variable 6\"]  \nvar7 [label = \"variable 7\"]  \nvar8 [label = \"variable 8\"]\n    \nnode [label = \"component A\"]\ncomp1\n\nnode [label = \"component B\"]\ncomp2\n\nedge [color = black, minlen = 3]\n{var1 var2 var3 var4} -> comp1\n{var5 var6 var7 var8} -> comp2\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-8a55543c2a403d28c46c" style="width:100%;height:464px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-8a55543c2a403d28c46c">{"x":{"diagram":"\ndigraph dot {\n\ngraph [layout = dot,\n       rankdir = LR]\n\nnode [shape = square,\n      color = black,\n      label = \"\"]\n\nvar1 [label = \"variable 1\"]\nvar2 [label = \"variable 2\"]\nvar3 [label = \"variable 3\"]\nvar4 [label = \"variable 4\"]\nvar5 [label = \"variable 5\"]\nvar6 [label = \"variable 6\"]  \nvar7 [label = \"variable 7\"]  \nvar8 [label = \"variable 8\"]\n    \nnode [label = \"component A\"]\ncomp1\n\nnode [label = \"component B\"]\ncomp2\n\nedge [color = black, minlen = 3]\n{var1 var2 var3 var4} -> comp1\n{var5 var6 var7 var8} -> comp2\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
-<p>While common factor analysis assumes that total variance can be partitioned into common and unique variance, PCA assumes that there common variances takes up all of total variance. This means that PCA assumes that all variables are measured without error. It is usually more reasonable to assume that you have not measured your set of items perfectly. Although some argue that the two methods have the same results, there is also evidence that factor analysis has better results than PCA (Widaman, 1993). See <span class="citation" data-cites="russell2002">@russell2002</span> for a discussion.</p>
+<p>While common factor analysis assumes that total variance can be partitioned into common and unique variance, PCA assumes that there common variances takes up all of total variance. This means that PCA assumes that all variables are measured without error. It is usually more reasonable to assume that you have not measured your set of items perfectly. Although some argue that the two methods have the same results, there is also evidence that factor analysis has better results than PCA (Widaman, 1993). See <span class="citation" data-cites="russell2002">Russell (<a href="#ref-russell2002" role="doc-biblioref">2002</a>)</span> for a discussion.</p>
 <p><strong>Conclusion</strong>: Do not use PCA.</p>
 </section>
 <section id="factor-extraction-method" class="level3">
@@ -191,7 +225,7 @@
 <li><p>image factor(ing)</p></li>
 </ul>
 <p>It’s not entirely clear which factor extraction method is the best and some authors use different terms for some of the methods, making it more difficult to compare them.</p>
-<p>Fabrigar, Wegener, MacCallum and Strahan (1999) argued that if data are relatively normally distributed, maximum likelihood is the best choice because “it allows for the computation of a wide range of indexes of the goodness of fit of the model <span class="math display">\[and\]</span> permits statistical significance testing of factor loadings and correlations among factors and the computation of confidence intervals.” (p.&nbsp;277). In case the data is not generally normally distributed, they recommend principal axis factoring. This is recommended in several sources (<span class="citation" data-cites="costello2005">@costello2005</span>, <span class="citation" data-cites="osborne2014">@osborne2014</span>).</p>
+<p>Fabrigar, Wegener, MacCallum and Strahan (1999) argued that if data are relatively normally distributed, maximum likelihood is the best choice because “it allows for the computation of a wide range of indexes of the goodness of fit of the model and permits statistical significance testing of factor loadings and correlations among factors and the computation of confidence intervals.” (p.&nbsp;277). In case the data is not generally normally distributed, they recommend principal axis factoring. This is recommended in several sources (<span class="citation" data-cites="costello2005">Costello and Osborne (<a href="#ref-costello2005" role="doc-biblioref">2005</a>)</span>; <span class="citation" data-cites="osborne2014">Osborne (<a href="#ref-osborne2014" role="doc-biblioref">2014</a>)</span>).</p>
 <p><strong>Conclusion</strong>: Use the maximum likelihood method if the data is generally normally distributed and to use principal axis factoring if the data is non-normal.</p>
 </section>
 <section id="rotation-methods" class="level3">
@@ -225,7 +259,7 @@
 <li><p>Velicer’s multiple average partial (MAP) procedure (Velicer, 1976)</p></li>
 <li><p>Akaike information criterion (AIC; Akaike, 1974)</p></li>
 <li><p>Bayesian information criterion (BIC; Schwarz, 1978)</p></li>
-<li><p>Comparison data (CD; <span class="citation" data-cites="ruscio2012">@ruscio2012</span>)</p></li>
+<li><p>Comparison data (CD; <span class="citation" data-cites="ruscio2012">Ruscio and Brendan Roche (<a href="#ref-ruscio2012" role="doc-biblioref">2012</a>)</span>)</p></li>
 <li><p>Very Simple Structure (VSS)</p></li>
 </ul>
 <p>If the theoretical framework for the instrument is sound, we should start with the expectation that we should see that structure in the data. Instruments are rarely perfect (especially the first time it is examined), and theoretical expectations are not always supported. But unless one is on a fishing expedition in a data set with no a priori ideas about how the analysis should turn out, 12 this is as good a place as any to start.</p>
@@ -235,8 +269,8 @@
 <p>The Minimum Average Partial (MAP) criterion involves partialing out common variance as each successive component is created. As each successive component is partialed out, common variance will decrease to a minimum. Velicer argued that minimum point should be considered the criterion for the number of factors to extract.</p>
 <p>VSS involves degrading the initial rotated factor solution by <strong>assuming</strong> that the nonsalient loadings are zero, even though in actuality they rarely are. What VSS does is test how well the factor matrix we <strong>think</strong> abaut and talk about actually fits the correlation matrix. It is not a confirmatory procedure for testing the significance of a particular loading, but rather it is an exploratory procedure for testing the relative utility of <strong>interpreting</strong> the correlation matrix in terms of a family of increasingly more complex factor models. The simplest model tasted by VSS is that each item is of complexity one, and that all items are embedded in a more complex factor matrix of rank k. This is the model most appropriate for scale construction and is the one we use most frequently when we talk about factor solutions. More complicated models may also be evaluated by VSS.</p>
 <p>Zwick and Velicer (1986) tested the scree test, Horn’s parallel test, and Velicer’s MAP test (among others) in simulation studies using a data set with a clear factor structure. Both the parallel test and MAP test seemed to work well.</p>
-<p><span class="citation" data-cites="ruscio2012">@ruscio2012</span> notes that PA is considered to be the method of choice among methodologists and recommend that researchers take advantage of PA as a starting point, perhaps supplemented by CD. They note that researchers can also use more than one method. Similarly, several prominent authors and journals have endorsed this as the most robust and accurate process for determining the number of factors to extract (Ledesma &amp; Valero-Mora, 2007; Velicer et al., 2000).</p>
-<p><span class="citation" data-cites="osborne2014">@osborne2014</span> notes that MAP has been considered superior to the “classic” criteria, and probably is superior to parallel analysis, although neither is perfect, and all must be used in the context of a search for conceptually interpretable factors. He recommends to use parallel analysis or MAP criteria, along with theory (and any of the classic criteria that suits you and is defensible).</p>
+<p><span class="citation" data-cites="ruscio2012">Ruscio and Brendan Roche (<a href="#ref-ruscio2012" role="doc-biblioref">2012</a>)</span> notes that PA is considered to be the method of choice among methodologists and recommend that researchers take advantage of PA as a starting point, perhaps supplemented by CD. They note that researchers can also use more than one method. Similarly, several prominent authors and journals have endorsed this as the most robust and accurate process for determining the number of factors to extract (Ledesma &amp; Valero-Mora, 2007; Velicer et al., 2000).</p>
+<p><span class="citation" data-cites="osborne2014">Osborne (<a href="#ref-osborne2014" role="doc-biblioref">2014</a>)</span> notes that MAP has been considered superior to the “classic” criteria, and probably is superior to parallel analysis, although neither is perfect, and all must be used in the context of a search for conceptually interpretable factors. He recommends to use parallel analysis or MAP criteria, along with theory (and any of the classic criteria that suits you and is defensible).</p>
 <p><strong>Conclusion:</strong> Use multiple criteria and theory to make a judgment call about how many factors to extract.</p>
 </section>
 <section id="sample" class="level3">
@@ -271,7 +305,7 @@
 </tr>
 <tr class="even">
 <td></td>
-<td><span class="citation" data-cites="comrey1992">@comrey1992</span></td>
+<td><span class="citation" data-cites="comrey1992">(<a href="#ref-comrey1992" role="doc-biblioref"><strong>comrey1992?</strong></a>)</span></td>
 <td>50 = very poor<br>
 100 = poor<br>
 200 = fair<br>
@@ -306,7 +340,7 @@
 </tr>
 <tr class="even">
 <td></td>
-<td><span class="citation" data-cites="gorsuch2015">@gorsuch2015</span>, p.332</td>
+<td><span class="citation" data-cites="gorsuch2015">(<a href="#ref-gorsuch2015" role="doc-biblioref"><strong>gorsuch2015?</strong></a>)</span>, p.332</td>
 <td>5:1 (100 participants minimum)</td>
 </tr>
 <tr class="odd">
@@ -316,7 +350,7 @@
 </tr>
 <tr class="even">
 <td></td>
-<td><span class="citation" data-cites="everitt1975">@everitt1975</span></td>
+<td><span class="citation" data-cites="everitt1975">(<a href="#ref-everitt1975" role="doc-biblioref"><strong>everitt1975?</strong></a>)</span></td>
 <td>10:1 (optimistically)</td>
 </tr>
 <tr class="odd">
@@ -352,7 +386,7 @@
 <li><p>the size of the model (model complexity)</p></li>
 </ul>
 <p>For example, MacCallum, Widaman, Zhang, and Hong (1999) found that results were consistent with population loadings with sample sizes as low as 60 cases if the communalities of the items were high (.60 or greater). With lower communality levels (around .50), samples of 100 to 200 cases were required.</p>
-<p>Costello and Osborne <span class="citation" data-cites="costello2005">[-@costello2005]</span> caution researchers to remember that EFA is a large-sample procedure and that generalizable or replicable results are unlikely if the sample is too small. They found that a ratio of 20:1 produces error rates well above the standard alpha (5%) level. They also say that researchers should realize that EFA is exploratory and should be used only for exploring data, not hypothesis or theory testing.</p>
+<p>Costello and Osborne <span class="citation" data-cites="costello2005">(<a href="#ref-costello2005" role="doc-biblioref">2005</a>)</span> caution researchers to remember that EFA is a large-sample procedure and that generalizable or replicable results are unlikely if the sample is too small. They found that a ratio of 20:1 produces error rates well above the standard alpha (5%) level. They also say that researchers should realize that EFA is exploratory and should be used only for exploring data, not hypothesis or theory testing.</p>
 </section>
 <section id="number-of-indicators" class="level4">
 <h4 class="anchored" data-anchor-id="number-of-indicators">Number of indicators</h4>
@@ -368,8 +402,8 @@
 <section id="sampling-adequacy" class="level3">
 <h3 class="anchored" data-anchor-id="sampling-adequacy">Sampling Adequacy</h3>
 <p>The Kaiser–Meyer–Olkin (KMO) test is a statistical measure to determine how suited data is for factor analysis. The test measures sampling adequacy for each variable in the model and the complete model. The statistic is a measure of the proportion of variance among variables that might be common variance. The lower the proportion, the higher the KMO value, the more suited the data is to factor analysis</p>
-<p>The KMO value ranges from 0 to 1, with 0.60 considered suitable for factor analysis <span class="citation" data-cites="tabachnick2013">@tabachnick2013</span>. Kaiser himself <span class="citation" data-cites="kaiser1974">[-@kaiser1974]</span> suggested that KMO &gt; .9 were marvelous, in the .80s, mertitourious, in the .70s, middling, in the .60s, medicore, in the 50s, miserable, and less than .5, unacceptable.</p>
-<p>Bartlett’s (1954) test of sphericity is a notoriously sensitive test of the hypothesis that the correlations in a correlation matrix are zero. Because of its sensitivity and its dependence on N, the test is likely to be significant with samples of substantial size even if correlations are very low. Therefore, use of the test is recommended only if there are fewer than, say, five cases per variable <span class="citation" data-cites="tabachnick2013">[@tabachnick2013]</span>.</p>
+<p>The KMO value ranges from 0 to 1, with 0.60 considered suitable for factor analysis <span class="citation" data-cites="tabachnick2013">(<a href="#ref-tabachnick2013" role="doc-biblioref"><strong>tabachnick2013?</strong></a>)</span>. Kaiser himself <span class="citation" data-cites="kaiser1974">(<a href="#ref-kaiser1974" role="doc-biblioref"><strong>kaiser1974?</strong></a>)</span> suggested that KMO &gt; .9 were marvelous, in the .80s, mertitourious, in the .70s, middling, in the .60s, medicore, in the 50s, miserable, and less than .5, unacceptable.</p>
+<p>Bartlett’s (1954) test of sphericity is a notoriously sensitive test of the hypothesis that the correlations in a correlation matrix are zero. Because of its sensitivity and its dependence on N, the test is likely to be significant with samples of substantial size even if correlations are very low. Therefore, use of the test is recommended only if there are fewer than, say, five cases per variable <span class="citation" data-cites="tabachnick2013">(<a href="#ref-tabachnick2013" role="doc-biblioref"><strong>tabachnick2013?</strong></a>)</span>.</p>
 </section>
 <section id="outlier-removal" class="level3">
 <h3 class="anchored" data-anchor-id="outlier-removal">Outlier removal</h3>
@@ -400,14 +434,31 @@
 <h3 class="anchored" data-anchor-id="additional-reading">Additional reading</h3>
 <p>The summaries and conclusions above were largely taken from the following sources:</p>
 <ul>
-<li>Best Practices in Exploratory Factor Analysis by <span class="citation" data-cites="osborne2014">@osborne2014</span></li>
+<li>Best Practices in Exploratory Factor Analysis by <span class="citation" data-cites="osborne2014">Osborne (<a href="#ref-osborne2014" role="doc-biblioref">2014</a>)</span></li>
 </ul>
 <!-- -->
 <ul>
-<li>In Search of Underlying Dimensions: The Use (and Abuse) of Factor Analysis in Personality and Social Psychology Bulletin by <span class="citation" data-cites="russell2002">@russell2002</span></li>
+<li>In Search of Underlying Dimensions: The Use (and Abuse) of Factor Analysis in Personality and Social Psychology Bulletin by <span class="citation" data-cites="russell2002">Russell (<a href="#ref-russell2002" role="doc-biblioref">2002</a>)</span></li>
 </ul>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-borsboom2006" class="csl-entry" role="doc-biblioentry">
+Borsboom, Denny. 2006. <span>“The Attack of the Psychometricians.”</span> <em>Psychometrika</em> 71 (3): 425. <a href="https://doi.org/10.1007/s11336-006-1447-6">https://doi.org/10.1007/s11336-006-1447-6</a>.
+</div>
+<div id="ref-costello2005" class="csl-entry" role="doc-biblioentry">
+Costello, Anna, and Jason Osborne. 2005. <span>“Best Practices in Exploratory Factor Analysis: Four Recommendations for Getting the Most from Your Analysis.”</span> <em>Practical Assessment, Research, and Evaluation</em> 10 (1). <a href="https://doi.org/10.7275/jyj1-4868">https://doi.org/10.7275/jyj1-4868</a>.
+</div>
+<div id="ref-osborne2014" class="csl-entry" role="doc-biblioentry">
+Osborne, Jason W. 2014. <em>Best Practices in Exploratory Factor Analysis</em>. <span>Createspace publishing</span>.
+</div>
+<div id="ref-ruscio2012" class="csl-entry" role="doc-biblioentry">
+Ruscio, John, and Brendan Roche. 2012. <span>“Determining the Number of Factors to Retain in an Exploratory Factor Analysis Using Comparison Data of Known Factorial Structure.”</span> <em>Psychological Assessment</em> 24 (2): 282–92. <a href="https://doi.org/10.1037/a0025697">https://doi.org/10.1037/a0025697</a>.
+</div>
+<div id="ref-russell2002" class="csl-entry" role="doc-biblioentry">
+Russell, Daniel W. 2002. <span>“In Search of Underlying Dimensions: The Use (and Abuse) of Factor Analysis in Personality and Social Psychology Bulletin.”</span> <em>Personality and Social Psychology Bulletin</em> 28 (12): 1629–46. <a href="https://doi.org/10.1177/014616702237645">https://doi.org/10.1177/014616702237645</a>.
+</div>
+</div>
 </section>
 </main> <!-- /main -->
 <script type="application/javascript">
@@ -488,12 +539,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../chapters/statistics/index.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">About</span>
+      <a href="../../../chapters/statistics/index.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Overview</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../chapters/statistics/CFA.html" class="pagination-link">
+      <a href="../../../chapters/statistics/factor-analysis/CFA.html" class="pagination-link">
         <span class="nav-page-text">CFA</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>

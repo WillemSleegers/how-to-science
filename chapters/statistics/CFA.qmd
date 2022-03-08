@@ -1,5 +1,0 @@
----
-title: "CFA"
----
-
-Chapter about CFA.

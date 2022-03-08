@@ -6,9 +6,10 @@ website:
   title: "How to Science"
   page-navigation: true
   reader-mode: true
+  repo-url: https://github.com/willemsleegers/how-to-science/
+  repo-actions: [edit, issue]
   navbar:
-    background: dark
-    foreground: light
+    background: light
     pinned: false
     collapse: true
     collapse-below: sm # sm, md, lg, xl, or xxl
@@ -39,8 +40,11 @@ website:
         - chapters/statistics/index.qmd
         - section: "Factor Analysis"
           contents:
-            - chapters/statistics/EFA.qmd
-            - chapters/statistics/CFA.qmd
+            - chapters/statistics/factor-analysis/EFA.qmd
+            - chapters/statistics/factor-analysis/CFA.qmd
+            - chapters/statistics/factor-analysis/r-packages.qmd
+            - chapters/statistics/factor-analysis/examples.qmd
+            - chapters/statistics/factor-analysis/recommended-reading.qmd
 
 format:
   html:

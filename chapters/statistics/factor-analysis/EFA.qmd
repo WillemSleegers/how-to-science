@@ -1,15 +1,14 @@
 ---
 title: "Exploratory Factor Analysis"
 toc: true
+bibliography: references.bib
 ---
 
 The goal of an exploratory factor analysis (EFA) is to study the latent factors that underlie responses to a larger number of items. In other words, the goal is to *explore* the data and *reduce* the number of variables. It is a popular technique in the development and validation of assessment instruments. Unlike confirmatory factor analysis (CFA), EFA is used when there is little or no a priori justification for specifying a particular structural model. This means that there is reasonable uncertainty about the number of underlying factors and which items load on which factor. The hope is to resolve some of that uncertainty empirically.
 
 ### Principal Components vs. Factor Analysis
 
-An important consideration is whether to use a principal components analysis (PCA) or a factor analysis.
-
-PCA is a data reduction technique. PCA computes the analysis without regard to the underlying latent structure of the variables, using all the variance in the manifest variables. When the goal is to develop a (psychological) scale, this is likely not what you want. With PCA, the variables are themselves of interest, rather than some hypothetical latent construct. Another way of describing it is that PCA conceptualizes constructs as causally determined by the observations (Edwards & Bagozzi, 2000). Again, this is likely not what you want because this means that "principal component scores are "caused" by their indicators in much the same way that sumscores are "caused" by item scores." [@borsboom2006]. Instead, you likely want the opposite causal relationship in which a latent factor causes the indicator scores.
+An important consideration is whether to use a principal components analysis (PCA) or a factor analysis. PCA is a data reduction technique. It involves an analysis without regard to the underlying latent structure of the variables, using all the variance in the manifest variables. When the goal is to develop a (psychological) scale, this is likely not what you want. With PCA, the variables themselves are of interest, rather than some hypothetical latent construct. Another way of describing it is that PCA conceptualizes constructs as causally determined by the observations (Edwards & Bagozzi, 2000). Again, this is likely not what you want because this means that "principal component scores are "caused" by their indicators in much the same way that sumscores are "caused" by item scores." [@borsboom2006]. Instead, you likely want the opposite causal relationship in which a latent factor causes the indicator scores.
 
 ```{r, echo=FALSE}
 library(DiagrammeR)
@@ -71,7 +70,7 @@ There are multiple factor extract methods, such as:
 
 It's not entirely clear which factor extraction method is the best and some authors use different terms for some of the methods, making it more difficult to compare them.
 
-Fabrigar, Wegener, MacCallum and Strahan (1999) argued that if data are relatively normally distributed, maximum likelihood is the best choice because "it allows for the computation of a wide range of indexes of the goodness of fit of the model $$and$$ permits statistical significance testing of factor loadings and correlations among factors and the computation of confidence intervals." (p. 277). In case the data is not generally normally distributed, they recommend principal axis factoring. This is recommended in several sources (@costello2005, @osborne2014).
+Fabrigar, Wegener, MacCallum and Strahan (1999) argued that if data are relatively normally distributed, maximum likelihood is the best choice because "it allows for the computation of a wide range of indexes of the goodness of fit of the model and permits statistical significance testing of factor loadings and correlations among factors and the computation of confidence intervals." (p. 277). In case the data is not generally normally distributed, they recommend principal axis factoring. This is recommended in several sources (@costello2005; @osborne2014).
 
 **Conclusion**: Use the maximum likelihood method if the data is generally normally distributed and to use principal axis factoring if the data is non-normal.
 
@@ -271,4 +270,3 @@ The summaries and conclusions above were largely taken from the following source
 <!-- -->
 
 -   In Search of Underlying Dimensions: The Use (and Abuse) of Factor Analysis in Personality and Social Psychology Bulletin by @russell2002
-

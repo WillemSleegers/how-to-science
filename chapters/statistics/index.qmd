@@ -1,9 +1,5 @@
 ---
-title: "About"
+title: "Overview"
 ---
 
-About this site
-
-```{r}
-1 + 1
-```
+This section is about statistics-related topics. At the moment there are two chapters. One of exploratory factor analyses and one of confirmatory factor analyses.
