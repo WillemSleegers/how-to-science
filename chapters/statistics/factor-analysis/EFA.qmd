@@ -1,50 +1,60 @@
 ---
 title: "Exploratory Factor Analysis"
 toc: true
+format:
+  html:
+    code-fold: true
 bibliography: references.bib
 ---
 
+::: callout-warning
+This chapter is still a work in progress.
+:::
+
 The goal of an exploratory factor analysis (EFA) is to study the latent factors that underlie responses to a larger number of items. In other words, the goal is to *explore* the data and *reduce* the number of variables. It is a popular technique in the development and validation of assessment instruments. Unlike confirmatory factor analysis (CFA), EFA is used when there is little or no a priori justification for specifying a particular structural model. This means that there is reasonable uncertainty about the number of underlying factors and which items load on which factor. The hope is to resolve some of that uncertainty empirically.
+
+Note that if you have a clear theoretical basis about the number of factors and which items should load on which factor, a CFA is more appropriate than EFA because it allows you to directly test your model. You could also do both, but a CFA should be conducted on new data to test its validity.
 
 ### Principal Components vs. Factor Analysis
 
-An important consideration is whether to use a principal components analysis (PCA) or a factor analysis. PCA is a data reduction technique. It involves an analysis without regard to the underlying latent structure of the variables, using all the variance in the manifest variables. When the goal is to develop a (psychological) scale, this is likely not what you want. With PCA, the variables themselves are of interest, rather than some hypothetical latent construct. Another way of describing it is that PCA conceptualizes constructs as causally determined by the observations (Edwards & Bagozzi, 2000). Again, this is likely not what you want because this means that "principal component scores are "caused" by their indicators in much the same way that sumscores are "caused" by item scores." [@borsboom2006]. Instead, you likely want the opposite causal relationship in which a latent factor causes the indicator scores.
+An important consideration is whether to use a principal components analysis (PCA) or a factor analysis. PCA is a data reduction technique and while a factor analysis is also a type of data reduction technique, the focus with PCA is more on simply reducing the data, without regard for a theoretical interpretation. With PCA, the variables themselves are of interest, rather than some hypothetical latent construct. Another way of describing it is that PCA conceptualizes constructs as causally determined by the observations. Again, this is likely not what you want because this means that "principal component scores are "caused" by their indicators in much the same way that sum scores are "caused" by item scores." \[@borsboom2006, p. 426\]. PCA is a formative model and not a reflective model [@edwards2000]. Instead, you likely want the opposite causal relationship in which a latent factor causes the indicator scores.
 
-```{r, echo=FALSE}
-library(DiagrammeR)
-
-grViz("
-digraph dot {
-
-graph [layout = dot,
-       rankdir = LR]
-
-node [shape = square,
-      color = black,
-      label = '']
-
-var1 [label = 'variable 1']
-var2 [label = 'variable 2']
-var3 [label = 'variable 3']
-var4 [label = 'variable 4']
-var5 [label = 'variable 5']
-var6 [label = 'variable 6']  
-var7 [label = 'variable 7']  
-var8 [label = 'variable 8']
+```{r, PCA-FA-figure}
+DiagrammeR::grViz("
+  digraph dot {
+    graph [
+      layout = dot, 
+      rankdir = LR, 
+      fontname = Helvetica, 
+      label = 'Illustration of a PCA model (left) and a factor analysis model (right).'
+    ]
     
-node [label = 'component A']
-comp1
-
-node [label = 'component B']
-comp2
-
-edge [color = black, minlen = 3]
-{var1 var2 var3 var4} -> comp1
-{var5 var6 var7 var8} -> comp2
-}")
+    node [fontname = Helvetica]
+    node [shape = square]
+    var1 [label = 'item 1']
+    var2 [label = 'item 2']
+    var3 [label = 'item 3']
+    var4 [label = 'item 4']
+    var5 [label = 'item 1']
+    var6 [label = 'item 2']  
+    var7 [label = 'item 3']  
+    var8 [label = 'item 4']
+  
+    node [shape = circle]
+    construct_a [label = 'construct A']
+    construct_b [label = 'construct B']
+  
+    edge [color = black, minlen = 3]
+    {var1 var2 var3 var4} -> construct_a
+    construct_b -> {var5 var6 var7 var8}
+  
+    edge[style = invis, minlen = 1];
+    construct_a -> construct_b
+  }"
+)
 ```
 
-While common factor analysis assumes that total variance can be partitioned into common and unique variance, PCA assumes that there common variances takes up all of total variance. This means that PCA assumes that all variables are measured without error. It is usually more reasonable to assume that you have not measured your set of items perfectly. Although some argue that the two methods have the same results, there is also evidence that factor analysis has better results than PCA (Widaman, 1993). See @russell2002 for a discussion.
+A related issue is that factor analysis assumes that total variance can be partitioned into common and unique variance and PCA assumes that the common variances takes up all of total variance. This means that PCA assumes that all variables are measured without error. It is usually more reasonable to assume that you have not measured your set of items perfectly. Although some argue that the two methods have the same results [@velicer1990], there is evidence that those similarities are mistaken and that factor analysis has better results than PCA [@widaman1993].
 
 **Conclusion**: Do not use PCA.
 
@@ -70,7 +80,7 @@ There are multiple factor extract methods, such as:
 
 It's not entirely clear which factor extraction method is the best and some authors use different terms for some of the methods, making it more difficult to compare them.
 
-Fabrigar, Wegener, MacCallum and Strahan (1999) argued that if data are relatively normally distributed, maximum likelihood is the best choice because "it allows for the computation of a wide range of indexes of the goodness of fit of the model and permits statistical significance testing of factor loadings and correlations among factors and the computation of confidence intervals." (p. 277). In case the data is not generally normally distributed, they recommend principal axis factoring. This is recommended in several sources (@costello2005; @osborne2014).
+Fabrigar, Wegener, MacCallum and Strahan -@fabrigar1999 argued that if data are relatively normally distributed, maximum likelihood is the best choice because "it allows for the computation of a wide range of indexes of the goodness of fit of the model and permits statistical significance testing of factor loadings and correlations among factors and the computation of confidence intervals." (p. 277). In case the data is not generally normally distributed, they recommend principal axis factoring. This is recommended in several sources (@costello2005; @osborne2014).
 
 **Conclusion**: Use the maximum likelihood method if the data is generally normally distributed and to use principal axis factoring if the data is non-normal.
 
@@ -172,10 +182,6 @@ The general consensus seems to be that rules of thumb are a bad idea. The reason
 +--------------------------+-----------------------+--------------------------------+
 |                          | Aleamoni, 1976        | 400                            |
 +--------------------------+-----------------------+--------------------------------+
-|                          |                       |                                |
-+--------------------------+-----------------------+--------------------------------+
-|                          |                       |                                |
-+--------------------------+-----------------------+--------------------------------+
 | *Participant:item ratio* |                       |                                |
 +--------------------------+-----------------------+--------------------------------+
 |                          | @gorsuch2015, p.332   | 5:1 (100 participants minimum) |
@@ -185,12 +191,6 @@ The general consensus seems to be that rules of thumb are a bad idea. The reason
 |                          | @everitt1975          | 10:1 (optimistically)          |
 +--------------------------+-----------------------+--------------------------------+
 |                          | Nunally (1978), p.421 | 10:1                           |
-+--------------------------+-----------------------+--------------------------------+
-|                          |                       |                                |
-+--------------------------+-----------------------+--------------------------------+
-|                          |                       |                                |
-+--------------------------+-----------------------+--------------------------------+
-|                          |                       |                                |
 +--------------------------+-----------------------+--------------------------------+
 
 : Table: Examples of rules of thumb.
@@ -266,7 +266,5 @@ Remember that the goal of exploratory factor analysis is to explore whether your
 The summaries and conclusions above were largely taken from the following sources:
 
 -   Best Practices in Exploratory Factor Analysis by @osborne2014
-
-<!-- -->
-
 -   In Search of Underlying Dimensions: The Use (and Abuse) of Factor Analysis in Personality and Social Psychology Bulletin by @russell2002
+-   Evaluating the Use of Exploratory Factor Analysis in Psychological Research by @fabrigar1999

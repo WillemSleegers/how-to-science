@@ -3,3 +3,9 @@
 #quarto-header {
   border-bottom: 1px solid #dee2e6;
 }
+
+/* Align the logo and title better */
+.navbar-brand {
+  display: flex;
+  align-items: center;
+}

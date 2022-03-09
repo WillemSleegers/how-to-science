@@ -11,6 +11,69 @@
     div.column{display: inline-block; vertical-align: top; width: 50%;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
     div.csl-bib-body { }
     div.csl-entry {
       clear: both;
@@ -85,7 +148,7 @@
     <nav class="navbar navbar-expand-sm navbar-dark ">
       <div class="navbar-container container-fluid">
       <a class="navbar-brand" href="../../../index.html">
-    <img src="../../../assets/img/logo.png" alt="">
+    <img src="../../../assets/img/book.svg" alt="">
     <span class="navbar-title">How to Science</span>
   </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
@@ -197,18 +260,66 @@
 <h1 class="title d-none d-lg-block display-7">Exploratory Factor Analysis</h1>
 </header>
 
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This chapter is still a work in progress.</p>
+</div>
+</div>
 <p>The goal of an exploratory factor analysis (EFA) is to study the latent factors that underlie responses to a larger number of items. In other words, the goal is to <em>explore</em> the data and <em>reduce</em> the number of variables. It is a popular technique in the development and validation of assessment instruments. Unlike confirmatory factor analysis (CFA), EFA is used when there is little or no a priori justification for specifying a particular structural model. This means that there is reasonable uncertainty about the number of underlying factors and which items load on which factor. The hope is to resolve some of that uncertainty empirically.</p>
+<p>Note that if you have a clear theoretical basis about the number of factors and which items should load on which factor, a CFA is more appropriate than EFA because it allows you to directly test your model. You could also do both, but a CFA should be conducted on new data to test its validity.</p>
 <section id="principal-components-vs.-factor-analysis" class="level3">
 <h3 class="anchored" data-anchor-id="principal-components-vs.-factor-analysis">Principal Components vs.&nbsp;Factor Analysis</h3>
-<p>An important consideration is whether to use a principal components analysis (PCA) or a factor analysis.</p>
-<p>PCA is a data reduction technique. PCA computes the analysis without regard to the underlying latent structure of the variables, using all the variance in the manifest variables. When the goal is to develop a (psychological) scale, this is likely not what you want. With PCA, the variables are themselves of interest, rather than some hypothetical latent construct. Another way of describing it is that PCA conceptualizes constructs as causally determined by the observations (Edwards &amp; Bagozzi, 2000). Again, this is likely not what you want because this means that “principal component scores are”caused” by their indicators in much the same way that sumscores are “caused” by item scores.” <span class="citation" data-cites="borsboom2006">(<a href="#ref-borsboom2006" role="doc-biblioref">Borsboom 2006</a>)</span>. Instead, you likely want the opposite causal relationship in which a latent factor causes the indicator scores.</p>
+<p>An important consideration is whether to use a principal components analysis (PCA) or a factor analysis. PCA is a data reduction technique and while a factor analysis is also a type of data reduction technique, the focus with PCA is more on simply reducing the data, without regard for a theoretical interpretation. With PCA, the variables themselves are of interest, rather than some hypothetical latent construct. Another way of describing it is that PCA conceptualizes constructs as causally determined by the observations. Again, this is likely not what you want because this means that “principal component scores are”caused” by their indicators in much the same way that sum scores are “caused” by item scores.” [<span class="citation" data-cites="borsboom2006">Borsboom (<a href="#ref-borsboom2006" role="doc-biblioref">2006</a>)</span>, p.&nbsp;426]. PCA is a formative model and not a reflective model <span class="citation" data-cites="edwards2000">(<a href="#ref-edwards2000" role="doc-biblioref">Edwards &amp; Bagozzi, 2000</a>)</span>. Instead, you likely want the opposite causal relationship in which a latent factor causes the indicator scores.</p>
 <div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>DiagrammeR<span class="sc">::</span><span class="fu">grViz</span>(<span class="st">"</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="st">  digraph dot {</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="st">    graph [</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="st">      layout = dot, </span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="st">      rankdir = LR, </span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="st">      fontname = Helvetica, </span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="st">      label = 'Illustration of a PCA model (left) and a factor analysis model (right).'</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="st">    ]</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="st">    </span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="st">    node [fontname = Helvetica]</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="st">    node [shape = square]</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="st">    var1 [label = 'item 1']</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="st">    var2 [label = 'item 2']</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="st">    var3 [label = 'item 3']</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="st">    var4 [label = 'item 4']</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="st">    var5 [label = 'item 1']</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="st">    var6 [label = 'item 2']  </span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="st">    var7 [label = 'item 3']  </span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="st">    var8 [label = 'item 4']</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="st">    node [shape = circle]</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="st">    construct_a [label = 'construct A']</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="st">    construct_b [label = 'construct B']</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="st">    edge [color = black, minlen = 3]</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="st">    {var1 var2 var3 var4} -&gt; construct_a</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="st">    construct_b -&gt; {var5 var6 var7 var8}</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="st">  </span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="st">    edge[style = invis, minlen = 1];</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="st">    construct_a -&gt; construct_b</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="st">  }"</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
-<div id="htmlwidget-8a55543c2a403d28c46c" style="width:100%;height:464px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-8a55543c2a403d28c46c">{"x":{"diagram":"\ndigraph dot {\n\ngraph [layout = dot,\n       rankdir = LR]\n\nnode [shape = square,\n      color = black,\n      label = \"\"]\n\nvar1 [label = \"variable 1\"]\nvar2 [label = \"variable 2\"]\nvar3 [label = \"variable 3\"]\nvar4 [label = \"variable 4\"]\nvar5 [label = \"variable 5\"]\nvar6 [label = \"variable 6\"]  \nvar7 [label = \"variable 7\"]  \nvar8 [label = \"variable 8\"]\n    \nnode [label = \"component A\"]\ncomp1\n\nnode [label = \"component B\"]\ncomp2\n\nedge [color = black, minlen = 3]\n{var1 var2 var3 var4} -> comp1\n{var5 var6 var7 var8} -> comp2\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-20ae1695cfefce89e0f7" style="width:100%;height:464px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-20ae1695cfefce89e0f7">{"x":{"diagram":"\n  digraph dot {\n    graph [\n      layout = dot, \n      rankdir = LR, \n      fontname = Helvetica, \n      label = \"Illustration of a PCA model (left) and a factor analysis model (right).\"\n    ]\n    \n    node [fontname = Helvetica]\n    node [shape = square]\n    var1 [label = \"item 1\"]\n    var2 [label = \"item 2\"]\n    var3 [label = \"item 3\"]\n    var4 [label = \"item 4\"]\n    var5 [label = \"item 1\"]\n    var6 [label = \"item 2\"]  \n    var7 [label = \"item 3\"]  \n    var8 [label = \"item 4\"]\n  \n    node [shape = circle]\n    construct_a [label = \"construct A\"]\n    construct_b [label = \"construct B\"]\n  \n    edge [color = black, minlen = 3]\n    {var1 var2 var3 var4} -> construct_a\n    construct_b -> {var5 var6 var7 var8}\n  \n    edge[style = invis, minlen = 1];\n    construct_a -> construct_b\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
-<p>While common factor analysis assumes that total variance can be partitioned into common and unique variance, PCA assumes that there common variances takes up all of total variance. This means that PCA assumes that all variables are measured without error. It is usually more reasonable to assume that you have not measured your set of items perfectly. Although some argue that the two methods have the same results, there is also evidence that factor analysis has better results than PCA (Widaman, 1993). See <span class="citation" data-cites="russell2002">Russell (<a href="#ref-russell2002" role="doc-biblioref">2002</a>)</span> for a discussion.</p>
+<p>A related issue is that factor analysis assumes that total variance can be partitioned into common and unique variance and PCA assumes that the common variances takes up all of total variance. This means that PCA assumes that all variables are measured without error. It is usually more reasonable to assume that you have not measured your set of items perfectly. Although some argue that the two methods have the same results <span class="citation" data-cites="velicer1990">(<a href="#ref-velicer1990" role="doc-biblioref">Velicer &amp; Jackson, 1990</a>)</span>, there is evidence that those similarities are mistaken and that factor analysis has better results than PCA <span class="citation" data-cites="widaman1993">(<a href="#ref-widaman1993" role="doc-biblioref">Widaman, 1993</a>)</span>.</p>
 <p><strong>Conclusion</strong>: Do not use PCA.</p>
 </section>
 <section id="factor-extraction-method" class="level3">
@@ -225,7 +336,7 @@
 <li><p>image factor(ing)</p></li>
 </ul>
 <p>It’s not entirely clear which factor extraction method is the best and some authors use different terms for some of the methods, making it more difficult to compare them.</p>
-<p>Fabrigar, Wegener, MacCallum and Strahan (1999) argued that if data are relatively normally distributed, maximum likelihood is the best choice because “it allows for the computation of a wide range of indexes of the goodness of fit of the model and permits statistical significance testing of factor loadings and correlations among factors and the computation of confidence intervals.” (p.&nbsp;277). In case the data is not generally normally distributed, they recommend principal axis factoring. This is recommended in several sources (<span class="citation" data-cites="costello2005">Costello and Osborne (<a href="#ref-costello2005" role="doc-biblioref">2005</a>)</span>; <span class="citation" data-cites="osborne2014">Osborne (<a href="#ref-osborne2014" role="doc-biblioref">2014</a>)</span>).</p>
+<p>Fabrigar, Wegener, MacCallum and Strahan -<span class="citation" data-cites="fabrigar1999">Fabrigar et al. (<a href="#ref-fabrigar1999" role="doc-biblioref">1999</a>)</span> argued that if data are relatively normally distributed, maximum likelihood is the best choice because “it allows for the computation of a wide range of indexes of the goodness of fit of the model and permits statistical significance testing of factor loadings and correlations among factors and the computation of confidence intervals.” (p.&nbsp;277). In case the data is not generally normally distributed, they recommend principal axis factoring. This is recommended in several sources (<span class="citation" data-cites="costello2005">Costello &amp; Osborne (<a href="#ref-costello2005" role="doc-biblioref">2005</a>)</span>; <span class="citation" data-cites="osborne2014">Osborne (<a href="#ref-osborne2014" role="doc-biblioref">2014</a>)</span>).</p>
 <p><strong>Conclusion</strong>: Use the maximum likelihood method if the data is generally normally distributed and to use principal axis factoring if the data is non-normal.</p>
 </section>
 <section id="rotation-methods" class="level3">
@@ -259,7 +370,7 @@
 <li><p>Velicer’s multiple average partial (MAP) procedure (Velicer, 1976)</p></li>
 <li><p>Akaike information criterion (AIC; Akaike, 1974)</p></li>
 <li><p>Bayesian information criterion (BIC; Schwarz, 1978)</p></li>
-<li><p>Comparison data (CD; <span class="citation" data-cites="ruscio2012">Ruscio and Brendan Roche (<a href="#ref-ruscio2012" role="doc-biblioref">2012</a>)</span>)</p></li>
+<li><p>Comparison data (CD; <span class="citation" data-cites="ruscio2012">Ruscio &amp; Brendan Roche (<a href="#ref-ruscio2012" role="doc-biblioref">2012</a>)</span>)</p></li>
 <li><p>Very Simple Structure (VSS)</p></li>
 </ul>
 <p>If the theoretical framework for the instrument is sound, we should start with the expectation that we should see that structure in the data. Instruments are rarely perfect (especially the first time it is examined), and theoretical expectations are not always supported. But unless one is on a fishing expedition in a data set with no a priori ideas about how the analysis should turn out, 12 this is as good a place as any to start.</p>
@@ -269,7 +380,7 @@
 <p>The Minimum Average Partial (MAP) criterion involves partialing out common variance as each successive component is created. As each successive component is partialed out, common variance will decrease to a minimum. Velicer argued that minimum point should be considered the criterion for the number of factors to extract.</p>
 <p>VSS involves degrading the initial rotated factor solution by <strong>assuming</strong> that the nonsalient loadings are zero, even though in actuality they rarely are. What VSS does is test how well the factor matrix we <strong>think</strong> abaut and talk about actually fits the correlation matrix. It is not a confirmatory procedure for testing the significance of a particular loading, but rather it is an exploratory procedure for testing the relative utility of <strong>interpreting</strong> the correlation matrix in terms of a family of increasingly more complex factor models. The simplest model tasted by VSS is that each item is of complexity one, and that all items are embedded in a more complex factor matrix of rank k. This is the model most appropriate for scale construction and is the one we use most frequently when we talk about factor solutions. More complicated models may also be evaluated by VSS.</p>
 <p>Zwick and Velicer (1986) tested the scree test, Horn’s parallel test, and Velicer’s MAP test (among others) in simulation studies using a data set with a clear factor structure. Both the parallel test and MAP test seemed to work well.</p>
-<p><span class="citation" data-cites="ruscio2012">Ruscio and Brendan Roche (<a href="#ref-ruscio2012" role="doc-biblioref">2012</a>)</span> notes that PA is considered to be the method of choice among methodologists and recommend that researchers take advantage of PA as a starting point, perhaps supplemented by CD. They note that researchers can also use more than one method. Similarly, several prominent authors and journals have endorsed this as the most robust and accurate process for determining the number of factors to extract (Ledesma &amp; Valero-Mora, 2007; Velicer et al., 2000).</p>
+<p><span class="citation" data-cites="ruscio2012">Ruscio &amp; Brendan Roche (<a href="#ref-ruscio2012" role="doc-biblioref">2012</a>)</span> notes that PA is considered to be the method of choice among methodologists and recommend that researchers take advantage of PA as a starting point, perhaps supplemented by CD. They note that researchers can also use more than one method. Similarly, several prominent authors and journals have endorsed this as the most robust and accurate process for determining the number of factors to extract (Ledesma &amp; Valero-Mora, 2007; Velicer et al., 2000).</p>
 <p><span class="citation" data-cites="osborne2014">Osborne (<a href="#ref-osborne2014" role="doc-biblioref">2014</a>)</span> notes that MAP has been considered superior to the “classic” criteria, and probably is superior to parallel analysis, although neither is perfect, and all must be used in the context of a search for conceptually interpretable factors. He recommends to use parallel analysis or MAP criteria, along with theory (and any of the classic criteria that suits you and is defensible).</p>
 <p><strong>Conclusion:</strong> Use multiple criteria and theory to make a judgment call about how many factors to extract.</p>
 </section>
@@ -324,16 +435,6 @@
 <td>400</td>
 </tr>
 <tr class="odd">
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="odd">
 <td><em>Participant:item ratio</em></td>
 <td></td>
 <td></td>
@@ -357,21 +458,6 @@
 <td></td>
 <td>Nunally (1978), p.421</td>
 <td>10:1</td>
-</tr>
-<tr class="even">
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td></td>
-<td></td>
-<td></td>
 </tr>
 </tbody>
 </table>
@@ -435,28 +521,38 @@
 <p>The summaries and conclusions above were largely taken from the following sources:</p>
 <ul>
 <li>Best Practices in Exploratory Factor Analysis by <span class="citation" data-cites="osborne2014">Osborne (<a href="#ref-osborne2014" role="doc-biblioref">2014</a>)</span></li>
-</ul>
-<!-- -->
-<ul>
 <li>In Search of Underlying Dimensions: The Use (and Abuse) of Factor Analysis in Personality and Social Psychology Bulletin by <span class="citation" data-cites="russell2002">Russell (<a href="#ref-russell2002" role="doc-biblioref">2002</a>)</span></li>
+<li>Evaluating the Use of Exploratory Factor Analysis in Psychological Research by <span class="citation" data-cites="fabrigar1999">Fabrigar et al. (<a href="#ref-fabrigar1999" role="doc-biblioref">1999</a>)</span></li>
 </ul>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="doc-bibliography">
 <div id="ref-borsboom2006" class="csl-entry" role="doc-biblioentry">
-Borsboom, Denny. 2006. <span>“The Attack of the Psychometricians.”</span> <em>Psychometrika</em> 71 (3): 425. <a href="https://doi.org/10.1007/s11336-006-1447-6">https://doi.org/10.1007/s11336-006-1447-6</a>.
+Borsboom, D. (2006). The attack of the psychometricians. <em>Psychometrika</em>, <em>71</em>(3), 425. <a href="https://doi.org/10.1007/s11336-006-1447-6">https://doi.org/10.1007/s11336-006-1447-6</a>
 </div>
 <div id="ref-costello2005" class="csl-entry" role="doc-biblioentry">
-Costello, Anna, and Jason Osborne. 2005. <span>“Best Practices in Exploratory Factor Analysis: Four Recommendations for Getting the Most from Your Analysis.”</span> <em>Practical Assessment, Research, and Evaluation</em> 10 (1). <a href="https://doi.org/10.7275/jyj1-4868">https://doi.org/10.7275/jyj1-4868</a>.
+Costello, A., &amp; Osborne, J. (2005). Best practices in exploratory factor analysis: Four recommendations for getting the most from your analysis. <em>Practical Assessment, Research, and Evaluation</em>, <em>10</em>(1). <a href="https://doi.org/10.7275/jyj1-4868">https://doi.org/10.7275/jyj1-4868</a>
+</div>
+<div id="ref-edwards2000" class="csl-entry" role="doc-biblioentry">
+Edwards, J. R., &amp; Bagozzi, R. P. (2000). On the nature and direction of relationships between constructs and measures. <em>Psychological Methods</em>, <em>5</em>(2), 155–174. <a href="https://doi.org/10.1037/1082-989X.5.2.155">https://doi.org/10.1037/1082-989X.5.2.155</a>
+</div>
+<div id="ref-fabrigar1999" class="csl-entry" role="doc-biblioentry">
+Fabrigar, L. R., Wegener, D. T., MacCallum, R. C., &amp; Strahan, E. J. (1999). Evaluating the use of exploratory factor analysis in psychological research. <em>Psychological Methods</em>, <em>4</em>(3), 272–299. <a href="https://doi.org/10.1037/1082-989X.4.3.272">https://doi.org/10.1037/1082-989X.4.3.272</a>
 </div>
 <div id="ref-osborne2014" class="csl-entry" role="doc-biblioentry">
-Osborne, Jason W. 2014. <em>Best Practices in Exploratory Factor Analysis</em>. <span>Createspace publishing</span>.
+Osborne, J. W. (2014). <em>Best practices in exploratory factor analysis</em>. <span>Createspace publishing</span>.
 </div>
 <div id="ref-ruscio2012" class="csl-entry" role="doc-biblioentry">
-Ruscio, John, and Brendan Roche. 2012. <span>“Determining the Number of Factors to Retain in an Exploratory Factor Analysis Using Comparison Data of Known Factorial Structure.”</span> <em>Psychological Assessment</em> 24 (2): 282–92. <a href="https://doi.org/10.1037/a0025697">https://doi.org/10.1037/a0025697</a>.
+Ruscio, J., &amp; Brendan Roche. (2012). Determining the number of factors to retain in an exploratory factor analysis using comparison data of known factorial structure. <em>Psychological Assessment</em>, <em>24</em>(2), 282–292. <a href="https://doi.org/10.1037/a0025697">https://doi.org/10.1037/a0025697</a>
 </div>
 <div id="ref-russell2002" class="csl-entry" role="doc-biblioentry">
-Russell, Daniel W. 2002. <span>“In Search of Underlying Dimensions: The Use (and Abuse) of Factor Analysis in Personality and Social Psychology Bulletin.”</span> <em>Personality and Social Psychology Bulletin</em> 28 (12): 1629–46. <a href="https://doi.org/10.1177/014616702237645">https://doi.org/10.1177/014616702237645</a>.
+Russell, D. W. (2002). In search of underlying dimensions: The use (and abuse) of factor analysis in Personality and Social Psychology Bulletin. <em>Personality and Social Psychology Bulletin</em>, <em>28</em>(12), 1629–1646. <a href="https://doi.org/10.1177/014616702237645">https://doi.org/10.1177/014616702237645</a>
+</div>
+<div id="ref-velicer1990" class="csl-entry" role="doc-biblioentry">
+Velicer, W. F., &amp; Jackson, D. N. (1990). Component analysis versus common factor analysis: Some issues in selecting an appropriate procedure. <em>Multivariate Behavioral Research</em>, <em>25</em>(1), 1–28. <a href="https://doi.org/10.1207/s15327906mbr2501_1">https://doi.org/10.1207/s15327906mbr2501_1</a>
+</div>
+<div id="ref-widaman1993" class="csl-entry" role="doc-biblioentry">
+Widaman, K. F. (1993). Common factor analysis versus principal component analysis: Differential bias in representing model parameters? <em>Multivariate Behavioral Research</em>, <em>28</em>(3), 263–311. <a href="https://doi.org/10.1207/s15327906mbr2803_1">https://doi.org/10.1207/s15327906mbr2803_1</a>
 </div>
 </div>
 </section>

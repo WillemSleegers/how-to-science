@@ -50,5 +50,6 @@ format:
   html:
     theme: cosmo
     css: assets/css/styles.css
+    csl: assets/bib/apa.csl
 
 editor: visual
