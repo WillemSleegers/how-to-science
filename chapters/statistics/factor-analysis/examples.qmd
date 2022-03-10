@@ -1,5 +1,8 @@
 ---
 title: "Examples"
+nocite: |
+  @kahane2018
+bibliography: references.bib
 ---
 
-\- Beyond Sacrificial Harm: A Two-Dimensional Model of Utilitarian Psychology
+This page lists several examples of papers in which EFA and/or CFA was used to construct a psychological scale.

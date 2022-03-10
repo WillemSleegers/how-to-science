@@ -1,6 +1,0 @@
----
-title: "Recommended reading"
-bibliography: references.bib
----
-
--   Dynamic Fit Index Cutoffs for Confirmatory Factor Analysis Models by @mcneish2021

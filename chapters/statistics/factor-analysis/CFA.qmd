@@ -6,6 +6,8 @@ title: "Confirmatory Factor Analysis"
 This chapter is still a work in progress.
 :::
 
+Note that if you have a clear theoretical basis about the number of factors and which items should load on which factor, CFA is more appropriate than EFA because it allows you to directly test your model. You could also do both, but a CFA should be conducted on new data to test its validity.
+
 For confirmatory factor analyses there are also several ways to determine the sample size, including:
 
 1.  Rules of thumb
@@ -100,3 +102,7 @@ The only advice we can afford to give, however, is to closely follow development
 ### Reliability
 
 Reliability increases the closer the value gets to 1.00, with an acceptability threshold of 0.70.
+
+## Recommended Reading
+
+-   Dynamic Fit Index Cutoffs for Confirmatory Factor Analysis Models by @mcneish2021

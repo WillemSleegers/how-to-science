@@ -11,13 +11,73 @@ bibliography: references.bib
 This chapter is still a work in progress.
 :::
 
-The goal of an exploratory factor analysis (EFA) is to study the latent factors that underlie responses to a larger number of items. In other words, the goal is to *explore* the data and *reduce* the number of variables. It is a popular technique in the development and validation of assessment instruments. Unlike confirmatory factor analysis (CFA), EFA is used when there is little or no a priori justification for specifying a particular structural model. This means that there is reasonable uncertainty about the number of underlying factors and which items load on which factor. The hope is to resolve some of that uncertainty empirically.
+The goal of an exploratory factor analysis (EFA) is to study the latent factors that underlie responses to a larger number of items. In other words, the goal is to *explore* the data and *reduce* the number of variables. It is a popular technique in the development and validation of assessment instruments.
 
-Note that if you have a clear theoretical basis about the number of factors and which items should load on which factor, a CFA is more appropriate than EFA because it allows you to directly test your model. You could also do both, but a CFA should be conducted on new data to test its validity.
+Unlike confirmatory factor analysis (CFA), EFA is used when there is little or no a priori justification for specifying a particular structural model. This means that there is reasonable uncertainty about the number of underlying factors and which items load on which factor. The hope is to resolve some of that uncertainty empirically.
 
-## Principal Components vs. Factor Analysis
+## Preparation
 
-An important consideration is whether to use a principal components analysis (PCA) or a factor analysis. PCA is a data reduction technique and while a factor analysis is also a type of data reduction technique, the focus with PCA is more on simply reducing the data, without regard for a theoretical interpretation. With PCA, the variables themselves are of interest, rather than some hypothetical latent construct. Another way of describing it is that PCA conceptualizes constructs as causally determined by the observations. Again, this is likely not what you want because this means that "principal component scores are "caused" by their indicators in much the same way that sum scores are "caused" by item scores." \[@borsboom2006, p. 426\]. PCA is a formative model and not a reflective model [@edwards2000]. Instead, you likely want the opposite causal relationship in which a latent factor causes the indicator scores.
+Before you perform a factor analysis, make sure that the design of your study is suitable for this type of analysis. This means you should have an appropriate sample, sample size, and indicators (items).
+
+### Sample
+
+It may be obvious, but make sure to target participants that are likely to vary in the attitude that you're interested in measuring and that the sample is representative of the population that you're interested in.
+
+### Sample size
+
+Rules of thumb are one way to determine an appropriate sample size, but the general consensus seems to be that rules of thumb are a bad idea [@maccallum1999]. The reason for that is that the rules of thumb only involve one of two factors: a set number of participants or a particular participant-to-item ratio. The reality is that the appropriate sample size is dependent on many more factors, such as the:
+
+-   Study design (e.g., cross-sectional vs. longitudinal)
+
+-   Size of the relationships among the indicators (e.g., high communalities without cross loadings; strong loadings)
+
+-   Reliability of the indicators
+
+-   Scaling (e.g., categorical, continuous) and distribution of the indicators
+
+-   Estimator type (e.g., ML, robust ML, WLSMV)
+
+-   Amount and patterns of missing data
+
+-   Size of the model (model complexity)
+
+For example, MacCallum, Widaman, Zhang, and Hong (1999) found that results were consistent with population loadings with sample sizes as low as 60 cases if the communalities of the items were high (.60 or greater). With lower communality levels (around .50), samples of 100 to 200 cases were required.
+
+Costello and Osborne [-@costello2005] caution researchers to remember that EFA is a large-sample procedure and that generalizable or replicable results are unlikely if the sample is too small. They found that a ratio of 20:1 produces error rates well above the standard alpha (5%) level. They also say that researchers should realize that EFA is exploratory and should be used only for exploring data, not hypothesis or theory testing.
+
+### Relevant indicators
+
+One design issue that is especially important is what measured variables to include in the study. If measured variables irrelevant to the domain of interest are included, then spurious common factors might emerge or true common factors might be obscured [@fabrigar1999].
+
+### Number of indicators
+
+At least three items per factor are required for a factor model to be identified; more items per factor results in overidentification of the model. A number of writers recommend that four or more items per factor be included in the factor analysis to ensure an adequate identification of the factors (Comrey & Lee, 1992; Fabrigar et al., 1999; Gorsuch, 1988). @fabrigar1999 suggest to include at least 4 and perhaps as many as six for each factor.
+
+MacCallum et al. (1999) found that in addition to the communality of the measures, the results were more accurate for given sample sizes if there were more measures per factor included in the analysis.Within the range of indicators studied (three to seven per factor), it is better to have more indicators than fewer. The critical point, however, is that these indicators must be reasonably valid and reliable.
+
+Velicer & Fava (1998) suggest 6-10 initial variables per factor is recommended as 25% to 50% will not perform as expected and the end goal should be to have four- or five to-one as a minimum. They say that the bare minimum of three variables per factor is a dangerous goal. They also write that if loading is low, a ratio of 10 or 20 to 1 may be required for model identification.
+
+Factor loadings can be improved by using multiple response (Likert-type) items, as they generally result in higher loadings than two-choice items (Comrey & Montag, 1982; Oswald & Velicer, 1980; Velicer, DiClemente, & Corriveau, 1984; Velicer, Govia, Cherico, & Corriveau, 1985; Velicer & Stevenson, 1978). Likewise, the quality of item writing can affect the size of the loadings, that is, the expression of an item in simple language, restricting the item to a single idea, or using content that is appropriate to a majority of respondents are all ways of improving items. Item quality can also be improved by using item parcels, that is, the total of several items, instead of individual items.
+
+Some additional arguments for why multiple indicators per factor are useful:
+
+-   People read items incorrectly or sometimes just don't understand an item (despite all efforts to make them as clear as possible), so having a sample of items can counteract the idiosyncratic mistakes of respondents
+
+-   With complicated topics, having multiple items also adds clarity about the overall goal of the scale. Each item is an indicator to the participant about what the purpose of the scale is.
+
+## Data Analysis
+
+### Sampling Adequacy
+
+The Kaiser--Meyer--Olkin (KMO) test is a statistical measure to determine how suitable the data is for factor analysis. The test measures sampling adequacy for the complete model and each variable in the model. The statistic is a measure of the proportion of variance among variables that might be common variance. The lower the proportion, the higher the KMO value, the more suitable the data is.
+
+The KMO value ranges from 0 to 1, with 0.60 considered suitable for factor analysis @tabachnick2013. Kaiser himself [-@kaiser1974] suggested that KMO \> .9 were marvelous, in the .80s, meritorious, in the .70s, middling, in the .60s, mediocre, in the 50s, miserable, and less than .5, unacceptable.
+
+Bartlett's (1954) test of sphericity is a notoriously sensitive test of the hypothesis that the correlations in a correlation matrix are zero. Because of its sensitivity and its dependence on N, the test is likely to be significant with samples of substantial size even if correlations are very low. Therefore, use of the test is recommended only if there are fewer than, say, five cases per variable [@tabachnick2013].
+
+### Principal Components vs. Factor Analysis
+
+An important consideration is whether to use a principal components analysis (PCA) or a factor analysis. PCA is a data reduction technique and while a factor analysis is also a type of data reduction technique, the focus with PCA is more on simply reducing the data, without regard for a theoretical interpretation. With PCA, the variables themselves are of interest, rather than a hypothetical latent construct. Constructs are conceptualized as being causally determined by the observations; that is, CFA reflects a formative model rather than a reflective one [@edwards2000]. If you are a psychologist trying to create a measure of a psychological construct, this is probaly not what you want as principal component scores are "caused" by their indicators in much the same way that sum scores are "caused" by item scores." \[@borsboom2006, p. 426\]. Instead, you likely want the opposite causal relationship in which a latent factor causes the indicator scores.
 
 ```{r, PCA-FA-figure}
 DiagrammeR::grViz("
@@ -25,11 +85,11 @@ DiagrammeR::grViz("
     graph [
       layout = dot, 
       rankdir = LR, 
-      fontname = Helvetica, 
+      fontname = 'Source Sans Pro', 
       label = 'Illustration of a PCA model (left) and a factor analysis model (right).'
     ]
     
-    node [fontname = Helvetica]
+    node [fontname = 'Source Sans Pro']
     node [shape = square]
     var1 [label = 'item 1']
     var2 [label = 'item 2']
@@ -54,7 +114,9 @@ DiagrammeR::grViz("
 )
 ```
 
-A related issue is that factor analysis assumes that total variance can be partitioned into common and unique variance and PCA assumes that the common variances takes up all of total variance. This means that PCA assumes that all variables are measured without error. It is usually more reasonable to assume that you have not measured your set of items perfectly. Although some argue that the two methods have the same results [@velicer1990], there is evidence that those similarities are mistaken and that factor analysis has better results than PCA [@widaman1993].
+A related issue is that factor analysis assumes that the total variance can be partitioned into common and unique variance and PCA assumes that the common variances takes up all of total variance. This means that PCA assumes that all variables are measured without error. It is usually more reasonable to assume that you have not measured your set of items perfectly.
+
+Although some argue that the two methods have the same results [@velicer1990], there is evidence that those similarities are mistaken and that factor analysis has better results than PCA [@widaman1993].
 
 **Conclusion**: Do not use PCA.
 
@@ -112,7 +174,7 @@ There is no widely preferred method of oblique rotation; all tend to produce sim
 
 **Conclusion**: Use any oblique rotation.
 
-### Number of factors to retain
+### Number of factors
 
 There are several methods to determine how many factors to retain:
 
@@ -154,122 +216,21 @@ Zwick and Velicer (1986) tested the scree test, Horn's parallel test, and Velice
 
 @osborne2014 notes that MAP has been considered superior to the "classic" criteria, and probably is superior to parallel analysis, although neither is perfect, and all must be used in the context of a search for conceptually interpretable factors. He recommends to use parallel analysis or MAP criteria, along with theory (and any of the classic criteria that suits you and is defensible).
 
-Finally, Empirical research suggests that overfactoring introduces much less error to factor loading estimatesihan underfactoring (Fava & Velicer. 1992; Wood et..;!., 1996). Although be wary of Solutions with too many factors mightprompt a researcher to postulate the existence of cons tracts with little theoretical value and thereby develop unnecessarily complex theories.
+Finally, empirical research suggests that overfactoring introduces much less error to factor loading estimatesihan underfactoring (Fava & Velicer. 1992; Wood et..;!., 1996). Although be wary of Solutions with too many factors mightprompt a researcher to postulate the existence of cons tracts with little theoretical value and thereby develop unnecessarily complex theories.
 
-**Conclusion:** Use multiple criteria and theory to make a judgment call about how many factors to extract. When in doubt, favor more factors rather than fewer factors.
+**Conclusion:** Use multiple criteria, including theory, to make a judgment call about how many factors to extract. When in doubt, favor more factors rather than fewer factors.
 
-### Sample
+## Interpretation
 
-Make sure to target participants that are likely to vary in the attitude that you're interested in measuring.
+Remember that the goal of exploratory factor analysis is to explore whether your data fits a model that makes sense. Ideally, you have a conceptual or theoretical framework for the analysis- a theory or body of literature guiding the development of an instrument, for example. Even if you do not, the results should be sensible in some way. You should be able to construct a simple narrative describing how each factor, and its constituent variables, makes sense and is easily labeled.
 
-Make sure the sample is representative of the population that you're interested in.
-
-### Sample size
-
-#### Rules of thumb
-
-The general consensus seems to be that rules of thumb are a bad idea [@maccallum1999]. The reason for that is that these rules only involve one of two factors. Common rules of thumb consist of going for a set number of participants or a particular participant-to-item ratio.
-
-+--------------------------+-----------------------+--------------------------------+
-| Type                     | Source                | Rule                           |
-+==========================+=======================+================================+
-| *Participant-only*       |                       |                                |
-+--------------------------+-----------------------+--------------------------------+
-|                          | @comrey1992           | 50 = very poor\                |
-|                          |                       | 100 = poor\                    |
-|                          |                       | 200 = fair\                    |
-|                          |                       | 300 = good\                    |
-|                          |                       | 500 = very good\               |
-|                          |                       | 1000+ = excellent              |
-+--------------------------+-----------------------+--------------------------------+
-|                          | Barrett & Kline, 1981 | 50                             |
-+--------------------------+-----------------------+--------------------------------+
-|                          | Aleamoni, 1976        | 400                            |
-+--------------------------+-----------------------+--------------------------------+
-|                          | Gorsuch (1983)        | at least 100                   |
-+--------------------------+-----------------------+--------------------------------+
-|                          | Kline (1979)          | at least 100                   |
-+--------------------------+-----------------------+--------------------------------+
-|                          | Guilford (1954)       | at least 200                   |
-+--------------------------+-----------------------+--------------------------------+
-|                          | Cattell (1978)        | at least 250                   |
-+--------------------------+-----------------------+--------------------------------+
-| *Participant:item ratio* |                       |                                |
-+--------------------------+-----------------------+--------------------------------+
-|                          | @gorsuch2015, p.332   | 5:1 (100 participants minimum) |
-+--------------------------+-----------------------+--------------------------------+
-|                          | Gorsuch (1983)        | at least 5:1                   |
-+--------------------------+-----------------------+--------------------------------+
-|                          | Hatcher 1994, p.73    | at least 5:1                   |
-+--------------------------+-----------------------+--------------------------------+
-|                          | @everitt1975          | 10:1 (optimistically)          |
-+--------------------------+-----------------------+--------------------------------+
-|                          | Nunally (1978), p.421 | 10:1                           |
-+--------------------------+-----------------------+--------------------------------+
-|                          | Cattell (1978)        | 3:1 to 6:1                     |
-+--------------------------+-----------------------+--------------------------------+
-
-: Table: Examples of rules of thumb.
-
-The reality is that the sample size is dependent on:
-
--   the study design (e.g., cross-sectional vs. longitudinal)
-
--   the size of the relationships among the indicators (e.g., high communalities without cross loadings; strong loadings)
-
--   the reliability of the indicators
-
--   the scaling (e.g., categorical, continuous) and distribution of the indicators
-
--   estimator type (e.g., ML, robust ML, WLSMV)
-
--   the amount and patterns of missing data
-
--   the size of the model (model complexity)
-
-For example, MacCallum, Widaman, Zhang, and Hong (1999) found that results were consistent with population loadings with sample sizes as low as 60 cases if the communalities of the items were high (.60 or greater). With lower communality levels (around .50), samples of 100 to 200 cases were required.
-
-Costello and Osborne [-@costello2005] caution researchers to remember that EFA is a large-sample procedure and that generalizable or replicable results are unlikely if the sample is too small. They found that a ratio of 20:1 produces error rates well above the standard alpha (5%) level. They also say that researchers should realize that EFA is exploratory and should be used only for exploring data, not hypothesis or theory testing.
-
-#### Number of indicators
-
-At least three items per factor are required for a factor model to be identified; more items per factor results in overidentification of the model. A number of writers recommend that four or more items per factor be included in the factor analysis to ensure an adequate identification of the factors (Comrey & Lee, 1992; Fabrigar et al., 1999; Gorsuch, 1988). @fabrigar1999 suggest to include at least 4 and perhaps as many as six for each factor.
-
-MacCallum et al. (1999) found that in addition to the communality of the measures, the results were more accurate for given sample sizes if there were more measures per factor included in the analysis.Within the range of indicators studied (three to seven per factor), it is better to have more indicators than fewer. The critical point, however, is that these indicators must be reasonably valid and reliable.
-
-Velicer & Fava (1998) suggest 6-10 initial variables per factor is recommended as 25% to 50% will not perform as expected and the end goal should be to have four- or five to-one as a minimum. They say that the bare minimum of three variables per factor is a dangerous goal. They also write that if loading is low, a ratio of 10 or 20 to 1 may be required for model identification.
-
-Factor loadings can be improved by Multiple response (Likert-type) items generally result in higher loadings than two-choice items (Comrey & Montag, 1982; Oswald & Velicer, 1980; Velicer, DiClemente, & Corriveau, 1984; Velicer, Govia, Cherico, & Corriveau, 1985; Velicer & Stevenson, 1978). Likewise, the quality of item writing can affect the size of the loadings, that is, the expression of an item in simple language, restricting the item to a single idea, or using content that is appropriate to a majority of respondents are all ways of improving items. Item quality can also be improved by using item parcels, that is, the total of several items, instead of individual items.
-
-Some additional arguments for why multiple indicators per factor are useful:
-
--   People read items incorrectly or sometimes just don't understand an item (despite all efforts to make them as clear as possible), so having a sample of items can counteract the idiosyncratic mistakes of respondents
-
--   With complicated topics, having multiple items also adds clarity about the overall goal of the scale. Each item is an indicator to the participant about what the purpose of the scale is.
-
-### Relevant indicators
-
-One design issue that is especially important is what measured variables to include in the study. If measured variables irrelevant to the domain of interest are included, then spurious common factors might emerge or true common factors might be obscured [@fabrigar1999].
-
-### Sampling Adequacy
-
-The Kaiser--Meyer--Olkin (KMO) test is a statistical measure to determine how suited data is for factor analysis. The test measures sampling adequacy for each variable in the model and the complete model. The statistic is a measure of the proportion of variance among variables that might be common variance. The lower the proportion, the higher the KMO value, the more suited the data is to factor analysis
-
-The KMO value ranges from 0 to 1, with 0.60 considered suitable for factor analysis @tabachnick2013. Kaiser himself [-@kaiser1974] suggested that KMO \> .9 were marvelous, in the .80s, mertitourious, in the .70s, middling, in the .60s, medicore, in the 50s, miserable, and less than .5, unacceptable.
-
-Bartlett's (1954) test of sphericity is a notoriously sensitive test of the hypothesis that the correlations in a correlation matrix are zero. Because of its sensitivity and its dependence on N, the test is likely to be significant with samples of substantial size even if correlations are very low. Therefore, use of the test is recommended only if there are fewer than, say, five cases per variable [@tabachnick2013].
-
-### Outlier removal
-
-Should you remove outliers?
-
-### Factor structure
+### Factor Loadings
 
 Tabachnick and Fidell (2001) cite .32 as a good rule of thumb for the minimum loading of an item. Others say item loadings above .30 (Costello).
 
 Others say a factor loading coefficient ≥ 0.40 is considered necessary to judge the quality (validity) of an item as an indicator of one factor or another. Some may think that this criterion is quite lax since a factor loading of 0.40 means that only 16% of the explained variance depends on the factor of which one item is the indicator (Gana & Broc)
 
-Some psychometricians (for example, $$COM 92, TAB 07$$) recommend that we choose items whose R² is greater than 0.40 (thus showing a factorial factor loading greater than 0.63).
+Some psychometricians recommend that we choose items whose R² is greater than 0.40 (thus showing a factorial factor loading greater than 0.63).
 
 -   A "crossloading" item is an item that loads at .32 or higher on two or more factors. The researcher needs to decide whether a crossloading item should be dropped from the analysis, which may be a good choice if there are several adequate to strong loaders (.50 or better) on each factor.
 
@@ -277,15 +238,13 @@ Some psychometricians (for example, $$COM 92, TAB 07$$) recommend that we choose
 
 Comrey and Lee (1992) suggest that loadings in excess of .71 (50% overlapping variance) are considered excellent, .63 (40% overlapping variance) very good, .55 (30% overlapping variance) good, .45 (20% overlapping variance) fair, and .32 (10% overlapping variance) poor.
 
-#### Number of indicators to keep
+### Number of indicators
 
 -   , it is important for the latent variable to have at least four indicators (for example: four items). In effect, with only three indicators, the measurement model is just-identified, thus making useless its testability. (Gana & Broc)
 
-### Interpretation
+## Summary
 
-Remember that the goal of exploratory factor analysis is to explore whether your data fits a model that makes sense. Ideally, you have a conceptual or theoretical framework for the analysis- a theory or body of literature guiding the development of an instrument, for example. Even if you do not, the results should be sensible in some way. You should be able to construct a simple narrative describing how each factor, and its constituent variables, makes sense and is easily labeled.
-
-### Additional reading
+## Recommended Reading
 
 The summaries and conclusions above were largely taken from the following sources:
 
@@ -295,7 +254,9 @@ The summaries and conclusions above were largely taken from the following source
 
 ## Glossary
 
--   `h2`: the amount of variance in the item/variable explained by the (retained) factors. It is the sum of the squared loadings, a.k.a. *communality*.
+-   communality: the amount of variance in the item/variable explained by the (retained) factors. It is the sum of the squared loadings, a.k.a. *communality*.
+
+-   h2: See communality.
 
 -   `u2`: 1 - `h2`. residual variance, a.k.a. *uniqueness*
 
