@@ -2,10 +2,14 @@
 title: "R-packages"
 ---
 
-\- lavaan
+This chapter lists useful R package that relate to performing factor analyses.
 
-\- lavaan.survey
+-   psych
 
-\- semTools
+-   lavaan
 
-\- semPower
+-   lavaan.survey
+
+-   semTools
+
+-   semPower

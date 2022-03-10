@@ -1,14 +1,10 @@
 ---
-title: "Survey design"
+title: "Response Options"
 ---
 
-# Survey design
-
-This chapter is about best practices and common issues in designing surveys.
-
-## 
-
-### Response options {.unnumbered}
+::: callout-warning
+This chapter is still a work in progress.
+:::
 
 The question of how many response options to use centers around two main concerns. The first is that more options means you can obtain a more fine-grained assessment of the characteristic that is being evaluated (e.g., attitude). In other words, your assessment is more precise. However, the question is how the number of options affects the reliability and the validity of the measurement. With more options, it becomes more difficult for people to distinguish between the different options (e.g., is "Strongly agree" reliably different from "Very strongly agree"?).
 

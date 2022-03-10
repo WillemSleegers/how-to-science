@@ -148,7 +148,7 @@
     <nav class="navbar navbar-expand-sm navbar-dark ">
       <div class="navbar-container container-fluid">
       <a class="navbar-brand" href="../../../index.html">
-    <img src="../../../assets/img/book.svg" alt="">
+    <img src="../../../assets/img/logo.png" alt="">
     <span class="navbar-title">How to Science</span>
   </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
@@ -212,7 +212,7 @@
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../chapters/statistics/factor-analysis/CFA.html" class="sidebar-item-text sidebar-link">CFA</a>
+  <a href="../../../chapters/statistics/factor-analysis/CFA.html" class="sidebar-item-text sidebar-link">Confirmatory Factor Analysis</a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -240,17 +240,22 @@
         <nav id="TOC" role="doc-toc">
 <h2 id="toc-title">On this page</h2>
 <ul>
-<li><a href="#principal-components-vs.-factor-analysis" class="nav-link active" data-scroll-target="#principal-components-vs.-factor-analysis">Principal Components vs.&nbsp;Factor Analysis</a></li>
+<li><a href="#principal-components-vs.-factor-analysis" class="nav-link active" data-scroll-target="#principal-components-vs.-factor-analysis">Principal Components vs.&nbsp;Factor Analysis</a>
+<ul class="collapse">
 <li><a href="#factor-extraction-method" class="nav-link" data-scroll-target="#factor-extraction-method">Factor Extraction Method</a></li>
 <li><a href="#rotation-methods" class="nav-link" data-scroll-target="#rotation-methods">Rotation methods</a></li>
 <li><a href="#number-of-factors-to-retain" class="nav-link" data-scroll-target="#number-of-factors-to-retain">Number of factors to retain</a></li>
 <li><a href="#sample" class="nav-link" data-scroll-target="#sample">Sample</a></li>
 <li><a href="#sample-size" class="nav-link" data-scroll-target="#sample-size">Sample size</a></li>
+<li><a href="#relevant-indicators" class="nav-link" data-scroll-target="#relevant-indicators">Relevant indicators</a></li>
 <li><a href="#sampling-adequacy" class="nav-link" data-scroll-target="#sampling-adequacy">Sampling Adequacy</a></li>
 <li><a href="#outlier-removal" class="nav-link" data-scroll-target="#outlier-removal">Outlier removal</a></li>
 <li><a href="#factor-structure" class="nav-link" data-scroll-target="#factor-structure">Factor structure</a></li>
 <li><a href="#interpretation" class="nav-link" data-scroll-target="#interpretation">Interpretation</a></li>
 <li><a href="#additional-reading" class="nav-link" data-scroll-target="#additional-reading">Additional reading</a></li>
+</ul></li>
+<li><a href="#glossary" class="nav-link" data-scroll-target="#glossary">Glossary</a></li>
+<li><a href="#references" class="nav-link" data-scroll-target="#references">References</a></li>
 </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/willemsleegers/how-to-science/edit/main/chapters/statistics/factor-analysis/EFA.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/willemsleegers/how-to-science/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
@@ -275,8 +280,8 @@ Warning
 </div>
 <p>The goal of an exploratory factor analysis (EFA) is to study the latent factors that underlie responses to a larger number of items. In other words, the goal is to <em>explore</em> the data and <em>reduce</em> the number of variables. It is a popular technique in the development and validation of assessment instruments. Unlike confirmatory factor analysis (CFA), EFA is used when there is little or no a priori justification for specifying a particular structural model. This means that there is reasonable uncertainty about the number of underlying factors and which items load on which factor. The hope is to resolve some of that uncertainty empirically.</p>
 <p>Note that if you have a clear theoretical basis about the number of factors and which items should load on which factor, a CFA is more appropriate than EFA because it allows you to directly test your model. You could also do both, but a CFA should be conducted on new data to test its validity.</p>
-<section id="principal-components-vs.-factor-analysis" class="level3">
-<h3 class="anchored" data-anchor-id="principal-components-vs.-factor-analysis">Principal Components vs.&nbsp;Factor Analysis</h3>
+<section id="principal-components-vs.-factor-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="principal-components-vs.-factor-analysis">Principal Components vs.&nbsp;Factor Analysis</h2>
 <p>An important consideration is whether to use a principal components analysis (PCA) or a factor analysis. PCA is a data reduction technique and while a factor analysis is also a type of data reduction technique, the focus with PCA is more on simply reducing the data, without regard for a theoretical interpretation. With PCA, the variables themselves are of interest, rather than some hypothetical latent construct. Another way of describing it is that PCA conceptualizes constructs as causally determined by the observations. Again, this is likely not what you want because this means that “principal component scores are”caused” by their indicators in much the same way that sum scores are “caused” by item scores.” [<span class="citation" data-cites="borsboom2006">Borsboom (<a href="#ref-borsboom2006" role="doc-biblioref">2006</a>)</span>, p.&nbsp;426]. PCA is a formative model and not a reflective model <span class="citation" data-cites="edwards2000">(<a href="#ref-edwards2000" role="doc-biblioref">Edwards &amp; Bagozzi, 2000</a>)</span>. Instead, you likely want the opposite causal relationship in which a latent factor causes the indicator scores.</p>
 <div class="cell">
 <details>
@@ -315,13 +320,12 @@ Warning
 <span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="htmlwidget-20ae1695cfefce89e0f7" style="width:100%;height:464px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-20ae1695cfefce89e0f7">{"x":{"diagram":"\n  digraph dot {\n    graph [\n      layout = dot, \n      rankdir = LR, \n      fontname = Helvetica, \n      label = \"Illustration of a PCA model (left) and a factor analysis model (right).\"\n    ]\n    \n    node [fontname = Helvetica]\n    node [shape = square]\n    var1 [label = \"item 1\"]\n    var2 [label = \"item 2\"]\n    var3 [label = \"item 3\"]\n    var4 [label = \"item 4\"]\n    var5 [label = \"item 1\"]\n    var6 [label = \"item 2\"]  \n    var7 [label = \"item 3\"]  \n    var8 [label = \"item 4\"]\n  \n    node [shape = circle]\n    construct_a [label = \"construct A\"]\n    construct_b [label = \"construct B\"]\n  \n    edge [color = black, minlen = 3]\n    {var1 var2 var3 var4} -> construct_a\n    construct_b -> {var5 var6 var7 var8}\n  \n    edge[style = invis, minlen = 1];\n    construct_a -> construct_b\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-3fee1f9a73b50388f79c" style="width:100%;height:464px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-3fee1f9a73b50388f79c">{"x":{"diagram":"\n  digraph dot {\n    graph [\n      layout = dot, \n      rankdir = LR, \n      fontname = Helvetica, \n      label = \"Illustration of a PCA model (left) and a factor analysis model (right).\"\n    ]\n    \n    node [fontname = Helvetica]\n    node [shape = square]\n    var1 [label = \"item 1\"]\n    var2 [label = \"item 2\"]\n    var3 [label = \"item 3\"]\n    var4 [label = \"item 4\"]\n    var5 [label = \"item 1\"]\n    var6 [label = \"item 2\"]  \n    var7 [label = \"item 3\"]  \n    var8 [label = \"item 4\"]\n  \n    node [shape = circle]\n    construct_a [label = \"construct A\"]\n    construct_b [label = \"construct B\"]\n  \n    edge [color = black, minlen = 3]\n    {var1 var2 var3 var4} -> construct_a\n    construct_b -> {var5 var6 var7 var8}\n  \n    edge[style = invis, minlen = 1];\n    construct_a -> construct_b\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>A related issue is that factor analysis assumes that total variance can be partitioned into common and unique variance and PCA assumes that the common variances takes up all of total variance. This means that PCA assumes that all variables are measured without error. It is usually more reasonable to assume that you have not measured your set of items perfectly. Although some argue that the two methods have the same results <span class="citation" data-cites="velicer1990">(<a href="#ref-velicer1990" role="doc-biblioref">Velicer &amp; Jackson, 1990</a>)</span>, there is evidence that those similarities are mistaken and that factor analysis has better results than PCA <span class="citation" data-cites="widaman1993">(<a href="#ref-widaman1993" role="doc-biblioref">Widaman, 1993</a>)</span>.</p>
 <p><strong>Conclusion</strong>: Do not use PCA.</p>
-</section>
 <section id="factor-extraction-method" class="level3">
 <h3 class="anchored" data-anchor-id="factor-extraction-method">Factor Extraction Method</h3>
 <p>Extraction is the general term for the process of reducing the number of dimensions being analyzed from the number of variables in the data set (and matrix of associations) into a smaller number of factors.</p>
@@ -372,6 +376,7 @@ Warning
 <li><p>Bayesian information criterion (BIC; Schwarz, 1978)</p></li>
 <li><p>Comparison data (CD; <span class="citation" data-cites="ruscio2012">Ruscio &amp; Brendan Roche (<a href="#ref-ruscio2012" role="doc-biblioref">2012</a>)</span>)</p></li>
 <li><p>Very Simple Structure (VSS)</p></li>
+<li><p>Likelihood ratio statistic</p></li>
 </ul>
 <p>If the theoretical framework for the instrument is sound, we should start with the expectation that we should see that structure in the data. Instruments are rarely perfect (especially the first time it is examined), and theoretical expectations are not always supported. But unless one is on a fishing expedition in a data set with no a priori ideas about how the analysis should turn out, 12 this is as good a place as any to start.</p>
 <p>The default in most statistical software packages is to use the Kaiser criterion. It makes some sense, as an eigenvalue represents the sum of the squared factor loadings in a column, and to get a sum of 1.0 or more, one must have rather large factor loadings to square and sum. However, this is easily achieved with more items and there are now alternative methods. Hence, there is broad consensus in the literature that this is among the least accurate methods for selecting the number of factors to retain (Velicer &amp; Jackson, 1990).</p>
@@ -382,7 +387,8 @@ Warning
 <p>Zwick and Velicer (1986) tested the scree test, Horn’s parallel test, and Velicer’s MAP test (among others) in simulation studies using a data set with a clear factor structure. Both the parallel test and MAP test seemed to work well.</p>
 <p><span class="citation" data-cites="ruscio2012">Ruscio &amp; Brendan Roche (<a href="#ref-ruscio2012" role="doc-biblioref">2012</a>)</span> notes that PA is considered to be the method of choice among methodologists and recommend that researchers take advantage of PA as a starting point, perhaps supplemented by CD. They note that researchers can also use more than one method. Similarly, several prominent authors and journals have endorsed this as the most robust and accurate process for determining the number of factors to extract (Ledesma &amp; Valero-Mora, 2007; Velicer et al., 2000).</p>
 <p><span class="citation" data-cites="osborne2014">Osborne (<a href="#ref-osborne2014" role="doc-biblioref">2014</a>)</span> notes that MAP has been considered superior to the “classic” criteria, and probably is superior to parallel analysis, although neither is perfect, and all must be used in the context of a search for conceptually interpretable factors. He recommends to use parallel analysis or MAP criteria, along with theory (and any of the classic criteria that suits you and is defensible).</p>
-<p><strong>Conclusion:</strong> Use multiple criteria and theory to make a judgment call about how many factors to extract.</p>
+<p>Finally, Empirical research suggests that overfactoring introduces much less error to factor loading estimatesihan underfactoring (Fava &amp; Velicer. 1992; Wood et..;!., 1996). Although be wary of Solutions with too many factors mightprompt a researcher to postulate the existence of cons tracts with little theoretical value and thereby develop unnecessarily complex theories.</p>
+<p><strong>Conclusion:</strong> Use multiple criteria and theory to make a judgment call about how many factors to extract. When in doubt, favor more factors rather than fewer factors.</p>
 </section>
 <section id="sample" class="level3">
 <h3 class="anchored" data-anchor-id="sample">Sample</h3>
@@ -393,7 +399,7 @@ Warning
 <h3 class="anchored" data-anchor-id="sample-size">Sample size</h3>
 <section id="rules-of-thumb" class="level4">
 <h4 class="anchored" data-anchor-id="rules-of-thumb">Rules of thumb</h4>
-<p>The general consensus seems to be that rules of thumb are a bad idea. The reason for that is that these rules only involve one of two factors. Common rules of thumb consist of going for a set number of participants or a particular participant-to-item ratio.</p>
+<p>The general consensus seems to be that rules of thumb are a bad idea <span class="citation" data-cites="maccallum1999">(<a href="#ref-maccallum1999" role="doc-biblioref">MacCallum et al., 1999</a>)</span>. The reason for that is that these rules only involve one of two factors. Common rules of thumb consist of going for a set number of participants or a particular participant-to-item ratio.</p>
 <table class="table">
 <caption>Table: Examples of rules of thumb.</caption>
 <colgroup>
@@ -435,6 +441,26 @@ Warning
 <td>400</td>
 </tr>
 <tr class="odd">
+<td></td>
+<td>Gorsuch (1983)</td>
+<td>at least 100</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>Kline (1979)</td>
+<td>at least 100</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>Guilford (1954)</td>
+<td>at least 200</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>Cattell (1978)</td>
+<td>at least 250</td>
+</tr>
+<tr class="odd">
 <td><em>Participant:item ratio</em></td>
 <td></td>
 <td></td>
@@ -446,18 +472,28 @@ Warning
 </tr>
 <tr class="odd">
 <td></td>
-<td>Hatcher 1994, p.73</td>
-<td>5:1 (minimum)</td>
+<td>Gorsuch (1983)</td>
+<td>at least 5:1</td>
 </tr>
 <tr class="even">
+<td></td>
+<td>Hatcher 1994, p.73</td>
+<td>at least 5:1</td>
+</tr>
+<tr class="odd">
 <td></td>
 <td><span class="citation" data-cites="everitt1975">(<a href="#ref-everitt1975" role="doc-biblioref"><strong>everitt1975?</strong></a>)</span></td>
 <td>10:1 (optimistically)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td></td>
 <td>Nunally (1978), p.421</td>
 <td>10:1</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>Cattell (1978)</td>
+<td>3:1 to 6:1</td>
 </tr>
 </tbody>
 </table>
@@ -476,14 +512,20 @@ Warning
 </section>
 <section id="number-of-indicators" class="level4">
 <h4 class="anchored" data-anchor-id="number-of-indicators">Number of indicators</h4>
-<p>At least three items per factor are required for a factor model to be identified; more items per factor results in overidentification of the model. A number of writers recommend that four or more items per factor be included in the factor analysis to ensure an adequate identification of the factors (Comrey &amp; Lee, 1992; Fabrigar et al., 1999; Gorsuch, 1988).</p>
-<p>MacCallum et al.&nbsp;(1999) found that in addition to the communality of the measures, the results were more accurate for given sample sizes if there were more measures per factor included in the analysis.</p>
+<p>At least three items per factor are required for a factor model to be identified; more items per factor results in overidentification of the model. A number of writers recommend that four or more items per factor be included in the factor analysis to ensure an adequate identification of the factors (Comrey &amp; Lee, 1992; Fabrigar et al., 1999; Gorsuch, 1988). <span class="citation" data-cites="fabrigar1999">Fabrigar et al. (<a href="#ref-fabrigar1999" role="doc-biblioref">1999</a>)</span> suggest to include at least 4 and perhaps as many as six for each factor.</p>
+<p>MacCallum et al.&nbsp;(1999) found that in addition to the communality of the measures, the results were more accurate for given sample sizes if there were more measures per factor included in the analysis.Within the range of indicators studied (three to seven per factor), it is better to have more indicators than fewer. The critical point, however, is that these indicators must be reasonably valid and reliable.</p>
+<p>Velicer &amp; Fava (1998) suggest 6-10 initial variables per factor is recommended as 25% to 50% will not perform as expected and the end goal should be to have four- or five to-one as a minimum. They say that the bare minimum of three variables per factor is a dangerous goal. They also write that if loading is low, a ratio of 10 or 20 to 1 may be required for model identification.</p>
+<p>Factor loadings can be improved by Multiple response (Likert-type) items generally result in higher loadings than two-choice items (Comrey &amp; Montag, 1982; Oswald &amp; Velicer, 1980; Velicer, DiClemente, &amp; Corriveau, 1984; Velicer, Govia, Cherico, &amp; Corriveau, 1985; Velicer &amp; Stevenson, 1978). Likewise, the quality of item writing can affect the size of the loadings, that is, the expression of an item in simple language, restricting the item to a single idea, or using content that is appropriate to a majority of respondents are all ways of improving items. Item quality can also be improved by using item parcels, that is, the total of several items, instead of individual items.</p>
 <p>Some additional arguments for why multiple indicators per factor are useful:</p>
 <ul>
 <li><p>People read items incorrectly or sometimes just don’t understand an item (despite all efforts to make them as clear as possible), so having a sample of items can counteract the idiosyncratic mistakes of respondents</p></li>
 <li><p>With complicated topics, having multiple items also adds clarity about the overall goal of the scale. Each item is an indicator to the participant about what the purpose of the scale is.</p></li>
 </ul>
 </section>
+</section>
+<section id="relevant-indicators" class="level3">
+<h3 class="anchored" data-anchor-id="relevant-indicators">Relevant indicators</h3>
+<p>One design issue that is especially important is what measured variables to include in the study. If measured variables irrelevant to the domain of interest are included, then spurious common factors might emerge or true common factors might be obscured <span class="citation" data-cites="fabrigar1999">(<a href="#ref-fabrigar1999" role="doc-biblioref">Fabrigar et al., 1999</a>)</span>.</p>
 </section>
 <section id="sampling-adequacy" class="level3">
 <h3 class="anchored" data-anchor-id="sampling-adequacy">Sampling Adequacy</h3>
@@ -524,6 +566,17 @@ Warning
 <li>In Search of Underlying Dimensions: The Use (and Abuse) of Factor Analysis in Personality and Social Psychology Bulletin by <span class="citation" data-cites="russell2002">Russell (<a href="#ref-russell2002" role="doc-biblioref">2002</a>)</span></li>
 <li>Evaluating the Use of Exploratory Factor Analysis in Psychological Research by <span class="citation" data-cites="fabrigar1999">Fabrigar et al. (<a href="#ref-fabrigar1999" role="doc-biblioref">1999</a>)</span></li>
 </ul>
+</section>
+</section>
+<section id="glossary" class="level2">
+<h2 class="anchored" data-anchor-id="glossary">Glossary</h2>
+<ul>
+<li><p><code>h2</code>: the amount of variance in the item/variable explained by the (retained) factors. It is the sum of the squared loadings, a.k.a.&nbsp;<em>communality</em>.</p></li>
+<li><p><code>u2</code>: 1 -&nbsp;<code>h2</code>. residual variance, a.k.a.&nbsp;<em>uniqueness</em></p></li>
+</ul>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="doc-bibliography">
@@ -538,6 +591,9 @@ Edwards, J. R., &amp; Bagozzi, R. P. (2000). On the nature and direction of rela
 </div>
 <div id="ref-fabrigar1999" class="csl-entry" role="doc-biblioentry">
 Fabrigar, L. R., Wegener, D. T., MacCallum, R. C., &amp; Strahan, E. J. (1999). Evaluating the use of exploratory factor analysis in psychological research. <em>Psychological Methods</em>, <em>4</em>(3), 272–299. <a href="https://doi.org/10.1037/1082-989X.4.3.272">https://doi.org/10.1037/1082-989X.4.3.272</a>
+</div>
+<div id="ref-maccallum1999" class="csl-entry" role="doc-biblioentry">
+MacCallum, R. C., Widaman, K. F., Zhang, S., &amp; Hong, S. (1999). Sample size in factor analysis. <em>Psychological Methods</em>, <em>4</em>(1), 84–99. <a href="https://doi.org/10.1037/1082-989X.4.1.84">https://doi.org/10.1037/1082-989X.4.1.84</a>
 </div>
 <div id="ref-osborne2014" class="csl-entry" role="doc-biblioentry">
 Osborne, J. W. (2014). <em>Best practices in exploratory factor analysis</em>. <span>Createspace publishing</span>.
@@ -641,7 +697,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
   <div class="nav-page nav-page-next">
       <a href="../../../chapters/statistics/factor-analysis/CFA.html" class="pagination-link">
-        <span class="nav-page-text">CFA</span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text">Confirmatory Factor Analysis</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

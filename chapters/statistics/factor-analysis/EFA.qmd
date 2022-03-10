@@ -15,7 +15,7 @@ The goal of an exploratory factor analysis (EFA) is to study the latent factors 
 
 Note that if you have a clear theoretical basis about the number of factors and which items should load on which factor, a CFA is more appropriate than EFA because it allows you to directly test your model. You could also do both, but a CFA should be conducted on new data to test its validity.
 
-### Principal Components vs. Factor Analysis
+## Principal Components vs. Factor Analysis
 
 An important consideration is whether to use a principal components analysis (PCA) or a factor analysis. PCA is a data reduction technique and while a factor analysis is also a type of data reduction technique, the focus with PCA is more on simply reducing the data, without regard for a theoretical interpretation. With PCA, the variables themselves are of interest, rather than some hypothetical latent construct. Another way of describing it is that PCA conceptualizes constructs as causally determined by the observations. Again, this is likely not what you want because this means that "principal component scores are "caused" by their indicators in much the same way that sum scores are "caused" by item scores." \[@borsboom2006, p. 426\]. PCA is a formative model and not a reflective model [@edwards2000]. Instead, you likely want the opposite causal relationship in which a latent factor causes the indicator scores.
 
@@ -134,6 +134,8 @@ There are several methods to determine how many factors to retain:
 
 -   Very Simple Structure (VSS)
 
+-   Likelihood ratio statistic
+
 If the theoretical framework for the instrument is sound, we should start with the expectation that we should see that structure in the data. Instruments are rarely perfect (especially the first time it is examined), and theoretical expectations are not always supported. But unless one is on a fishing expedition in a data set with no a priori ideas about how the analysis should turn out, 12 this is as good a place as any to start.
 
 The default in most statistical software packages is to use the Kaiser criterion. It makes some sense, as an eigenvalue represents the sum of the squared factor loadings in a column, and to get a sum of 1.0 or more, one must have rather large factor loadings to square and sum. However, this is easily achieved with more items and there are now alternative methods. Hence, there is broad consensus in the literature that this is among the least accurate methods for selecting the number of factors to retain (Velicer & Jackson, 1990).
@@ -152,7 +154,9 @@ Zwick and Velicer (1986) tested the scree test, Horn's parallel test, and Velice
 
 @osborne2014 notes that MAP has been considered superior to the "classic" criteria, and probably is superior to parallel analysis, although neither is perfect, and all must be used in the context of a search for conceptually interpretable factors. He recommends to use parallel analysis or MAP criteria, along with theory (and any of the classic criteria that suits you and is defensible).
 
-**Conclusion:** Use multiple criteria and theory to make a judgment call about how many factors to extract.
+Finally, Empirical research suggests that overfactoring introduces much less error to factor loading estimatesihan underfactoring (Fava & Velicer. 1992; Wood et..;!., 1996). Although be wary of Solutions with too many factors mightprompt a researcher to postulate the existence of cons tracts with little theoretical value and thereby develop unnecessarily complex theories.
+
+**Conclusion:** Use multiple criteria and theory to make a judgment call about how many factors to extract. When in doubt, favor more factors rather than fewer factors.
 
 ### Sample
 
@@ -164,7 +168,7 @@ Make sure the sample is representative of the population that you're interested 
 
 #### Rules of thumb
 
-The general consensus seems to be that rules of thumb are a bad idea. The reason for that is that these rules only involve one of two factors. Common rules of thumb consist of going for a set number of participants or a particular participant-to-item ratio.
+The general consensus seems to be that rules of thumb are a bad idea [@maccallum1999]. The reason for that is that these rules only involve one of two factors. Common rules of thumb consist of going for a set number of participants or a particular participant-to-item ratio.
 
 +--------------------------+-----------------------+--------------------------------+
 | Type                     | Source                | Rule                           |
@@ -182,15 +186,27 @@ The general consensus seems to be that rules of thumb are a bad idea. The reason
 +--------------------------+-----------------------+--------------------------------+
 |                          | Aleamoni, 1976        | 400                            |
 +--------------------------+-----------------------+--------------------------------+
+|                          | Gorsuch (1983)        | at least 100                   |
++--------------------------+-----------------------+--------------------------------+
+|                          | Kline (1979)          | at least 100                   |
++--------------------------+-----------------------+--------------------------------+
+|                          | Guilford (1954)       | at least 200                   |
++--------------------------+-----------------------+--------------------------------+
+|                          | Cattell (1978)        | at least 250                   |
++--------------------------+-----------------------+--------------------------------+
 | *Participant:item ratio* |                       |                                |
 +--------------------------+-----------------------+--------------------------------+
 |                          | @gorsuch2015, p.332   | 5:1 (100 participants minimum) |
 +--------------------------+-----------------------+--------------------------------+
-|                          | Hatcher 1994, p.73    | 5:1 (minimum)                  |
+|                          | Gorsuch (1983)        | at least 5:1                   |
++--------------------------+-----------------------+--------------------------------+
+|                          | Hatcher 1994, p.73    | at least 5:1                   |
 +--------------------------+-----------------------+--------------------------------+
 |                          | @everitt1975          | 10:1 (optimistically)          |
 +--------------------------+-----------------------+--------------------------------+
 |                          | Nunally (1978), p.421 | 10:1                           |
++--------------------------+-----------------------+--------------------------------+
+|                          | Cattell (1978)        | 3:1 to 6:1                     |
 +--------------------------+-----------------------+--------------------------------+
 
 : Table: Examples of rules of thumb.
@@ -217,15 +233,23 @@ Costello and Osborne [-@costello2005] caution researchers to remember that EFA i
 
 #### Number of indicators
 
-At least three items per factor are required for a factor model to be identified; more items per factor results in overidentification of the model. A number of writers recommend that four or more items per factor be included in the factor analysis to ensure an adequate identification of the factors (Comrey & Lee, 1992; Fabrigar et al., 1999; Gorsuch, 1988).
+At least three items per factor are required for a factor model to be identified; more items per factor results in overidentification of the model. A number of writers recommend that four or more items per factor be included in the factor analysis to ensure an adequate identification of the factors (Comrey & Lee, 1992; Fabrigar et al., 1999; Gorsuch, 1988). @fabrigar1999 suggest to include at least 4 and perhaps as many as six for each factor.
 
-MacCallum et al. (1999) found that in addition to the communality of the measures, the results were more accurate for given sample sizes if there were more measures per factor included in the analysis.
+MacCallum et al. (1999) found that in addition to the communality of the measures, the results were more accurate for given sample sizes if there were more measures per factor included in the analysis.Within the range of indicators studied (three to seven per factor), it is better to have more indicators than fewer. The critical point, however, is that these indicators must be reasonably valid and reliable.
+
+Velicer & Fava (1998) suggest 6-10 initial variables per factor is recommended as 25% to 50% will not perform as expected and the end goal should be to have four- or five to-one as a minimum. They say that the bare minimum of three variables per factor is a dangerous goal. They also write that if loading is low, a ratio of 10 or 20 to 1 may be required for model identification.
+
+Factor loadings can be improved by Multiple response (Likert-type) items generally result in higher loadings than two-choice items (Comrey & Montag, 1982; Oswald & Velicer, 1980; Velicer, DiClemente, & Corriveau, 1984; Velicer, Govia, Cherico, & Corriveau, 1985; Velicer & Stevenson, 1978). Likewise, the quality of item writing can affect the size of the loadings, that is, the expression of an item in simple language, restricting the item to a single idea, or using content that is appropriate to a majority of respondents are all ways of improving items. Item quality can also be improved by using item parcels, that is, the total of several items, instead of individual items.
 
 Some additional arguments for why multiple indicators per factor are useful:
 
 -   People read items incorrectly or sometimes just don't understand an item (despite all efforts to make them as clear as possible), so having a sample of items can counteract the idiosyncratic mistakes of respondents
 
 -   With complicated topics, having multiple items also adds clarity about the overall goal of the scale. Each item is an indicator to the participant about what the purpose of the scale is.
+
+### Relevant indicators
+
+One design issue that is especially important is what measured variables to include in the study. If measured variables irrelevant to the domain of interest are included, then spurious common factors might emerge or true common factors might be obscured [@fabrigar1999].
 
 ### Sampling Adequacy
 
@@ -268,3 +292,11 @@ The summaries and conclusions above were largely taken from the following source
 -   Best Practices in Exploratory Factor Analysis by @osborne2014
 -   In Search of Underlying Dimensions: The Use (and Abuse) of Factor Analysis in Personality and Social Psychology Bulletin by @russell2002
 -   Evaluating the Use of Exploratory Factor Analysis in Psychological Research by @fabrigar1999
+
+## Glossary
+
+-   `h2`: the amount of variance in the item/variable explained by the (retained) factors. It is the sum of the squared loadings, a.k.a. *communality*.
+
+-   `u2`: 1 - `h2`. residual variance, a.k.a. *uniqueness*
+
+## References

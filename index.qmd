@@ -9,11 +9,13 @@ The book is divided up into multiple sections. At this moment, there is a sectio
 
 More sections will be added in the future.
 
-## Contribute
+## Word of Caution
 
-This book will forever be a work in progress because the content will be about what are currently regarded as best practices. These are likely to change over time, so the book will have to change with it.
+Some sections in the book are not yet finished. They're work in progress. Sometimes I think they're already a bit useful, so I make them public. If I think they're not finished/polished yet, I put a warning at the start of the chapter to indicate that.
 
-It's also very likely that there are mistakes in this book. It's possible to comment on these by clicking on the Github link on each page and creating an Issue.
+Having said that, this book will forever be a work in progress because the content will be about current best practices. As best practices are likely to change over time, so the book will change with it. If I realize that something is heavily outdated, I will make a note of it.
+
+It's also very likely that there are mistakes in this book. These mistakes can theoretically range from gross errors to simple typos, or a reliance on outdated information. If you find a mistake, please contact me or click on the GitHub links on each page and create an Issue.
 
 ## Acknowledgements
 

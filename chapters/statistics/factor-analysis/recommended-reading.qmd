@@ -1,5 +1,6 @@
 ---
 title: "Recommended reading"
+bibliography: references.bib
 ---
 
-https://stats.idre.ucla.edu/spss/seminars/introduction-to-factor-analysis/a-practical-introduction-to-factor-analysis/
+-   Dynamic Fit Index Cutoffs for Confirmatory Factor Analysis Models by @mcneish2021

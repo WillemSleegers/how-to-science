@@ -1,12 +1,10 @@
 ---
-title: "Survey design"
+title: "Overview"
 ---
 
 This chapter is about best practices and common issues in designing surveys.
 
-## Steps
-
-As suggested in some review papers (e.g., @gehlbach2011), the construction of a new survey/scale is best done in several steps:
+As suggested in some review papers [e.g., @gehlbach2011], the construction of a new survey or scale is best done in several steps:
 
 -   Review the literature to define the construct of interest and to find existing or related measures of the construct
 
@@ -21,3 +19,5 @@ As suggested in some review papers (e.g., @gehlbach2011), the construction of a 
 -   Do cognitive pretesting to see how respondents understand and respond to each item
 
 -   Run large-scaled reliability and validity tests
+
+I will try to cover as many of these topics as possible. Currently, there is a chapter on response options and one containing some recommended readings.

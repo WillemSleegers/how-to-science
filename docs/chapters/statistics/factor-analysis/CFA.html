@@ -3,7 +3,7 @@
   <meta charset="utf-8">
   <meta name="generator" content="quarto-0.9.34">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>How to Science - CFA</title>
+  <title>How to Science - Confirmatory Factor Analysis</title>
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -50,7 +50,6 @@
       "search-submit-button-title": "Submit"
     }
   }</script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
   <![endif]-->
@@ -62,7 +61,7 @@
     <nav class="navbar navbar-expand-sm navbar-dark ">
       <div class="navbar-container container-fluid">
       <a class="navbar-brand" href="../../../index.html">
-    <img src="../../../assets/img/book.svg" alt="">
+    <img src="../../../assets/img/logo.png" alt="">
     <span class="navbar-title">How to Science</span>
   </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
@@ -93,7 +92,7 @@
     </nav>
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">CFA</h1>
+      <h1 class="quarto-secondary-nav-title">Confirmatory Factor Analysis</h1>
       <button type="button" class="quarto-btn-toggle btn">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -126,7 +125,7 @@
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../chapters/statistics/factor-analysis/CFA.html" class="sidebar-item-text sidebar-link active">CFA</a>
+  <a href="../../../chapters/statistics/factor-analysis/CFA.html" class="sidebar-item-text sidebar-link active">Confirmatory Factor Analysis</a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -154,8 +153,21 @@
 <!-- main -->
 <main class="content" id="quarto-document-content">
 <header id="title-block-header">
-<h1 class="title d-none d-lg-block display-7">CFA</h1>
+<h1 class="title d-none d-lg-block display-7">Confirmatory Factor Analysis</h1>
 </header>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This chapter is still a work in progress.</p>
+</div>
+</div>
 <p>For confirmatory factor analyses there are also several ways to determine the sample size, including:</p>
 <ol type="1">
 <li>Rules of thumb</li>
@@ -169,7 +181,7 @@
 <section id="estimator" class="level3">
 <h3 class="anchored" data-anchor-id="estimator">Estimator</h3>
 <p>If the data is normally distributed, use the ML estimator.</p>
-<p>the findings of Chou and Bentler <span class="math display">\[CHO 95\]</span> make it possible to qualify these remarks. These authors showed that in the presence of a sufficiently large sample, maximum likelihood estimation method and generalized least squares method do not make the results suffer, even when the multivariate normality is slightly violated.</p>
+<p>the findings of Chou and Bentler make it possible to qualify these remarks. These authors showed that in the presence of a sufficiently large sample, maximum likelihood estimation method and generalized least squares method do not make the results suffer, even when the multivariate normality is slightly violated.</p>
 <p>In case of violations, the following estimators can be used:</p>
 <ul>
 <li><p>MLM</p></li>
@@ -180,12 +192,12 @@
 <li><p>WLSMV: Robust alternative to DWLS</p></li>
 <li><p>bootstrapping: Not recommended for dichotomous and ordinal measures with few response categories)</p></li>
 </ul>
-<p>Mardia calculation to determine violations from normal distribution. It can be noted that not only is this standardized coefficient statistically significant, but its value is greater than 5, which is the threshold value beyond which multivariate normality seems to fail <span class="math display">\[KLI 16\]</span>.</p>
+<p>Mardia calculation to determine violations from normal distribution. It can be noted that not only is this standardized coefficient statistically significant, but its value is greater than 5, which is the threshold value beyond which multivariate normality seems to fail.</p>
 <table class="table">
 <caption>Recommendations concerning the main estimators available in lavaan according to the type of data (Gana &amp; Broc).</caption>
 <colgroup>
-<col style="width: 41%">
-<col style="width: 58%">
+<col style="width: 42%">
+<col style="width: 57%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -243,13 +255,13 @@
 </section>
 <section id="fit-indices" class="level3">
 <h3 class="anchored" data-anchor-id="fit-indices">Fit indices</h3>
-<p>The only advice we can afford to give, however, is to closely follow developments concerning fit indices. In the meantime, you can carefully follow the recommendations of Hu and Bentler <span class="math display">\[HU 99\]</span> or Schreiber and his co-authors <span class="math display">\[SCH 06\]</span> who suggest the following guidelines for judging a model goodness-of-fit (based on the hypothesis where the maximum likelihood method is the estimation method): 1) RMSEA value ≤ 0.06, with confidence interval at 90% values should be between 0 and 1.00; 2) SRMR value ≤ 0.08; and 3) CFI and TLI values ≥ 0.95.</p>
+<p>The only advice we can afford to give, however, is to closely follow developments concerning fit indices. In the meantime, you can carefully follow the recommendations of Hu and Bentler or Schreiber and his co-authors who suggest the following guidelines for judging a model goodness-of-fit (based on the hypothesis where the maximum likelihood method is the estimation method): 1) RMSEA value ≤ 0.06, with confidence interval at 90% values should be between 0 and 1.00; 2) SRMR value ≤ 0.08; and 3) CFI and TLI values ≥ 0.95.</p>
 <table class="table">
 <caption>Fit indices guidance from <span class="citation" data-cites="gana2019">@gana2019</span></caption>
 <colgroup>
 <col style="width: 14%">
-<col style="width: 10%">
-<col style="width: 74%">
+<col style="width: 11%">
+<col style="width: 73%">
 </colgroup>
 <thead>
 <tr class="header">
