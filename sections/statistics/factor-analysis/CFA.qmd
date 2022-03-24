@@ -1,5 +1,6 @@
 ---
 title: "Confirmatory Factor Analysis"
+bibliography: references.bib
 ---
 
 ::: callout-warning
@@ -7,6 +8,14 @@ This chapter is still a work in progress.
 :::
 
 Note that if you have a clear theoretical basis about the number of factors and which items should load on which factor, CFA is more appropriate than EFA because it allows you to directly test your model. You could also do both, but a CFA should be conducted on new data to test its validity.
+
+To incorporate:
+
+-   https://github.com/zackfisher/MIIVsem
+
+-   https://doi.apa.org/doiLanding?doi=10.1037%2Fmet0000297
+
+-   
 
 For confirmatory factor analyses there are also several ways to determine the sample size, including:
 
@@ -17,6 +26,10 @@ For confirmatory factor analyses there are also several ways to determine the sa
 ### Number of indicators
 
 Some argue that when it comes to the number of indicators, more is better @marsh1998.
+
+Others say that more is not always better [@koran2020]. @koran2020, using a simulation study, showed that:
+
+> Models with relatively weak loadings tended to have a larger desirable number of indicators per factor than models with stronger loadings based on considerations of sample size, solution propriety, bias, and power. Models with few factors also tended to have a larger desirable number of indicators per factor than models with more factors. Models with many factors and strong indicators reached a minimum required sample size with as few as three indicators per factor.
 
 ### Estimator
 
@@ -102,6 +115,8 @@ The only advice we can afford to give, however, is to closely follow development
 ### Reliability
 
 Reliability increases the closer the value gets to 1.00, with an acceptability threshold of 0.70.
+
+### How to model reverse-worded items?
 
 ## Recommended Reading
 

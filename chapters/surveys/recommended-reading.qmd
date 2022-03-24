@@ -1,9 +1,0 @@
----
-title: "Recommended Reading"
-bibliography: references.bib
----
-
-The following papers are useful overview or review papers that are, in my mind, particular useful to read.
-
--   Survey Item Validation by @wolf2019
--   Measure twice, cut down error: A process for enhancing the validity of survey scales by @gehlbach2011

@@ -18,33 +18,33 @@ website:
       - text: "About"
         href: index.qmd
       - text: "Survey Design"
-        href: chapters/surveys/index.qmd
+        href: sections/surveys/index.qmd
       - text: "Statistics"
-        href: chapters/statistics/index.qmd
+        href: sections/statistics/index.qmd
 
   sidebar:
     - id: surveys
       title: "Survey Design"
-      style: "docked" # floating, docked
+      style: "floating" # floating, docked
       collapse-level: 2
       align: left
       contents:
-        - chapters/surveys/index.qmd
-        - chapters/surveys/item-development.qmd
-        - chapters/surveys/response-options.qmd
-        - chapters/surveys/recommended-reading.qmd
+        - sections/surveys/index.qmd
+        - sections/surveys/item-development.qmd
+        - sections/surveys/response-options.qmd
+        - sections/surveys/recommended-reading.qmd
 
     - id: statistics
       title: "Statistics"
       contents:
-        - chapters/statistics/index.qmd
+        - sections/statistics/index.qmd
         - section: "Factor Analysis"
           contents:
-            - chapters/statistics/factor-analysis/EFA.qmd
-            - chapters/statistics/factor-analysis/CFA.qmd
-            - chapters/statistics/factor-analysis/r-packages.qmd
-            - chapters/statistics/factor-analysis/examples.qmd
-            - chapters/statistics/factor-analysis/recommended-reading.qmd
+            - sections/statistics/factor-analysis/EFA.qmd
+            - sections/statistics/factor-analysis/CFA.qmd
+            - sections/statistics/factor-analysis/r-packages.qmd
+            - sections/statistics/factor-analysis/examples.qmd
+            - sections/statistics/factor-analysis/recommended-reading.qmd
 
 format:
   html:

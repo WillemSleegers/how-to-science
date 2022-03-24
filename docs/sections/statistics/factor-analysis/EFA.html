@@ -102,8 +102,8 @@
   <script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
   <script src="../../../site_libs/quarto-search/fuse.min.js"></script>
   <script src="../../../site_libs/quarto-search/quarto-search.js"></script>
-  <link href="../../../chapters/statistics/factor-analysis/CFA.html" rel="next">
-  <link href="../../../chapters/statistics/index.html" rel="prev">
+  <link href="../../../sections/statistics/factor-analysis/CFA.html" rel="next">
+  <link href="../../../sections/statistics/index.html" rel="prev">
   <script src="../../../site_libs/quarto-html/quarto.js"></script>
   <script src="../../../site_libs/quarto-html/popper.min.js"></script>
   <script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -141,7 +141,7 @@
   <![endif]-->
   <link rel="stylesheet" href="../../../assets/css/styles.css">
 </head>
-<body class="docked">
+<body class="floating">
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-sm navbar-dark ">
@@ -159,10 +159,10 @@
     <a class="nav-link" href="../../../index.html">About</a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../chapters/surveys/index.html">Survey Design</a>
+    <a class="nav-link" href="../../../sections/surveys/index.html">Survey Design</a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="../../../chapters/statistics/index.html" aria-current="page">Statistics</a>
+    <a class="nav-link active" href="../../../sections/statistics/index.html" aria-current="page">Statistics</a>
   </li>  
 </ul>
               <div class="quarto-toggle-container">
@@ -188,12 +188,12 @@
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../chapters/statistics/index.html" class="sidebar-item-text sidebar-link">Overview</a>
+  <a href="../../../sections/statistics/index.html" class="sidebar-item-text sidebar-link">Overview</a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -206,22 +206,22 @@
     <ul id="quarto-sidebar-section-factor-analysis" class="collapse list-unstyled sidebar-section depth1 show">  
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../chapters/statistics/factor-analysis/EFA.html" class="sidebar-item-text sidebar-link active">Exploratory Factor Analysis</a>
+  <a href="../../../sections/statistics/factor-analysis/EFA.html" class="sidebar-item-text sidebar-link active">Exploratory Factor Analysis</a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../chapters/statistics/factor-analysis/CFA.html" class="sidebar-item-text sidebar-link">Confirmatory Factor Analysis</a>
+  <a href="../../../sections/statistics/factor-analysis/CFA.html" class="sidebar-item-text sidebar-link">Confirmatory Factor Analysis</a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../chapters/statistics/factor-analysis/r-packages.html" class="sidebar-item-text sidebar-link">R-packages</a>
+  <a href="../../../sections/statistics/factor-analysis/r-packages.html" class="sidebar-item-text sidebar-link">R-packages</a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../chapters/statistics/factor-analysis/examples.html" class="sidebar-item-text sidebar-link">Examples</a>
+  <a href="../../../sections/statistics/factor-analysis/examples.html" class="sidebar-item-text sidebar-link">Examples</a>
   </div>
 </li>
     </ul>
@@ -237,12 +237,12 @@
 <li><a href="#preparation" class="nav-link active" data-scroll-target="#preparation">Preparation</a>
 <ul class="collapse">
 <li><a href="#sample" class="nav-link" data-scroll-target="#sample">Sample</a></li>
+<li><a href="#number-of-items" class="nav-link" data-scroll-target="#number-of-items">Number of items</a></li>
 <li><a href="#sample-size" class="nav-link" data-scroll-target="#sample-size">Sample size</a></li>
-<li><a href="#relevant-indicators" class="nav-link" data-scroll-target="#relevant-indicators">Relevant indicators</a></li>
-<li><a href="#number-of-indicators" class="nav-link" data-scroll-target="#number-of-indicators">Number of indicators</a></li>
 </ul></li>
 <li><a href="#data-analysis" class="nav-link" data-scroll-target="#data-analysis">Data Analysis</a>
 <ul class="collapse">
+<li><a href="#relevant-items" class="nav-link" data-scroll-target="#relevant-items">Relevant items</a></li>
 <li><a href="#sampling-adequacy" class="nav-link" data-scroll-target="#sampling-adequacy">Sampling Adequacy</a></li>
 <li><a href="#principal-components-vs.-factor-analysis" class="nav-link" data-scroll-target="#principal-components-vs.-factor-analysis">Principal Components vs.&nbsp;Factor Analysis</a></li>
 <li><a href="#factor-extraction-method" class="nav-link" data-scroll-target="#factor-extraction-method">Factor Extraction Method</a></li>
@@ -252,14 +252,14 @@
 <li><a href="#interpretation" class="nav-link" data-scroll-target="#interpretation">Interpretation</a>
 <ul class="collapse">
 <li><a href="#factor-loadings" class="nav-link" data-scroll-target="#factor-loadings">Factor Loadings</a></li>
-<li><a href="#number-of-indicators-1" class="nav-link" data-scroll-target="#number-of-indicators-1">Number of indicators</a></li>
+<li><a href="#number-of-indicators" class="nav-link" data-scroll-target="#number-of-indicators">Number of indicators</a></li>
+<li><a href="#reliability" class="nav-link" data-scroll-target="#reliability">Reliability</a></li>
 </ul></li>
-<li><a href="#summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
 <li><a href="#recommended-reading" class="nav-link" data-scroll-target="#recommended-reading">Recommended Reading</a></li>
 <li><a href="#glossary" class="nav-link" data-scroll-target="#glossary">Glossary</a></li>
 <li><a href="#references" class="nav-link" data-scroll-target="#references">References</a></li>
 </ul>
-<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/willemsleegers/how-to-science/edit/main/chapters/statistics/factor-analysis/EFA.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/willemsleegers/how-to-science/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/willemsleegers/how-to-science/edit/main/sections/statistics/factor-analysis/EFA.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/willemsleegers/how-to-science/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -289,9 +289,21 @@ Warning
 <h3 class="anchored" data-anchor-id="sample">Sample</h3>
 <p>It may be obvious, but make sure to target participants that are likely to vary in the attitude that you’re interested in measuring and that the sample is representative of the population that you’re interested in.</p>
 </section>
+<section id="number-of-items" class="level3">
+<h3 class="anchored" data-anchor-id="number-of-items">Number of items</h3>
+<p>At least three items per factor are required for a factor model to be identified; more items per factor results in overidentification of the model. A number of writers recommend that four or more items per factor be included in the factor analysis to ensure an adequate identification of the factors (Comrey &amp; Lee, 1992; Fabrigar et al., 1999; Gorsuch, 1988). <span class="citation" data-cites="fabrigar1999">Fabrigar et al. (<a href="#ref-fabrigar1999" role="doc-biblioref">1999</a>)</span> suggest to include at least 4 and perhaps as many as six for each factor.</p>
+<p>MacCallum et al.&nbsp;(1999) found that in addition to the communality of the measures, the results were more accurate for given sample sizes if there were more measures per factor included in the analysis. Within the range of indicators studied (three to seven per factor), it is better to have more indicators than fewer. The critical point, however, is that these indicators must be reasonably valid and reliable.</p>
+<p>Velicer &amp; Fava (1998) suggest 6-10 initial variables per factor is recommended as 25% to 50% will not perform as expected and the end goal should be to have four- or five to-one as a minimum. They say that the bare minimum of three variables per factor is a dangerous goal. They also write that if loading is low, a ratio of 10 or 20 to 1 may be required for model identification.</p>
+<p>Factor loadings can be improved by using multiple response (Likert-type) items, as they generally result in higher loadings than two-choice items (Comrey &amp; Montag, 1982; Oswald &amp; Velicer, 1980; Velicer, DiClemente, &amp; Corriveau, 1984; Velicer, Govia, Cherico, &amp; Corriveau, 1985; Velicer &amp; Stevenson, 1978). Likewise, the quality of item writing can affect the size of the loadings, that is, the expression of an item in simple language, restricting the item to a single idea, or using content that is appropriate to a majority of respondents are all ways of improving items. Item quality can also be improved by using item parcels, that is, the total of several items, instead of individual items.</p>
+<p>Some additional arguments for why multiple indicators per factor are useful:</p>
+<ul>
+<li><p>People read items incorrectly or sometimes just don’t understand an item (despite all efforts to make them as clear as possible), so having a sample of items can counteract the idiosyncratic mistakes of respondents</p></li>
+<li><p>With complicated topics, having multiple items also adds clarity about the overall goal of the scale. Each item is an indicator to the participant about what the purpose of the scale is.</p></li>
+</ul>
+</section>
 <section id="sample-size" class="level3">
 <h3 class="anchored" data-anchor-id="sample-size">Sample size</h3>
-<p>Rules of thumb are one way to determine an appropriate sample size, but the general consensus seems to be that rules of thumb are a bad idea <span class="citation" data-cites="maccallum1999">(<a href="#ref-maccallum1999" role="doc-biblioref">MacCallum et al., 1999</a>)</span>. The reason for that is that the rules of thumb only involve one of two factors: a set number of participants or a particular participant-to-item ratio. The reality is that the appropriate sample size is dependent on many more factors, such as the:</p>
+<p>Rules of thumb are one way to determine an appropriate sample size, but the general consensus is that rules of thumb are a bad idea [<span class="citation" data-cites="maccallum1999">MacCallum et al. (<a href="#ref-maccallum1999" role="doc-biblioref">1999</a>)</span>, <span class="citation" data-cites="costello2005">Costello &amp; Osborne (<a href="#ref-costello2005" role="doc-biblioref">2005</a>)</span>]. The reason for that is that rules of thumb only involve one of two factors that are relevant for determining the sample size: a set number of participants or a particular participant-to-item ratio. The reality is that the appropriate sample size is dependent on many more factors, such as the:</p>
 <ul>
 <li><p>Study design (e.g., cross-sectional vs.&nbsp;longitudinal)</p></li>
 <li><p>Size of the relationships among the indicators (e.g., high communalities without cross loadings; strong loadings)</p></li>
@@ -301,28 +313,121 @@ Warning
 <li><p>Amount and patterns of missing data</p></li>
 <li><p>Size of the model (model complexity)</p></li>
 </ul>
-<p>For example, MacCallum, Widaman, Zhang, and Hong (1999) found that results were consistent with population loadings with sample sizes as low as 60 cases if the communalities of the items were high (.60 or greater). With lower communality levels (around .50), samples of 100 to 200 cases were required.</p>
-<p>Costello and Osborne <span class="citation" data-cites="costello2005">(<a href="#ref-costello2005" role="doc-biblioref">2005</a>)</span> caution researchers to remember that EFA is a large-sample procedure and that generalizable or replicable results are unlikely if the sample is too small. They found that a ratio of 20:1 produces error rates well above the standard alpha (5%) level. They also say that researchers should realize that EFA is exploratory and should be used only for exploring data, not hypothesis or theory testing.</p>
-</section>
-<section id="relevant-indicators" class="level3">
-<h3 class="anchored" data-anchor-id="relevant-indicators">Relevant indicators</h3>
-<p>One design issue that is especially important is what measured variables to include in the study. If measured variables irrelevant to the domain of interest are included, then spurious common factors might emerge or true common factors might be obscured <span class="citation" data-cites="fabrigar1999">(<a href="#ref-fabrigar1999" role="doc-biblioref">Fabrigar et al., 1999</a>)</span>.</p>
-</section>
-<section id="number-of-indicators" class="level3">
-<h3 class="anchored" data-anchor-id="number-of-indicators">Number of indicators</h3>
-<p>At least three items per factor are required for a factor model to be identified; more items per factor results in overidentification of the model. A number of writers recommend that four or more items per factor be included in the factor analysis to ensure an adequate identification of the factors (Comrey &amp; Lee, 1992; Fabrigar et al., 1999; Gorsuch, 1988). <span class="citation" data-cites="fabrigar1999">Fabrigar et al. (<a href="#ref-fabrigar1999" role="doc-biblioref">1999</a>)</span> suggest to include at least 4 and perhaps as many as six for each factor.</p>
-<p>MacCallum et al.&nbsp;(1999) found that in addition to the communality of the measures, the results were more accurate for given sample sizes if there were more measures per factor included in the analysis.Within the range of indicators studied (three to seven per factor), it is better to have more indicators than fewer. The critical point, however, is that these indicators must be reasonably valid and reliable.</p>
-<p>Velicer &amp; Fava (1998) suggest 6-10 initial variables per factor is recommended as 25% to 50% will not perform as expected and the end goal should be to have four- or five to-one as a minimum. They say that the bare minimum of three variables per factor is a dangerous goal. They also write that if loading is low, a ratio of 10 or 20 to 1 may be required for model identification.</p>
-<p>Factor loadings can be improved by using multiple response (Likert-type) items, as they generally result in higher loadings than two-choice items (Comrey &amp; Montag, 1982; Oswald &amp; Velicer, 1980; Velicer, DiClemente, &amp; Corriveau, 1984; Velicer, Govia, Cherico, &amp; Corriveau, 1985; Velicer &amp; Stevenson, 1978). Likewise, the quality of item writing can affect the size of the loadings, that is, the expression of an item in simple language, restricting the item to a single idea, or using content that is appropriate to a majority of respondents are all ways of improving items. Item quality can also be improved by using item parcels, that is, the total of several items, instead of individual items.</p>
-<p>Some additional arguments for why multiple indicators per factor are useful:</p>
-<ul>
-<li><p>People read items incorrectly or sometimes just don’t understand an item (despite all efforts to make them as clear as possible), so having a sample of items can counteract the idiosyncratic mistakes of respondents</p></li>
-<li><p>With complicated topics, having multiple items also adds clarity about the overall goal of the scale. Each item is an indicator to the participant about what the purpose of the scale is.</p></li>
-</ul>
+<p>For example, <span class="citation" data-cites="maccallum1999">MacCallum et al. (<a href="#ref-maccallum1999" role="doc-biblioref">1999</a>)</span> found that results were consistent with population loadings with sample sizes as low as 60 if the communalities of the items were high (.60 or greater).</p>
+<p><a href="https://journals.sagepub.com/doi/full/10.1177/0095798418771807#">Fabrigar et al., 1999</a>;&nbsp;<a href="https://journals.sagepub.com/doi/full/10.1177/0095798418771807#">MacCallum, Widaman, Preacher, &amp; Hong, 2001</a>;&nbsp;<a href="https://journals.sagepub.com/doi/full/10.1177/0095798418771807#">Mundfrom &amp; Shaw, 2005</a>;&nbsp;<a href="https://journals.sagepub.com/doi/full/10.1177/0095798418771807#">Velicer &amp; Fava, 1998</a>).</p>
+<p><span class="citation" data-cites="costello2005">Costello &amp; Osborne (<a href="#ref-costello2005" role="doc-biblioref">2005</a>)</span> found that sample sizes in two years’ worth of PsychINFO articles were relatively low. The majority of the studies in their survey (62.9%) had subject to item ratios of 10:1 or less. They also found that a ratio of 20:1 produces error rates well above the standard alpha (5%) level. This is based on a study in which different rules of thumb were used to analyze the factor structure of the Marsh’s Self-Description Questionnaire. As this questionnaire might be more typical of psychological scales (at least more typical than many simulated data sets), it shows that sample sizes should be larger rather than smaller. They caution researchers to remember that EFA is a large-sample procedure and that generalizable or replicable results are unlikely if the sample is too small.</p>
+<p><span class="citation" data-cites="mundfrom2005">Mundfrom et al. (<a href="#ref-mundfrom2005" role="doc-biblioref">2005</a>)</span> performed a simulation study to determine the minimum sample size for a study, taking into account the number of factors, the ratio of items to factors, and the level of communality.</p>
+<table class="table">
+<caption>Recommended minimum sample sizes by <span class="citation" data-cites="mundfrom2005">Mundfrom et al. (<a href="#ref-mundfrom2005" role="doc-biblioref">2005</a>)</span></caption>
+<thead>
+<tr class="header">
+<th>Criterion</th>
+<th>Communality</th>
+<th>p/f</th>
+<th>n</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Excellent</td>
+<td>High</td>
+<td>4</td>
+<td>500</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td>6</td>
+<td>250</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td>8</td>
+<td>100</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>Wide</td>
+<td>4</td>
+<td>900</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td>6</td>
+<td>200</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td>8</td>
+<td>130</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>Low</td>
+<td>4</td>
+<td>1400</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td>6</td>
+<td>260</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td>8</td>
+<td>130</td>
+</tr>
+<tr class="even">
+<td>Good</td>
+<td>High</td>
+<td>5</td>
+<td>130</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td>7</td>
+<td>55</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>Wide</td>
+<td>5</td>
+<td>140</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td>8</td>
+<td>60</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>Low</td>
+<td>5</td>
+<td>200</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td>8</td>
+<td>80</td>
+</tr>
+</tbody>
+</table>
 </section>
 </section>
 <section id="data-analysis" class="level2">
 <h2 class="anchored" data-anchor-id="data-analysis">Data Analysis</h2>
+<section id="relevant-items" class="level3">
+<h3 class="anchored" data-anchor-id="relevant-items">Relevant items</h3>
+<p>One design issue that is especially important is measured variables to include in the study. If measured variables irrelevant to the domain of interest are included, then spurious common factors might emerge or true common factors might be obscured <span class="citation" data-cites="fabrigar1999">(<a href="#ref-fabrigar1999" role="doc-biblioref">Fabrigar et al., 1999</a>)</span>.</p>
+</section>
 <section id="sampling-adequacy" class="level3">
 <h3 class="anchored" data-anchor-id="sampling-adequacy">Sampling Adequacy</h3>
 <p>The Kaiser–Meyer–Olkin (KMO) test is a statistical measure to determine how suitable the data is for factor analysis. The test measures sampling adequacy for the complete model and each variable in the model. The statistic is a measure of the proportion of variance among variables that might be common variance. The lower the proportion, the higher the KMO value, the more suitable the data is.</p>
@@ -369,8 +474,8 @@ Warning
 <span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="htmlwidget-0588db513517df8a254f" style="width:100%;height:464px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-0588db513517df8a254f">{"x":{"diagram":"\n  digraph dot {\n    graph [\n      layout = dot, \n      rankdir = LR, \n      fontname = \"Source Sans Pro\", \n      label = \"Illustration of a PCA model (left) and a factor analysis model (right).\"\n    ]\n    \n    node [fontname = \"Source Sans Pro\"]\n    node [shape = square]\n    var1 [label = \"item 1\"]\n    var2 [label = \"item 2\"]\n    var3 [label = \"item 3\"]\n    var4 [label = \"item 4\"]\n    var5 [label = \"item 1\"]\n    var6 [label = \"item 2\"]  \n    var7 [label = \"item 3\"]  \n    var8 [label = \"item 4\"]\n  \n    node [shape = circle]\n    construct_a [label = \"construct A\"]\n    construct_b [label = \"construct B\"]\n  \n    edge [color = black, minlen = 3]\n    {var1 var2 var3 var4} -> construct_a\n    construct_b -> {var5 var6 var7 var8}\n  \n    edge[style = invis, minlen = 1];\n    construct_a -> construct_b\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-9cbdfba4be1d8d105680" style="width:100%;height:464px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-9cbdfba4be1d8d105680">{"x":{"diagram":"\n  digraph dot {\n    graph [\n      layout = dot, \n      rankdir = LR, \n      fontname = \"Source Sans Pro\", \n      label = \"Illustration of a PCA model (left) and a factor analysis model (right).\"\n    ]\n    \n    node [fontname = \"Source Sans Pro\"]\n    node [shape = square]\n    var1 [label = \"item 1\"]\n    var2 [label = \"item 2\"]\n    var3 [label = \"item 3\"]\n    var4 [label = \"item 4\"]\n    var5 [label = \"item 1\"]\n    var6 [label = \"item 2\"]  \n    var7 [label = \"item 3\"]  \n    var8 [label = \"item 4\"]\n  \n    node [shape = circle]\n    construct_a [label = \"construct A\"]\n    construct_b [label = \"construct B\"]\n  \n    edge [color = black, minlen = 3]\n    {var1 var2 var3 var4} -> construct_a\n    construct_b -> {var5 var6 var7 var8}\n  \n    edge[style = invis, minlen = 1];\n    construct_a -> construct_b\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>A related issue is that factor analysis assumes that the total variance can be partitioned into common and unique variance and PCA assumes that the common variances takes up all of total variance. This means that PCA assumes that all variables are measured without error. It is usually more reasonable to assume that you have not measured your set of items perfectly.</p>
@@ -448,6 +553,7 @@ Warning
 <section id="factor-loadings" class="level3">
 <h3 class="anchored" data-anchor-id="factor-loadings">Factor Loadings</h3>
 <p>Tabachnick and Fidell (2001) cite .32 as a good rule of thumb for the minimum loading of an item. Others say item loadings above .30 (Costello).</p>
+<p>Clark and Watson, 1995 say &gt; .35 <span class="citation" data-cites="clark1995">Clark &amp; Watson (<a href="#ref-clark1995" role="doc-biblioref">1995</a>)</span></p>
 <p>Others say a factor loading coefficient ≥ 0.40 is considered necessary to judge the quality (validity) of an item as an indicator of one factor or another. Some may think that this criterion is quite lax since a factor loading of 0.40 means that only 16% of the explained variance depends on the factor of which one item is the indicator (Gana &amp; Broc)</p>
 <p>Some psychometricians recommend that we choose items whose R² is greater than 0.40 (thus showing a factorial factor loading greater than 0.63).</p>
 <ul>
@@ -455,16 +561,26 @@ Warning
 <p>A factor with fewer than three items is generally weak and unstable; 5 or more strongly loading items (.50 or better) are desirable and indicate a solid factor.</p></li>
 </ul>
 <p>Comrey and Lee (1992) suggest that loadings in excess of .71 (50% overlapping variance) are considered excellent, .63 (40% overlapping variance) very good, .55 (30% overlapping variance) good, .45 (20% overlapping variance) fair, and .32 (10% overlapping variance) poor.</p>
+<p>one must be careful not to prematurely drop poorly performing items, especially when such items were predicted a priori to be strong markers of a given factor.</p>
 </section>
-<section id="number-of-indicators-1" class="level3">
-<h3 class="anchored" data-anchor-id="number-of-indicators-1">Number of indicators</h3>
+<section id="number-of-indicators" class="level3">
+<h3 class="anchored" data-anchor-id="number-of-indicators">Number of indicators</h3>
 <ul>
 <li>, it is important for the latent variable to have at least four indicators (for example: four items). In effect, with only three indicators, the measurement model is just-identified, thus making useless its testability. (Gana &amp; Broc)</li>
+<li>5 or more strongly loading items (.50 or better) indicate a solid factor <span class="citation" data-cites="costello2005">(<a href="#ref-costello2005" role="doc-biblioref">Costello &amp; Osborne, 2005</a>)</span></li>
 </ul>
 </section>
+<section id="reliability" class="level3">
+<h3 class="anchored" data-anchor-id="reliability">Reliability</h3>
+<p>Note that Cronbach’s alpha relies on the assumption of unidimensionality.</p>
+<p>Internal consistency:</p>
+<p>Recommended cut off points are:</p>
+<ul>
+<li><p>.80 in a basic science setting <span class="citation" data-cites="clark1995">(<a href="#ref-clark1995" role="doc-biblioref">Clark &amp; Watson, 1995</a>)</span> Nunally 1978</p></li>
+<li><p>.9 or .5 in applied settings Nunally 1978</p></li>
+</ul>
+<p>Test-retest reliability:</p>
 </section>
-<section id="summary" class="level2">
-<h2 class="anchored" data-anchor-id="summary">Summary</h2>
 </section>
 <section id="recommended-reading" class="level2">
 <h2 class="anchored" data-anchor-id="recommended-reading">Recommended Reading</h2>
@@ -473,6 +589,7 @@ Warning
 <li>Best Practices in Exploratory Factor Analysis by <span class="citation" data-cites="osborne2014">Osborne (<a href="#ref-osborne2014" role="doc-biblioref">2014</a>)</span></li>
 <li>In Search of Underlying Dimensions: The Use (and Abuse) of Factor Analysis in Personality and Social Psychology Bulletin by <span class="citation" data-cites="russell2002">Russell (<a href="#ref-russell2002" role="doc-biblioref">2002</a>)</span></li>
 <li>Evaluating the Use of Exploratory Factor Analysis in Psychological Research by <span class="citation" data-cites="fabrigar1999">Fabrigar et al. (<a href="#ref-fabrigar1999" role="doc-biblioref">1999</a>)</span></li>
+<li><span class="citation" data-cites="costello2005">Costello &amp; Osborne (<a href="#ref-costello2005" role="doc-biblioref">2005</a>)</span></li>
 </ul>
 </section>
 <section id="glossary" class="level2">
@@ -491,6 +608,9 @@ Warning
 <div id="ref-borsboom2006" class="csl-entry" role="doc-biblioentry">
 Borsboom, D. (2006). The attack of the psychometricians. <em>Psychometrika</em>, <em>71</em>(3), 425. <a href="https://doi.org/10.1007/s11336-006-1447-6">https://doi.org/10.1007/s11336-006-1447-6</a>
 </div>
+<div id="ref-clark1995" class="csl-entry" role="doc-biblioentry">
+Clark, L. A., &amp; Watson, D. (1995). Constructing validity: Basic issues in objective scale development. <em>Psychological Assessment</em>, <em>7</em>(3), 309–319. <a href="https://doi.org/10.1037/1040-3590.7.3.309">https://doi.org/10.1037/1040-3590.7.3.309</a>
+</div>
 <div id="ref-costello2005" class="csl-entry" role="doc-biblioentry">
 Costello, A., &amp; Osborne, J. (2005). Best practices in exploratory factor analysis: Four recommendations for getting the most from your analysis. <em>Practical Assessment, Research, and Evaluation</em>, <em>10</em>(1). <a href="https://doi.org/10.7275/jyj1-4868">https://doi.org/10.7275/jyj1-4868</a>
 </div>
@@ -505,6 +625,9 @@ Kaiser, H. F. (1974). An index of factorial simplicity. <em>Psychometrika</em>, 
 </div>
 <div id="ref-maccallum1999" class="csl-entry" role="doc-biblioentry">
 MacCallum, R. C., Widaman, K. F., Zhang, S., &amp; Hong, S. (1999). Sample size in factor analysis. <em>Psychological Methods</em>, <em>4</em>(1), 84–99. <a href="https://doi.org/10.1037/1082-989X.4.1.84">https://doi.org/10.1037/1082-989X.4.1.84</a>
+</div>
+<div id="ref-mundfrom2005" class="csl-entry" role="doc-biblioentry">
+Mundfrom, D. J., Shaw, D. G., &amp; Ke, T. L. (2005). Minimum sample size recommendations for conducting factor analyses. <em>International Journal of Testing</em>, <em>5</em>(2), 159–168. <a href="https://doi.org/10.1207/s15327574ijt0502_4">https://doi.org/10.1207/s15327574ijt0502_4</a>
 </div>
 <div id="ref-osborne2014" class="csl-entry" role="doc-biblioentry">
 Osborne, J. W. (2014). <em>Best practices in exploratory factor analysis</em>. <span>Createspace publishing</span>.
@@ -605,12 +728,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../../chapters/statistics/index.html" class="pagination-link">
+      <a href="../../../sections/statistics/index.html" class="pagination-link">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Overview</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../../chapters/statistics/factor-analysis/CFA.html" class="pagination-link">
+      <a href="../../../sections/statistics/factor-analysis/CFA.html" class="pagination-link">
         <span class="nav-page-text">Confirmatory Factor Analysis</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>

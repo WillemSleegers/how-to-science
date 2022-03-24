@@ -3,7 +3,7 @@
   <meta charset="utf-8">
   <meta name="generator" content="quarto-0.9.34">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>How to Science - Confirmatory Factor Analysis</title>
+  <title>How to Science - Examples</title>
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -11,6 +11,25 @@
     div.column{display: inline-block; vertical-align: top; width: 50%;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+    }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
   </style>
 
   <script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -20,8 +39,7 @@
   <script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
   <script src="../../../site_libs/quarto-search/fuse.min.js"></script>
   <script src="../../../site_libs/quarto-search/quarto-search.js"></script>
-  <link href="../../../chapters/statistics/factor-analysis/r-packages.html" rel="next">
-  <link href="../../../chapters/statistics/factor-analysis/EFA.html" rel="prev">
+  <link href="../../../sections/statistics/factor-analysis/r-packages.html" rel="prev">
   <script src="../../../site_libs/quarto-html/quarto.js"></script>
   <script src="../../../site_libs/quarto-html/popper.min.js"></script>
   <script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -55,7 +73,7 @@
   <![endif]-->
   <link rel="stylesheet" href="../../../assets/css/styles.css">
 </head>
-<body class="docked fullcontent">
+<body class="floating fullcontent">
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-sm navbar-dark ">
@@ -73,10 +91,10 @@
     <a class="nav-link" href="../../../index.html">About</a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../chapters/surveys/index.html">Survey Design</a>
+    <a class="nav-link" href="../../../sections/surveys/index.html">Survey Design</a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="../../../chapters/statistics/index.html" aria-current="page">Statistics</a>
+    <a class="nav-link active" href="../../../sections/statistics/index.html" aria-current="page">Statistics</a>
   </li>  
 </ul>
               <div class="quarto-toggle-container">
@@ -92,7 +110,7 @@
     </nav>
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">Confirmatory Factor Analysis</h1>
+      <h1 class="quarto-secondary-nav-title">Examples</h1>
       <button type="button" class="quarto-btn-toggle btn">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -102,12 +120,12 @@
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../chapters/statistics/index.html" class="sidebar-item-text sidebar-link">Overview</a>
+  <a href="../../../sections/statistics/index.html" class="sidebar-item-text sidebar-link">Overview</a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -120,22 +138,22 @@
     <ul id="quarto-sidebar-section-factor-analysis" class="collapse list-unstyled sidebar-section depth1 show">  
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../chapters/statistics/factor-analysis/EFA.html" class="sidebar-item-text sidebar-link">Exploratory Factor Analysis</a>
+  <a href="../../../sections/statistics/factor-analysis/EFA.html" class="sidebar-item-text sidebar-link">Exploratory Factor Analysis</a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../chapters/statistics/factor-analysis/CFA.html" class="sidebar-item-text sidebar-link active">Confirmatory Factor Analysis</a>
+  <a href="../../../sections/statistics/factor-analysis/CFA.html" class="sidebar-item-text sidebar-link">Confirmatory Factor Analysis</a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../chapters/statistics/factor-analysis/r-packages.html" class="sidebar-item-text sidebar-link">R-packages</a>
+  <a href="../../../sections/statistics/factor-analysis/r-packages.html" class="sidebar-item-text sidebar-link">R-packages</a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../chapters/statistics/factor-analysis/examples.html" class="sidebar-item-text sidebar-link">Examples</a>
+  <a href="../../../sections/statistics/factor-analysis/examples.html" class="sidebar-item-text sidebar-link active">Examples</a>
   </div>
 </li>
     </ul>
@@ -148,183 +166,16 @@
 <!-- main -->
 <main class="content" id="quarto-document-content">
 <header id="title-block-header">
-<h1 class="title d-none d-lg-block display-7">Confirmatory Factor Analysis</h1>
+<h1 class="title d-none d-lg-block display-7">Examples</h1>
 </header>
-<div class="callout-warning callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Warning
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>This chapter is still a work in progress.</p>
-</div>
-</div>
-<p>Note that if you have a clear theoretical basis about the number of factors and which items should load on which factor, CFA is more appropriate than EFA because it allows you to directly test your model. You could also do both, but a CFA should be conducted on new data to test its validity.</p>
-<p>For confirmatory factor analyses there are also several ways to determine the sample size, including:</p>
-<ol type="1">
-<li>Rules of thumb</li>
-<li>Satorra-Saris method</li>
-<li>Monte Carlo approach</li>
-</ol>
-<section id="number-of-indicators" class="level3">
-<h3 class="anchored" data-anchor-id="number-of-indicators">Number of indicators</h3>
-<p>Some argue that when it comes to the number of indicators, more is better <span class="citation" data-cites="marsh1998">@marsh1998</span>.</p>
-</section>
-<section id="estimator" class="level3">
-<h3 class="anchored" data-anchor-id="estimator">Estimator</h3>
-<p>If the data is normally distributed, use the ML estimator.</p>
-<p>the findings of Chou and Bentler make it possible to qualify these remarks. These authors showed that in the presence of a sufficiently large sample, maximum likelihood estimation method and generalized least squares method do not make the results suffer, even when the multivariate normality is slightly violated.</p>
-<p>In case of violations, the following estimators can be used:</p>
-<ul>
-<li><p>MLM</p></li>
-<li><p>MLR: Similar to MLM but better suited for small sample sizes (Gana &amp; Broc).</p></li>
-<li><p>weighted least squares method (WLS): Requires a large sample size (FLO 04) and frequently runs into convergence issues and improper solutions</p></li>
-<li><p>Diagonally Weighted Least Squares (DWLS): For small samples and non-normal data ([JÖR 89)</p></li>
-<li><p>WLSM: Robust alternative to DWLS</p></li>
-<li><p>WLSMV: Robust alternative to DWLS</p></li>
-<li><p>bootstrapping: Not recommended for dichotomous and ordinal measures with few response categories)</p></li>
-</ul>
-<p>Mardia calculation to determine violations from normal distribution. It can be noted that not only is this standardized coefficient statistically significant, but its value is greater than 5, which is the threshold value beyond which multivariate normality seems to fail.</p>
-<table class="table">
-<caption>Recommendations concerning the main estimators available in lavaan according to the type of data (Gana &amp; Broc).</caption>
-<colgroup>
-<col style="width: 42%">
-<col style="width: 57%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Data type and normality assumption</th>
-<th>Recommended estimator</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><em>Continuous data</em></td>
-<td></td>
-</tr>
-<tr class="even">
-<td>Approximately normal distribution</td>
-<td>ML</td>
-</tr>
-<tr class="odd">
-<td>Violation of normality assumption</td>
-<td>ML (in case of moderate violation)</td>
-</tr>
-<tr class="even">
-<td></td>
-<td>MLM, MLR, Bootstrap</td>
-</tr>
-<tr class="odd">
-<td><em>Ordinal/categorical data</em></td>
-<td></td>
-</tr>
-<tr class="even">
-<td>Approximately normal distribution</td>
-<td>ML (if at least 6 response categories)</td>
-</tr>
-<tr class="odd">
-<td></td>
-<td>MLM, MLR (if at least 4 response categories)</td>
-</tr>
-<tr class="even">
-<td></td>
-<td>WLSMV (binary response or 3 response categories)</td>
-</tr>
-<tr class="odd">
-<td>Violation of normality assumption</td>
-<td>ML (if at least 6 response categories)</td>
-</tr>
-<tr class="even">
-<td></td>
-<td>MLM, MLR (if at least 4 response categories)</td>
-</tr>
-<tr class="odd">
-<td></td>
-<td>WLSMV (in case of severe violation)</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="fit-indices" class="level3">
-<h3 class="anchored" data-anchor-id="fit-indices">Fit indices</h3>
-<p>The only advice we can afford to give, however, is to closely follow developments concerning fit indices. In the meantime, you can carefully follow the recommendations of Hu and Bentler or Schreiber and his co-authors who suggest the following guidelines for judging a model goodness-of-fit (based on the hypothesis where the maximum likelihood method is the estimation method): 1) RMSEA value ≤ 0.06, with confidence interval at 90% values should be between 0 and 1.00; 2) SRMR value ≤ 0.08; and 3) CFI and TLI values ≥ 0.95.</p>
-<table class="table">
-<caption>Fit indices guidance from <span class="citation" data-cites="gana2019">@gana2019</span></caption>
-<colgroup>
-<col style="width: 14%">
-<col style="width: 11%">
-<col style="width: 73%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Fit Type</th>
-<th>Index</th>
-<th>Benchmark</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Absolute</td>
-<td>RMR/SRMR</td>
-<td>≤ 0.08 = good fit</td>
-</tr>
-<tr class="even">
-<td></td>
-<td>WRMR</td>
-<td>≤ 1.00 = good fit</td>
-</tr>
-<tr class="odd">
-<td>Parsimonious</td>
-<td>PRATIO</td>
-<td>Between 0.00 (saturated model) and 1.00 (parsimonious model)</td>
-</tr>
-<tr class="even">
-<td></td>
-<td>RMSEA</td>
-<td>≤ 0.05 = very good fit<br>
-≤ 0.06 and ≤ 0.08 = good fit</td>
-</tr>
-<tr class="odd">
-<td></td>
-<td>AIC</td>
-<td>Comparative index: the lower value of this index, the better the fit</td>
-</tr>
-<tr class="even">
-<td></td>
-<td>BIC</td>
-<td>Comparative index: the lower value of this BIC index, the better the fit</td>
-</tr>
-<tr class="odd">
-<td>Incremental</td>
-<td>CFI</td>
-<td>≥ 0.90 and ≤ 0.94 = good fit<br>
-≥ 0.95 = very good fit</td>
-</tr>
-<tr class="even">
-<td></td>
-<td>TLI</td>
-<td>≥ 0.90 and ≤ 0.94 = good fit<br>
-≥ 0.95 = very good fit</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="reliability" class="level3">
-<h3 class="anchored" data-anchor-id="reliability">Reliability</h3>
-<p>Reliability increases the closer the value gets to 1.00, with an acceptability threshold of 0.70.</p>
-</section>
-<section id="recommended-reading" class="level2">
-<h2 class="anchored" data-anchor-id="recommended-reading">Recommended Reading</h2>
-<ul>
-<li>Dynamic Fit Index Cutoffs for Confirmatory Factor Analysis Models by <span class="citation" data-cites="mcneish2021">@mcneish2021</span></li>
-</ul>
+<p>This page lists several examples of papers in which EFA and/or CFA was used to construct a psychological scale.</p>
 
 
-</section>
+<div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="doc-bibliography">
+<div id="ref-kahane2018" class="csl-entry" role="doc-biblioentry">
+Kahane, G., Everett, J. A. C., Earp, B. D., Caviola, L., Faber, N. S., Crockett, M. J., &amp; Savulescu, J. (2018). Beyond sacrificial harm: A two-dimensional model of utilitarian psychology. <em>Psychological Review</em>, <em>125</em>(2), 131–164. <a href="https://doi.org/10.1037/rev0000093">https://doi.org/10.1037/rev0000093</a>
+</div>
+</div>
 </main> <!-- /main -->
 <script type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
@@ -404,14 +255,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../../chapters/statistics/factor-analysis/EFA.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Exploratory Factor Analysis</span>
+      <a href="../../../sections/statistics/factor-analysis/r-packages.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">R-packages</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../../chapters/statistics/factor-analysis/r-packages.html" class="pagination-link">
-        <span class="nav-page-text">R-packages</span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->

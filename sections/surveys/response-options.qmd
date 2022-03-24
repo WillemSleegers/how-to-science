@@ -1,10 +1,16 @@
 ---
 title: "Response Options"
+toc: true
+bibliography: references.bib
 ---
 
 ::: callout-warning
 This chapter is still a work in progress.
 :::
+
+There are several decisions to make that involve response options. How many response options should you use? Should you use an even or odd number of response options? Should you label them? This section contains a summary of best practices that one can use to address these questions.
+
+## Number of Response Options
 
 The question of how many response options to use centers around two main concerns. The first is that more options means you can obtain a more fine-grained assessment of the characteristic that is being evaluated (e.g., attitude). In other words, your assessment is more precise. However, the question is how the number of options affects the reliability and the validity of the measurement. With more options, it becomes more difficult for people to distinguish between the different options (e.g., is "Strongly agree" reliably different from "Very strongly agree"?).
 
@@ -70,7 +76,7 @@ Another relevant factor is whether the scale is bipolar or unipolar. Bipolar sca
 
 **Conclusion**: It appears that few response options (2 or 3) should definitely be avoided. More response options therefore seems better, but benefits seem to quickly level off. Given other concerns, such as ease of use and interpretability, a 7-point Likert scale seems to be preferred for bipolar scales and a 5-point Likert scale for unipolar scales.
 
-### Odd vs. even response options {.unnumbered}
+## Odd vs. Even Response Options
 
 The middle option of a scale can have an ambiguous meaning. Participants may use it to indicate a moderate standing on the issue (Rugg and Cantril, 1944), a lack of an opinion (Nadler, Weston, and Voyles, 2014), ambivalence (Klopfer and Madden, 1980; Schaeﬀer and Presser, 2003; Nadler, Weston, and Voyles, 2014), indifference (Schaeﬀer and Presser, 2003; Nadler, Weston, and Voyles, 2014), uncertainty (Baka, Figgou, and Triga, 2012; Nadler, Weston, and Voyles, 2014), confusion, or to signal context dependence (e.g., "it depends" or disputing the question, see Baka, Figgou, and Triga, 2012).
 
@@ -86,13 +92,13 @@ An alternative approach to this issue is to use branching. Respondents could fir
 
 **Conclusion**: If it is possible that respondents may have a moderate view, it seems crucial for it to be possible to capture this view. Limitations of a middle option could then be addressed in other ways (e.g., clear questions).
 
-### Response option labeling {.unnumbered}
+## Response Option Labeling
 
 There are several studies that show all response options should be labelled, rather than only labeling the end points [@weng2004; @krosnick1993].
 
 For an example of biopolar labels for a 2- to 11-point Likert scale, see Table 1.
 
-::: {#likert-labels-table}
+::: column-body-outset
 | Label                      | 2-point | 3-point | 4-point | 5-point | 6-point | 7-point | 8-point | 9-point | 10-point | 11-point |
 |-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|
 | Very strongly disagree     |         |         |         |         |         |         | x       | x       | x        | x        |
@@ -112,6 +118,44 @@ For an example of biopolar labels for a 2- to 11-point Likert scale, see Table 1
 
 It is also recommended to avoid agree-disagree response labels because asking respondents to rate their level of agreement is a cognitively demanding task that increases respondent error and reduces responding effort [@gehlbach2011].
 
-### Acquiescence and response options
+**Agreement:** Strongly agree, Moderately agree, Neither agree nor disagree, Moderately disagree, Strongly disagree (another version removes the "moderately" qualifier and/or uses "neutral")
 
-## 
+**Comparison:** Much X, Slightly X, About the same, Slightly (opposite of X), Much (opposite of X)
+
+**Ease:** Very easy, Moderately easy, Neither easy nor difficult, Moderately difficult, Very difficult
+
+**Expectations:** Exceeds expectations, Fully meets expectations, Does not fully meet expectations, Does not meet expectations at all
+
+**Extent (5 pt):** A great deal (Completely, if appropriate), Considerably, Moderately, Slightly, Not at all
+
+**Extent (4 pt):** Significantly, Moderately, Slightly, Not at all
+
+**Frequency (no set time):** Always, Often, Occasionally, Rarely, Never
+
+**Frequency (general):** Daily, Weekly, Monthly, Once a semester, Once a year, Never
+
+**Frequency (based on time frame):** More than 5 times, 4 - 5 times, 2 - 3 times, 1 time, Less than 1 time, Never
+
+**Frequency (extended):** More than once a week, Once a week, Once a month, Once a semester, Once a year, Less than once a year, Never
+
+**Helpfulness:** Extremely helpful, Very helpful, Moderately helpful, Slightly helpful, Not at all helpful
+
+**Importance:** Extremely important, Very important, Moderately important, Slightly important, Not at all important
+
+**Interest:** Extremely interested, Very interested, Moderately interested, Slightly interested, Not at all interested
+
+**Likelihood:** Very likely, Moderately likely, Neither likely nor unlikely, Moderately unlikely, Very unlikely
+
+**Numeric Scales:** Less than #, About the same, More than \#
+
+**Probability:** Definitely would, Probably would, Probably wouldn't, Definitely wouldn't
+
+**Proficiency:** Beginner, Developing, Competent, Advanced, Expert (typical for Rubrics)
+
+**Quality:** Excellent, Good, Average, Below average, Poor
+
+**Satisfaction:** Very satisfied, Moderately satisfied, Neither satisfied nor dissatisfied, Moderately dissatisfied, Very dissatisfied (another version removes the "moderately" qualifier and/or uses "neutral")
+
+Taken from https://baselinesupport.campuslabs.com/hc/en-us/articles/204305485-Recommended-Scales
+
+## References
