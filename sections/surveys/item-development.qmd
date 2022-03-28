@@ -26,3 +26,5 @@ Item writing guidelines [@simms2008]:
 ## Pilot testing
 
 After the initial item pool is complete, it makes sense to pilot test the items before running a large-scaled exploratory study.
+
+Factor loadings can be improved by using multiple response (Likert-type) items, as they generally result in higher loadings than two-choice items (Comrey & Montag, 1982; Oswald & Velicer, 1980; Velicer, DiClemente, & Corriveau, 1984; Velicer, Govia, Cherico, & Corriveau, 1985; Velicer & Stevenson, 1978). Likewise, the quality of item writing can affect the size of the loadings, that is, the expression of an item in simple language, restricting the item to a single idea, or using content that is appropriate to a majority of respondents are all ways of improving items.

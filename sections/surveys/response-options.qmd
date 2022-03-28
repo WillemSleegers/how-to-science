@@ -100,7 +100,7 @@ For an example of biopolar labels for a 2- to 11-point Likert scale, see Table 1
 
 ::: column-body-outset
 | Label                      | 2-point | 3-point | 4-point | 5-point | 6-point | 7-point | 8-point | 9-point | 10-point | 11-point |
-|-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|
+|----------------------------|---------|---------|---------|---------|---------|---------|---------|---------|----------|----------|
 | Very strongly disagree     |         |         |         |         |         |         | x       | x       | x        | x        |
 | Strongly disagree          |         |         | x       | x       | x       | x       | x       | x       | x        | x        |
 | Disagree                   | x       | x       | x       | x       | x       | x       | x       | x       | x        | x        |
