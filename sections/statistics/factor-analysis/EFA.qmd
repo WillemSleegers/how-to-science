@@ -252,26 +252,21 @@ Finally, one must be careful not to prematurely drop poorly performing items, es
 
 ### Reliability
 
-Note that Cronbach's alpha relies on the assumption of unidimensionality.
+There are different types of reliabilities that can be calculated to assess the reliability of the scale:
 
-Internal consistency:
+-   Internal consistency
 
-Recommended cut off points are:
+-   Test-retest reliability
 
--   .80 in a basic science setting [@clark1995] Nunally 1978
-
--   .9 or .5 in applied settings Nunally 1978
-
-Test-retest reliability:
+Cronbach's alpha is the most popular measure of internal reliability, with recommended cutoffs of .80 in a basic science setting and .9 or .95 in an applied setting [@clark1995\]. Note that Cronbach's alpha relies on the assumption of unidimensionality. Cronbach's alpha has faced some criticism \[e.g., see @peters2014] and other measures should be used as well, such as omega.
 
 ## Recommended Reading
 
-The summaries and conclusions above were largely taken from the following sources:
+I found the following best practices papers useful:
 
--   Best Practices in Exploratory Factor Analysis by @osborne2014
--   In Search of Underlying Dimensions: The Use (and Abuse) of Factor Analysis in Personality and Social Psychology Bulletin by @russell2002
--   Evaluating the Use of Exploratory Factor Analysis in Psychological Research by @fabrigar1999
--   @costello2005
+-   Evaluating the use of exploratory factor analysis in psychological research by @fabrigar1999
+-   In search of underlying dimensions: The use (and abuse) of factor analysis in personality and social psychology bulletin by @russell2002
+-   Best practices in exploratory factor analysis by @osborne2014
 
 ## Glossary
 
