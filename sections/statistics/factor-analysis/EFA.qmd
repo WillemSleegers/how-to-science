@@ -77,9 +77,9 @@ One design issue that is especially important is about which measured variables 
 
 The Kaiser--Meyer--Olkin (KMO) test is a statistical measure to determine how suitable the data is for factor analysis. The test measures sampling adequacy for the complete model and each variable in the model. The statistic indicates the degree to which each variable in a set is predicted without error by the other variables.
 
-The KMO value ranges from 0 to 1, with 0.60 considered suitable for factor analysis @tabachnick2013. Kaiser himself [-@kaiser1974] suggested that KMO \> .9 were marvelous, in the .80s, meritorious, in the .70s, middling, in the .60s, mediocre, in the 50s, miserable, and less than .5, unacceptable.
+The KMO value ranges from 0 to 1, with 0.60 considered suitable for factor analysis [@tabachnick2013\]. Kaiser himself \[-@kaiser1974] suggested that KMO \> .9 were marvelous, in the .80s, meritorious, in the .70s, middling, in the .60s, mediocre, in the 50s, miserable, and less than .5, unacceptable.
 
-Bartlett's (1954) test of sphericity is a notoriously sensitive test of the hypothesis that the correlations in a correlation matrix are zero. Because of its sensitivity and its dependence on N, the test is likely to be significant with samples of substantial size even if correlations are very low. Therefore, use of the test is recommended only if there are fewer than around five participants per variable [@tabachnick2013].
+Bartlett's test of sphericity is a notoriously sensitive test of the hypothesis that the correlations in a correlation matrix are zero. Because of its sensitivity and its dependence on N, the test is likely to be significant with samples of substantial size even if correlations are very low. Therefore, use of the test is recommended only if there are fewer than around five participants per variable [@tabachnick2013].
 
 ### Principal Components vs. Factor Analysis
 
