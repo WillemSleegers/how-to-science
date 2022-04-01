@@ -25,7 +25,7 @@ It may be obvious, but make sure to target participants that are likely to vary 
 
 ### Sample size
 
-Rules of thumb are one way to determine an appropriate sample size, but the general consensus is that rules of thumb are a bad idea [@maccallum1999, @costello2005\]. The reason for that is that rules of thumb only involve one of two factors: a set number of participants or a particular participant-to-item ratio. The reality is that the appropriate sample size is dependent on many more factors, such as communalities, factor loadings, the number of indicators per factor, and the number of factors \[@gagne2006, @maccallum1999, @maccallum2001, @velicer1998].
+Rules of thumb are one way to determine an appropriate sample size, but the general consensus is that rules of thumb are a bad idea \[@maccallum1999, @costello2005\]. The reason for that is that rules of thumb only involve one of two factors: a set number of participants or a particular participant-to-item ratio. The reality is that the appropriate sample size is dependent on many more factors, such as communalities, factor loadings, the number of indicators per factor, and the number of factors \[@gagne2006, @maccallum1999, @maccallum2001, @velicer1998\].
 
 Given the replication failures in the social sciences, it should be no surprise that also in the EFA literature there appears to be a sample size problem. This is perhaps best demonstrated by @costello2005. They reviewed two years' worth of PsychINFO articles and found that the majority of the studies (62.9%) had participants to item ratios of 10:1 or less. Of course, the participant to item ratio is not a good benchmark for the appropriate sample size, so this is not enough to demonstrate that the sample size is insufficient. They did find support that this is not enough by sampling data of various sample sizes from a large data set of responses to the Marsh's Self-Description Questionnaire. They found that only 70% of their large (20:1) samples produced correct solutions, leading them to conclude that a 20:1 participant to item ratio produces error rates well above the field standard alpha = .05 level.
 
@@ -77,7 +77,7 @@ One design issue that is especially important is about which measured variables 
 
 The Kaiser--Meyer--Olkin (KMO) test is a statistical measure to determine how suitable the data is for factor analysis. The test measures sampling adequacy for the complete model and each variable in the model. The statistic indicates the degree to which each variable in a set is predicted without error by the other variables.
 
-The KMO value ranges from 0 to 1, with 0.60 considered suitable for factor analysis [@tabachnick2013\]. Kaiser himself \[-@kaiser1974] suggested that KMO \> .9 were marvelous, in the .80s, meritorious, in the .70s, middling, in the .60s, mediocre, in the 50s, miserable, and less than .5, unacceptable.
+The KMO value ranges from 0 to 1, with 0.60 considered suitable for factor analysis [@tabachnick2013]. @kaiser1974 himself suggested that KMO \> .9 were marvelous, in the .80s, meritorious, in the .70s, middling, in the .60s, mediocre, in the 50s, miserable, and less than .5, unacceptable.
 
 Bartlett's test of sphericity is a notoriously sensitive test of the hypothesis that the correlations in a correlation matrix are zero. Because of its sensitivity and its dependence on N, the test is likely to be significant with samples of substantial size even if correlations are very low. Therefore, use of the test is recommended only if there are fewer than around five participants per variable [@tabachnick2013].
 
@@ -218,7 +218,7 @@ The default in most statistical software packages is to use the Kaiser criterion
 
 The scree test involves examining the graph of the eigenvalues and looking for the natural bend or "elbow" in the data where the slope of the curve changes markedly. Although the scree plot itself is not considered sufficient to determine how many factors should be extracted [@velicer2000], it does appear to be a relatively reliable method. The main down side seems to be its ambiguity as the bend is not always clear and sometimes there are even multiple bends.
 
-Parallel analysis involves generating random uncorrelated data, and comparing eigenvalues from the EFA to the eigenvalues from the random data. Using this process, only factors with eigenvalues that are above random eigenvalues should be retained, although it is not clear how much above the random eigenvalues they should be. Several authors have endorsed this as the most robust and accurate process for determining the number of factors to extract [@ledesma2007, @velicer2000].
+Parallel analysis involves generating random uncorrelated data, and comparing eigenvalues from the EFA to the eigenvalues from the random data. Using this process, only factors with eigenvalues that are above random eigenvalues should be retained, although it is not clear how much above the random eigenvalues they should be. Several authors have endorsed this as the most robust and accurate process for determining the number of factors to extract \[@ledesma2007, @velicer2000\].
 
 The Minimum Average Partial (MAP) criterion involves partialing out common variance as each successive component is created. As each successive component is partialed out, common variance will decrease to a minimum. Velicer argued that minimum point should be considered the criterion for the number of factors to extract.
 
@@ -226,7 +226,7 @@ VSS involves degrading the initial rotated factor solution by assuming that the 
 
 @zwick1986 tested the scree test, Horn's parallel test, and Velicer's MAP test (among others) in simulation studies using a data set with a clear factor structure. Both the parallel test and MAP test seemed to work well. @ruscio2012 notes that PA is considered to be the method of choice among methodologists and recommend that researchers take advantage of PA as a starting point, perhaps supplemented by CD. They note that researchers can also use more than one method. @osborne2014 notes that MAP has been considered superior to the "classic" criteria, and probably is superior to parallel analysis, although neither is perfect, and all must be used in the context of a search for conceptually interpretable factors. He recommends to use parallel analysis or MAP criteria, along with theory (and any of the classic criteria that suits you and is defensible).
 
-Finally, empirical research suggests that overfactoring introduces much less error to factor loading estimates than underfactoring [@fava1996, @wood1996]. Although you should be skeptical of solutions with too many factors because the factors may not be meaningful and parsimony should also be considered.
+Finally, empirical research suggests that overfactoring introduces much less error to factor loading estimates than underfactoring \[@fava1996, @wood1996\]. Although you should be skeptical of solutions with too many factors because the factors may not be meaningful and parsimony should also be considered.
 
 **Conclusion:** Use multiple criteria, including theory, to make a judgment call about how many factors to extract. When in doubt, favor more factors rather than fewer factors.
 
@@ -258,7 +258,7 @@ There are different types of reliabilities that can be calculated to assess the 
 
 -   Test-retest reliability
 
-Cronbach's alpha is the most popular measure of internal reliability, with recommended cutoffs of .80 in a basic science setting and .9 or .95 in an applied setting [@clark1995\]. Note that Cronbach's alpha relies on the assumption of unidimensionality. Cronbach's alpha has faced some criticism \[e.g., see @peters2014] and other measures should be used as well, such as omega.
+Cronbach's alpha is the most popular measure of internal reliability, with recommended cutoffs of .80 in a basic science setting and .9 or .95 in an applied setting \[@clark1995\]. Note that Cronbach's alpha relies on the assumption of unidimensionality. Cronbach's alpha has faced some criticism \[e.g., see @peters2014\] and other measures should be used as well, such as omega.
 
 ## Recommended Reading
 
