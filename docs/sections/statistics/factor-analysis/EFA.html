@@ -231,6 +231,21 @@ div.csl-indent {
 </li>
     </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Group differences</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../sections/statistics/group-differences/pairwise-comparisons.html" class="sidebar-item-text sidebar-link">Group differences</a>
+  </div>
+</li>
+    </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -486,8 +501,8 @@ Warning
 <span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="htmlwidget-2c826522b765dc8bfd6e" style="width:100%;height:464px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-2c826522b765dc8bfd6e">{"x":{"diagram":"\n  digraph dot {\n    graph [\n      layout = dot, \n      rankdir = LR, \n      fontname = \"Source Sans Pro\", \n      label = \"Illustration of a PCA model (left) and a factor analysis model (right).\"\n    ]\n    \n    node [fontname = \"Source Sans Pro\"]\n    node [shape = square]\n    var1 [label = \"item 1\"]\n    var2 [label = \"item 2\"]\n    var3 [label = \"item 3\"]\n    var4 [label = \"item 4\"]\n    var5 [label = \"item 1\"]\n    var6 [label = \"item 2\"]  \n    var7 [label = \"item 3\"]  \n    var8 [label = \"item 4\"]\n  \n    node [shape = circle]\n    construct_a [label = \"construct A\"]\n    construct_b [label = \"construct B\"]\n  \n    edge [color = black, minlen = 3]\n    {var1 var2 var3 var4} -> construct_a\n    construct_b -> {var5 var6 var7 var8}\n  \n    edge[style = invis, minlen = 1];\n    construct_a -> construct_b\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-ec91a8572dcf71e43dab" style="width:100%;height:464px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-ec91a8572dcf71e43dab">{"x":{"diagram":"\n  digraph dot {\n    graph [\n      layout = dot, \n      rankdir = LR, \n      fontname = \"Source Sans Pro\", \n      label = \"Illustration of a PCA model (left) and a factor analysis model (right).\"\n    ]\n    \n    node [fontname = \"Source Sans Pro\"]\n    node [shape = square]\n    var1 [label = \"item 1\"]\n    var2 [label = \"item 2\"]\n    var3 [label = \"item 3\"]\n    var4 [label = \"item 4\"]\n    var5 [label = \"item 1\"]\n    var6 [label = \"item 2\"]  \n    var7 [label = \"item 3\"]  \n    var8 [label = \"item 4\"]\n  \n    node [shape = circle]\n    construct_a [label = \"construct A\"]\n    construct_b [label = \"construct B\"]\n  \n    edge [color = black, minlen = 3]\n    {var1 var2 var3 var4} -> construct_a\n    construct_b -> {var5 var6 var7 var8}\n  \n    edge[style = invis, minlen = 1];\n    construct_a -> construct_b\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>A related issue is that factor analysis assumes that the total variance can be partitioned into common and unique variance and PCA assumes that the common variances takes up all of total variance. This means that PCA assumes that all variables are measured without error. It is usually more reasonable to assume that you have not measured your set of items perfectly.</p>

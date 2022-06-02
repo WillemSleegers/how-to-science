@@ -45,6 +45,9 @@ website:
             - sections/statistics/factor-analysis/r-packages.qmd
             - sections/statistics/factor-analysis/examples.qmd
             - sections/statistics/factor-analysis/recommended-reading.qmd
+        - section: "Group differences"
+          contents:
+            - sections/statistics/group-differences/pairwise-comparisons.qmd
 
 format:
   html:
