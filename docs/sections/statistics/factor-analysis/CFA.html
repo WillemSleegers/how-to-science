@@ -1,80 +1,85 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-  <meta charset="utf-8">
-  <meta name="generator" content="quarto-0.9.141">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>How to Science - Confirmatory Factor Analysis</title>
-  <style>
-    code{white-space: pre-wrap;}
-    span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
-    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    ul.task-list{list-style: none;}
-    div.csl-bib-body { }
-    div.csl-entry {
-      clear: both;
-    }
-    .hanging div.csl-entry {
-      margin-left:2em;
-      text-indent:-2em;
-    }
-    div.csl-left-margin {
-      min-width:2em;
-      float:left;
-    }
-    div.csl-right-inline {
-      margin-left:2em;
-      padding-left:1em;
-    }
-    div.csl-indent {
-      margin-left: 2em;
-    }
-  </style>
 
-  <script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
-  <script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
-  <script src="../../../site_libs/clipboard/clipboard.min.js"></script>
-  <meta name="quarto:offset" content="../../../">
-  <script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
-  <script src="../../../site_libs/quarto-search/fuse.min.js"></script>
-  <script src="../../../site_libs/quarto-search/quarto-search.js"></script>
-  <link href="../../../sections/statistics/factor-analysis/r-packages.html" rel="next">
-  <link href="../../../sections/statistics/factor-analysis/EFA.html" rel="prev">
-  <script src="../../../site_libs/quarto-html/quarto.js"></script>
-  <script src="../../../site_libs/quarto-html/popper.min.js"></script>
-  <script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
-  <script src="../../../site_libs/quarto-html/anchor.min.js"></script>
-  <link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-  <link id="quarto-text-highlighting-styles" href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet">
-  <script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
-  <link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-  <link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
-  <script id="quarto-search-options" type="application/json">{
-    "location": "navbar",
-    "copy-button": false,
-    "collapse-after": 3,
-    "panel-placement": "end",
-    "type": "overlay",
-    "limit": 20,
-    "language": {
-      "search-no-results-text": "No results",
-      "search-matching-documents-text": "matching documents",
-      "search-copy-link-title": "Copy link to search",
-      "search-hide-matches-text": "Hide additional matches",
-      "search-more-match-text": "more match in this document",
-      "search-more-matches-text": "more matches in this document",
-      "search-clear-button-title": "Clear",
-      "search-detached-cancel-button-title": "Cancel",
-      "search-submit-button-title": "Submit"
-    }
-  }</script>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
-  <link rel="stylesheet" href="../../../assets/css/styles.css">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-0.9.483">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>How to Science - Confirmatory Factor Analysis</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../../assets/css/styles.css">
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../sections/statistics/factor-analysis/r-packages.html" rel="next">
+<link href="../../../sections/statistics/factor-analysis/EFA.html" rel="prev">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
 </head>
-<body class="floating fullcontent">
+
+<body class="nav-sidebar floating nav-fixed fullcontent">
+
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-sm navbar-dark ">
@@ -166,9 +171,23 @@
     
 <!-- main -->
 <main class="content" id="quarto-document-content">
-<header id="title-block-header" class="quarto-title-block default">
 
-<div class="quarto-title"><h1 class="title d-none d-lg-block display-7">Confirmatory Factor Analysis</h1></div></header>
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">Confirmatory Factor Analysis</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
 <div class="callout-warning callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -221,8 +240,8 @@ Warning
 <table class="table">
 <caption>Recommendations concerning the main estimators available in lavaan according to the type of data (Gana &amp; Broc).</caption>
 <colgroup>
-<col style="width: 42%">
-<col style="width: 57%">
+<col style="width: 41%">
+<col style="width: 58%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -278,69 +297,20 @@ Warning
 </tbody>
 </table>
 </section>
-<section id="fit-indices" class="level3">
-<h3 class="anchored" data-anchor-id="fit-indices">Fit indices</h3>
-<p>The only advice we can afford to give, however, is to closely follow developments concerning fit indices. In the meantime, you can carefully follow the recommendations of Hu and Bentler or Schreiber and his co-authors who suggest the following guidelines for judging a model goodness-of-fit (based on the hypothesis where the maximum likelihood method is the estimation method): 1) RMSEA value ≤ 0.06, with confidence interval at 90% values should be between 0 and 1.00; 2) SRMR value ≤ 0.08; and 3) CFI and TLI values ≥ 0.95.</p>
-<table class="table">
-<caption>Fit indices guidance from <span class="citation" data-cites="gana2019">Gana &amp; Broc (<a href="#ref-gana2019" role="doc-biblioref">2019</a>)</span></caption>
-<colgroup>
-<col style="width: 14%">
-<col style="width: 11%">
-<col style="width: 73%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Fit Type</th>
-<th>Index</th>
-<th>Benchmark</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Absolute</td>
-<td>RMR/SRMR</td>
-<td>≤ 0.08 = good fit</td>
-</tr>
-<tr class="even">
-<td></td>
-<td>WRMR</td>
-<td>≤ 1.00 = good fit</td>
-</tr>
-<tr class="odd">
-<td>Parsimonious</td>
-<td>PRATIO</td>
-<td>Between 0.00 (saturated model) and 1.00 (parsimonious model)</td>
-</tr>
-<tr class="even">
-<td></td>
-<td>RMSEA</td>
-<td>≤ 0.05 = very good fit<br>
-≤ 0.06 and ≤ 0.08 = good fit</td>
-</tr>
-<tr class="odd">
-<td></td>
-<td>AIC</td>
-<td>Comparative index: the lower value of this index, the better the fit</td>
-</tr>
-<tr class="even">
-<td></td>
-<td>BIC</td>
-<td>Comparative index: the lower value of this BIC index, the better the fit</td>
-</tr>
-<tr class="odd">
-<td>Incremental</td>
-<td>CFI</td>
-<td>≥ 0.90 and ≤ 0.94 = good fit<br>
-≥ 0.95 = very good fit</td>
-</tr>
-<tr class="even">
-<td></td>
-<td>TLI</td>
-<td>≥ 0.90 and ≤ 0.94 = good fit<br>
-≥ 0.95 = very good fit</td>
-</tr>
-</tbody>
-</table>
+<section id="assessing-model-fit" class="level3">
+<h3 class="anchored" data-anchor-id="assessing-model-fit">Assessing model fit</h3>
+<p>Probably the most common way to assess model fit is to rely on cut-off points for several fit indices. However, these cut off points make no sense. The reason is that the suitability of a particular model fit index depends on a multitude of factors, including the number of items per factor, factor loading size, type of misspecification, model type, and violations of multivariate normality <span class="citation" data-cites="greiff2017">(<a href="#ref-greiff2017" role="doc-biblioref">Greiff &amp; Heene, 2017</a>)</span>. It therefore makes no sense to use one cut-off point for all models.</p>
+<p>Instead, it is recommend to do the following:</p>
+<p>Step 1: Perform the chi squared test and see whether it indicates a significant misfit. Although it appears that the norm is to ignore a significant chi squared test, it seems that is considered to be a mistake, leading to many misfitted models to not be rejected [<span class="citation" data-cites="barrett2007">Barrett (<a href="#ref-barrett2007" role="doc-biblioref">2007</a>)</span>, <span class="citation" data-cites="mcintosh2007">McIntosh (<a href="#ref-mcintosh2007" role="doc-biblioref">2007</a>)</span>].</p>
+<p>Step 2: In the case of a significant chi squared test, inspect potential sources of misfit.</p>
+<ul>
+<li><p>If your model depends on the multivariate normality assumption, look for signs of a violation of this assumption. Given that much research is done using Likert scales, this could be a likely source. To solve this misfit issue, one can transform the data or use a different estimator.</p></li>
+<li><p>Inspect the discrepancies between the observed and model-implied covariance matrices.</p></li>
+<li><p>Use tools to locate misfits, such as looking at modification indices or performing Fisher’s C test or the Wald test.</p></li>
+</ul>
+<p>Note that it is important to avoid the problem of overfitting. Any modifications to the model should be tested again on new independent data.</p>
+<p>The modifications should also have a theoretical backing.</p>
+<p>Finally, although it should not be necessary to point this out, but it is possible to be wrong. You may have to conclude that the data simply does not support your theory and that you need to go back to the drawing board.</p>
 </section>
 <section id="reliability" class="level3">
 <h3 class="anchored" data-anchor-id="reliability">Reliability</h3>
@@ -357,11 +327,14 @@ Warning
 
 
 
-
 </section>
+
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="doc-bibliography">
-<div id="ref-gana2019" class="csl-entry" role="doc-biblioentry">
-Gana, K., &amp; Broc, G. (2019). <em>Structural equation modeling with lavaan</em> (Vol. 1). Wiley &amp; Sons.
+<div id="ref-barrett2007" class="csl-entry" role="doc-biblioentry">
+Barrett, P. (2007). Structural equation modelling: Adjudging model fit. <em>Personality and Individual Differences</em>, <em>42</em>(5), 815–824. <a href="https://doi.org/10.1016/j.paid.2006.09.018">https://doi.org/10.1016/j.paid.2006.09.018</a>
+</div>
+<div id="ref-greiff2017" class="csl-entry" role="doc-biblioentry">
+Greiff, S., &amp; Heene, M. (2017). Why psychological assessment needs to start worrying about model fit. <em>European Journal of Psychological Assessment</em>, <em>33</em>(5), 313–317. <a href="https://doi.org/10.1027/1015-5759/a000450">https://doi.org/10.1027/1015-5759/a000450</a>
 </div>
 <div id="ref-koran2020" class="csl-entry" role="doc-biblioentry">
 Koran, J. (2020). Indicators per factor in confirmatory factor analysis: More is not always better. <em>Structural Equation Modeling: A Multidisciplinary Journal</em>, <em>27</em>(5), 765–772. <a href="https://doi.org/10.1080/10705511.2019.1706527">https://doi.org/10.1080/10705511.2019.1706527</a>
@@ -369,11 +342,14 @@ Koran, J. (2020). Indicators per factor in confirmatory factor analysis: More is
 <div id="ref-marsh1998" class="csl-entry" role="doc-biblioentry">
 Marsh, H. W., Hau, K.-T., Balla, J. R., &amp; Grayson, D. (1998). Is more ever too much? The number of indicators per factor in confirmatory factor analysis. <em>Multivariate Behavioral Research</em>, <em>33</em>(2), 181–220. <a href="https://doi.org/10.1207/s15327906mbr3302_1">https://doi.org/10.1207/s15327906mbr3302_1</a>
 </div>
+<div id="ref-mcintosh2007" class="csl-entry" role="doc-biblioentry">
+McIntosh, C. N. (2007). Rethinking fit assessment in structural equation modelling: A commentary and elaboration on Barrett (2007). <em>Personality and Individual Differences</em>, <em>42</em>(5), 859–867. <a href="https://doi.org/10.1016/j.paid.2006.09.020">https://doi.org/10.1016/j.paid.2006.09.020</a>
+</div>
 <div id="ref-mcneish2021" class="csl-entry" role="doc-biblioentry">
 McNeish, D., &amp; Wolf, M. G. (2021). Dynamic fit index cutoffs for confirmatory factor analysis models. <em>Psychological Methods</em>. <a href="https://doi.org/10.1037/met0000425">https://doi.org/10.1037/met0000425</a>
 </div>
 </div></section></div></main> <!-- /main -->
-<script type="application/javascript">
+<script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const icon = "";
   const anchorJS = new window.AnchorJS();
@@ -394,7 +370,10 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.blur();
     // flash "checked"
     button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
     setTimeout(function() {
+      button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
     // clear code selection
@@ -462,6 +441,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
 </nav>
 </div> <!-- /content -->
+
 
 
 </body></html>

@@ -1,0 +1,135 @@
+---
+title: "Group differences"
+---
+
+```{r}
+#| label: setup
+#| message: false
+
+# Load packages
+library(MASS)
+library(tidyverse)
+library(viridis)
+library(brms)
+library(emmeans)
+
+# Set the default ggplot theme
+theme_set(theme_minimal())
+```
+
+This section is about different statistical techniques to analyze group differences.
+
+## Bayesian
+
+### Pairwise comparisons
+
+In this scenario we simulate data from a study with 5 different groups. The conditions differ from each by a small amount and for simplicity's sake each condition has a standard deviation of 1. The sample size per condition is 250.
+
+```{r}
+# Set the simulation parameters
+Ms <- c(0, 0.1, 0.2, 0.3, 0.4)
+SDs <- 1
+n <- 250
+
+# Produce the variance-covariance matrix
+Sigma <- matrix(
+  nrow = 5, 
+  ncol = 5, 
+  data = c(
+    SDs, 0, 0, 0, 0,
+    0, SDs, 0, 0, 0,
+    0, 0, SDs, 0, 0,
+    0, 0, 0, SDs, 0,
+    0, 0, 0, 0, SDs
+  )
+)
+
+# Simulate the values
+m <- mvrnorm(n = n, mu = Ms, Sigma = Sigma, empirical = TRUE)
+
+# Prepare the data by converting it to a data frame and making it tidy
+colnames(m) <- c("A", "B", "C", "D", "E")
+
+data <- as_tibble(m)
+
+data <- pivot_longer(
+  data = data, 
+  cols = everything(), 
+  names_to = "condition", 
+  values_to = "DV"
+)
+```
+
+To perform the pairwise comparisons we first fit a model with `brms`. If we also want to calculate Bayes factors, we need to set a prior for the intercept. For technical reasons, this needs to be done by explicitly including the intercept in the formula. After that we need to set 3 priors: 1 for the intercept, 1 for all the other coefficients, and one for sigma. We'll set some weak priors because we don't have any additional information about this simulated data.
+
+```{r}
+#| label: brms-model
+model <- brm(
+  formula = DV ~ 0 + Intercept + condition, 
+  data = data, 
+  family = gaussian(), 
+  prior = c(
+    set_prior(coef = "Intercept", prior = "normal(0, 1)"),
+    set_prior(class = "b", prior = "normal(0, 1)"),
+    set_prior(class = "sigma", prior = "normal(0, 1)")
+  ), 
+  file = "model", 
+  sample_prior = TRUE
+)
+
+model
+```
+
+The estimates range, as expected, from 0 for the intercept to 0.40 for condition E.
+
+If we want pairwise comparisons, we can use the `emmeans` package to obtain them. We use the `emmeans()` function and set the `specs` argument to `pairwise ~ condition`. `pairwise` is a reserved term to use for exactly this purpose. The result is an object that contains estimated marginal means and contrasts. Since we're interested in the pairwise comparisons we only print the contrasts.
+
+```{r}
+#| label: pairwise-comparisons
+emmeans <- emmeans(model, specs = pairwise ~ condition)
+emmeans$contrasts
+```
+
+This gives us the estimates as well as lower and upper bounds of a highest probability density intervals. We can also plot them using the following code.
+
+```{r}
+#| label: pairwise-comparisons-plot
+#| fig-cap: Pairwise comparisons via `emmeans`
+contrasts <- as_tibble(emmeans$contrasts)
+
+ggplot(contrasts, aes(x = contrast, y = estimate)) +
+  geom_pointrange(aes(ymin = lower.HPD, ymax = upper.HPD)) +
+  labs(x = "Contrast", y = "Estimate with 95% HPD")
+```
+
+Alternatively, we can also calculate specific contrasts using the `hypothesis()` function from `brms`. The added value of calculating contrasts this way is that it also provides us with a Bayes factor if we set priors for all parts of the model.
+
+For example, we can get the contrast between condition A and B by subtracting the Intercept from the condition B coefficient. We can then get a Bayes factor for the test that this value is larger than 0.
+
+```{r}
+#| label: hypothesis-A-B
+contrast_A_B <- hypothesis(model, "conditionB - Intercept > 0")
+contrast_A_B
+```
+
+This gives us an estimate of 0.1 (as expected) and a Bayes factor of `r  contrast_A_B$hypothesis$Evid.Ratio`.
+
+We can also test whether this contrast is equal to 0.
+
+```{r}
+#| label: hypothesis-A-B-null
+contrast_A_B_null <- hypothesis(model, "conditionB - Intercept = 0")
+contrast_A_B_null
+```
+
+This gives us a Bayes factor of `r contrast_A_B_null$hypothesis$Evid.Ratio`.
+
+Alternatively, we can compare another contrast, say, D vs. B. We can get this contrast by subtracting the coefficient for condition B from the coefficient for condition D.
+
+```{r}
+#| label: hypothesis-D-B
+contrast_D_B <- hypothesis(model, "conditionD - conditionB > 0")
+contrast_D_B
+```
+
+As expected, we see an estimate of 0.2 (0.4 - 0.2). We also see a Bayes factor of `r contrast_D_B$hypothesis$Evid.Ratio` for the test that this is larger than 0.

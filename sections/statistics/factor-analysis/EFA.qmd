@@ -258,7 +258,19 @@ There are different types of reliabilities that can be calculated to assess the 
 
 -   Test-retest reliability
 
-Cronbach's alpha is the most popular measure of internal reliability, with recommended cutoffs of .80 in a basic science setting and .9 or .95 in an applied setting \[@clark1995\]. Note that Cronbach's alpha relies on the assumption of unidimensionality. Cronbach's alpha has faced some criticism \[e.g., see @peters2014\] and other measures should be used as well, such as omega.
+Cronbach's alpha is the most popular measure of internal reliability, with recommended cutoffs of .80 in a basic science setting and .9 or .95 in an applied setting \[@clark1995\]. Note that Cronbach's alpha relies on the assumption of unidimensionality, which means it cannot be used as evidence for unidimensionality. In fact, Cronbach's alpha's assumes *equally* sized factor loadings. Given that this is an unlikely assumption, and that Cronbach's alpha is also influenced by the number of items, alternative measures of reliability should be used \[e.g., see @peters2014, @hayes2020\].
+
+McDonald's omega does not assume equally sized factor loadings. Cronbach's alpha is actually a special case of McDonald's omega, assuming the untenable assumption of equally sized factor loadings.
+
+**Conclusion**: Use McDonald's omega.
+
+## An Example
+
+```{r}
+# Load packages
+library(psych)
+library(tidyverse)
+```
 
 ## Recommended Reading
 
