@@ -48,6 +48,7 @@ website:
         - section: "Group differences"
           contents:
             - sections/statistics/group-differences/pairwise-comparisons.qmd
+            - sections/statistics/group-differences/sequential-analyses.qmd
 
 format:
   html:
@@ -56,3 +57,6 @@ format:
     csl: assets/bib/apa.csl
 
 editor: visual
+
+execute:
+  freeze: true
