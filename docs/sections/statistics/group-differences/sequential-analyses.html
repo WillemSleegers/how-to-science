@@ -260,56 +260,58 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(viridis)</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(brms)</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(emmeans)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the default ggplot theme</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_minimal</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(BayesFactor)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidybayes)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the default ggplot theme</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_minimal</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This section is about performing sequential analyses.</p>
 <section id="bayesian" class="level2">
 <h2 class="anchored" data-anchor-id="bayesian">Bayesian</h2>
-<p>Let’s simulate data for a scenario in which we have 5 different between-subjects conditions. The conditions differ from each by a small amount and for simplicity’s sake each condition has a standard deviation of 1.</p>
-<p>To simplify the code for demonstrating a sequential analysis, we’ll first simulate all the data and then draw samples from it, rather that simulating new data for each step.</p>
+<section id="two-groups" class="level3">
+<h3 class="anchored" data-anchor-id="two-groups">Two groups</h3>
+<p>For this scenario we simulate data from two different groups (say a control group and an experimental group).</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the simulation parameters</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>Ms <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="fl">0.3</span>, <span class="fl">0.4</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>Ms <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.5</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>SDs <span class="ot">&lt;-</span> <span class="dv">1</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>labels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>, <span class="st">"D"</span>, <span class="st">"E"</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>labels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"control"</span>, <span class="st">"experimental"</span>)</span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Produce the variance-covariance matrix</span></span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>Sigma <span class="ot">&lt;-</span> <span class="fu">matrix</span>(</span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">nrow =</span> <span class="fu">length</span>(Ms), </span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">ncol =</span> <span class="fu">length</span>(Ms), </span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> <span class="fu">c</span>(</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    SDs<span class="sc">^</span><span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>,</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>, SDs<span class="sc">^</span><span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>,</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>, <span class="dv">0</span>, SDs<span class="sc">^</span><span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">0</span>,</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, SDs<span class="sc">^</span><span class="dv">2</span>, <span class="dv">0</span>,</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, SDs<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    SDs<span class="sc">^</span><span class="dv">2</span>, <span class="dv">0</span>,</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>, SDs<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">mvrnorm</span>(<span class="at">n =</span> n, <span class="at">mu =</span> Ms, <span class="at">Sigma =</span> Sigma, <span class="at">empirical =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate</span></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">mvrnorm</span>(<span class="at">n =</span> n, <span class="at">mu =</span> Ms, <span class="at">Sigma =</span> Sigma, <span class="at">empirical =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare data</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(m) <span class="ot">&lt;-</span> labels</span>
 <span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare data</span></span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(m) <span class="ot">&lt;-</span> labels</span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(m)</span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">pivot_longer</span>(</span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> data, </span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>  <span class="at">cols =</span> <span class="fu">everything</span>(), </span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>  <span class="at">names_to =</span> <span class="st">"condition"</span>, </span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>  <span class="at">values_to =</span> <span class="st">"DV"</span></span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">mutate</span>(data, <span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>(), <span class="at">.before =</span> condition)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(m)</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">pivot_longer</span>(</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> data, </span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>  <span class="at">cols =</span> <span class="fu">everything</span>(), </span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>  <span class="at">names_to =</span> <span class="st">"condition"</span>, </span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>  <span class="at">values_to =</span> <span class="st">"DV"</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">mutate</span>(data, <span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>(), <span class="at">.before =</span> condition)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Now that we have some data we can draw samples from it, run a model, calculate the Bayes factor, and store the Bayes factor together with the cumulative sample size so we can create a plot for how the Bayes factor changes as we ‘recruit’ more participants.</p>
+</section>
+<section id="estimation" class="level3">
+<h3 class="anchored" data-anchor-id="estimation">Estimation</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>n_step <span class="ot">&lt;-</span> <span class="dv">50</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>bayes_factors <span class="ot">&lt;-</span> <span class="fu">tibble</span>()</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">tibble</span>()</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>(n <span class="sc">/</span> n_step)) {</span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Draw a sample</span></span>
@@ -324,33 +326,166 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>      <span class="fu">set_prior</span>(<span class="at">coef =</span> <span class="st">"Intercept"</span>, <span class="at">prior =</span> <span class="st">"normal(0, 1)"</span>),</span>
 <span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>      <span class="fu">set_prior</span>(<span class="at">class =</span> <span class="st">"b"</span>, <span class="at">prior =</span> <span class="st">"normal(0, 1)"</span>),</span>
 <span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>      <span class="fu">set_prior</span>(<span class="at">class =</span> <span class="st">"sigma"</span>, <span class="at">prior =</span> <span class="st">"normal(1, 1)"</span>)</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    ), </span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">sample_prior =</span> <span class="cn">TRUE</span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate the BF of a contrast</span></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  contrast <span class="ot">&lt;-</span> <span class="fu">hypothesis</span>(model, <span class="st">"conditionD - conditionB = 0"</span>)</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add the information to the bayes factors data frame</span></span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>  bayes_factors <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    bayes_factors, </span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tibble</span>(</span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>      <span class="at">step =</span> i,</span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>      <span class="at">n =</span> i <span class="sc">*</span> n_step,</span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>      <span class="at">BF =</span> contrast<span class="sc">$</span>hypothesis<span class="sc">$</span>Evid.Ratio</span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Get the posterior of the condition estimate</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  draws <span class="ot">&lt;-</span> model <span class="sc">%&gt;%</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as_draws_df</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>      <span class="at">step =</span> i,</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>      <span class="at">n =</span> i <span class="sc">*</span> n_step</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add the information to the bayes factors data frame</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>  results <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>    results, </span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>    draws</span>
 <span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 
 </div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(results, <span class="fu">aes</span>(<span class="at">x =</span> n, <span class="at">y =</span> b_conditionexperimental)) <span class="sc">+</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_halfeye</span>() <span class="sc">+</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Sample size per condition (n)"</span>, <span class="at">y =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="sequential-analyses_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="bayes-factors" class="level3">
+<h3 class="anchored" data-anchor-id="bayes-factors">Bayes factors</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>n_step <span class="ot">&lt;-</span> <span class="dv">50</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">tibble</span>()</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>(n <span class="sc">/</span> n_step)) {</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Draw a sample</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  sample <span class="ot">&lt;-</span> <span class="fu">slice_head</span>(data, <span class="at">n =</span> i <span class="sc">*</span> n_step)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Run the brm model</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  model <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">formula =</span> DV <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> Intercept <span class="sc">+</span> condition, </span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> sample, </span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">family =</span> <span class="fu">gaussian</span>(), </span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">prior =</span> <span class="fu">c</span>(</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>      <span class="fu">set_prior</span>(<span class="at">coef =</span> <span class="st">"Intercept"</span>, <span class="at">prior =</span> <span class="st">"normal(0, 1)"</span>),</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>      <span class="fu">set_prior</span>(<span class="at">class =</span> <span class="st">"b"</span>, <span class="at">prior =</span> <span class="st">"student_t(1, 0, 1)"</span>),</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>      <span class="co">#set_prior(class = "sigma", prior = "normal(1, 1)"),</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>      <span class="fu">set_prior</span>(<span class="st">""</span>, <span class="st">"sigma"</span>) <span class="sc">+</span> </span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>        <span class="fu">set_prior</span>(<span class="st">"target += log(1 / sigma)"</span>, <span class="at">check =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    ), </span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">sample_prior =</span> <span class="cn">TRUE</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate the BF of a contrast</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>  BF_brms <span class="ot">&lt;-</span> <span class="fu">hypothesis</span>(model, <span class="st">"conditionexperimental = 0"</span>)</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>  BF_BF <span class="ot">&lt;-</span> <span class="fu">ttestBF</span>(<span class="at">formula =</span> DV <span class="sc">~</span> condition, <span class="at">data =</span> sample, <span class="at">rscale =</span> <span class="st">"wide"</span>)</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add the information to the bayes factors data frame</span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>  results <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>    bayes_factors, </span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tibble</span>(</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>      <span class="at">step =</span> i,</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>      <span class="at">n =</span> i <span class="sc">*</span> n_step,</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>      <span class="at">BF_brms =</span> BF_brms<span class="sc">$</span>hypothesis<span class="sc">$</span>Evid.Ratio,</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>      <span class="at">BF_BF =</span> <span class="fu">extractBF</span>(BF_BF)<span class="sc">$</span>bf</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="more-than-two-groups" class="level3">
+<h3 class="anchored" data-anchor-id="more-than-two-groups">More than two groups</h3>
+<p>Let’s simulate data for a scenario in which we have 5 different between-subjects conditions. The conditions differ from each by a small amount and for simplicity’s sake each condition has a standard deviation of 1.</p>
+<p>To simplify the code for demonstrating a sequential analysis, we’ll first simulate all the data and then draw samples from it, rather that simulating new data for each step.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the simulation parameters</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>Ms <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="dv">1</span>, <span class="fl">0.4</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>SDs <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>labels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>, <span class="st">"D"</span>, <span class="st">"E"</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Produce the variance-covariance matrix</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>Sigma <span class="ot">&lt;-</span> <span class="fu">matrix</span>(</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">nrow =</span> <span class="fu">length</span>(Ms), </span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">ncol =</span> <span class="fu">length</span>(Ms), </span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> <span class="fu">c</span>(</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    SDs<span class="sc">^</span><span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>,</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>, SDs<span class="sc">^</span><span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>,</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>, <span class="dv">0</span>, SDs<span class="sc">^</span><span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">0</span>,</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, SDs<span class="sc">^</span><span class="dv">2</span>, <span class="dv">0</span>,</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, SDs<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">mvrnorm</span>(<span class="at">n =</span> n, <span class="at">mu =</span> Ms, <span class="at">Sigma =</span> Sigma, <span class="at">empirical =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare data</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(m) <span class="ot">&lt;-</span> labels</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(m)</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">pivot_longer</span>(</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> data, </span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>  <span class="at">cols =</span> <span class="fu">everything</span>(), </span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>  <span class="at">names_to =</span> <span class="st">"condition"</span>, </span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>  <span class="at">values_to =</span> <span class="st">"DV"</span></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">mutate</span>(data, <span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>(), <span class="at">.before =</span> condition)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now that we have some data we can draw samples from it, run a model, calculate the Bayes factor, and store the Bayes factor together with the cumulative sample size so we can create a plot for how the Bayes factor changes as we ‘recruit’ more participants.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>n_step <span class="ot">&lt;-</span> <span class="dv">50</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>bayes_factors <span class="ot">&lt;-</span> <span class="fu">tibble</span>()</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>(n <span class="sc">/</span> n_step)) {</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Draw a sample</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  sample <span class="ot">&lt;-</span> <span class="fu">slice_head</span>(data, <span class="at">n =</span> i <span class="sc">*</span> n_step)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Run the brm model</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  model <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">formula =</span> DV <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> Intercept <span class="sc">+</span> condition, </span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> sample, </span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">family =</span> <span class="fu">gaussian</span>(), </span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">prior =</span> <span class="fu">c</span>(</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>      <span class="fu">set_prior</span>(<span class="at">coef =</span> <span class="st">"Intercept"</span>, <span class="at">prior =</span> <span class="st">"normal(0, 1)"</span>),</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>      <span class="fu">set_prior</span>(<span class="at">class =</span> <span class="st">"b"</span>, <span class="at">prior =</span> <span class="st">"normal(0, 1)"</span>),</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>      <span class="fu">set_prior</span>(<span class="at">class =</span> <span class="st">"sigma"</span>, <span class="at">prior =</span> <span class="st">"normal(1, 1)"</span>)</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    ), </span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">sample_prior =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">iter =</span> <span class="dv">10000</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate the BF of a contrast</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>  contrast <span class="ot">&lt;-</span> <span class="fu">hypothesis</span>(model, <span class="st">"conditionD - conditionB = 0"</span>)</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add the information to the bayes factors data frame</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>  bayes_factors <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>    bayes_factors, </span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tibble</span>(</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>      <span class="at">step =</span> i,</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>      <span class="at">n =</span> i <span class="sc">*</span> n_step,</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>      <span class="at">BF =</span> contrast<span class="sc">$</span>hypothesis<span class="sc">$</span>Evid.Ratio</span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+
+</div>
 <p>Now we have a data frame that contains the Bayes factors for each step, so we can plot how the Bayes factor changes as we recruit more participants.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(bayes_factors, <span class="fu">aes</span>(<span class="at">x =</span> n, <span class="at">y =</span> <span class="fu">log</span>(BF))) <span class="sc">+</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"n"</span>, <span class="at">y =</span> <span class="fu">expression</span>(BF[<span class="dv">10</span>])) <span class="sc">+</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(bayes_factors, <span class="fu">aes</span>(<span class="at">x =</span> n, <span class="at">y =</span> <span class="fu">if_else</span>(BF <span class="sc">&lt;</span> <span class="dv">1</span>, <span class="fu">log</span>(BF), BF))) <span class="sc">+</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"n"</span>, <span class="at">y =</span> <span class="fu">expression</span>(BF[<span class="dv">10</span>])) <span class="sc">+</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -359,9 +494,397 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </figure>
 </div>
 </div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>List of 93
+ $ line                      :List of 6
+  ..$ colour       : chr "black"
+  ..$ size         : num 0.5
+  ..$ linetype     : num 1
+  ..$ lineend      : chr "butt"
+  ..$ arrow        : logi FALSE
+  ..$ inherit.blank: logi TRUE
+  ..- attr(*, "class")= chr [1:2] "element_line" "element"
+ $ rect                      :List of 5
+  ..$ fill         : chr "white"
+  ..$ colour       : chr "black"
+  ..$ size         : num 0.5
+  ..$ linetype     : num 1
+  ..$ inherit.blank: logi TRUE
+  ..- attr(*, "class")= chr [1:2] "element_rect" "element"
+ $ text                      :List of 11
+  ..$ family       : chr ""
+  ..$ face         : chr "plain"
+  ..$ colour       : chr "black"
+  ..$ size         : num 11
+  ..$ hjust        : num 0.5
+  ..$ vjust        : num 0.5
+  ..$ angle        : num 0
+  ..$ lineheight   : num 0.9
+  ..$ margin       : 'margin' num [1:4] 0points 0points 0points 0points
+  .. ..- attr(*, "unit")= int 8
+  ..$ debug        : logi FALSE
+  ..$ inherit.blank: logi TRUE
+  ..- attr(*, "class")= chr [1:2] "element_text" "element"
+ $ title                     : NULL
+ $ aspect.ratio              : NULL
+ $ axis.title                : NULL
+ $ axis.title.x              :List of 11
+  ..$ family       : NULL
+  ..$ face         : NULL
+  ..$ colour       : NULL
+  ..$ size         : NULL
+  ..$ hjust        : NULL
+  ..$ vjust        : num 1
+  ..$ angle        : NULL
+  ..$ lineheight   : NULL
+  ..$ margin       : 'margin' num [1:4] 2.75points 0points 0points 0points
+  .. ..- attr(*, "unit")= int 8
+  ..$ debug        : NULL
+  ..$ inherit.blank: logi TRUE
+  ..- attr(*, "class")= chr [1:2] "element_text" "element"
+ $ axis.title.x.top          :List of 11
+  ..$ family       : NULL
+  ..$ face         : NULL
+  ..$ colour       : NULL
+  ..$ size         : NULL
+  ..$ hjust        : NULL
+  ..$ vjust        : num 0
+  ..$ angle        : NULL
+  ..$ lineheight   : NULL
+  ..$ margin       : 'margin' num [1:4] 0points 0points 2.75points 0points
+  .. ..- attr(*, "unit")= int 8
+  ..$ debug        : NULL
+  ..$ inherit.blank: logi TRUE
+  ..- attr(*, "class")= chr [1:2] "element_text" "element"
+ $ axis.title.x.bottom       : NULL
+ $ axis.title.y              :List of 11
+  ..$ family       : NULL
+  ..$ face         : NULL
+  ..$ colour       : NULL
+  ..$ size         : NULL
+  ..$ hjust        : NULL
+  ..$ vjust        : num 1
+  ..$ angle        : num 90
+  ..$ lineheight   : NULL
+  ..$ margin       : 'margin' num [1:4] 0points 2.75points 0points 0points
+  .. ..- attr(*, "unit")= int 8
+  ..$ debug        : NULL
+  ..$ inherit.blank: logi TRUE
+  ..- attr(*, "class")= chr [1:2] "element_text" "element"
+ $ axis.title.y.left         : NULL
+ $ axis.title.y.right        :List of 11
+  ..$ family       : NULL
+  ..$ face         : NULL
+  ..$ colour       : NULL
+  ..$ size         : NULL
+  ..$ hjust        : NULL
+  ..$ vjust        : num 0
+  ..$ angle        : num -90
+  ..$ lineheight   : NULL
+  ..$ margin       : 'margin' num [1:4] 0points 0points 0points 2.75points
+  .. ..- attr(*, "unit")= int 8
+  ..$ debug        : NULL
+  ..$ inherit.blank: logi TRUE
+  ..- attr(*, "class")= chr [1:2] "element_text" "element"
+ $ axis.text                 :List of 11
+  ..$ family       : NULL
+  ..$ face         : NULL
+  ..$ colour       : chr "grey30"
+  ..$ size         : 'rel' num 0.8
+  ..$ hjust        : NULL
+  ..$ vjust        : NULL
+  ..$ angle        : NULL
+  ..$ lineheight   : NULL
+  ..$ margin       : NULL
+  ..$ debug        : NULL
+  ..$ inherit.blank: logi TRUE
+  ..- attr(*, "class")= chr [1:2] "element_text" "element"
+ $ axis.text.x               :List of 11
+  ..$ family       : NULL
+  ..$ face         : NULL
+  ..$ colour       : NULL
+  ..$ size         : NULL
+  ..$ hjust        : NULL
+  ..$ vjust        : num 1
+  ..$ angle        : NULL
+  ..$ lineheight   : NULL
+  ..$ margin       : 'margin' num [1:4] 2.2points 0points 0points 0points
+  .. ..- attr(*, "unit")= int 8
+  ..$ debug        : NULL
+  ..$ inherit.blank: logi TRUE
+  ..- attr(*, "class")= chr [1:2] "element_text" "element"
+ $ axis.text.x.top           :List of 11
+  ..$ family       : NULL
+  ..$ face         : NULL
+  ..$ colour       : NULL
+  ..$ size         : NULL
+  ..$ hjust        : NULL
+  ..$ vjust        : num 0
+  ..$ angle        : NULL
+  ..$ lineheight   : NULL
+  ..$ margin       : 'margin' num [1:4] 0points 0points 2.2points 0points
+  .. ..- attr(*, "unit")= int 8
+  ..$ debug        : NULL
+  ..$ inherit.blank: logi TRUE
+  ..- attr(*, "class")= chr [1:2] "element_text" "element"
+ $ axis.text.x.bottom        : NULL
+ $ axis.text.y               :List of 11
+  ..$ family       : NULL
+  ..$ face         : NULL
+  ..$ colour       : NULL
+  ..$ size         : NULL
+  ..$ hjust        : num 1
+  ..$ vjust        : NULL
+  ..$ angle        : NULL
+  ..$ lineheight   : NULL
+  ..$ margin       : 'margin' num [1:4] 0points 2.2points 0points 0points
+  .. ..- attr(*, "unit")= int 8
+  ..$ debug        : NULL
+  ..$ inherit.blank: logi TRUE
+  ..- attr(*, "class")= chr [1:2] "element_text" "element"
+ $ axis.text.y.left          : NULL
+ $ axis.text.y.right         :List of 11
+  ..$ family       : NULL
+  ..$ face         : NULL
+  ..$ colour       : NULL
+  ..$ size         : NULL
+  ..$ hjust        : num 0
+  ..$ vjust        : NULL
+  ..$ angle        : NULL
+  ..$ lineheight   : NULL
+  ..$ margin       : 'margin' num [1:4] 0points 0points 0points 2.2points
+  .. ..- attr(*, "unit")= int 8
+  ..$ debug        : NULL
+  ..$ inherit.blank: logi TRUE
+  ..- attr(*, "class")= chr [1:2] "element_text" "element"
+ $ axis.ticks                : list()
+  ..- attr(*, "class")= chr [1:2] "element_blank" "element"
+ $ axis.ticks.x              : NULL
+ $ axis.ticks.x.top          : NULL
+ $ axis.ticks.x.bottom       : NULL
+ $ axis.ticks.y              : NULL
+ $ axis.ticks.y.left         : NULL
+ $ axis.ticks.y.right        : NULL
+ $ axis.ticks.length         : 'simpleUnit' num 2.75points
+  ..- attr(*, "unit")= int 8
+ $ axis.ticks.length.x       : NULL
+ $ axis.ticks.length.x.top   : NULL
+ $ axis.ticks.length.x.bottom: NULL
+ $ axis.ticks.length.y       : NULL
+ $ axis.ticks.length.y.left  : NULL
+ $ axis.ticks.length.y.right : NULL
+ $ axis.line                 : list()
+  ..- attr(*, "class")= chr [1:2] "element_blank" "element"
+ $ axis.line.x               : NULL
+ $ axis.line.x.top           : NULL
+ $ axis.line.x.bottom        : NULL
+ $ axis.line.y               : NULL
+ $ axis.line.y.left          : NULL
+ $ axis.line.y.right         : NULL
+ $ legend.background         : list()
+  ..- attr(*, "class")= chr [1:2] "element_blank" "element"
+ $ legend.margin             : 'margin' num [1:4] 5.5points 5.5points 5.5points 5.5points
+  ..- attr(*, "unit")= int 8
+ $ legend.spacing            : 'simpleUnit' num 11points
+  ..- attr(*, "unit")= int 8
+ $ legend.spacing.x          : NULL
+ $ legend.spacing.y          : NULL
+ $ legend.key                : list()
+  ..- attr(*, "class")= chr [1:2] "element_blank" "element"
+ $ legend.key.size           : 'simpleUnit' num 1.2lines
+  ..- attr(*, "unit")= int 3
+ $ legend.key.height         : NULL
+ $ legend.key.width          : NULL
+ $ legend.text               :List of 11
+  ..$ family       : NULL
+  ..$ face         : NULL
+  ..$ colour       : NULL
+  ..$ size         : 'rel' num 0.8
+  ..$ hjust        : NULL
+  ..$ vjust        : NULL
+  ..$ angle        : NULL
+  ..$ lineheight   : NULL
+  ..$ margin       : NULL
+  ..$ debug        : NULL
+  ..$ inherit.blank: logi TRUE
+  ..- attr(*, "class")= chr [1:2] "element_text" "element"
+ $ legend.text.align         : NULL
+ $ legend.title              :List of 11
+  ..$ family       : NULL
+  ..$ face         : NULL
+  ..$ colour       : NULL
+  ..$ size         : NULL
+  ..$ hjust        : num 0
+  ..$ vjust        : NULL
+  ..$ angle        : NULL
+  ..$ lineheight   : NULL
+  ..$ margin       : NULL
+  ..$ debug        : NULL
+  ..$ inherit.blank: logi TRUE
+  ..- attr(*, "class")= chr [1:2] "element_text" "element"
+ $ legend.title.align        : NULL
+ $ legend.position           : chr "right"
+ $ legend.direction          : NULL
+ $ legend.justification      : chr "center"
+ $ legend.box                : NULL
+ $ legend.box.just           : NULL
+ $ legend.box.margin         : 'margin' num [1:4] 0cm 0cm 0cm 0cm
+  ..- attr(*, "unit")= int 1
+ $ legend.box.background     : list()
+  ..- attr(*, "class")= chr [1:2] "element_blank" "element"
+ $ legend.box.spacing        : 'simpleUnit' num 11points
+  ..- attr(*, "unit")= int 8
+ $ panel.background          : list()
+  ..- attr(*, "class")= chr [1:2] "element_blank" "element"
+ $ panel.border              : list()
+  ..- attr(*, "class")= chr [1:2] "element_blank" "element"
+ $ panel.spacing             : 'simpleUnit' num 5.5points
+  ..- attr(*, "unit")= int 8
+ $ panel.spacing.x           : NULL
+ $ panel.spacing.y           : NULL
+ $ panel.grid                :List of 6
+  ..$ colour       : chr "grey92"
+  ..$ size         : NULL
+  ..$ linetype     : NULL
+  ..$ lineend      : NULL
+  ..$ arrow        : logi FALSE
+  ..$ inherit.blank: logi TRUE
+  ..- attr(*, "class")= chr [1:2] "element_line" "element"
+ $ panel.grid.major          : NULL
+ $ panel.grid.minor          :List of 6
+  ..$ colour       : NULL
+  ..$ size         : 'rel' num 0.5
+  ..$ linetype     : NULL
+  ..$ lineend      : NULL
+  ..$ arrow        : logi FALSE
+  ..$ inherit.blank: logi TRUE
+  ..- attr(*, "class")= chr [1:2] "element_line" "element"
+ $ panel.grid.major.x        : NULL
+ $ panel.grid.major.y        : NULL
+ $ panel.grid.minor.x        : NULL
+ $ panel.grid.minor.y        : NULL
+ $ panel.ontop               : logi FALSE
+ $ plot.background           : list()
+  ..- attr(*, "class")= chr [1:2] "element_blank" "element"
+ $ plot.title                :List of 11
+  ..$ family       : NULL
+  ..$ face         : NULL
+  ..$ colour       : NULL
+  ..$ size         : 'rel' num 1.2
+  ..$ hjust        : num 0
+  ..$ vjust        : num 1
+  ..$ angle        : NULL
+  ..$ lineheight   : NULL
+  ..$ margin       : 'margin' num [1:4] 0points 0points 5.5points 0points
+  .. ..- attr(*, "unit")= int 8
+  ..$ debug        : NULL
+  ..$ inherit.blank: logi TRUE
+  ..- attr(*, "class")= chr [1:2] "element_text" "element"
+ $ plot.title.position       : chr "panel"
+ $ plot.subtitle             :List of 11
+  ..$ family       : NULL
+  ..$ face         : NULL
+  ..$ colour       : NULL
+  ..$ size         : NULL
+  ..$ hjust        : num 0
+  ..$ vjust        : num 1
+  ..$ angle        : NULL
+  ..$ lineheight   : NULL
+  ..$ margin       : 'margin' num [1:4] 0points 0points 5.5points 0points
+  .. ..- attr(*, "unit")= int 8
+  ..$ debug        : NULL
+  ..$ inherit.blank: logi TRUE
+  ..- attr(*, "class")= chr [1:2] "element_text" "element"
+ $ plot.caption              :List of 11
+  ..$ family       : NULL
+  ..$ face         : NULL
+  ..$ colour       : NULL
+  ..$ size         : 'rel' num 0.8
+  ..$ hjust        : num 1
+  ..$ vjust        : num 1
+  ..$ angle        : NULL
+  ..$ lineheight   : NULL
+  ..$ margin       : 'margin' num [1:4] 5.5points 0points 0points 0points
+  .. ..- attr(*, "unit")= int 8
+  ..$ debug        : NULL
+  ..$ inherit.blank: logi TRUE
+  ..- attr(*, "class")= chr [1:2] "element_text" "element"
+ $ plot.caption.position     : chr "panel"
+ $ plot.tag                  :List of 11
+  ..$ family       : NULL
+  ..$ face         : NULL
+  ..$ colour       : NULL
+  ..$ size         : 'rel' num 1.2
+  ..$ hjust        : num 0.5
+  ..$ vjust        : num 0.5
+  ..$ angle        : NULL
+  ..$ lineheight   : NULL
+  ..$ margin       : NULL
+  ..$ debug        : NULL
+  ..$ inherit.blank: logi TRUE
+  ..- attr(*, "class")= chr [1:2] "element_text" "element"
+ $ plot.tag.position         : chr "topleft"
+ $ plot.margin               : 'margin' num [1:4] 5.5points 5.5points 5.5points 5.5points
+  ..- attr(*, "unit")= int 8
+ $ strip.background          : list()
+  ..- attr(*, "class")= chr [1:2] "element_blank" "element"
+ $ strip.background.x        : NULL
+ $ strip.background.y        : NULL
+ $ strip.placement           : chr "inside"
+ $ strip.text                :List of 11
+  ..$ family       : NULL
+  ..$ face         : NULL
+  ..$ colour       : chr "grey10"
+  ..$ size         : 'rel' num 0.8
+  ..$ hjust        : NULL
+  ..$ vjust        : NULL
+  ..$ angle        : NULL
+  ..$ lineheight   : NULL
+  ..$ margin       : 'margin' num [1:4] 4.4points 4.4points 4.4points 4.4points
+  .. ..- attr(*, "unit")= int 8
+  ..$ debug        : NULL
+  ..$ inherit.blank: logi TRUE
+  ..- attr(*, "class")= chr [1:2] "element_text" "element"
+ $ strip.text.x              : NULL
+ $ strip.text.y              :List of 11
+  ..$ family       : NULL
+  ..$ face         : NULL
+  ..$ colour       : NULL
+  ..$ size         : NULL
+  ..$ hjust        : NULL
+  ..$ vjust        : NULL
+  ..$ angle        : num -90
+  ..$ lineheight   : NULL
+  ..$ margin       : NULL
+  ..$ debug        : NULL
+  ..$ inherit.blank: logi TRUE
+  ..- attr(*, "class")= chr [1:2] "element_text" "element"
+ $ strip.switch.pad.grid     : 'simpleUnit' num 2.75points
+  ..- attr(*, "unit")= int 8
+ $ strip.switch.pad.wrap     : 'simpleUnit' num 2.75points
+  ..- attr(*, "unit")= int 8
+ $ strip.text.y.left         :List of 11
+  ..$ family       : NULL
+  ..$ face         : NULL
+  ..$ colour       : NULL
+  ..$ size         : NULL
+  ..$ hjust        : NULL
+  ..$ vjust        : NULL
+  ..$ angle        : num 90
+  ..$ lineheight   : NULL
+  ..$ margin       : NULL
+  ..$ debug        : NULL
+  ..$ inherit.blank: logi TRUE
+  ..- attr(*, "class")= chr [1:2] "element_text" "element"
+ - attr(*, "class")= chr [1:2] "theme" "gg"
+ - attr(*, "complete")= logi TRUE
+ - attr(*, "validate")= logi TRUE</code></pre>
+</div>
 </div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

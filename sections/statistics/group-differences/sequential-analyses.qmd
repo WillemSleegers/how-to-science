@@ -12,6 +12,8 @@ library(tidyverse)
 library(viridis)
 library(brms)
 library(emmeans)
+library(BayesFactor)
+library(tidybayes)
 
 # Set the default ggplot theme
 theme_set(theme_minimal())
@@ -20,6 +22,148 @@ theme_set(theme_minimal())
 This section is about performing sequential analyses.
 
 ## Bayesian
+
+### Two groups
+
+For this scenario we simulate data from two different groups (say a control group and an experimental group).
+
+```{r}
+#| label: simulation-2-groups
+#| eval: false
+
+# Set the simulation parameters
+Ms <- c(0, 0.5)
+SDs <- 1
+n <- 1000
+labels <- c("control", "experimental")
+
+# Produce the variance-covariance matrix
+Sigma <- matrix(
+  nrow = length(Ms), 
+  ncol = length(Ms), 
+  data = c(
+    SDs^2, 0,
+    0, SDs^2
+  )
+)
+
+# Simulate
+m <- mvrnorm(n = n, mu = Ms, Sigma = Sigma, empirical = TRUE)
+
+# Prepare data
+colnames(m) <- labels
+
+data <- as_tibble(m)
+
+data <- pivot_longer(
+  data = data, 
+  cols = everything(), 
+  names_to = "condition", 
+  values_to = "DV"
+)
+
+data <- mutate(data, id = 1:n(), .before = condition)
+```
+
+### Estimation
+
+```{r}
+#| label: sequential-estimation-2-groups
+#| eval: false
+n_step <- 50
+results <- tibble()
+
+for (i in 1:(n / n_step)) {
+  # Draw a sample
+  sample <- slice_head(data, n = i * n_step)
+  
+  # Run the brm model
+  model <- brm(
+    formula = DV ~ 0 + Intercept + condition, 
+    data = sample, 
+    family = gaussian(), 
+    prior = c(
+      set_prior(coef = "Intercept", prior = "normal(0, 1)"),
+      set_prior(class = "b", prior = "normal(0, 1)"),
+      set_prior(class = "sigma", prior = "normal(1, 1)")
+    )
+  )
+  
+  # Get the posterior of the condition estimate
+  draws <- model %>%
+    as_draws_df() %>%
+    mutate(
+      step = i,
+      n = i * n_step
+    )
+  
+  # Add the information to the bayes factors data frame
+  results <- bind_rows(
+    results, 
+    draws
+  )
+}
+```
+
+```{r}
+#| label: read-2-groups-data
+#| echo: false
+#| message: false
+results <- read_csv("2-groups.csv")
+```
+
+```{r}
+ggplot(results, aes(x = n, y = b_conditionexperimental)) +
+  stat_halfeye() +
+  labs(x = "Sample size per condition (n)", y = "")
+```
+
+### Bayes factors
+
+```{r}
+#| label: sequential-analyses-2-groups
+#| eval: false
+n_step <- 50
+results <- tibble()
+
+for (i in 1:(n / n_step)) {
+  # Draw a sample
+  sample <- slice_head(data, n = i * n_step)
+  
+  # Run the brm model
+  model <- brm(
+    formula = DV ~ 0 + Intercept + condition, 
+    data = sample, 
+    family = gaussian(), 
+    prior = c(
+      set_prior(coef = "Intercept", prior = "normal(0, 1)"),
+      set_prior(class = "b", prior = "student_t(1, 0, 1)"),
+      #set_prior(class = "sigma", prior = "normal(1, 1)"),
+      set_prior("", "sigma") + 
+        set_prior("target += log(1 / sigma)", check = FALSE)
+    ), 
+    sample_prior = TRUE
+  )
+  
+  # Calculate the BF of a contrast
+  BF_brms <- hypothesis(model, "conditionexperimental = 0")
+
+  BF_BF <- ttestBF(formula = DV ~ condition, data = sample, rscale = "wide")
+  
+  # Add the information to the bayes factors data frame
+  results <- bind_rows(
+    bayes_factors, 
+    tibble(
+      step = i,
+      n = i * n_step,
+      BF_brms = BF_brms$hypothesis$Evid.Ratio,
+      BF_BF = extractBF(BF_BF)$bf
+    )
+  )
+}
+```
+
+### More than two groups
 
 Let's simulate data for a scenario in which we have 5 different between-subjects conditions. The conditions differ from each by a small amount and for simplicity's sake each condition has a standard deviation of 1.
 
@@ -30,7 +174,7 @@ To simplify the code for demonstrating a sequential analysis, we'll first simula
 #| eval: false
 
 # Set the simulation parameters
-Ms <- c(0, 0.1, 0.2, 0.3, 0.4)
+Ms <- c(0, 0.1, 0.2, 1, 0.4)
 SDs <- 1
 n <- 1000
 labels <- c("A", "B", "C", "D", "E")
@@ -88,7 +232,8 @@ for (i in 1:(n / n_step)) {
       set_prior(class = "b", prior = "normal(0, 1)"),
       set_prior(class = "sigma", prior = "normal(1, 1)")
     ), 
-    sample_prior = TRUE
+    sample_prior = TRUE, 
+    iter = 10000
   )
   
   # Calculate the BF of a contrast
@@ -118,8 +263,9 @@ Now we have a data frame that contains the Bayes factors for each step, so we ca
 ```{r}
 #| label: sequential-bayes-factors
 #| fig-cap: Sequential analysis
-ggplot(bayes_factors, aes(x = n, y = log(BF))) +
+ggplot(bayes_factors, aes(x = n, y = if_else(BF < 1, log(BF), BF))) +
   geom_line() +
   labs(x = "n", y = expression(BF[10])) +
+  scale_y_continuous()
   theme_minimal()
 ```

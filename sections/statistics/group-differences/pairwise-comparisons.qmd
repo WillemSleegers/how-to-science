@@ -33,14 +33,14 @@ n <- 250
 
 # Produce the variance-covariance matrix
 Sigma <- matrix(
-  nrow = 5, 
-  ncol = 5, 
+  nrow = length(Ms), 
+  ncol = length(Ms), 
   data = c(
-    SDs, 0, 0, 0, 0,
-    0, SDs, 0, 0, 0,
-    0, 0, SDs, 0, 0,
-    0, 0, 0, SDs, 0,
-    0, 0, 0, 0, SDs
+    SDs^2, 0, 0, 0, 0,
+    0, SDs^2, 0, 0, 0,
+    0, 0, SDs^2, 0, 0,
+    0, 0, 0, SDs^2, 0,
+    0, 0, 0, 0, SDs^2
   )
 )
 
@@ -58,6 +58,8 @@ data <- pivot_longer(
   names_to = "condition", 
   values_to = "DV"
 )
+
+data <- mutate(data, id = 1:n(), .before = condition)
 ```
 
 To perform the pairwise comparisons we first fit a model with `brms`. If we also want to calculate Bayes factors, we need to set a prior for the intercept. For technical reasons, this needs to be done by explicitly including the intercept in the formula. After that we need to set 3 priors: 1 for the intercept, 1 for all the other coefficients, and one for sigma. We'll set some weak priors because we don't have any additional information about this simulated data.
@@ -71,9 +73,8 @@ model <- brm(
   prior = c(
     set_prior(coef = "Intercept", prior = "normal(0, 1)"),
     set_prior(class = "b", prior = "normal(0, 1)"),
-    set_prior(class = "sigma", prior = "normal(0, 1)")
+    set_prior(class = "sigma", prior = "normal(1, 1)")
   ), 
-  file = "model", 
   sample_prior = TRUE
 )
 
@@ -87,7 +88,9 @@ If we want pairwise comparisons, we can use the `emmeans` package to obtain them
 ```{r}
 #| label: pairwise-comparisons
 emmeans <- emmeans(model, specs = pairwise ~ condition)
-emmeans$contrasts
+
+contrasts <- emmeans$contrasts
+contrasts
 ```
 
 This gives us the estimates as well as lower and upper bounds of a highest probability density intervals. We can also plot them using the following code.
@@ -95,7 +98,7 @@ This gives us the estimates as well as lower and upper bounds of a highest proba
 ```{r}
 #| label: pairwise-comparisons-plot
 #| fig-cap: Pairwise comparisons via `emmeans`
-contrasts <- as_tibble(emmeans$contrasts)
+contrasts <- as_tibble(contrasts)
 
 ggplot(contrasts, aes(x = contrast, y = estimate)) +
   geom_pointrange(aes(ymin = lower.HPD, ymax = upper.HPD)) +
@@ -104,17 +107,19 @@ ggplot(contrasts, aes(x = contrast, y = estimate)) +
 
 Alternatively, we can also calculate specific contrasts using the `hypothesis()` function from `brms`. The added value of calculating contrasts this way is that it also provides us with a Bayes factor if we set priors for all parts of the model.
 
-For example, we can get the contrast between condition A and B by subtracting the Intercept from the condition B coefficient. We can then get a Bayes factor for the test that this value is larger than 0.
+For example, we can get the contrast between condition A and B by subtracting the Intercept from the condition B coefficient. We can then get an evidence ratio for the test that this value is larger than 0. This value is simply the ratio of the number of samples larger (or smaller) than a value to the number of samples smaller (or larger) than the value.
 
 ```{r}
 #| label: hypothesis-A-B
 contrast_A_B <- hypothesis(model, "conditionB - Intercept > 0")
 contrast_A_B
+
+# sum(contrast_A_B$samples$H1 > 0) / sum(contrast_A_B$samples$H1 < 0)
 ```
 
-This gives us an estimate of 0.1 (as expected) and a Bayes factor of `r  contrast_A_B$hypothesis$Evid.Ratio`.
+This gives us an estimate of 0.1 (as expected) and an evidence ratio of `r  contrast_A_B$hypothesis$Evid.Ratio`.
 
-We can also test whether this contrast is equal to 0.
+We can also test whether this contrast is equal to 0. This is a Bayes factor computed via the Savage-Dickey density ratio method. That is, the posterior density at a point of interest is divided by the prior density at the same point.
 
 ```{r}
 #| label: hypothesis-A-B-null
@@ -132,4 +137,4 @@ contrast_D_B <- hypothesis(model, "conditionD - conditionB > 0")
 contrast_D_B
 ```
 
-As expected, we see an estimate of 0.2 (0.4 - 0.2). We also see a Bayes factor of `r contrast_D_B$hypothesis$Evid.Ratio` for the test that this is larger than 0.
+As expected, we see an estimate of 0.2 (0.4 - 0.2). We also see an evidence ratio of `r contrast_D_B$hypothesis$Evid.Ratio` for the hypothesis that this is larger than 0.

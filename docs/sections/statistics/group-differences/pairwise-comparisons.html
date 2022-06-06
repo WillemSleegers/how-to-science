@@ -279,14 +279,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Produce the variance-covariance matrix</span></span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>Sigma <span class="ot">&lt;-</span> <span class="fu">matrix</span>(</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">nrow =</span> <span class="dv">5</span>, </span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">ncol =</span> <span class="dv">5</span>, </span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">nrow =</span> <span class="fu">length</span>(Ms), </span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">ncol =</span> <span class="fu">length</span>(Ms), </span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> <span class="fu">c</span>(</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    SDs, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>,</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>, SDs, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>,</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>, <span class="dv">0</span>, SDs, <span class="dv">0</span>, <span class="dv">0</span>,</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, SDs, <span class="dv">0</span>,</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, SDs</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    SDs<span class="sc">^</span><span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>,</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>, SDs<span class="sc">^</span><span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>,</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>, <span class="dv">0</span>, SDs<span class="sc">^</span><span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">0</span>,</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, SDs<span class="sc">^</span><span class="dv">2</span>, <span class="dv">0</span>,</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, SDs<span class="sc">^</span><span class="dv">2</span></span>
 <span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
@@ -303,7 +303,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>  <span class="at">cols =</span> <span class="fu">everything</span>(), </span>
 <span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>  <span class="at">names_to =</span> <span class="st">"condition"</span>, </span>
 <span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>  <span class="at">values_to =</span> <span class="st">"DV"</span></span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">mutate</span>(data, <span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>(), <span class="at">.before =</span> condition)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>To perform the pairwise comparisons we first fit a model with <code>brms</code>. If we also want to calculate Bayes factors, we need to set a prior for the intercept. For technical reasons, this needs to be done by explicitly including the intercept in the formula. After that we need to set 3 priors: 1 for the intercept, 1 for all the other coefficients, and one for sigma. We’ll set some weak priors because we don’t have any additional information about this simulated data.</p>
 <div class="cell">
@@ -314,13 +316,145 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">prior =</span> <span class="fu">c</span>(</span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">set_prior</span>(<span class="at">coef =</span> <span class="st">"Intercept"</span>, <span class="at">prior =</span> <span class="st">"normal(0, 1)"</span>),</span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">set_prior</span>(<span class="at">class =</span> <span class="st">"b"</span>, <span class="at">prior =</span> <span class="st">"normal(0, 1)"</span>),</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">set_prior</span>(<span class="at">class =</span> <span class="st">"sigma"</span>, <span class="at">prior =</span> <span class="st">"normal(0, 1)"</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">set_prior</span>(<span class="at">class =</span> <span class="st">"sigma"</span>, <span class="at">prior =</span> <span class="st">"normal(1, 1)"</span>)</span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  ), </span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">"model"</span>, </span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">sample_prior =</span> <span class="cn">TRUE</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>model</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">sample_prior =</span> <span class="cn">TRUE</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Compiling Stan program...</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Trying to compile a simple C file</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Running /Library/Frameworks/R.framework/Resources/bin/R CMD SHLIB foo.c
+clang -mmacosx-version-min=10.13 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG   -I"/Library/Frameworks/R.framework/Versions/4.2/Resources/library/Rcpp/include/"  -I"/Library/Frameworks/R.framework/Versions/4.2/Resources/library/RcppEigen/include/"  -I"/Library/Frameworks/R.framework/Versions/4.2/Resources/library/RcppEigen/include/unsupported"  -I"/Library/Frameworks/R.framework/Versions/4.2/Resources/library/BH/include" -I"/Library/Frameworks/R.framework/Versions/4.2/Resources/library/StanHeaders/include/src/"  -I"/Library/Frameworks/R.framework/Versions/4.2/Resources/library/StanHeaders/include/"  -I"/Library/Frameworks/R.framework/Versions/4.2/Resources/library/RcppParallel/include/"  -I"/Library/Frameworks/R.framework/Versions/4.2/Resources/library/rstan/include" -DEIGEN_NO_DEBUG  -DBOOST_DISABLE_ASSERTS  -DBOOST_PENDING_INTEGER_LOG2_HPP  -DSTAN_THREADS  -DBOOST_NO_AUTO_PTR  -include '/Library/Frameworks/R.framework/Versions/4.2/Resources/library/StanHeaders/include/stan/math/prim/mat/fun/Eigen.hpp'  -D_REENTRANT -DRCPP_PARALLEL_USE_TBB=1   -I/usr/local/include   -fPIC  -Wall -g -O2  -c foo.c -o foo.o
+In file included from &lt;built-in&gt;:1:
+In file included from /Library/Frameworks/R.framework/Versions/4.2/Resources/library/StanHeaders/include/stan/math/prim/mat/fun/Eigen.hpp:13:
+In file included from /Library/Frameworks/R.framework/Versions/4.2/Resources/library/RcppEigen/include/Eigen/Dense:1:
+In file included from /Library/Frameworks/R.framework/Versions/4.2/Resources/library/RcppEigen/include/Eigen/Core:88:
+/Library/Frameworks/R.framework/Versions/4.2/Resources/library/RcppEigen/include/Eigen/src/Core/util/Macros.h:628:1: error: unknown type name 'namespace'
+namespace Eigen {
+^
+/Library/Frameworks/R.framework/Versions/4.2/Resources/library/RcppEigen/include/Eigen/src/Core/util/Macros.h:628:16: error: expected ';' after top level declarator
+namespace Eigen {
+               ^
+               ;
+In file included from &lt;built-in&gt;:1:
+In file included from /Library/Frameworks/R.framework/Versions/4.2/Resources/library/StanHeaders/include/stan/math/prim/mat/fun/Eigen.hpp:13:
+In file included from /Library/Frameworks/R.framework/Versions/4.2/Resources/library/RcppEigen/include/Eigen/Dense:1:
+/Library/Frameworks/R.framework/Versions/4.2/Resources/library/RcppEigen/include/Eigen/Core:96:10: fatal error: 'complex' file not found
+#include &lt;complex&gt;
+         ^~~~~~~~~
+3 errors generated.
+make: *** [foo.o] Error 1</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Start sampling</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+SAMPLING FOR MODEL '26506c9e129ffc36bd1658ecb9d890c1' NOW (CHAIN 1).
+Chain 1: 
+Chain 1: Gradient evaluation took 2.1e-05 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.21 seconds.
+Chain 1: Adjust your expectations accordingly!
+Chain 1: 
+Chain 1: 
+Chain 1: Iteration:    1 / 2000 [  0%]  (Warmup)
+Chain 1: Iteration:  200 / 2000 [ 10%]  (Warmup)
+Chain 1: Iteration:  400 / 2000 [ 20%]  (Warmup)
+Chain 1: Iteration:  600 / 2000 [ 30%]  (Warmup)
+Chain 1: Iteration:  800 / 2000 [ 40%]  (Warmup)
+Chain 1: Iteration: 1000 / 2000 [ 50%]  (Warmup)
+Chain 1: Iteration: 1001 / 2000 [ 50%]  (Sampling)
+Chain 1: Iteration: 1200 / 2000 [ 60%]  (Sampling)
+Chain 1: Iteration: 1400 / 2000 [ 70%]  (Sampling)
+Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
+Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
+Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
+Chain 1: 
+Chain 1:  Elapsed Time: 0.066074 seconds (Warm-up)
+Chain 1:                0.057278 seconds (Sampling)
+Chain 1:                0.123352 seconds (Total)
+Chain 1: 
+
+SAMPLING FOR MODEL '26506c9e129ffc36bd1658ecb9d890c1' NOW (CHAIN 2).
+Chain 2: 
+Chain 2: Gradient evaluation took 1e-05 seconds
+Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.1 seconds.
+Chain 2: Adjust your expectations accordingly!
+Chain 2: 
+Chain 2: 
+Chain 2: Iteration:    1 / 2000 [  0%]  (Warmup)
+Chain 2: Iteration:  200 / 2000 [ 10%]  (Warmup)
+Chain 2: Iteration:  400 / 2000 [ 20%]  (Warmup)
+Chain 2: Iteration:  600 / 2000 [ 30%]  (Warmup)
+Chain 2: Iteration:  800 / 2000 [ 40%]  (Warmup)
+Chain 2: Iteration: 1000 / 2000 [ 50%]  (Warmup)
+Chain 2: Iteration: 1001 / 2000 [ 50%]  (Sampling)
+Chain 2: Iteration: 1200 / 2000 [ 60%]  (Sampling)
+Chain 2: Iteration: 1400 / 2000 [ 70%]  (Sampling)
+Chain 2: Iteration: 1600 / 2000 [ 80%]  (Sampling)
+Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
+Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
+Chain 2: 
+Chain 2:  Elapsed Time: 0.066055 seconds (Warm-up)
+Chain 2:                0.066104 seconds (Sampling)
+Chain 2:                0.132159 seconds (Total)
+Chain 2: 
+
+SAMPLING FOR MODEL '26506c9e129ffc36bd1658ecb9d890c1' NOW (CHAIN 3).
+Chain 3: 
+Chain 3: Gradient evaluation took 1.9e-05 seconds
+Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.19 seconds.
+Chain 3: Adjust your expectations accordingly!
+Chain 3: 
+Chain 3: 
+Chain 3: Iteration:    1 / 2000 [  0%]  (Warmup)
+Chain 3: Iteration:  200 / 2000 [ 10%]  (Warmup)
+Chain 3: Iteration:  400 / 2000 [ 20%]  (Warmup)
+Chain 3: Iteration:  600 / 2000 [ 30%]  (Warmup)
+Chain 3: Iteration:  800 / 2000 [ 40%]  (Warmup)
+Chain 3: Iteration: 1000 / 2000 [ 50%]  (Warmup)
+Chain 3: Iteration: 1001 / 2000 [ 50%]  (Sampling)
+Chain 3: Iteration: 1200 / 2000 [ 60%]  (Sampling)
+Chain 3: Iteration: 1400 / 2000 [ 70%]  (Sampling)
+Chain 3: Iteration: 1600 / 2000 [ 80%]  (Sampling)
+Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
+Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
+Chain 3: 
+Chain 3:  Elapsed Time: 0.06382 seconds (Warm-up)
+Chain 3:                0.067943 seconds (Sampling)
+Chain 3:                0.131763 seconds (Total)
+Chain 3: 
+
+SAMPLING FOR MODEL '26506c9e129ffc36bd1658ecb9d890c1' NOW (CHAIN 4).
+Chain 4: 
+Chain 4: Gradient evaluation took 1e-05 seconds
+Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.1 seconds.
+Chain 4: Adjust your expectations accordingly!
+Chain 4: 
+Chain 4: 
+Chain 4: Iteration:    1 / 2000 [  0%]  (Warmup)
+Chain 4: Iteration:  200 / 2000 [ 10%]  (Warmup)
+Chain 4: Iteration:  400 / 2000 [ 20%]  (Warmup)
+Chain 4: Iteration:  600 / 2000 [ 30%]  (Warmup)
+Chain 4: Iteration:  800 / 2000 [ 40%]  (Warmup)
+Chain 4: Iteration: 1000 / 2000 [ 50%]  (Warmup)
+Chain 4: Iteration: 1001 / 2000 [ 50%]  (Sampling)
+Chain 4: Iteration: 1200 / 2000 [ 60%]  (Sampling)
+Chain 4: Iteration: 1400 / 2000 [ 70%]  (Sampling)
+Chain 4: Iteration: 1600 / 2000 [ 80%]  (Sampling)
+Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
+Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
+Chain 4: 
+Chain 4:  Elapsed Time: 0.065475 seconds (Warm-up)
+Chain 4:                0.063031 seconds (Sampling)
+Chain 4:                0.128506 seconds (Total)
+Chain 4: </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>model</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Family: gaussian 
   Links: mu = identity; sigma = identity 
@@ -331,15 +465,15 @@ Formula: DV ~ 0 + Intercept + condition
 
 Population-Level Effects: 
            Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-Intercept      0.00      0.07    -0.13     0.13 1.00     1042     1482
-conditionB     0.10      0.09    -0.08     0.28 1.00     1312     1684
-conditionC     0.20      0.09     0.01     0.38 1.00     1464     1901
-conditionD     0.30      0.09     0.12     0.47 1.00     1335     2185
-conditionE     0.39      0.09     0.22     0.58 1.00     1428     2006
+Intercept      0.00      0.06    -0.12     0.12 1.00     1032     1632
+conditionB     0.10      0.09    -0.07     0.27 1.00     1510     2073
+conditionC     0.20      0.09     0.02     0.36 1.00     1514     2436
+conditionD     0.30      0.09     0.13     0.47 1.00     1312     2129
+conditionE     0.40      0.09     0.22     0.57 1.00     1502     2179
 
 Family Specific Parameters: 
       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sigma     1.00      0.02     0.96     1.04 1.00     3541     2636
+sigma     1.00      0.02     0.96     1.04 1.00     3775     2982
 
 Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -349,20 +483,20 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <p>The estimates range, as expected, from 0 for the intercept to 0.40 for condition E.</p>
 <p>If we want pairwise comparisons, we can use the <code>emmeans</code> package to obtain them. We use the <code>emmeans()</code> function and set the <code>specs</code> argument to <code>pairwise ~ condition</code>. <code>pairwise</code> is a reserved term to use for exactly this purpose. The result is an object that contains estimated marginal means and contrasts. Since we’re interested in the pairwise comparisons we only print the contrasts.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>emmeans <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(model, <span class="at">specs =</span> pairwise <span class="sc">~</span> condition)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>emmeans<span class="sc">$</span>contrasts</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>emmeans <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(model, <span class="at">specs =</span> pairwise <span class="sc">~</span> condition)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>emmeans<span class="sc">$</span>contrasts</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> contrast estimate lower.HPD upper.HPD
- A - B     -0.0964    -0.272    0.0825
- A - C     -0.1952    -0.378   -0.0163
- A - D     -0.2962    -0.481   -0.1295
- A - E     -0.3926    -0.577   -0.2170
- B - C     -0.0992    -0.278    0.0689
- B - D     -0.1978    -0.366   -0.0250
- B - E     -0.2978    -0.468   -0.1298
- C - D     -0.0996    -0.281    0.0730
- C - E     -0.1991    -0.376   -0.0298
- D - E     -0.1009    -0.274    0.0732
+ A - B     -0.1000    -0.275    0.0668
+ A - C     -0.1961    -0.362   -0.0257
+ A - D     -0.2941    -0.481   -0.1446
+ A - E     -0.3961    -0.578   -0.2250
+ B - C     -0.0990    -0.270    0.0713
+ B - D     -0.1977    -0.384   -0.0283
+ B - E     -0.2967    -0.475   -0.1243
+ C - D     -0.0979    -0.273    0.0690
+ C - E     -0.1979    -0.377   -0.0314
+ D - E     -0.0985    -0.272    0.0758
 
 Point estimate displayed: median 
 HPD interval probability: 0.95 </code></pre>
@@ -370,11 +504,11 @@ HPD interval probability: 0.95 </code></pre>
 </div>
 <p>This gives us the estimates as well as lower and upper bounds of a highest probability density intervals. We can also plot them using the following code.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>contrasts <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(emmeans<span class="sc">$</span>contrasts)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(contrasts, <span class="fu">aes</span>(<span class="at">x =</span> contrast, <span class="at">y =</span> estimate)) <span class="sc">+</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_pointrange</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> lower.HPD, <span class="at">ymax =</span> upper.HPD)) <span class="sc">+</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Contrast"</span>, <span class="at">y =</span> <span class="st">"Estimate with 95% HPD"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>contrasts <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(emmeans<span class="sc">$</span>contrasts)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(contrasts, <span class="fu">aes</span>(<span class="at">x =</span> contrast, <span class="at">y =</span> estimate)) <span class="sc">+</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_pointrange</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> lower.HPD, <span class="at">ymax =</span> upper.HPD)) <span class="sc">+</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Contrast"</span>, <span class="at">y =</span> <span class="st">"Estimate with 95% HPD"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -385,14 +519,14 @@ HPD interval probability: 0.95 </code></pre>
 </div>
 </div>
 <p>Alternatively, we can also calculate specific contrasts using the <code>hypothesis()</code> function from <code>brms</code>. The added value of calculating contrasts this way is that it also provides us with a Bayes factor if we set priors for all parts of the model.</p>
-<p>For example, we can get the contrast between condition A and B by subtracting the Intercept from the condition B coefficient. We can then get a Bayes factor for the test that this value is larger than 0.</p>
+<p>For example, we can get the contrast between condition A and B by subtracting the Intercept from the condition B coefficient. We can then get an evidence ratio for the test that this value is larger than 0. This value is simply the ratio of the number of samples larger (or smaller) than a value to the number of samples smaller (or larger) than the value.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>contrast_A_B <span class="ot">&lt;-</span> <span class="fu">hypothesis</span>(model, <span class="st">"conditionB - Intercept &gt; 0"</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>contrast_A_B</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>contrast_A_B <span class="ot">&lt;-</span> <span class="fu">hypothesis</span>(model, <span class="st">"conditionB - Intercept &gt; 0"</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>contrast_A_B</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Hypothesis Tests for class b:
                 Hypothesis Estimate Est.Error CI.Lower CI.Upper Evid.Ratio
-1 (conditionB-Inter... &gt; 0     0.09      0.14    -0.14     0.33       2.96
+1 (conditionB-Inter... &gt; 0     0.09      0.14    -0.13     0.33          3
   Post.Prob Star
 1      0.75     
 ---
@@ -401,18 +535,19 @@ HPD interval probability: 0.95 </code></pre>
 for two-sided hypotheses, the value tested against lies outside the 95%-CI.
 Posterior probabilities of point hypotheses assume equal prior probabilities.</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sum(contrast_A_B$samples$H1 &gt; 0) / sum(contrast_A_B$samples$H1 &lt; 0)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>This gives us an estimate of 0.1 (as expected) and a Bayes factor of 2.9564787.</p>
-<p>We can also test whether this contrast is equal to 0.</p>
+<p>This gives us an estimate of 0.1 (as expected) and an evidence ratio of 3.004004.</p>
+<p>We can also test whether this contrast is equal to 0. This is a Bayes factor computed via the Savage-Dickey density ratio method. That is, the posterior density at a point of interest is divided by the prior density at the same point.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>contrast_A_B_null <span class="ot">&lt;-</span> <span class="fu">hypothesis</span>(model, <span class="st">"conditionB - Intercept = 0"</span>)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>contrast_A_B_null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>contrast_A_B_null <span class="ot">&lt;-</span> <span class="fu">hypothesis</span>(model, <span class="st">"conditionB - Intercept = 0"</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>contrast_A_B_null</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Hypothesis Tests for class b:
                 Hypothesis Estimate Est.Error CI.Lower CI.Upper Evid.Ratio
-1 (conditionB-Inter... = 0     0.09      0.14    -0.19     0.38       7.83
+1 (conditionB-Inter... = 0     0.09      0.14    -0.17     0.37       8.52
   Post.Prob Star
-1      0.89     
+1       0.9     
 ---
 'CI': 90%-CI for one-sided and 95%-CI for two-sided hypotheses.
 '*': For one-sided hypotheses, the posterior probability exceeds 95%;
@@ -420,15 +555,15 @@ for two-sided hypotheses, the value tested against lies outside the 95%-CI.
 Posterior probabilities of point hypotheses assume equal prior probabilities.</code></pre>
 </div>
 </div>
-<p>This gives us a Bayes factor of 7.830261.</p>
+<p>This gives us a Bayes factor of 8.5246971.</p>
 <p>Alternatively, we can compare another contrast, say, D vs.&nbsp;B. We can get this contrast by subtracting the coefficient for condition B from the coefficient for condition D.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>contrast_D_B <span class="ot">&lt;-</span> <span class="fu">hypothesis</span>(model, <span class="st">"conditionD - conditionB &gt; 0"</span>)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>contrast_D_B</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>contrast_D_B <span class="ot">&lt;-</span> <span class="fu">hypothesis</span>(model, <span class="st">"conditionD - conditionB &gt; 0"</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>contrast_D_B</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Hypothesis Tests for class b:
                 Hypothesis Estimate Est.Error CI.Lower CI.Upper Evid.Ratio
-1 (conditionD-condi... &gt; 0      0.2      0.09     0.05     0.34      92.02
+1 (conditionD-condi... &gt; 0      0.2      0.09     0.05     0.35      82.33
   Post.Prob Star
 1      0.99    *
 ---
@@ -438,7 +573,7 @@ for two-sided hypotheses, the value tested against lies outside the 95%-CI.
 Posterior probabilities of point hypotheses assume equal prior probabilities.</code></pre>
 </div>
 </div>
-<p>As expected, we see an estimate of 0.2 (0.4 - 0.2). We also see a Bayes factor of 92.0232558 for the test that this is larger than 0.</p>
+<p>As expected, we see an estimate of 0.2 (0.4 - 0.2). We also see an evidence ratio of 82.3333333 for the hypothesis that this is larger than 0.</p>
 
 
 </section>
