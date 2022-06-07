@@ -2,7 +2,7 @@
 title: "Sequential analyses"
 toc: true
 code-tools: true
-code-fold: true
+code-fold: show
 ---
 
 ```{r}
@@ -139,51 +139,87 @@ ggplot(results, aes(x = factor(n), y = b_conditionexperimental)) +
   labs(x = "Sample size per condition (n)", y = "")
 ```
 
-### Bayes factors
+#### Bayes factors
 
 This is still a work in progress. I have yet to figure out the best way to obtain Bayes factors using the `brms` package.
 
+Below I use both `brms` and `BayesFactor` to calculate Bayes factors for the effect of condition across various sample sizes.
+
 ```{r}
 #| label: sequential-analyses-2-groups
-#| eval: false
-n_step <- 50
+#| message: false
+#| results: false
+#| 
+#| cache: true
+ns <- c(10, 20, 30, 40, 50, 75, 100, 150, 200, 250)
 results <- tibble()
 
-for (i in 1:(n / n_step)) {
-  # Draw a sample
-  sample <- slice_head(data, n = i * n_step)
+for (i in 1:length(ns)) {
+  # Get the sample size
+  n <- ns[i]
   
-  # Run the brm model
-  model <- brm(
-    formula = DV ~ 0 + Intercept + condition, 
-    data = sample, 
-    family = gaussian(), 
-    prior = c(
-      set_prior(coef = "Intercept", prior = "normal(0, 1)"),
-      set_prior(class = "b", prior = "student_t(1, 0, 1)"),
-      #set_prior(class = "sigma", prior = "normal(1, 1)"),
-      set_prior("", "sigma") + 
-        set_prior("target += log(1 / sigma)", check = FALSE)
-    ), 
-    sample_prior = TRUE
-  )
+  # Draw a sample of size n
+  sample <- slice_head(data, n = n)
   
-  # Calculate the BF of a contrast
+  # If this is the first iteration, run the full brms model
+  # Else update the model
+  if (i == 1) {
+    model <- brm(
+      formula = DV ~ 0 + Intercept + condition, 
+      data = sample, 
+      family = gaussian(), 
+      prior = c(
+        set_prior(coef = "Intercept", prior = "normal(0, 1)"),
+        set_prior(class = "b", prior = "normal(0, 1)"),
+        set_prior(class = "sigma", prior = "normal(1, 1)")
+      ), 
+      sample_prior = TRUE
+    )
+  } else {
+    model <- update(model, newdata = as.data.frame(sample))
+  }
+  
+  # Calculate the BF
   BF_brms <- hypothesis(model, "conditionexperimental = 0")
 
-  BF_BF <- ttestBF(formula = DV ~ condition, data = sample, rscale = "wide")
+  # Also calculate the BF with the testBF() function from BayesFactor
+  BF_BF <- ttestBF(formula = DV ~ condition, data = sample)
   
   # Add the information to the bayes factors data frame
   results <- bind_rows(
-    bayes_factors, 
+    results, 
     tibble(
       step = i,
-      n = i * n_step,
-      BF_brms = BF_brms$hypothesis$Evid.Ratio,
-      BF_BF = extractBF(BF_BF)$bf
+      n = n,
+      brms = BF_brms$hypothesis$Evid.Ratio,
+      BayesFactor = extractBF(BF_BF)$bf
     )
   )
 }
+```
+
+Next we plot the Bayes factors for each sample size and for each method of calculating the Bayes factor.
+
+```{r}
+#| label: plot-bayes-factors-2-groups
+#| fig-cap: Bayes factors per sample size
+results_long <- results %>%
+  mutate(BayesFactor = 1 / BayesFactor) %>%
+  pivot_longer(
+    cols = c(brms, BayesFactor), 
+    names_to = "method", 
+    values_to = "BF")
+
+ggplot(
+    data = results_long, 
+    mapping = aes(x = factor(n), y = BF, linetype = method, group = method)
+  ) +
+  geom_line() +
+  labs(
+    x = "Sample size per condition (n)", 
+    y = expression(BF["10"]), 
+    linetype = "Method"
+  )
 ```
 
 ### Four groups
@@ -228,6 +264,8 @@ data <- pivot_longer(
 
 data <- mutate(data, id = 1:n(), .before = condition)
 ```
+
+#### Estimation
 
 With this data we can run multiple sequential models (like in the 2 groups scenario), except this time we calculate contrasts between all the levels of the condition factor. We again obtain the posteriors of these contrasts and store them so we can plot them afterwards.
 
@@ -286,6 +324,7 @@ Now that we have a data frame that contains the posterior draws of each contrast
 ```{r}
 #| label: plot-4-groups
 #| fig-cap: Sequential analysis
+#| fig-subcap: Horizontal lines show the 95% interval of the estimate from the largest sample.
 #| fig-height: 14
 final_quantiles <- results %>%
   filter(n == 250) %>%
@@ -309,3 +348,84 @@ ggplot(results, aes(x = factor(n), y = .value)) +
   scale_color_viridis(option = "mako", discrete = TRUE)
 ```
 
+#### Bayes factors
+
+Below we run the same models but this time we calculate Bayes factors for each contrast using the `hypothesis()` function.
+
+```{r}
+#| label: bayes-factors-4-groups
+#| message: false
+#| results: false
+#| cache: true
+ns <- c(10, 20, 30, 40, 50, 75, 100, 150, 200, 250)
+results <- tibble()
+
+for (i in 1:length(ns)) {
+  # Get the sample size
+  n <- ns[i]
+  
+  # Draw a sample of size n
+  sample <- slice_head(data, n = n)
+  
+  # If this is the first iteration, run the full brms model
+  # Else update the model
+  if (i == 1) {
+    model <- brm(
+      formula = DV ~ 0 + Intercept + condition, 
+      data = sample, 
+      family = gaussian(), 
+      prior = c(
+        set_prior(coef = "Intercept", prior = "normal(0, 1)"),
+        set_prior(class = "b", prior = "normal(0, 1)"),
+        set_prior(class = "sigma", prior = "normal(1, 1)")
+      ), 
+      sample_prior = TRUE
+    )
+  } else {
+    model <- update(model, newdata = sample)
+  }
+  
+  # Get the bayes factors for each contrast
+  BF_AB <- hypothesis(model, "Intercept = conditionB")
+  BF_AC <- hypothesis(model, "Intercept = conditionC")
+  BF_AD <- hypothesis(model, "Intercept = conditionD")
+  BF_BC <- hypothesis(model, "conditionB = conditionC")
+  BF_BD <- hypothesis(model, "conditionB = conditionD")
+  BF_CD <- hypothesis(model, "conditionC = conditionD")
+  
+  # Create a tibble with the Bayes factors and sample information
+  bayes_factors <- tibble(
+    i = i,
+    n = n,
+    `A - B` = BF_AB$hypothesis$Evid.Ratio,
+    `A - C` = BF_AC$hypothesis$Evid.Ratio,
+    `A - D` = BF_AD$hypothesis$Evid.Ratio,
+    `B - C` = BF_BC$hypothesis$Evid.Ratio,
+    `B - D` = BF_BD$hypothesis$Evid.Ratio,
+    `C - D` = BF_CD$hypothesis$Evid.Ratio
+  )
+
+  # Add the draws to the results data frame
+  results <- bind_rows(
+    results, 
+    bayes_factors
+  )
+}
+```
+
+Next, we plot the Bayes factors over time, for each contrast.
+
+```{r}
+results_long <- results %>%
+  pivot_longer(cols = -c(i, n), names_to = "contrast", values_to = "BF") %>%
+  mutate(BF = if_else(BF < 1, log(BF), BF))
+
+ggplot(data = results_long, mapping = aes(x = factor(n), y = BF, group = 1)) +
+  geom_line() +
+  facet_wrap(~ contrast) + 
+  labs(
+    x = "Sample size per condition (n)", 
+    y = expression(BF["10"]), 
+    linetype = "Method"
+  )
+```
