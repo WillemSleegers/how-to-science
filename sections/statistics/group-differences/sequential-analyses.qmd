@@ -176,14 +176,14 @@ for (i in 1:length(ns)) {
       sample_prior = TRUE
     )
   } else {
-    model <- update(model, newdata = as.data.frame(sample))
+    model <- update(model, newdata = sample)
   }
   
   # Calculate the BF
   BF_brms <- hypothesis(model, "conditionexperimental = 0")
 
   # Also calculate the BF with the testBF() function from BayesFactor
-  BF_BF <- ttestBF(formula = DV ~ condition, data = sample)
+  BF_BF <- ttestBF(formula = DV ~ condition, data = as.data.frame(sample))
   
   # Add the information to the bayes factors data frame
   results <- bind_rows(
