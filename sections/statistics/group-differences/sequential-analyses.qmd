@@ -1,5 +1,8 @@
 ---
 title: "Sequential analyses"
+toc: true
+code-tools: true
+code-fold: true
 ---
 
 ```{r}
@@ -17,6 +20,9 @@ library(tidybayes)
 
 # Set the default ggplot theme
 theme_set(theme_minimal())
+
+# Set seed
+set.seed(1)
 ```
 
 This section is about performing sequential analyses.
@@ -29,12 +35,11 @@ For this scenario we simulate data from two different groups (say a control grou
 
 ```{r}
 #| label: simulation-2-groups
-#| eval: false
 
 # Set the simulation parameters
-Ms <- c(0, 0.5)
+Ms <- c(0, 0.25)
 SDs <- 1
-n <- 1000
+n <- 250
 labels <- c("control", "experimental")
 
 # Produce the variance-covariance matrix
@@ -65,39 +70,51 @@ data <- pivot_longer(
 data <- mutate(data, id = 1:n(), .before = condition)
 ```
 
-### Estimation
+There are different Bayesian ways to analyze this data. One can focus on estimation or on Bayes factors.
+
+#### Estimation
+
+If estimation is the goal, we run the model (or models) and obtain the posterior distribution of the estimates of interest. Below we run subsequent models with each model using more of the data.
 
 ```{r}
-#| label: sequential-estimation-2-groups
-#| eval: false
-n_step <- 50
+#| label: estimates-2-groups
+#| message: false
+#| results: false
+#| cache: true
+ns <- c(10, 20, 30, 40, 50, 75, 100, 150, 200, 250)
 results <- tibble()
 
-for (i in 1:(n / n_step)) {
-  # Draw a sample
-  sample <- slice_head(data, n = i * n_step)
+for (i in 1:length(ns)) {
+  # Get the sample size
+  n <- ns[i]
   
-  # Run the brm model
-  model <- brm(
-    formula = DV ~ 0 + Intercept + condition, 
-    data = sample, 
-    family = gaussian(), 
-    prior = c(
-      set_prior(coef = "Intercept", prior = "normal(0, 1)"),
-      set_prior(class = "b", prior = "normal(0, 1)"),
-      set_prior(class = "sigma", prior = "normal(1, 1)")
+  # Draw a sample of size n
+  sample <- slice_head(data, n = n)
+  
+  # If this is the first iteration, run the full brms model
+  # Else update the model
+  if (i == 1) {
+    model <- brm(
+      formula = DV ~ 0 + Intercept + condition, 
+      data = sample, 
+      family = gaussian(), 
+      prior = c(
+        set_prior(coef = "Intercept", prior = "normal(0, 1)"),
+        set_prior(class = "b", prior = "normal(0, 1)"),
+        set_prior(class = "sigma", prior = "normal(1, 1)")
+      )
     )
-  )
+  } else {
+    model <- update(model, newdata = sample)
+  }
   
-  # Get the posterior of the condition estimate
-  draws <- model %>%
-    as_draws_df() %>%
-    mutate(
-      step = i,
-      n = i * n_step
-    )
+  # Get the posteriors of the model estimates
+  draws <- as_draws_df(model)
   
-  # Add the information to the bayes factors data frame
+  # Add sample information
+  draws <- mutate(draws, step = i, n = n)
+  
+  # Add the draws to the results data frame
   results <- bind_rows(
     results, 
     draws
@@ -105,20 +122,26 @@ for (i in 1:(n / n_step)) {
 }
 ```
 
-```{r}
-#| label: read-2-groups-data
-#| echo: false
-#| message: false
-results <- read_csv("2-groups.csv")
-```
+Now we have the draws of the posterior distribution of the model estimates. We can plot these using the following code.
 
 ```{r}
-ggplot(results, aes(x = n, y = b_conditionexperimental)) +
+#| label: estimates-plot-2-groups
+#| fig-cap: Sequential analyses of 2 groups
+#| fig-subcap: Horizontal lines show the 95% interval of the estimate from the largest sample.
+final_quantiles <- results %>%
+  filter(n == 250) %>%
+  pull(b_conditionexperimental) %>%
+  quantile(probs = c(.025, .975))
+
+ggplot(results, aes(x = factor(n), y = b_conditionexperimental)) +
   stat_halfeye() +
+  geom_hline(yintercept = final_quantiles, linetype = "dashed", alpha = .5) +
   labs(x = "Sample size per condition (n)", y = "")
 ```
 
 ### Bayes factors
+
+This is still a work in progress. I have yet to figure out the best way to obtain Bayes factors using the `brms` package.
 
 ```{r}
 #| label: sequential-analyses-2-groups
@@ -163,32 +186,28 @@ for (i in 1:(n / n_step)) {
 }
 ```
 
-### More than two groups
+### Four groups
 
-Let's simulate data for a scenario in which we have 5 different between-subjects conditions. The conditions differ from each by a small amount and for simplicity's sake each condition has a standard deviation of 1.
-
-To simplify the code for demonstrating a sequential analysis, we'll first simulate all the data and then draw samples from it, rather that simulating new data for each step.
+Let's simulate data for a scenario in which we have 4 different between-subjects conditions. The conditions differ from each by a small amount and for simplicity's sake each condition has a standard deviation of 1.
 
 ```{r}
-#| label: simulation
-#| eval: false
+#| label: simulation-4-groups
 
 # Set the simulation parameters
-Ms <- c(0, 0.1, 0.2, 1, 0.4)
+Ms <- c(0, 0.2, 0.4, 0.6)
 SDs <- 1
-n <- 1000
-labels <- c("A", "B", "C", "D", "E")
+n <- 250
+labels <- c("A", "B", "C", "D")
 
 # Produce the variance-covariance matrix
 Sigma <- matrix(
   nrow = length(Ms), 
   ncol = length(Ms), 
   data = c(
-    SDs^2, 0, 0, 0, 0,
-    0, SDs^2, 0, 0, 0,
-    0, 0, SDs^2, 0, 0,
-    0, 0, 0, SDs^2, 0,
-    0, 0, 0, 0, SDs^2
+    SDs^2, 0, 0, 0,
+    0, SDs^2, 0, 0,
+    0, 0, SDs^2, 0,
+    0, 0, 0, SDs^2
   )
 )
 
@@ -210,62 +229,83 @@ data <- pivot_longer(
 data <- mutate(data, id = 1:n(), .before = condition)
 ```
 
-Now that we have some data we can draw samples from it, run a model, calculate the Bayes factor, and store the Bayes factor together with the cumulative sample size so we can create a plot for how the Bayes factor changes as we 'recruit' more participants.
+With this data we can run multiple sequential models (like in the 2 groups scenario), except this time we calculate contrasts between all the levels of the condition factor. We again obtain the posteriors of these contrasts and store them so we can plot them afterwards.
 
 ```{r}
-#| label: sequential-analyses
-#| eval: false
-n_step <- 50
-bayes_factors <- tibble()
+#| label: sequential-analyses-4-groups
+#| message: false
+#| results: false
+#| cache: true
+ns <- c(10, 20, 30, 40, 50, 75, 100, 150, 200, 250)
+results <- tibble()
 
-for (i in 1:(n / n_step)) {
-  # Draw a sample
-  sample <- slice_head(data, n = i * n_step)
+for (i in 1:length(ns)) {
+  # Get the sample size
+  n <- ns[i]
   
-  # Run the brm model
-  model <- brm(
-    formula = DV ~ 0 + Intercept + condition, 
-    data = sample, 
-    family = gaussian(), 
-    prior = c(
-      set_prior(coef = "Intercept", prior = "normal(0, 1)"),
-      set_prior(class = "b", prior = "normal(0, 1)"),
-      set_prior(class = "sigma", prior = "normal(1, 1)")
-    ), 
-    sample_prior = TRUE, 
-    iter = 10000
-  )
+  # Draw a sample of size n
+  sample <- slice_head(data, n = n)
   
-  # Calculate the BF of a contrast
-  contrast <- hypothesis(model, "conditionD - conditionB = 0")
-  
-  # Add the information to the bayes factors data frame
-  bayes_factors <- bind_rows(
-    bayes_factors, 
-    tibble(
-      step = i,
-      n = i * n_step,
-      BF = contrast$hypothesis$Evid.Ratio
+  # If this is the first iteration, run the full brms model
+  # Else update the model
+  if (i == 1) {
+    model <- brm(
+      formula = DV ~ 0 + Intercept + condition, 
+      data = sample, 
+      family = gaussian(), 
+      prior = c(
+        set_prior(coef = "Intercept", prior = "normal(0, 1)"),
+        set_prior(class = "b", prior = "normal(0, 1)"),
+        set_prior(class = "sigma", prior = "normal(1, 1)")
+      )
     )
+  } else {
+    model <- update(model, newdata = sample)
+  }
+  
+  # Get the estimated marginal means
+  emmeans <- emmeans(model, specs = pairwise ~ condition)
+  contrasts <- emmeans$contrasts
+  
+  # Get draws of the posterior of each contrast
+  draws <- gather_emmeans_draws(contrasts)
+  
+  # Add sample information
+  draws <- mutate(draws, step = i, n = n)
+  
+  # Add the draws to the results data frame
+  results <- bind_rows(
+    results, 
+    draws
   )
 }
 ```
 
-```{r}
-#| label: read-results
-#| echo: false
-#| message: false
-bayes_factors <- read_csv("bayes_factors.csv")
-```
-
-Now we have a data frame that contains the Bayes factors for each step, so we can plot how the Bayes factor changes as we recruit more participants.
+Now that we have a data frame that contains the posterior draws of each contrast, we can plot the posteriors as well as some summary statistics (e.g., the median, a 95% interval) for each contrast.
 
 ```{r}
-#| label: sequential-bayes-factors
+#| label: plot-4-groups
 #| fig-cap: Sequential analysis
-ggplot(bayes_factors, aes(x = n, y = if_else(BF < 1, log(BF), BF))) +
-  geom_line() +
-  labs(x = "n", y = expression(BF[10])) +
-  scale_y_continuous()
-  theme_minimal()
+#| fig-height: 14
+final_quantiles <- results %>%
+  filter(n == 250) %>%
+  group_by(contrast) %>%
+  summarize(
+    final_lower = quantile(.value, .025),
+    final_upper = quantile(.value, .975)
+  ) %>%
+  pivot_longer(cols = -contrast, names_to = "bound", "value")
+
+ggplot(results, aes(x = factor(n), y = .value)) +
+  stat_slabinterval() +
+  geom_hline(
+    mapping = aes(yintercept = value), 
+    data = final_quantiles, 
+    linetype = "dashed", 
+    alpha = .5
+  ) +  
+  facet_wrap(~ contrast, ncol = 1, scales = "free_y") +
+  labs(x = "Sample size per condition (n)", y = "Contrast estimate") +
+  scale_color_viridis(option = "mako", discrete = TRUE)
 ```
+
