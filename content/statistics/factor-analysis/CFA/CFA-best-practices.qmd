@@ -21,7 +21,7 @@ For confirmatory factor analyses there are several ways to determine the appropr
 
 ### Rules of thumb
 
-Just like with EFA, there are many rules of thumb for the sample size of a CFA. However, just like with EFA, these are gross oversimplifications and might easily provide a misleading estimate. Rules of thumb usually consist of only a fixed sample size (e.g., use N = 300) or a sample size ratio (e.g., *n* = 5-10 per estimated parameter). In reality, the sample size depends on many more factors, the exact goal of the researcher, and whether the model can even be run (i.e., converge).
+Just like with EFA, there are many rules of thumb for the sample size of a CFA. However, just like with EFA, these are gross oversimplifications and might easily provide a misleading estimate. Rules of thumb usually consist of only a fixed sample size (e.g., use N = 300) or a sample size ratio (e.g., *n* = 5-10 per estimated parameter). In reality, the sample size depends on many more factors, including the type of model and the goal of the researcher (e.g., powering for overall misfit or a specific parameter).
 
 **Conclusion**: Try to avoid relying on rules of thumb
 
@@ -33,7 +33,7 @@ This method is probably the most difficult of the methods because it requires be
 
 In the context of a factor analysis, this method is difficult to apply because there are usually many parameters to simulate. For example, you have to simulate the factor loadings, variances, and correlations between factors. If you also want to include potential sources of misfit, you have to additionally simulate different number of factors, cross loadings, and possibly correlated residuals. Compared to a simple mediation model, these are many more parameters to estimate. It doesn't help that factor analyses are usually used to assess the validity of a new scale, meaning that relatively little is known about the exact parameters, making the simulation extra difficult---possibly too difficult.
 
-For instructions on how to conduct Monte Carlo power analyses, see Muthén and Muthén -@muthen2002 or Wang and Rhemtulla -@wang2021.
+For instructions on how to conduct Monte Carlo power analyses, see Muthén and Muthén \[-@muthen2002\] or Wang and Rhemtulla \[-@wang2021\].
 
 **Conclusion**: Too difficult for factor analysis purposes.
 
