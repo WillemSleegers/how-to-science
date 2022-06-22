@@ -15,9 +15,9 @@ Confirmatory factor analysis (CFA) is used to specify a particular structural mo
 For confirmatory factor analyses there are several ways to determine the appropriate sample size, including:
 
 1.  Rules of thumb
-2.  The Satorra-Saris method
-3.  The RMSEA method
-4.  Monte Carlo simulation
+2.  Monte Carlo simulation
+3.  The Satorra-Saris method
+4.  The RMSEA method
 
 ### Rules of thumb
 
