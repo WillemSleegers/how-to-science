@@ -1,8 +1,0 @@
----
-title: "Examples"
-nocite: |
-  @kahane2018
-bibliography: references.bib
----
-
-This page lists several examples of papers in which EFA and/or CFA was used to construct a psychological scale.

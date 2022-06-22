@@ -12,43 +12,49 @@ website:
     background: light
     pinned: false
     collapse: true
-    collapse-below: sm # sm, md, lg, xl, or xxl
-    logo: assets/img/logo.png
+    collapse-below: md # sm, md, lg, xl, or xxl
+    logo: assets/img/atom-laboratory-science.svg
     left:
-      - text: "About"
-        href: index.qmd
-      - text: "Survey Design"
-        href: sections/surveys/index.qmd
+      - text: "Methodology"
+        menu:
+         - sidebar:survey-design
       - text: "Statistics"
-        href: sections/statistics/index.qmd
+        menu:
+         - sidebar:factor-analysis
+         - sidebar:group-differences
 
   sidebar:
-    - id: surveys
+    - id: survey-design
       title: "Survey Design"
       style: "floating" # floating, docked
-      collapse-level: 2
       align: left
       contents:
-        - sections/surveys/index.qmd
-        - sections/surveys/item-development.qmd
-        - sections/surveys/response-options.qmd
-        - sections/surveys/recommended-reading.qmd
+       - section: "Survey Design"
+         contents:
+          - content/methodology/survey-design/index.qmd
+          - content/methodology/survey-design/item-development.qmd
+          - content/methodology/survey-design/response-options.qmd
+          - content/methodology/survey-design/recommended-reading.qmd
 
-    - id: statistics
-      title: "Statistics"
+    - id: factor-analysis
+      title: "Factor analysis"
       contents:
-        - sections/statistics/index.qmd
-        - section: "Factor Analysis"
+        - content/statistics/factor-analysis/index.qmd
+        - section: "Exploratory factor analysis"
           contents:
-            - sections/statistics/factor-analysis/EFA.qmd
-            - sections/statistics/factor-analysis/CFA.qmd
-            - sections/statistics/factor-analysis/r-packages.qmd
-            - sections/statistics/factor-analysis/examples.qmd
-            - sections/statistics/factor-analysis/recommended-reading.qmd
-        - section: "Group differences"
+            - content/statistics/factor-analysis/EFA/EFA-best-practices.qmd
+            - content/statistics/factor-analysis/EFA/EFA-example.qmd
+            - content/statistics/factor-analysis/EFA/EFA-recommended-reading.qmd
+            - content/statistics/factor-analysis/EFA/EFA-glossary.qmd
+        - section: "Confirmatory factor analysis"
           contents:
-            - sections/statistics/group-differences/pairwise-comparisons.qmd
-            - sections/statistics/group-differences/sequential-analyses.qmd
+            - content/statistics/factor-analysis/CFA/CFA-best-practices.qmd
+
+    - id: group-differences
+      title: "Group differences"
+      contents:
+        - content/statistics/group-differences/pairwise-comparisons.qmd
+        - content/statistics/group-differences/sequential-analyses.qmd
 
 format:
   html:

@@ -6,6 +6,7 @@
 
 /* Align the logo and title better */
 .navbar-brand {
+  width: 180px;
   display: flex;
   align-items: center;
 }

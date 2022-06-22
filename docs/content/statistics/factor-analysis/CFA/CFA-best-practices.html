@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-0.9.598">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>How to Science - Best practices in CFA</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+<script src="../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../../">
+<link href="../../../../content/statistics/factor-analysis/EFA/EFA-glossary.html" rel="prev">
+<script src="../../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../../../../assets/css/styles.css">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-md navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="../../../../index.html">
+    <img src="../../../../assets/img/atom-laboratory-science.svg" alt="">
+    <span class="navbar-title">How to Science</span>
+  </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-methodology" role="button" data-bs-toggle="dropdown" aria-expanded="false">Methodology</a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-methodology">    
+        <li>
+    <a class="dropdown-item" href="../../../../content/methodology/survey-design/index.html">
+ <span class="dropdown-text">Survey Design</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-statistics" role="button" data-bs-toggle="dropdown" aria-expanded="false">Statistics</a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-statistics">    
+        <li>
+    <a class="dropdown-item" href="../../../../content/statistics/factor-analysis/index.html">
+ <span class="dropdown-text">Factor analysis</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../content/statistics/group-differences/pairwise-comparisons.html">
+ <span class="dropdown-text">Group differences</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+              <div class="quarto-toggle-container">
+                  <a href="" class="quarto-reader-toggle nav-link" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+              </div>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">Best practices in CFA</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../content/statistics/factor-analysis/index.html" class="sidebar-item-text sidebar-link">Factor analysis</a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Exploratory factor analysis</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../content/statistics/factor-analysis/EFA/EFA-best-practices.html" class="sidebar-item-text sidebar-link">Best practices in EFA</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../content/statistics/factor-analysis/EFA/EFA-example.html" class="sidebar-item-text sidebar-link">EFA example</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../content/statistics/factor-analysis/EFA/EFA-recommended-reading.html" class="sidebar-item-text sidebar-link">Recommend reading</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../content/statistics/factor-analysis/EFA/EFA-glossary.html" class="sidebar-item-text sidebar-link">Glossary</a>
+  </div>
+</li>
+    </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Confirmatory factor analysis</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../content/statistics/factor-analysis/CFA/CFA-best-practices.html" class="sidebar-item-text sidebar-link active">Best practices in CFA</a>
+  </div>
+</li>
+    </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#sample-size" id="toc-sample-size" class="nav-link active" data-scroll-target="#sample-size">Sample size</a>
+  <ul class="collapse">
+  <li><a href="#rules-of-thumb" id="toc-rules-of-thumb" class="nav-link" data-scroll-target="#rules-of-thumb">Rules of thumb</a></li>
+  <li><a href="#monte-carlo-method" id="toc-monte-carlo-method" class="nav-link" data-scroll-target="#monte-carlo-method">Monte Carlo method</a></li>
+  <li><a href="#satorra-saris-method" id="toc-satorra-saris-method" class="nav-link" data-scroll-target="#satorra-saris-method">Satorra-Saris method</a></li>
+  <li><a href="#rmsea-method" id="toc-rmsea-method" class="nav-link" data-scroll-target="#rmsea-method">RMSEA method</a></li>
+  <li><a href="#power-analysis-software" id="toc-power-analysis-software" class="nav-link" data-scroll-target="#power-analysis-software">Power analysis software</a></li>
+  </ul></li>
+  <li><a href="#number-of-indicators" id="toc-number-of-indicators" class="nav-link" data-scroll-target="#number-of-indicators">Number of indicators</a></li>
+  <li><a href="#estimator" id="toc-estimator" class="nav-link" data-scroll-target="#estimator">Estimator</a></li>
+  <li><a href="#assessing-model-fit" id="toc-assessing-model-fit" class="nav-link" data-scroll-target="#assessing-model-fit">Assessing model fit</a></li>
+  <li><a href="#reliability" id="toc-reliability" class="nav-link" data-scroll-target="#reliability">Reliability</a></li>
+  <li><a href="#misc" id="toc-misc" class="nav-link" data-scroll-target="#misc">Misc</a>
+  <ul class="collapse">
+  <li><a href="#how-to-model-reverse-worded-items" id="toc-how-to-model-reverse-worded-items" class="nav-link" data-scroll-target="#how-to-model-reverse-worded-items">How to model reverse-worded items?</a></li>
+  </ul></li>
+  <li><a href="#recommended-reading" id="toc-recommended-reading" class="nav-link" data-scroll-target="#recommended-reading">Recommended Reading</a></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/willemsleegers/how-to-science/edit/main/content/statistics/factor-analysis/CFA/CFA-best-practices.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/willemsleegers/how-to-science/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">Best practices in CFA</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This chapter is still a work in progress.</p>
+</div>
+</div>
+<p>Confirmatory factor analysis (CFA) is used to specify a particular structural model. In the context of a factor analysis, that means you have a clear theoretical and/or empirical basis about the number of factors and which items should load on which factor. In this case, CFA is more appropriate than an exploratory factor analysis (EFA because it allows you to test how well your model fit the data.</p>
+<section id="sample-size" class="level2">
+<h2 class="anchored" data-anchor-id="sample-size">Sample size</h2>
+<p>For confirmatory factor analyses there are several ways to determine the appropriate sample size, including:</p>
+<ol type="1">
+<li>Rules of thumb</li>
+<li>The Satorra-Saris method</li>
+<li>The RMSEA method</li>
+<li>Monte Carlo simulation</li>
+</ol>
+<section id="rules-of-thumb" class="level3">
+<h3 class="anchored" data-anchor-id="rules-of-thumb">Rules of thumb</h3>
+<p>Just like with EFA, there are many rules of thumb for the sample size of a CFA. However, just like with EFA, these are gross oversimplifications and might easily provide a misleading estimate. Rules of thumb usually consist of only a fixed sample size (e.g., use N = 300) or a sample size ratio (e.g., <em>n</em> = 5-10 per estimated parameter). In reality, the sample size depends on many more factors, the exact goal of the researcher, and whether the model can even be run (i.e., converge).</p>
+<p><strong>Conclusion</strong>: Try to avoid relying on rules of thumb</p>
+</section>
+<section id="monte-carlo-method" class="level3">
+<h3 class="anchored" data-anchor-id="monte-carlo-method">Monte Carlo method</h3>
+<p>The Monte Carlo method is a simulation-based method to obtain the sample size for a given model and statistical test. It works by generating a large number of data sets from a population model, fitting the model to each data set, storing the target statistic, and calculating the proportion of data sets for which the statistic of interest (e.g., <span class="math inline">\(χ^2\)</span> value, fit statistic, regression coefficient) is statistically significant. This proportion is the statistical power for the statistical test.</p>
+<p>This method is probably the most difficult of the methods because it requires being able to simulate the population data. Depending on which analysis you will run on each data set, this method may also take a lot of time. It is, however, the most flexible method and can tell you the power for the exact test you want to run, whether that’s a commonly-used fit statistic or something else (e.g., confidence interval range, multiple parameters being significant).</p>
+<p>In the context of a factor analysis, this method is difficult to apply because there are usually many parameters to simulate. For example, you have to simulate the factor loadings, variances, and correlations between factors. If you also want to include potential sources of misfit, you have to additionally simulate different number of factors, cross loadings, and possibly correlated residuals. Compared to a simple mediation model, these are many more parameters to estimate. It doesn’t help that factor analyses are usually used to assess the validity of a new scale, meaning that relatively little is known about the exact parameters, making the simulation extra difficult—possibly too difficult.</p>
+<p>For instructions on how to conduct Monte Carlo power analyses, see Muthén and Muthén -<span class="citation" data-cites="muthen2002">Muthén &amp; Muthén (<a href="#ref-muthen2002" role="doc-biblioref">2002</a>)</span> or Wang and Rhemtulla -<span class="citation" data-cites="wang2021">Wang &amp; Rhemtulla (<a href="#ref-wang2021" role="doc-biblioref">2021</a>)</span>.</p>
+<p><strong>Conclusion</strong>: Too difficult for factor analysis purposes.</p>
+</section>
+<section id="satorra-saris-method" class="level3">
+<h3 class="anchored" data-anchor-id="satorra-saris-method">Satorra-Saris method</h3>
+<p>The Satorra-Saris method can be used to estimate the power of model misspecifications.</p>
+<p>The idea is that there is a population covariance matrix and a model-implied covariance matrix. If the model is correct, the model-implied covariance matrix is the same as the population covariance matrix. If the model is incorrect, there is a misspecification (called <span class="math inline">\(F_0\)</span>). The expected misspecifcation error is a function of the discrepancy and the sample size. This is called the noncentrality parameter, <span class="math inline">\(\lambda\)</span>.</p>
+<p>Obtaining the noncentrality parameter is the hard part. It requires specifying both the model you expect to be true and a different model with a different specification that you’d like to be able to detect. This is the hard part because there are many ways for the population model to be different from your model, so you have to decided what kind of misspecification you’d like to be able to detect.</p>
+<p>Once you have specified both models, you can fit your model to the population model and obtain the <span class="math inline">\(χ^2\)</span> value, which can be used as the noncentrality parameter <span class="math inline">\(\lambda\)</span>.</p>
+<p>You can also test the difference between two nested models and obtain <span class="math inline">\(\Deltaχ^2\)</span>, which can be used as the noncentrality parameter for comparing these two models.</p>
+<p>Calculating the power once the noncentrality parameter is obtained is easy. You need the degrees of freedom of the model, the alpha, and the power level. You can put these numbers in an online calculators or use R to obtain the sample size needed.</p>
+<p>Just like with the Monte Carlo method, this method seems less suitable for factor analyses because it requires specifying the exact misspecification. Since there are many possible misspecification in a factor analysis, it becomes difficult to figure out what exactly you want to power for. It could be for a cross loading or for a correlated residual between any of the items, or, if there are multiple factors, the correlations between them.</p>
+<p><strong>Conclusion</strong>: Useful when you have a clear misspecification in mind or when you have two models you want to compare; less useful in factor analysis.</p>
+</section>
+<section id="rmsea-method" class="level3">
+<h3 class="anchored" data-anchor-id="rmsea-method">RMSEA method</h3>
+<p>The RMSEA method is a power calculation method based on the RMSEA fit index.</p>
+<p>The RMSEA assumes that the specified model will only be an approximation to reality, and thus some specification error should be allowed</p>
+<p>The advantage of power calculations using the RMSEA is that the noncentrality parameter (λ) can be derived from the RMSEA. You therefore only need to set the RMSEA of the true model and an alternative model.</p>
+<p><span class="citation" data-cites="maccallum1996">MacCallum et al. (<a href="#ref-maccallum1996" role="doc-biblioref">1996</a>)</span> suggested calculating the power to reject close fit (RMSEA ≤ .05) when in the population there is not close fit (RMSEA = .08). Alternatively, you can also flip this logic and calculate the power of no-close fit (RMSEA &gt; .05) while in the population there is a close fit (RMSEA = .01). <span class="citation" data-cites="jak2021">Jak et al. (<a href="#ref-jak2021" role="doc-biblioref">2021</a>)</span> recommend power analyses for both the test for close fit and the test for not-close fit.</p>
+<p>An advantage of this method is that it is easy to use, but a disadvantage is that it is more difficult to interpret because there is no targeted misfit, so you don’t know exactly what kind of misspecifications you’re powering for. This does seem better suited for a factor analysis because it covers multiple kinds of misspecifications.</p>
+<p>Additionally, this method requires setting good RMSEA cut off points. Although there are some recommendations for which values to use, there is also work showing that the RMSEA cut off points should be determined dynamically, rather than fixed for each model <span class="citation" data-cites="wolf2021">(<a href="#ref-wolf2021" role="doc-biblioref">Wolf &amp; McNeish, 2021</a>)</span>. It seems necessary, therefore, to do some prior work to determine what a suitable cut off point could be and use this in subsequent power analyses.</p>
+<p><strong>Conclusion</strong>: Seems like the best method for determining power for a factor analysis.</p>
+</section>
+<section id="power-analysis-software" class="level3">
+<h3 class="anchored" data-anchor-id="power-analysis-software">Power analysis software</h3>
+<p>There are several tools to run power analyses for CFAs.</p>
+<section id="online-tools" class="level4">
+<h4 class="anchored" data-anchor-id="online-tools">Online tools</h4>
+<ul>
+<li><p><a href="https://sjak.shinyapps.io/power4SEM/" title="power4SEM">power4SEM</a></p></li>
+<li><p><a href="https://webpower.psychstat.org/wiki/models/index" title="WebPower">WebPower</a></p></li>
+<li><p><a href="https://yilinandrewang.shinyapps.io/pwrSEM/" title="pwrSEM">pwrSEM</a></p></li>
+</ul>
+</section>
+<section id="r-packages" class="level4">
+<h4 class="anchored" data-anchor-id="r-packages">R packages</h4>
+<ul>
+<li><p><a href="https://cran.r-project.org/web/packages/semPower/index.html" title="semPower">semPower</a></p></li>
+<li><p><a href="https://cran.r-project.org/web/packages/semTools/index.html" title="semTools">semTools</a></p></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="number-of-indicators" class="level2">
+<h2 class="anchored" data-anchor-id="number-of-indicators">Number of indicators</h2>
+<p>Some argue that when it comes to the number of indicators, more is better <span class="citation" data-cites="marsh1998">Marsh et al. (<a href="#ref-marsh1998" role="doc-biblioref">1998</a>)</span>.</p>
+<p>Others say that more is not always better <span class="citation" data-cites="koran2020">(<a href="#ref-koran2020" role="doc-biblioref">Koran, 2020</a>)</span>. <span class="citation" data-cites="koran2020">Koran (<a href="#ref-koran2020" role="doc-biblioref">2020</a>)</span>, using a simulation study, showed that:</p>
+<blockquote class="blockquote">
+<p>Models with relatively weak loadings tended to have a larger desirable number of indicators per factor than models with stronger loadings based on considerations of sample size, solution propriety, bias, and power. Models with few factors also tended to have a larger desirable number of indicators per factor than models with more factors. Models with many factors and strong indicators reached a minimum required sample size with as few as three indicators per factor.</p>
+</blockquote>
+</section>
+<section id="estimator" class="level2">
+<h2 class="anchored" data-anchor-id="estimator">Estimator</h2>
+<p>If the data is normally distributed, use the ML estimator.</p>
+<p>the findings of Chou and Bentler make it possible to qualify these remarks. These authors showed that in the presence of a sufficiently large sample, maximum likelihood estimation method and generalized least squares method do not make the results suffer, even when the multivariate normality is slightly violated.</p>
+<p>In case of violations, the following estimators can be used:</p>
+<ul>
+<li><p>MLM</p></li>
+<li><p>MLR: Similar to MLM but better suited for small sample sizes (Gana &amp; Broc).</p></li>
+<li><p>weighted least squares method (WLS): Requires a large sample size (FLO 04) and frequently runs into convergence issues and improper solutions</p></li>
+<li><p>Diagonally Weighted Least Squares (DWLS): For small samples and non-normal data ([JÖR 89)</p></li>
+<li><p>WLSM: Robust alternative to DWLS</p></li>
+<li><p>WLSMV: Robust alternative to DWLS</p></li>
+<li><p>bootstrapping: Not recommended for dichotomous and ordinal measures with few response categories)</p></li>
+</ul>
+<p>Mardia calculation to determine violations from normal distribution. It can be noted that not only is this standardized coefficient statistically significant, but its value is greater than 5, which is the threshold value beyond which multivariate normality seems to fail.</p>
+<table class="table">
+<caption>Recommendations concerning the main estimators available in lavaan according to the type of data (Gana &amp; Broc).</caption>
+<colgroup>
+<col style="width: 41%">
+<col style="width: 58%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Data type and normality assumption</th>
+<th>Recommended estimator</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><em>Continuous data</em></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Approximately normal distribution</td>
+<td>ML</td>
+</tr>
+<tr class="odd">
+<td>Violation of normality assumption</td>
+<td>ML (in case of moderate violation)</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>MLM, MLR, Bootstrap</td>
+</tr>
+<tr class="odd">
+<td><em>Ordinal/categorical data</em></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Approximately normal distribution</td>
+<td>ML (if at least 6 response categories)</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>MLM, MLR (if at least 4 response categories)</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>WLSMV (binary response or 3 response categories)</td>
+</tr>
+<tr class="odd">
+<td>Violation of normality assumption</td>
+<td>ML (if at least 6 response categories)</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>MLM, MLR (if at least 4 response categories)</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>WLSMV (in case of severe violation)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="assessing-model-fit" class="level2">
+<h2 class="anchored" data-anchor-id="assessing-model-fit">Assessing model fit</h2>
+<p>Probably the most common way to assess model fit is to rely on cut-off points for several fit indices. However, these cut off points make no sense. The reason is that the suitability of a particular model fit index depends on a multitude of factors, including the number of items per factor, factor loading size, type of misspecification, model type, and violations of multivariate normality <span class="citation" data-cites="greiff2017">(<a href="#ref-greiff2017" role="doc-biblioref">Greiff &amp; Heene, 2017</a>)</span>. It therefore makes no sense to use one cut-off point for all models.</p>
+<p>Instead, it is recommend to do the following:</p>
+<p>Step 1: Perform the chi squared test and see whether it indicates a significant misfit. Although it appears that the norm is to ignore a significant chi squared test, it seems that is considered to be a mistake, leading to many misfitted models to not be rejected <span class="citation" data-cites="barrett2007">McIntosh (<a href="#ref-mcintosh2007" role="doc-biblioref">2007</a>)</span>.</p>
+<p>Step 2: In the case of a significant chi squared test, inspect potential sources of misfit.</p>
+<ul>
+<li><p>If your model depends on the multivariate normality assumption, look for signs of a violation of this assumption. Given that much research is done using Likert scales, this could be a likely source. To solve this misfit issue, one can transform the data or use a different estimator.</p></li>
+<li><p>Inspect the discrepancies between the observed and model-implied covariance matrices.</p></li>
+<li><p>Use tools to locate misfits, such as looking at modification indices or performing Fisher’s C test or the Wald test.</p></li>
+</ul>
+<p>Note that it is important to avoid the problem of overfitting. Any modifications to the model should be tested again on new independent data.</p>
+<p>The modifications should also have a theoretical backing.</p>
+<p>Finally, although it should not be necessary to point this out, but it is possible to be wrong. You may have to conclude that the data simply does not support your theory and that you need to go back to the drawing board.</p>
+</section>
+<section id="reliability" class="level2">
+<h2 class="anchored" data-anchor-id="reliability">Reliability</h2>
+<p>Reliability increases the closer the value gets to 1.00, with an acceptability threshold of 0.70.</p>
+</section>
+<section id="misc" class="level2">
+<h2 class="anchored" data-anchor-id="misc">Misc</h2>
+<section id="how-to-model-reverse-worded-items" class="level3">
+<h3 class="anchored" data-anchor-id="how-to-model-reverse-worded-items">How to model reverse-worded items?</h3>
+</section>
+</section>
+<section id="recommended-reading" class="level2">
+<h2 class="anchored" data-anchor-id="recommended-reading">Recommended Reading</h2>
+<ul>
+<li>Dynamic Fit Index Cutoffs for Confirmatory Factor Analysis Models by <span class="citation" data-cites="mcneish2021">McNeish &amp; Wolf (<a href="#ref-mcneish2021" role="doc-biblioref">2021</a>)</span></li>
+</ul>
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="doc-bibliography">
+<div id="ref-barrett2007" class="csl-entry" role="doc-biblioentry">
+Barrett, P. (2007). Structural equation modelling: Adjudging model fit. <em>Personality and Individual Differences</em>, <em>42</em>(5), 815–824. <a href="https://doi.org/10.1016/j.paid.2006.09.018">https://doi.org/10.1016/j.paid.2006.09.018</a>
+</div>
+<div id="ref-greiff2017" class="csl-entry" role="doc-biblioentry">
+Greiff, S., &amp; Heene, M. (2017). Why psychological assessment needs to start worrying about model fit. <em>European Journal of Psychological Assessment</em>, <em>33</em>(5), 313–317. <a href="https://doi.org/10.1027/1015-5759/a000450">https://doi.org/10.1027/1015-5759/a000450</a>
+</div>
+<div id="ref-jak2021" class="csl-entry" role="doc-biblioentry">
+Jak, S., Jorgensen, T. D., Verdam, M. G. E., Oort, F. J., &amp; Elffers, L. (2021). Analytical power calculations for structural equation modeling: A tutorial and Shiny app. <em>Behavior Research Methods</em>, <em>53</em>(4), 1385–1406. <a href="https://doi.org/10.3758/s13428-020-01479-0">https://doi.org/10.3758/s13428-020-01479-0</a>
+</div>
+<div id="ref-koran2020" class="csl-entry" role="doc-biblioentry">
+Koran, J. (2020). Indicators per factor in confirmatory factor analysis: More is not always better. <em>Structural Equation Modeling: A Multidisciplinary Journal</em>, <em>27</em>(5), 765–772. <a href="https://doi.org/10.1080/10705511.2019.1706527">https://doi.org/10.1080/10705511.2019.1706527</a>
+</div>
+<div id="ref-maccallum1996" class="csl-entry" role="doc-biblioentry">
+MacCallum, R. C., Browne, M. W., &amp; Sugawara, H. M. (1996). Power analysis and determination of sample size for covariance structure modeling. <em>Psychological Methods</em>, <em>1</em>(2), 130–149. <a href="https://doi.org/10.1037/1082-989X.1.2.130">https://doi.org/10.1037/1082-989X.1.2.130</a>
+</div>
+<div id="ref-marsh1998" class="csl-entry" role="doc-biblioentry">
+Marsh, H. W., Hau, K.-T., Balla, J. R., &amp; Grayson, D. (1998). Is more ever too much? The number of indicators per factor in confirmatory factor analysis. <em>Multivariate Behavioral Research</em>, <em>33</em>(2), 181–220. <a href="https://doi.org/10.1207/s15327906mbr3302_1">https://doi.org/10.1207/s15327906mbr3302_1</a>
+</div>
+<div id="ref-mcintosh2007" class="csl-entry" role="doc-biblioentry">
+McIntosh, C. N. (2007). Rethinking fit assessment in structural equation modelling: A commentary and elaboration on Barrett (2007). <em>Personality and Individual Differences</em>, <em>42</em>(5), 859–867. <a href="https://doi.org/10.1016/j.paid.2006.09.020">https://doi.org/10.1016/j.paid.2006.09.020</a>
+</div>
+<div id="ref-mcneish2021" class="csl-entry" role="doc-biblioentry">
+McNeish, D., &amp; Wolf, M. G. (2021). Dynamic fit index cutoffs for confirmatory factor analysis models. <em>Psychological Methods</em>. <a href="https://doi.org/10.1037/met0000425">https://doi.org/10.1037/met0000425</a>
+</div>
+<div id="ref-muthen2002" class="csl-entry" role="doc-biblioentry">
+Muthén, L. K., &amp; Muthén, B. O. (2002). How to use a monte carlo study to decide on sample size and determine power. <em>Structural Equation Modeling: A Multidisciplinary Journal</em>, <em>9</em>(4), 599–620. <a href="https://doi.org/10.1207/S15328007SEM0904_8">https://doi.org/10.1207/S15328007SEM0904_8</a>
+</div>
+<div id="ref-wang2021" class="csl-entry" role="doc-biblioentry">
+Wang, Y. A., &amp; Rhemtulla, M. (2021). Power analysis for parameter estimation in structural equation modeling: A discussion and tutorial. <em>Advances in Methods and Practices in Psychological Science</em>, <em>4</em>(1), 1–17.
+</div>
+<div id="ref-wolf2021" class="csl-entry" role="doc-biblioentry">
+Wolf, M. G., &amp; McNeish, D. (2021). <em>Dynamic fit index cutoffs for one-factor models</em>. <a href="https://doi.org/10.31234/osf.io/rve58">https://doi.org/10.31234/osf.io/rve58</a>
+</div>
+</div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../../../content/statistics/factor-analysis/EFA/EFA-glossary.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Glossary</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>
