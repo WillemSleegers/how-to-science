@@ -1,2 +1,2 @@
 # How to Science
-A bookdown with my conclusions regarding various methodological and statistical issues.
+A book with conclusions regarding various methodological and statistical issues.

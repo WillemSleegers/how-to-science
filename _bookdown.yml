@@ -1,4 +1,0 @@
-delete_merged_file: TRUE
-output_dir: "docs"
-rmd_files: ["index.Rmd", "chapters/survey-design.Rmd", 
-  "chapters/factor-analysis.Rmd", "chapters/references.Rmd"]

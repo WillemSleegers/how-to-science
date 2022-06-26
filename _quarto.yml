@@ -1,0 +1,68 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "How to Science"
+  page-navigation: true
+  reader-mode: true
+  repo-url: https://github.com/willemsleegers/how-to-science/
+  repo-actions: [edit, issue]
+  navbar:
+    background: light
+    pinned: false
+    collapse: true
+    collapse-below: md # sm, md, lg, xl, or xxl
+    logo: assets/img/atom-laboratory-science.svg
+    left:
+      - text: "Methodology"
+        menu:
+         - sidebar:survey-design
+      - text: "Statistics"
+        menu:
+         - sidebar:factor-analysis
+         - sidebar:group-differences
+
+  sidebar:
+    - id: survey-design
+      title: "Survey Design"
+      style: "floating" # floating, docked
+      align: left
+      contents:
+       - section: "Survey Design"
+         contents:
+          - content/methodology/survey-design/index.qmd
+          - content/methodology/survey-design/item-development.qmd
+          - content/methodology/survey-design/response-options.qmd
+          - content/methodology/survey-design/recommended-reading.qmd
+
+    - id: factor-analysis
+      title: "Factor analysis"
+      contents:
+        - content/statistics/factor-analysis/index.qmd
+        - section: "Exploratory factor analysis"
+          contents:
+            - content/statistics/factor-analysis/EFA/EFA-best-practices.qmd
+            - content/statistics/factor-analysis/EFA/EFA-example.qmd
+            - content/statistics/factor-analysis/EFA/EFA-recommended-reading.qmd
+            - content/statistics/factor-analysis/EFA/EFA-glossary.qmd
+        - section: "Confirmatory factor analysis"
+          contents:
+            - content/statistics/factor-analysis/CFA/CFA-best-practices.qmd
+
+    - id: group-differences
+      title: "Group differences"
+      contents:
+        - content/statistics/group-differences/pairwise-comparisons.qmd
+        - content/statistics/group-differences/sequential-analyses.qmd
+
+format:
+  html:
+    theme: cosmo
+    css: assets/css/styles.css
+    csl: assets/bib/apa.csl
+
+editor: visual
+
+execute:
+  freeze: true

@@ -1,0 +1,14 @@
+---
+title: "Factor analysis"
+---
+
+This section is about the two types of factor analysis:
+
+1.  Exploratory factor analysis (EFA)
+2.  Confirmatory factor analysis (CFA)
+
+Each section consists of a best practices section in which I cover the different decisions you have to make to run the analysis. I cover the literature and offer a conclusion for each step that should be, to my knowledge, the best way to perform that step.
+
+Other sections consist of an example of the analysis (with code), recommended reading, and a glossary.
+
+Do note that both sections are still a work in progress.

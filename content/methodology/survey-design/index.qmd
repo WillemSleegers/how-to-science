@@ -1,0 +1,30 @@
+---
+title: "Overview"
+bibliography: references.bib
+---
+
+This chapter is about best practices and common issues in designing surveys.
+
+As suggested in some review papers [e.g., @gehlbach2011, @simms2008], the construction of a new survey or scale consists of several steps:
+
+-   Review the literature to define the construct of interest and to find existing or related measures of the construct
+
+    -   Is the new measure really needed?
+
+    -   Define the constructs.
+
+-   Interview respondents to see whether respondents think the same way about the construct as you do
+
+-   Reconcile potential differences between the literature review and the interview data
+
+-   Develop items
+
+-   Validate with experts
+
+-   Do cognitive pretesting to see how respondents understand and respond to each item
+
+-   Run large-scaled reliability and validity tests
+
+I will try to cover as many of these topics as possible. Currently, there is a chapter on response options and one containing some recommended readings. There is also a Statistics section on this website that covers factor analyses.
+
+## References

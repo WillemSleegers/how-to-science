@@ -1,0 +1,9 @@
+---
+title: "EFA example"
+---
+
+```{r}
+# Load packages
+library(psych)
+library(tidyverse)
+```

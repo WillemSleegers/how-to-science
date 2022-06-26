@@ -1,0 +1,11 @@
+---
+title: "Recommend reading"
+---
+
+## Recommended Reading
+
+I found the following best practices papers useful:
+
+-   Evaluating the use of exploratory factor analysis in psychological research by @fabrigar1999
+-   In search of underlying dimensions: The use (and abuse) of factor analysis in personality and social psychology bulletin by @russell2002
+-   Best practices in exploratory factor analysis by @osborne2014

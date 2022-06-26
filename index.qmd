@@ -1,0 +1,29 @@
+---
+sidebar: false
+---
+
+![](assets/img/atom-laboratory-science.svg){fig-alt="How to Science" fig-align="center" width="200"}
+
+# How to Science
+
+This is a website to organize my conclusions about topics in methodology and statistics.
+
+The website is divided up into multiple sections. At this moment, there is a section on survey design and a section on statistics. The survey design section is about various issues pertaining to designing surveys, such as how to create items, what kind of response options to use, and so on. The statistics section is currently only about factor analyses, including both exploratory and confirmatory factor analyses.
+
+More sections will be added in the future.
+
+## Word of Caution
+
+Some sections in the book are not yet finished. They're work in progress. Sometimes I think they're already a bit useful, so I make them public. If I think they're not finished/polished yet, I put a warning at the start of the page to indicate that.
+
+Having said that, this website will forever be a work in progress because the content is about current best practices. As best practices are likely to change over time, so the content of this website will change with it. If I realize that something is heavily outdated, I will make a note of it.
+
+It's also very likely that there are mistakes. These mistakes can theoretically range from gross errors to simple typos, or a reliance on outdated information. If you find a mistake, please contact me or click on the GitHub link on each page and create an Issue.
+
+## Acknowledgements
+
+The following people have contributed to this book:
+
+-   [Willem Sleegers](https://www.willemsleegers.com "Willem Sleegers' personal website.")
+
+If I've missed your contributions and you deserve to be on this list, please don't hesitate to contact me or add yourself via a Pull Request on GitHub!

@@ -1,0 +1,271 @@
+---
+title: "Best practices in EFA"
+toc: true
+format:
+  html:
+    code-fold: true
+bibliography: references.bib
+---
+
+::: callout-warning
+This chapter is still a work in progress.
+:::
+
+The goal of an exploratory factor analysis (EFA) is to study latent factors that underlie responses to a larger number of items. In other words, the goal is to *explore* the data and *reduce* the number of variables. It is a popular technique in the development and validation of assessment instruments.
+
+Unlike confirmatory factor analysis (CFA), EFA is used when there is little or no a priori justification for specifying a particular structural model. This means that there is reasonable uncertainty about the number of underlying factors and which items load on which factor. The hope is to resolve some of that uncertainty empirically.
+
+## Preparation
+
+Before you perform a factor analysis, make sure that the design of your study is suitable for this type of analysis. This means you should have an appropriate sample, sample size, and indicators (items).
+
+### Sample
+
+It may be obvious, but make sure to target participants that are likely to vary in the attitude that you're interested in measuring and that the sample is representative of the population that you're interested in.
+
+### Sample size
+
+Rules of thumb are one way to determine an appropriate sample size, but the general consensus is that rules of thumb are a bad idea [@maccallum1999, @costello2005]. The reason for that is that rules of thumb only involve one of two factors: a set number of participants or a particular participant-to-item ratio. The reality is that the appropriate sample size is dependent on many more factors, such as communalities, factor loadings, the number of indicators per factor, and the number of factors [@gagne2006, @maccallum1999, @maccallum2001, @velicer1998].
+
+Given the replication failures in the social sciences, it should be no surprise that also in the EFA literature there appears to be a sample size problem. This is perhaps best demonstrated by @costello2005. They reviewed two years' worth of PsychINFO articles and found that the majority of the studies (62.9%) had participants to item ratios of 10:1 or less. Of course, the participant to item ratio is not a good benchmark for the appropriate sample size, so this is not enough to demonstrate that the sample size is insufficient. They did find support that this is not enough by sampling data of various sample sizes from a large data set of responses to the Marsh's Self-Description Questionnaire. They found that only 70% of their large (20:1) samples produced correct solutions, leading them to conclude that a 20:1 participant to item ratio produces error rates well above the field standard alpha = .05 level.
+
+So how many participants should you recruit? In my opinion, the most useful study is a simulation study by @mundfrom2005. They ran simulations to determine the minimum sample size for a study, taking into account the number of factors, the ratio of items to factors, and several different communalities. They generated a variety of population correlation matrices under different conditions, repeatedly sampled from these population structures, and determined coefficients of congruence between the sample solutions and population structures (similar to @velicer1998). This allowed them to produce a table with minimum recommend sample sizes for different situations.
+
+| Criterion        | Communality     | Items per factor | Minimum sample size |
+|------------------|-----------------|------------------|---------------------|
+| Excellent (0.98) | High (.6 to .8) | 4                | 500                 |
+|                  |                 | 6                | 250                 |
+|                  |                 | 8                | 100                 |
+|                  | Wide (.2 to .8) | 4                | 900                 |
+|                  |                 | 6                | 200                 |
+|                  |                 | 8                | 130                 |
+|                  | Low (.2 to .4)  | 4                | 1400                |
+|                  |                 | 6                | 260                 |
+|                  |                 | 8                | 130                 |
+| Good (0.92)      | High (.6 to .8) | 5                | 130                 |
+|                  |                 | 7                | 55                  |
+|                  | Wide (.2 to .8) | 5                | 140                 |
+|                  |                 | 8                | 60                  |
+|                  | Low (.2 to .4)  | 5                | 200                 |
+|                  |                 | 8                | 80                  |
+
+: Recommended minimum sample sizes by @mundfrom2005
+
+As can be seen in the table, the appropriate sample size is dependent on several factors and is not simply a function of sample size alone or a particular participant to item ratio.
+
+### Number of items
+
+The previous section on sample size shows that a relevant factor in determining the minimum sample size is the number of items per factor, so how many items should you create and include in the factor analysis?
+
+Since this is an exploratory factor analysis, it is not clear in advance how many items will actually survive the exploration. It could be that certain items will not be well understood by participants (although this should be caught in pilot testing prior to running an EFA) or that multiple items simple do not fit in the expected factor structure. Since not all items will likely behave well, you should always include more items than you intend to keep.
+
+It's also useful to keep in mind that for a single factor model to be identifiable, it must consist of at least three indicators and preferably four to also allow for the model to be statistically testable [@gana2019, also see @velicer1998 and @russell2002]. This is useful for when you want to do a CFA later or if you want others to be able to perform CFAs on your factor analysis results.
+
+The number of indicators also depends on the quality of indicators. @costello2005 notes that 5 or more strongly loading items (.50 or better) indicate a solid factor. @maccallum1999 writes that more indicators is generally better [also see @marsh1998, but see @hayduk2012]. Within the range of indicators they studied (three to seven per factor), it is better to have more indicators than fewer. The critical point, however, is that these indicators must be reasonably valid and reliable.
+
+@velicer1998 suggest that 6-10 initial items per factor is recommended as 25% to 50% will not perform as expected and the end goal should be to have four- or five to-one as a minimum. The bare minimum of three variables was found to be insufficient (based on two simulation studies) and a more prudent target would be to have four- or five to-one as a minimum. A ratio of 20-30 initial items per factor is also possible as an appropriate target for extensive oversampling, which may be needed in cases where it is not possible to obtain a large sample size.
+
+Finally, you should also take into account the desirable scale length. Shorter scales have the desirable property that they are quick to administer, meaning they can more easily be added to a study or included in short studies to obtain a larger sample size. The goal may therefore be to find only a handful of solid indicators for a factor.
+
+## Data Analysis
+
+### Relevant items
+
+One design issue that is especially important is about which measured variables to include in the study. If measured variables irrelevant to the domain of interest are included, then spurious common factors might emerge or true common factors might be obscured [@fabrigar1999].
+
+### Sampling Adequacy
+
+The Kaiser--Meyer--Olkin (KMO) test is a statistical measure to determine how suitable the data is for factor analysis. The test measures sampling adequacy for the complete model and each variable in the model. The statistic indicates the degree to which each variable in a set is predicted without error by the other variables.
+
+The KMO value ranges from 0 to 1, with 0.60 considered suitable for factor analysis [@tabachnick2013]. @kaiser1974 himself suggested that KMO \> .9 were marvelous, in the .80s, meritorious, in the .70s, middling, in the .60s, mediocre, in the 50s, miserable, and less than .5, unacceptable.
+
+Bartlett's test of sphericity is a notoriously sensitive test of the hypothesis that the correlations in a correlation matrix are zero. Because of its sensitivity and its dependence on N, the test is likely to be significant with samples of substantial size even if correlations are very low. Therefore, use of the test is recommended only if there are fewer than around five participants per variable [@tabachnick2013].
+
+### Principal Components vs. Factor Analysis
+
+An important consideration is whether to use a principal components analysis (PCA) or a factor analysis. PCA is a data reduction technique and while a factor analysis is also a type of data reduction technique, the focus with PCA is more on simply reducing the data, without regard for a theoretical interpretation. With PCA, the variables themselves are of interest, rather than a hypothetical latent construct. Constructs are conceptualized as being causally determined by the observations; that is, CFA reflects a formative model rather than a reflective one [@edwards2000]. If you are a psychologist trying to create a measure of a psychological construct, this is probably not what you want as principal component scores are "caused" by their indicators in much the same way that sum scores are "caused" by item scores." [@borsboom2006, p. 426]. Instead, you likely want the opposite causal relationship in which a latent factor causes the indicator scores.
+
+```{r, PCA-FA-figure}
+DiagrammeR::grViz("
+  digraph dot {
+    graph [
+      layout = dot, 
+      rankdir = LR, 
+      fontname = 'Source Sans Pro', 
+      label = 'Illustration of a PCA model (left) and a factor analysis model (right).'
+    ]
+    
+    node [fontname = 'Source Sans Pro']
+    node [shape = square]
+    var1 [label = 'item 1']
+    var2 [label = 'item 2']
+    var3 [label = 'item 3']
+    var4 [label = 'item 4']
+    var5 [label = 'item 1']
+    var6 [label = 'item 2']  
+    var7 [label = 'item 3']  
+    var8 [label = 'item 4']
+  
+    node [shape = circle]
+    construct_a [label = 'construct A']
+    construct_b [label = 'construct B']
+  
+    edge [color = black, minlen = 3]
+    {var1 var2 var3 var4} -> construct_a
+    construct_b -> {var5 var6 var7 var8}
+  
+    edge[style = invis, minlen = 1];
+    construct_a -> construct_b
+  }"
+)
+```
+
+A related issue is that factor analysis assumes that the total variance can be partitioned into common and unique variance and PCA assumes that the common variances takes up all of total variance. This means that PCA assumes that all variables are measured without error. It is usually more reasonable to assume that you have not measured your set of items perfectly.
+
+Although some argue that the two methods have the same results [@velicer1990], there is evidence that those similarities are mistaken and that factor analysis has better results than PCA [@widaman1993].
+
+**Conclusion**: Do not use PCA.
+
+### Factor Extraction Method
+
+Extraction is the general term for the process of reducing the number of dimensions being analyzed from the number of variables in the data set (and matrix of associations) into a smaller number of factors.
+
+There are multiple factor extraction methods, such as:
+
+-   minres
+
+-   unweighted least squares (ULS)
+
+-   generalized least squares (GLS)
+
+-   maximum likelihood
+
+-   principal axis factor(ing)
+
+-   alpha factor(ing)
+
+-   image factor(ing)
+
+It's not entirely clear which factor extraction method is the best and some authors use different terms for some of the methods, making it more difficult to compare them.
+
+@fabrigar1999 argued that if data are relatively normally distributed, maximum likelihood is the best choice because "it allows for the computation of a wide range of indexes of the goodness of fit of the model and permits statistical significance testing of factor loadings and correlations among factors and the computation of confidence intervals." (p. 277). In case the data is not generally normally distributed, they recommend principal axis factoring. This is recommended in several sources (@costello2005; @osborne2014).
+
+**Conclusion**: Use the maximum likelihood method if the data is generally normally distributed and to use principal axis factoring if the data is non-normal.
+
+### Rotation methods
+
+The goal of rotation is to clarify the factor structure and make the results of the EFA more interpretable.
+
+Rotation methods can be categorized into one of two categories: orthogonal or oblique. Orthogonal rotations keep axes at a 90 degree angle, forcing the factors to be uncorrelated. Oblique rotations allow angles that are not 90 degrees , thus allowing factors to be correlated if that is optimal for the solution.
+
+Orthogonal rotation methods include:
+
+-   varimax
+
+-   quartimax
+
+-   equamax
+
+Oblique rotation methods include:
+
+-   direct oblimin
+
+-   quartimin
+
+-   promax
+
+In the social sciences, we generally expect some correlation among factors, since behavior is rarely partitioned into neatly packaged units that function independently of one another. Therefore using orthogonal rotation results in a loss of valuable information if the factors are correlated, and oblique rotation should theoretically render a more accurate, and perhaps more reproducible, solution. If the factors are truly uncorrelated, orthogonal and oblique rotation produce nearly identical results. Since oblique rotation will reproduce an orthogonal solution but not vice versa, it makes sense to go for oblique rotation.
+
+There is no widely preferred method of oblique rotation; all tend to produce similar results [@fabrigar1999].
+
+**Conclusion**: Use any oblique rotation.
+
+### Number of factors
+
+There are many different methods to determine how many factors to retain. Some popular methods are:
+
+-   Theory
+
+-   Kaiser criterion
+
+-   Scree test
+
+-   Parallel analysis
+
+-   Velicer's multiple average partial (MAP) procedure
+
+-   Akaike information criterion
+
+-   Bayesian information criterion
+
+-   Comparison data
+
+-   Very Simple Structure (VSS)
+
+-   The root-mean-square error of approximation
+
+-   Likelihood ratio statistic
+
+Determining the number of factors is probably the most difficult part of the exploratory factor analysis. As Henry Kaiser said:
+
+> Solving the number of factors problem is easy, I do it everyday before breakfast. But knowing the right solution is harder.
+
+The difficulty of this step means that a certain flexibility is warranted.
+
+It makes sense to begin with the expectation that you will see the theorized factor structure. Instruments are rarely perfect (especially the first time it is examined), and theoretical expectations are not always supported, but unless one is on a totally blind fishing expedition, this is a good place to start.
+
+The default in most statistical software packages is to use the Kaiser criterion. It makes some sense, as an eigenvalue represents the sum of the squared factor loadings in a column, and to get a sum of 1.0 or more, one must have rather large factor loadings to square and sum. However, this is easily achieved with more items and there are now alternative methods. Hence, there is broad consensus in the literature that this is among the least accurate methods for selecting the number of factors to retain [@velicer1990].
+
+The scree test involves examining the graph of the eigenvalues and looking for the natural bend or "elbow" in the data where the slope of the curve changes markedly. Although the scree plot itself is not considered sufficient to determine how many factors should be extracted [@velicer2000], it does appear to be a relatively reliable method. The main down side seems to be its ambiguity as the bend is not always clear and sometimes there are even multiple bends.
+
+Parallel analysis involves generating random uncorrelated data, and comparing eigenvalues from the EFA to the eigenvalues from the random data. Using this process, only factors with eigenvalues that are above random eigenvalues should be retained, although it is not clear how much above the random eigenvalues they should be. Several authors have endorsed this as the most robust and accurate process for determining the number of factors to extract [@ledesma2007, @velicer2000].
+
+The Minimum Average Partial (MAP) criterion involves partialing out common variance as each successive component is created. As each successive component is partialed out, common variance will decrease to a minimum. Velicer argued that minimum point should be considered the criterion for the number of factors to extract.
+
+VSS involves degrading the initial rotated factor solution by assuming that the nonsalient loadings are zero, even though in actuality they rarely are. What VSS does is test how well the factor matrix we think about and talk about actually fits the correlation matrix. It is not a confirmatory procedure for testing the significance of a particular loading, but rather it is an exploratory procedure for testing the relative utility of interpreting the correlation matrix in terms of a family of increasingly more complex factor models. The simplest model tested by VSS is that each item is of complexity one, and that all items are embedded in a more complex factor matrix of rank k. This is the model most appropriate for scale construction and is the one we use most frequently when we talk about factor solutions. More complicated models may also be evaluated by VSS.
+
+@zwick1986 tested the scree test, Horn's parallel test, and Velicer's MAP test (among others) in simulation studies using a data set with a clear factor structure. Both the parallel test and MAP test seemed to work well. @ruscio2012 notes that PA is considered to be the method of choice among methodologists and recommend that researchers take advantage of PA as a starting point, perhaps supplemented by CD. They note that researchers can also use more than one method. @osborne2014 notes that MAP has been considered superior to the "classic" criteria, and probably is superior to parallel analysis, although neither is perfect, and all must be used in the context of a search for conceptually interpretable factors. He recommends to use parallel analysis or MAP criteria, along with theory (and any of the classic criteria that suits you and is defensible). Another simulation study, perhaps the most comprehensive one so far, also shows that the results of multiple methods should be taken into consideration [@auerswald2019]. They recommend that investigators compare the results of sequential $\chi^2$ model tests and either PA~PCA-95~, Hull, or the Empirical Kaiser Criterion (EKC). If both methods suggest the same number of factors, this most often reflects the correct number of underlying factors. If the methods disagree, CD, the EKC, or one of the variants of traditional PA~PCA~ are viable extraction criteria provided that the sample is large. They also note the importance of theoretical considerations and that the resulting factor loading patterns should be interpretable and that the scale reliabilities should also be taken into account.
+
+Finally, empirical research suggests that overfactoring introduces much less error to factor loading estimates than underfactoring [@fava1996, @wood1996]. Although you should be skeptical of solutions with too many factors because the factors may not be meaningful and parsimony should also be considered.
+
+**Conclusion:** Use multiple criteria, including theory, to make a judgment call about how many factors to extract. When in doubt, favor more factors rather than fewer factors.
+
+## Interpretation
+
+Remember that the goal of exploratory factor analysis is to explore whether your data fits a model that makes sense. Ideally, you have a conceptual or theoretical framework for the analysis. Even if you do not, the results should be sensible in some way. You should be able to construct a simple narrative describing how each factor, and its items, makes sense and is easily labeled.
+
+### Factor Loadings
+
+After determining the number of factors and rotation, you will be able to produce a table of factor loadings. The question is now to see whether there are items that load sufficiently strongly on each factor. If the goal is to have unidimensional factors, then cross loadings should also be examined. Items that don't perform well may be removed.
+
+There are different recommendations about what kind of factor loading cutoff threshold to use. @comrey1992 suggest that loadings in excess of .71 (50% overlapping variance) are considered excellent, .63 (40% overlapping variance) very good, .55 (30% overlapping variance) good, .45 (20% overlapping variance) fair, and .32 (10% overlapping variance) poor. @tabachnick2013 cite .32 as a good rule of thumb for the minimum loading of an item, assuming the sample size is larger than 300. Others say item loadings above .30 [@costello2005]. @clark1995 say larger than .35.
+
+In a review on the topic, @peterson2000 found that the average factor loading cutoff threshold is .40.
+
+Using a particular threshold is, however, insufficient if sample size is not taken into account. Factor loadings, like many other statistics, are estimated statistics and may be associated with large uncertainty intervals, depending on the sample size. It's possible for a sample factor loading of .70 to be 0 in the population, if the sample size was low [@cudeck1994]. A first benchmark, therefore, should be whether the factor loading is significantly different from 0. The standard errors of factor loadings can be calculated in different ways. If computational power is not an issue, non-parametric bootstrapping seems to be the preferred method [@zhang2014].
+
+Note that a multiple comparisons correction (e.g., Bonferonni) must be used to control familywise Type 1 errors.
+
+Finally, one must be careful not to prematurely drop poorly performing items, especially when such items were predicted a priori to be strong markers of a given factor.
+
+**Conclusion:** Calculate standard errors for factor loadings and use significance tests as the first benchmark to retain an item.
+
+### Reliability
+
+There are different types of reliabilities that can be calculated to assess the reliability of the scale:
+
+-   Internal consistency
+
+-   Test-retest reliability
+
+Cronbach's alpha is the most popular measure of internal reliability, with recommended cutoffs of .80 in a basic science setting and .9 or .95 in an applied setting [@clark1995]. Note that Cronbach's alpha relies on the assumption of unidimensionality, which means it cannot be used as evidence for unidimensionality. In fact, Cronbach's alpha's assumes *equally* sized factor loadings. Given that this is an unlikely assumption, and that Cronbach's alpha is also influenced by the number of items, alternative measures of reliability should be used [e.g., see @peters2014, @hayes2020].
+
+McDonald's omega does not assume equally sized factor loadings. Cronbach's alpha is actually a special case of McDonald's omega, assuming the untenable assumption of equally sized factor loadings.
+
+**Conclusion**: Use McDonald's omega.
+
+## 
+
+## 
+
+## References

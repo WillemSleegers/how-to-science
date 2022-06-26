@@ -1,0 +1,106 @@
+---
+title: CFA - Examples
+bibliography: references.bib
+---
+
+```{r}
+#| label: setup
+
+# Load packages
+library(tidyverse)
+library(lavaan)
+library(dynamic)
+```
+
+## Rosenberg Self-Esteem Scale
+
+The Rosenberg self-esteem scale (Rosenberg, 1989) is a unidimensional scale to assess global self-esteem. It is one of the most commonly used scales in psychology and could therefore serve as a nice illustration of how to assess whether the data fits a single factor model.
+
+It should be noted, however, that apparently there is some controversy whether the scale is actually unifactorial [@donnellan2016].
+
+### The Data
+
+```{r}
+#| label: data
+
+# Load data
+items <- read_csv("RSECSV.csv")
+
+# Data preparation
+# Replace all -9999 values with NA
+items <- mutate(items, across(everything(), ~ na_if(.x, -9999)))
+```
+
+The data was taken from @donnellan2016, who conducted a study to assess the factorial structure of the RSE. The data consists of `nrow(items)` participants, who were college students at a public university in the Southwestern United States.
+
+### The Model
+
+```{r}
+#| label: model
+model <- "
+  self_esteem =~ R1 + R2 + R3 + R4 + R5 + R6 + R7 + R8 + R9 + R10
+"
+
+fit <- cfa(model = model, data = items, estimator = "MLR")
+fitmeasures(fit, 
+  fit.measures = c("pvalue", "pvalue.scaled", "srmr", "rmsea", "cfi"))
+#fit_cutoffs <- cfaOne(fit)
+```
+
+## Marsh's Self-Description Questionnaire
+
+```{r}
+#| label: marsh-data
+
+# Load data
+marsh <- read_csv("marsh.csv")
+```
+
+Data for this example is from 15,661 students in 10th grade who participated in the National Education Longitudinal Study of 1988. Items from this scale include:
+
+Parents:
+
+-   My parents treat me fairly
+
+-   I do not like my parents very much
+
+-   I get along well with my parents
+
+-   My parents are usually unhappy or disappointed with what I do
+
+-   My parents understand me
+
+English
+
+-   I learn things quickly in English classes
+
+-   English is one of my best subjects
+
+-   I get good marks in English
+
+-   I'm hopeless in English classes
+
+Mathematics
+
+-   Mathematics is one of my best subjects
+
+-   I have always done well in mathematics
+
+-   I get good marks in mathematics
+
+-   I do badly in tests of mathematics
+
+```{r}
+#| label: marsh-model
+marsh_model <- "
+  english =~ Eng1 + Eng2 + Eng3 + Eng4
+  math    =~ Math1 + Math2 + Math3 + Math4
+  parent  =~ Par1 + Par2 + Par3 + Par4 + Par5
+"
+
+marsh_fit <- cfa(model = marsh_model, data = marsh, estimator = "MLR")
+fitmeasures(marsh_fit, 
+  fit.measures = c("pvalue", "pvalue.scaled", "srmr", "rmsea", "cfi")
+)
+#marsh_fit_cutoffs <- cfaHB(marsh_fit)
+```
