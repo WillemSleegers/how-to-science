@@ -22,6 +22,9 @@ website:
         menu:
          - sidebar:factor-analysis
          - sidebar:group-differences
+      - text: "Materials"
+        menu:
+         - sidebar:scales
 
   sidebar:
     - id: survey-design
@@ -55,6 +58,15 @@ website:
       contents:
         - content/statistics/group-differences/pairwise-comparisons.qmd
         - content/statistics/group-differences/sequential-analyses.qmd
+
+    - id: scales
+      title: "Scales"
+      contents:
+        - content/materials/scales/index.qmd
+        - section: "Personality"
+          contents:
+          - content/materials/scales/TIPI.qmd
+          - content/materials/scales/BFI-2-XS.qmd
 
 format:
   html:

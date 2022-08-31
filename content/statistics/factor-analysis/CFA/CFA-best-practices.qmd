@@ -33,7 +33,7 @@ This method is probably the most difficult of the methods because it requires be
 
 In the context of a factor analysis, this method is difficult to apply because there are usually many parameters to simulate. For example, you have to simulate the factor loadings, variances, and correlations between factors. If you also want to include potential sources of misfit, you have to additionally simulate different number of factors, cross loadings, and possibly correlated residuals. Compared to a simple mediation model, these are many more parameters to estimate. It doesn't help that factor analyses are usually used to assess the validity of a new scale, meaning that relatively little is known about the exact parameters, making the simulation extra difficult---possibly too difficult.
 
-For instructions on how to conduct Monte Carlo power analyses, see Muthén and Muthén \[-@muthen2002\] or Wang and Rhemtulla \[-@wang2021\].
+For instructions on how to conduct Monte Carlo power analyses, see Muthén and Muthén [-@muthen2002] or Wang and Rhemtulla [-@wang2021].
 
 **Conclusion**: Too difficult for factor analysis purposes.
 
@@ -158,6 +158,12 @@ Note that it is important to avoid the problem of overfitting. Any modifications
 The modifications should also have a theoretical backing.
 
 Finally, although it should not be necessary to point this out, but it is possible to be wrong. You may have to conclude that the data simply does not support your theory and that you need to go back to the drawing board.
+
+### Use flexible cut off points
+
+See https://flexiblecutoffs.org
+
+See McNeish and Wolf
 
 ## Reliability
 

@@ -1,0 +1,11 @@
+item_nr,item,scale,reverse,notes
+1,"I see myself as extraverted, enthusiastic.",extraversion,0,
+2,"I see myself as critical, quarrelsome.",agreeableness,1,
+3,"I see myself as dependable, self-disciplined.",conscientiousness,0,
+4,"I see myself as anxious, easily upset.",emotional stability,1,
+5,"I see myself as open to new experiences, complex.",openness to experience,0,
+6,"I see myself as reserved, quiet.",extraversion,1,
+7,"I see myself as sympathetic, warm.",agreeableness,0,
+8,"I see myself as disorganized, careless.",conscientiousness,1,
+9,"I see myself as calm, emotionally stable.",emotional stability,0,
+10,"I see myself as conventional, uncreative.",openness to experience,1,
