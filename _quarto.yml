@@ -63,6 +63,12 @@ website:
       title: "Scales"
       contents:
         - content/materials/scales/index.qmd
+        - section: "Animals"
+          contents:
+          - content/materials/scales/speciesism.qmd
+        - section: "Environmentalism"
+          contents:
+          - content/materials/scales/NEP.qmd
         - section: "Personality"
           contents:
           - content/materials/scales/TIPI.qmd

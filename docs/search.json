@@ -245,11 +245,18 @@
     "text": "Response options\n\nDisagree strongly\nDisagree a little\nNeutral; no opinion\nAgree a little\nAgree strongly"
   },
   {
-    "objectID": "content/materials/scales/BFI-2-XS.html#data",
-    "href": "content/materials/scales/BFI-2-XS.html#data",
+    "objectID": "content/materials/scales/BFI-2-XS.html#download",
+    "href": "content/materials/scales/BFI-2-XS.html#download",
     "title": "BFI-2-XS",
-    "section": "Data",
-    "text": "Data"
+    "section": "Download",
+    "text": "Download"
+  },
+  {
+    "objectID": "content/materials/scales/BFI-2-XS.html#extra",
+    "href": "content/materials/scales/BFI-2-XS.html#extra",
+    "title": "BFI-2-XS",
+    "section": "Extra",
+    "text": "Extra\nSee also this link for more information, such as versions of different lengths and translations."
   },
   {
     "objectID": "content/materials/scales/BFI-2-XS.html#reference",
@@ -257,6 +264,83 @@
     "title": "BFI-2-XS",
     "section": "Reference",
     "text": "Reference\n\n\nSoto, C. J., & John, O. P. (2017). Short and extra-short forms of the Big Five Inventory2: The BFI-2-S and BFI-2-XS. Journal of Research in Personality, 68, 69–81. https://doi.org/10.1016/j.jrp.2017.02.004"
+  },
+  {
+    "objectID": "content/materials/scales/speciesism.html",
+    "href": "content/materials/scales/speciesism.html",
+    "title": "Speciesism Scale",
+    "section": "",
+    "text": "The Speciesism Scale is a 6-item measure of speciesism—the assignment of different inherent moral status based solely on an individual’s species membership."
+  },
+  {
+    "objectID": "content/materials/scales/speciesism.html#items",
+    "href": "content/materials/scales/speciesism.html#items",
+    "title": "Speciesism Scale",
+    "section": "Items",
+    "text": "Items\n\nMorally, animals always count for less than humans.\nHumans have the right to use animals however they want to.\nIt is morally acceptable to keep animals in circuses for human entertainment.\nIt is morally acceptable to trade animals like possessions.\nChimpanzees should have basic legal rights such as a right to life or a prohibition of torture.\nIt is morally acceptable to perform medical experiments on animals that we would not perform on any human."
+  },
+  {
+    "objectID": "content/materials/scales/speciesism.html#response-options",
+    "href": "content/materials/scales/speciesism.html#response-options",
+    "title": "Speciesism Scale",
+    "section": "Response options",
+    "text": "Response options\n\nStrongly disagree\nDisagree\nSomewhat disagree\nNeither agree nor disagree\nSomewhat agree\nAgree\nStrongly agree\n\n\n\n\n\n\n\nNote\n\n\n\nThe original paper only reports the labels for the end points of the scale (‘Strongly disagree’ and ‘Strongly agree’), not the options in between."
+  },
+  {
+    "objectID": "content/materials/scales/speciesism.html#download",
+    "href": "content/materials/scales/speciesism.html#download",
+    "title": "Speciesism Scale",
+    "section": "Download",
+    "text": "Download"
+  },
+  {
+    "objectID": "content/materials/scales/speciesism.html#reference",
+    "href": "content/materials/scales/speciesism.html#reference",
+    "title": "Speciesism Scale",
+    "section": "Reference",
+    "text": "Reference\n\n\nCaviola, L., Everett, J. A. C., & Faber, N. S. (2019). The moral standing of animals: Towards a psychology of speciesism. Journal of Personality and Social Psychology, 116(6), 1011–1029. https://doi.org/10.1037/pspp0000182"
+  },
+  {
+    "objectID": "content/materials/scales/NEP.html",
+    "href": "content/materials/scales/NEP.html",
+    "title": "New Ecological Paradigm Scale",
+    "section": "",
+    "text": "The NEP is a 15-item measure of proenvironmental orientation. The revised NEP scale was designed to improve upon the original one in several respects:"
+  },
+  {
+    "objectID": "content/materials/scales/NEP.html#items",
+    "href": "content/materials/scales/NEP.html#items",
+    "title": "New Ecological Paradigm Scale",
+    "section": "Items",
+    "text": "Items\n\nWe are approaching the limit of the number of people the earth can support.\nHumans have the right to modify the natural environment to suit their needs.\nWhen humans interfere with nature it often produces disastrous consequences.\nHuman ingenuity will insure that we do NOT make the earth unlivable.\nHumans are severely abusing the environment.\nThe earth has plenty of natural resources if we just learn how to develop them.\nPlants and animals have as much right as humans to exist.\nThe balance of nature is strong enough to cope with the impacts of modern industrial nations.\nDespite our special abilities humans are still subject to the laws of nature.\nThe so-called “ecological crisis” facing humankind has been greatly exaggerated.\nThe earth is like a spaceship with very limited room and resources.\nHumans were meant to rule over the rest of nature.\nThe balance of nature is very delicate and easily upset.\nHumans will eventually learn enough about how nature works to be able to control it.\nIf things continue on their present course, we will soon experience a major ecological catastrophe."
+  },
+  {
+    "objectID": "content/materials/scales/NEP.html#instructions",
+    "href": "content/materials/scales/NEP.html#instructions",
+    "title": "New Ecological Paradigm Scale",
+    "section": "Instructions",
+    "text": "Instructions\n\nListed below are statements about the relationship between humans and the environment. For each one, please indicate whether you STRONGLY AGREE, MILDLY AGREE, are UNSURE, MILDLY DISAGREE or STRONGLY DISAGREE with it."
+  },
+  {
+    "objectID": "content/materials/scales/NEP.html#response-options",
+    "href": "content/materials/scales/NEP.html#response-options",
+    "title": "New Ecological Paradigm Scale",
+    "section": "Response options",
+    "text": "Response options\n\nStrongly agree\nMildly agree\nUnsure\nMildly disagree\nStrongly disagree"
+  },
+  {
+    "objectID": "content/materials/scales/NEP.html#download",
+    "href": "content/materials/scales/NEP.html#download",
+    "title": "New Ecological Paradigm Scale",
+    "section": "Download",
+    "text": "Download"
+  },
+  {
+    "objectID": "content/materials/scales/NEP.html#reference",
+    "href": "content/materials/scales/NEP.html#reference",
+    "title": "New Ecological Paradigm Scale",
+    "section": "Reference",
+    "text": "Reference\n\n\nDunlap, R. E., Van Liere, K. D., Mertig, A. G., & Jones, R. E. (2000). New trends in measuring environmental attitudes: Measuring endorsement of the new ecological paradigm: A revised NEP scale. Journal of Social Issues, 56(3), 425–442. https://doi.org/10.1111/0022-4537.00176"
   },
   {
     "objectID": "content/methodology/survey-design/recommended-reading.html",
@@ -277,7 +361,7 @@
     "href": "content/methodology/survey-design/response-options.html#number-of-response-options",
     "title": "Response Options",
     "section": "Number of Response Options",
-    "text": "Number of Response Options\nThe question of how many response options to use centers around two main concerns. The first is that more options means you can obtain a more fine-grained assessment of the characteristic that is being evaluated (e.g., attitude). In other words, your assessment is more precise. However, the question is how the number of options affects the reliability and the validity of the measurement. With more options, it becomes more difficult for people to distinguish between the different options (e.g., is “Strongly agree” reliably different from “Very strongly agree”?).\nTable 1 shows an overview of various studies in which the topic of response options was addressed. The studies vary in many ways, so the final conclusion should be a holistic interpretation of the results, rather than a simple tallying of the results. Note also that only empirical studies are included and not simulation studies. Simulation studies seem limited because they cannot address the plausible psychological limitation of people being unable to distinguish between many options.\n\nTable 1: Overview of empirical studies on the topic of response options.\n\n\n\n\n\n\n\nSource\nComparisons\nConclusion\n\n\n\n\nDonnellan & Rakhshani (2020)\n2- to 7-, and 11-point Likert\n5-point Likert or higher\n\n\nSimms et al. (2019)\n2- to 11-point Likert + VAS\n6-point Likert\n\n\nSung & Wu (2018)\n5-point Likert and VAS-RRP\nVAS-RPP\n\n\nCox et al. (2017)\n2- and 4-point Likert\nMixed\n\n\nLewis (2017)\n7-, 11-point Likert and VAS\nNo difference\n\n\nKuhlmann et al. (2017)\n5-point Likert and VAS\nNo difference\n\n\nHilbert (2016)\n2- and 5-point and VAS\nIt depends\n\n\nCapik & Gozum (2015)\n2- and 5-point Likert\nNo difference\n\n\nEutsler & Lang (2015)\n5-, 7-, 9-, and 11-point Likert\n7-point Likert\n\n\nFinn et al. (2015)\n2- and 4-point Likert\n4-point Likert\n\n\nRevilla et al. (2014)\n5-, 7-, 11-point Likert\n5-point Likert\n\n\nCox et al. (2012)\n2- and 4-point Likert\n4-point Likert\n\n\nJanhunen (2012)\n7-point Likert and 30-point VAR\nVAR\n\n\nDawes (2008)\n5-, 7-, and 10-point Likert\nNo difference\n\n\nWeng (2004)\n3- to 9-point Likert\n5-point or higher\n\n\nPreston & Colman (2000)\n2- to 11-point Likert and VAS\n7-, 9-, or 10-point Likert\n\n\nAlwin (1997)\n7- and 11-point Likert\n11-point Likert\n\n\nJaeschke et al. (1990)\n7-point Likert and VAS\nNo difference\n(slightly favor 7-point Likert)\n\n\nFlamer (1983)\n2- and 9-point Likert\n9-point Likert\n\n\nMatell & Jacoby (1971)\n2-point to 18-point Likert\nNo difference\n\n\nBendig (1954)\n2-, 3-, 5-, 7-, and 9-point Likert\nNo difference\n(maybe 3-point or higher)\n\n\n\nThere are also several review papers on the topic. Krosnick & Presser (2010) suggest that 7-point Likert scales are probably optimal. Lietz (2010) concludes a desirable Likert-scale consists of 5 to 8 response options. Similarly, Cox III (1980) recommends to use between 5 and 9 response options. Symonds (1924), in 1924, claims the optimum number is 7. Gehlbach & Brinkworth (2011) recommends using 5-points for unipolar items and 7-point for biopolar items.\nBesides psychometric properties it may also be worth taking into account respondent preference. This involves ease of use of the scale and whether the response options allow for sufficient variation for respondents to express their view. Preston & Colman (2000) found that respondents found scales with 5, 7, and 10 points easy to use (compared to fewer options and a VAS) and that they preferred scales with more response options to allow them to express themselves (7 or more). Other studies also show that respondents favor more options (Cox et al., 2017).\nNote that if time is of the essence, fewer response options are preferred.\nAnother relevant factor is whether the scale is bipolar or unipolar. Bipolar scales are symmetrical which means the number of options naturally increase as they need to match both sides of the spectrum. Unipolar items are only about one side, usually ranging from the absence of something to the presence of something (to a certain degree). Since it is harder to label a larger number of options for a unipolar scale, the number of options are likely to be smaller.\nConclusion: It appears that few response options (2 or 3) should definitely be avoided. More response options therefore seems better, but benefits seem to quickly level off. Given other concerns, such as ease of use and interpretability, a 7-point Likert scale seems to be preferred for bipolar scales and a 5-point Likert scale for unipolar scales."
+    "text": "Number of Response Options\nThe question of how many response options to use centers around two main concerns. The first is that more options means you can obtain a more fine-grained assessment of the characteristic that is being evaluated (e.g., attitude). In other words, your assessment is more precise. However, the question is how the number of options affects the reliability and the validity of the measurement. With more options, it becomes more difficult for people to distinguish between the different options (e.g., is “Strongly agree” reliably different from “Very strongly agree”?).\nTable 1 shows an overview of various studies in which the topic of response options was addressed. The studies vary in many ways, so the final conclusion should be a holistic interpretation of the results, rather than a simple tallying of the results. Note also that only empirical studies are included and not simulation studies. Simulation studies seem limited because they cannot address the plausible psychological limitation of people being unable to distinguish between many options.\n\nTable 1: Overview of empirical studies on the topic of response options.\n\n\n\n\n\n\n\nSource\nComparisons\nConclusion\n\n\n\n\nDonnellan & Rakhshani (2020)\n2- to 7-, and 11-point Likert\n5-point Likert or higher\n\n\nSimms et al. (2019)\n2- to 11-point Likert + VAS\n6-point Likert\n\n\nSung & Wu (2018)\n5-point Likert and VAS-RRP\nVAS-RPP\n\n\nCox et al. (2017)\n2- and 4-point Likert\nMixed\n\n\nLewis (2017)\n7-, 11-point Likert and VAS\nNo difference\n\n\nKuhlmann et al. (2017)\n5-point Likert and VAS\nNo difference\n\n\nHilbert (2016)\n2- and 5-point and VAS\nIt depends\n\n\nCapik & Gozum (2015)\n2- and 5-point Likert\nNo difference\n\n\nEutsler & Lang (2015)\n5-, 7-, 9-, and 11-point Likert\n7-point Likert\n\n\nFinn et al. (2015)\n2- and 4-point Likert\n4-point Likert\n\n\nRevilla et al. (2014)\n5-, 7-, 11-point Likert\n5-point Likert\n\n\nCox et al. (2012)\n2- and 4-point Likert\n4-point Likert\n\n\nJanhunen (2012)\n7-point Likert and 30-point VAR\nVAR\n\n\nDawes (2008)\n5-, 7-, and 10-point Likert\nNo difference\n\n\nWeng (2004)\n3- to 9-point Likert\n5-point or higher\n\n\nPreston & Colman (2000)\n2- to 11-point Likert and VAS\n7-, 9-, or 10-point Likert\n\n\nAlwin (1997)\n7- and 11-point Likert\n11-point Likert\n\n\nJaeschke et al. (1990)\n7-point Likert and VAS\nNo difference\n(slightly favor 7-point Likert)\n\n\nFlamer (1983)\n2- and 9-point Likert\n9-point Likert\n\n\nMatell & Jacoby (1971)\n2-point to 18-point Likert\nNo difference\n\n\nBendig (1954)\n2-, 3-, 5-, 7-, and 9-point Likert\nNo difference\n(maybe 3-point or higher)\n\n\nRhemtulla et al. (2012)\n2- to 7-point Likert\n5-point Likert maybe good, 6- or 7-point best\n\n\n\nThere are also several review papers on the topic. Krosnick & Presser (2010) suggest that 7-point Likert scales are probably optimal. Lietz (2010) concludes a desirable Likert-scale consists of 5 to 8 response options. Similarly, Cox III (1980) recommends to use between 5 and 9 response options. Symonds (1924), in 1924, claims the optimum number is 7. Gehlbach & Brinkworth (2011) recommends using 5-points for unipolar items and 7-point for biopolar items.\nThere are also statistical arguments for why a particular number of response options is preferred. With more response options, the assumption of normality is more likely to be tenable. Some of the papers included in Table 1 (e.g., Rhemtulla et al. (2012)) are about this concern.\nBesides psychometric properties it may also be worth taking into account respondent preference. This involves ease of use of the scale and whether the response options allow for sufficient variation for respondents to express their view. Preston & Colman (2000) found that respondents found scales with 5, 7, and 10 points easy to use (compared to fewer options and a VAS) and that they preferred scales with more response options to allow them to express themselves (7 or more). Other studies also show that respondents favor more options (Cox et al., 2017).\nNote that if time is of the essence, fewer response options are preferred.\nAnother relevant factor is whether the scale is bipolar or unipolar. Bipolar scales are symmetrical which means the number of options naturally increase as they need to match both sides of the spectrum. Unipolar items are only about one side, usually ranging from the absence of something to the presence of something (to a certain degree). Since it is harder to label a larger number of options for a unipolar scale, the number of options are likely to be smaller.\nConclusion: It appears that few response options (2 or 3) should definitely be avoided. More response options therefore seems better, but benefits seem to quickly level off. Given other concerns, such as ease of use and interpretability, a 7-point Likert scale seems to be preferred for bipolar scales and a 5-point Likert scale for unipolar scales."
   },
   {
     "objectID": "content/methodology/survey-design/response-options.html#odd-vs.-even-response-options",
@@ -341,19 +425,5 @@
     "title": "How to Science",
     "section": "Acknowledgements",
     "text": "Acknowledgements\nThe following people have contributed to this book:\n\nWillem Sleegers\n\nIf I’ve missed your contributions and you deserve to be on this list, please don’t hesitate to contact me or add yourself via a Pull Request on GitHub!"
-  },
-  {
-    "objectID": "content/materials/scales/BFI-2-XS.html#download",
-    "href": "content/materials/scales/BFI-2-XS.html#download",
-    "title": "BFI-2-XS",
-    "section": "Download",
-    "text": "Download"
-  },
-  {
-    "objectID": "content/materials/scales/BFI-2-XS.html#extra",
-    "href": "content/materials/scales/BFI-2-XS.html#extra",
-    "title": "BFI-2-XS",
-    "section": "Extra",
-    "text": "Extra\nSee also this link for more information, such as versions of different lengths and translations."
   }
 ]
