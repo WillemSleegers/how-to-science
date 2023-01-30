@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.0.38">
+<meta name="generator" content="quarto-1.1.251">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -11,10 +11,15 @@
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-span.underline{text-decoration: underline;}
-div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
@@ -44,7 +49,7 @@ div.csl-indent {
 <script src="../../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../../">
-<link href="../../../content/methodology/survey-design/recommended-reading.html" rel="next">
+<link href="../../../content/methodology/survey-design/reliability-validity.html" rel="next">
 <link href="../../../content/methodology/survey-design/item-development.html" rel="prev">
 <script src="../../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../../site_libs/quarto-html/popper.min.js"></script>
@@ -85,10 +90,14 @@ div.csl-indent {
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-md navbar-dark ">
       <div class="navbar-container container-fluid">
-      <a class="navbar-brand" href="../../../index.html">
-    <img src="../../../assets/img/atom-laboratory-science.svg" alt="">
+      <div class="navbar-brand-container">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../assets/img/atom-laboratory-science.svg" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../../index.html">
     <span class="navbar-title">How to Science</span>
-  </a>
+    </a>
+  </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
@@ -177,6 +186,11 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../../content/methodology/survey-design/reliability-validity.html" class="sidebar-item-text sidebar-link">Reliability and validity</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../../content/methodology/survey-design/recommended-reading.html" class="sidebar-item-text sidebar-link">Recommended Reading</a>
   </div>
 </li>
@@ -187,7 +201,7 @@ div.csl-indent {
 </nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc">
+        <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
   <ul>
@@ -239,8 +253,8 @@ Warning
 <caption>Table 1: Overview of empirical studies on the topic of response options.</caption>
 <colgroup>
 <col style="width: 16%">
-<col style="width: 36%">
-<col style="width: 47%">
+<col style="width: 35%">
+<col style="width: 46%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -564,6 +578,7 @@ Warning
 </table>
 </div>
 <p>It is also recommended to avoid agree-disagree response labels because asking respondents to rate their level of agreement is a cognitively demanding task that increases respondent error and reduces responding effort <span class="citation" data-cites="gehlbach2011">(<a href="#ref-gehlbach2011" role="doc-biblioref">Gehlbach &amp; Brinkworth, 2011</a>)</span>.</p>
+<p>Possible labels, from CampusLabs:</p>
 <p><strong>Agreement:</strong>&nbsp;Strongly agree, Moderately agree, Neither agree nor disagree, Moderately disagree, Strongly disagree (another version removes the “moderately” qualifier and/or uses “neutral”)</p>
 <p><strong>Comparison:</strong>&nbsp;Much X, Slightly X, About the same, Slightly (opposite of X), Much (opposite of X)</p>
 <p><strong>Ease:</strong>&nbsp;Very easy, Moderately easy, Neither easy nor difficult, Moderately difficult, Very difficult</p>
@@ -750,7 +765,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   for (var i=0; i<noterefs.length; i++) {
     const ref = noterefs[i];
     tippyHover(ref, function() {
-      let href = ref.getAttribute('href');
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
@@ -785,8 +801,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../../content/methodology/survey-design/recommended-reading.html" class="pagination-link">
-        <span class="nav-page-text">Recommended Reading</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../../content/methodology/survey-design/reliability-validity.html" class="pagination-link">
+        <span class="nav-page-text">Reliability and validity</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

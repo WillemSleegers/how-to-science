@@ -25,7 +25,7 @@ It may be obvious, but make sure to target participants that are likely to vary 
 
 ### Sample size
 
-Rules of thumb are one way to determine an appropriate sample size, but the general consensus is that rules of thumb are a bad idea [@maccallum1999, @costello2005]. The reason for that is that rules of thumb only involve one of two factors: a set number of participants or a particular participant-to-item ratio. The reality is that the appropriate sample size is dependent on many more factors, such as communalities, factor loadings, the number of indicators per factor, and the number of factors [@gagne2006, @maccallum1999, @maccallum2001, @velicer1998].
+Rules of thumb are one way to determine an appropriate sample size, but the general consensus is that rules of thumb are a bad idea [@maccallum1999, @costello2005]. The reason for that is that rules of thumb only involve one of two factors: a set number of participants or a particular participant-to-item ratio. The reality is that the appropriate sample size is dependent on many more factors, such as [communalities](EFA-glossary.qmd#communality), factor loadings, the number of indicators per factor, the number of factors, and more [@gagne2006, @maccallum1999, @maccallum2001, @velicer1998].
 
 Given the replication failures in the social sciences, it should be no surprise that also in the EFA literature there appears to be a sample size problem. This is perhaps best demonstrated by @costello2005. They reviewed two years' worth of PsychINFO articles and found that the majority of the studies (62.9%) had participants to item ratios of 10:1 or less. Of course, the participant to item ratio is not a good benchmark for the appropriate sample size, so this is not enough to demonstrate that the sample size is insufficient. They did find support that this is not enough by sampling data of various sample sizes from a large data set of responses to the Marsh's Self-Description Questionnaire. They found that only 70% of their large (20:1) samples produced correct solutions, leading them to conclude that a 20:1 participant to item ratio produces error rates well above the field standard alpha = .05 level.
 
@@ -126,6 +126,56 @@ Although some argue that the two methods have the same results [@velicer1990], t
 
 **Conclusion**: Do not use PCA.
 
+### Number of factors
+
+There are many different methods to determine how many factors to retain. Some popular methods are:
+
+-   Theory
+
+-   Kaiser criterion
+
+-   Scree test
+
+-   Parallel analysis
+
+-   Velicer's multiple average partial (MAP) procedure
+
+-   Akaike information criterion
+
+-   Bayesian information criterion
+
+-   Comparison data
+
+-   Very Simple Structure (VSS)
+
+-   The root-mean-square error of approximation
+
+-   Likelihood ratio statistic
+
+Determining the number of factors is probably the most difficult part of the exploratory factor analysis. As Henry Kaiser said:
+
+> Solving the number of factors problem is easy, I do it everyday before breakfast. But knowing the right solution is harder.
+
+The difficulty of this step means that a certain flexibility is warranted.
+
+It makes sense to begin with the expectation that you will see the theorized factor structure. Instruments are rarely perfect (especially the first time it is examined), and theoretical expectations are not always supported, but unless one is on a totally blind fishing expedition, this is a good place to start.
+
+The default in most statistical software packages is to use the Kaiser criterion. It makes some sense, as an eigenvalue represents the sum of the squared factor loadings in a column, and to get a sum of 1.0 or more, one must have rather large factor loadings to square and sum. However, this is easily achieved with more items and there are now alternative methods. Hence, there is broad consensus in the literature that this is among the least accurate methods for selecting the number of factors to retain [@velicer1990].
+
+The scree test involves examining the graph of the eigenvalues and looking for the natural bend or "elbow" in the data where the slope of the curve changes markedly. Although the scree plot itself is not considered sufficient to determine how many factors should be extracted [@velicer2000], it does appear to be a relatively reliable method. The main down side seems to be its ambiguity as the bend is not always clear and sometimes there are even multiple bends.
+
+Parallel analysis involves generating random uncorrelated data, and comparing eigenvalues from the EFA to the eigenvalues from the random data. Using this process, only factors with eigenvalues that are above random eigenvalues should be retained, although it is not clear how much above the random eigenvalues they should be. Several authors have endorsed this as the most robust and accurate process for determining the number of factors to extract [@ledesma2007, @velicer2000].
+
+The Minimum Average Partial (MAP) criterion involves partialing out common variance as each successive component is created. As each successive component is partialed out, common variance will decrease to a minimum. Velicer argued that minimum point should be considered the criterion for the number of factors to extract.
+
+VSS involves degrading the initial rotated factor solution by assuming that the nonsalient loadings are zero, even though in actuality they rarely are. What VSS does is test how well the factor matrix we think about and talk about actually fits the correlation matrix. It is not a confirmatory procedure for testing the significance of a particular loading, but rather it is an exploratory procedure for testing the relative utility of interpreting the correlation matrix in terms of a family of increasingly more complex factor models. The simplest model tested by VSS is that each item is of complexity one, and that all items are embedded in a more complex factor matrix of rank k. This is the model most appropriate for scale construction and is the one we use most frequently when we talk about factor solutions. More complicated models may also be evaluated by VSS.
+
+@zwick1986 tested the scree test, Horn's parallel test, and Velicer's MAP test (among others) in simulation studies using a data set with a clear factor structure. Both the parallel test and MAP test seemed to work well. @ruscio2012 notes that PA is considered to be the method of choice among methodologists and recommend that researchers take advantage of PA as a starting point, perhaps supplemented by CD. They note that researchers can also use more than one method. @osborne2014 notes that MAP has been considered superior to the "classic" criteria, and probably is superior to parallel analysis, although neither is perfect, and all must be used in the context of a search for conceptually interpretable factors. He recommends to use parallel analysis or MAP criteria, along with theory (and any of the classic criteria that suits you and is defensible). Another simulation study, perhaps the most comprehensive one so far, also shows that the results of multiple methods should be taken into consideration [@auerswald2019]. They recommend that investigators compare the results of sequential $\chi^2$ model tests and either PA~PCA-95~, Hull, or the Empirical Kaiser Criterion (EKC). If both methods suggest the same number of factors, this most often reflects the correct number of underlying factors. If the methods disagree, CD, the EKC, or one of the variants of traditional PA~PCA~ are viable extraction criteria provided that the sample is large. They also note the importance of theoretical considerations and that the resulting factor loading patterns should be interpretable and that the scale reliabilities should also be taken into account.
+
+Finally, empirical research suggests that overfactoring introduces much less error to factor loading estimates than under factoring [@fava1996, @wood1996]. Although you should be skeptical of solutions with too many factors because the factors may not be meaningful and parsimony should also be considered.
+
+**Conclusion:** Use multiple criteria, including theory, to make a judgment call about how many factors to extract. When in doubt, favor more factors rather than fewer factors.
+
 ### Factor Extraction Method
 
 Extraction is the general term for the process of reducing the number of dimensions being analyzed from the number of variables in the data set (and matrix of associations) into a smaller number of factors.
@@ -179,56 +229,6 @@ In the social sciences, we generally expect some correlation among factors, sinc
 There is no widely preferred method of oblique rotation; all tend to produce similar results [@fabrigar1999].
 
 **Conclusion**: Use any oblique rotation.
-
-### Number of factors
-
-There are many different methods to determine how many factors to retain. Some popular methods are:
-
--   Theory
-
--   Kaiser criterion
-
--   Scree test
-
--   Parallel analysis
-
--   Velicer's multiple average partial (MAP) procedure
-
--   Akaike information criterion
-
--   Bayesian information criterion
-
--   Comparison data
-
--   Very Simple Structure (VSS)
-
--   The root-mean-square error of approximation
-
--   Likelihood ratio statistic
-
-Determining the number of factors is probably the most difficult part of the exploratory factor analysis. As Henry Kaiser said:
-
-> Solving the number of factors problem is easy, I do it everyday before breakfast. But knowing the right solution is harder.
-
-The difficulty of this step means that a certain flexibility is warranted.
-
-It makes sense to begin with the expectation that you will see the theorized factor structure. Instruments are rarely perfect (especially the first time it is examined), and theoretical expectations are not always supported, but unless one is on a totally blind fishing expedition, this is a good place to start.
-
-The default in most statistical software packages is to use the Kaiser criterion. It makes some sense, as an eigenvalue represents the sum of the squared factor loadings in a column, and to get a sum of 1.0 or more, one must have rather large factor loadings to square and sum. However, this is easily achieved with more items and there are now alternative methods. Hence, there is broad consensus in the literature that this is among the least accurate methods for selecting the number of factors to retain [@velicer1990].
-
-The scree test involves examining the graph of the eigenvalues and looking for the natural bend or "elbow" in the data where the slope of the curve changes markedly. Although the scree plot itself is not considered sufficient to determine how many factors should be extracted [@velicer2000], it does appear to be a relatively reliable method. The main down side seems to be its ambiguity as the bend is not always clear and sometimes there are even multiple bends.
-
-Parallel analysis involves generating random uncorrelated data, and comparing eigenvalues from the EFA to the eigenvalues from the random data. Using this process, only factors with eigenvalues that are above random eigenvalues should be retained, although it is not clear how much above the random eigenvalues they should be. Several authors have endorsed this as the most robust and accurate process for determining the number of factors to extract [@ledesma2007, @velicer2000].
-
-The Minimum Average Partial (MAP) criterion involves partialing out common variance as each successive component is created. As each successive component is partialed out, common variance will decrease to a minimum. Velicer argued that minimum point should be considered the criterion for the number of factors to extract.
-
-VSS involves degrading the initial rotated factor solution by assuming that the nonsalient loadings are zero, even though in actuality they rarely are. What VSS does is test how well the factor matrix we think about and talk about actually fits the correlation matrix. It is not a confirmatory procedure for testing the significance of a particular loading, but rather it is an exploratory procedure for testing the relative utility of interpreting the correlation matrix in terms of a family of increasingly more complex factor models. The simplest model tested by VSS is that each item is of complexity one, and that all items are embedded in a more complex factor matrix of rank k. This is the model most appropriate for scale construction and is the one we use most frequently when we talk about factor solutions. More complicated models may also be evaluated by VSS.
-
-@zwick1986 tested the scree test, Horn's parallel test, and Velicer's MAP test (among others) in simulation studies using a data set with a clear factor structure. Both the parallel test and MAP test seemed to work well. @ruscio2012 notes that PA is considered to be the method of choice among methodologists and recommend that researchers take advantage of PA as a starting point, perhaps supplemented by CD. They note that researchers can also use more than one method. @osborne2014 notes that MAP has been considered superior to the "classic" criteria, and probably is superior to parallel analysis, although neither is perfect, and all must be used in the context of a search for conceptually interpretable factors. He recommends to use parallel analysis or MAP criteria, along with theory (and any of the classic criteria that suits you and is defensible). Another simulation study, perhaps the most comprehensive one so far, also shows that the results of multiple methods should be taken into consideration [@auerswald2019]. They recommend that investigators compare the results of sequential $\chi^2$ model tests and either PA~PCA-95~, Hull, or the Empirical Kaiser Criterion (EKC). If both methods suggest the same number of factors, this most often reflects the correct number of underlying factors. If the methods disagree, CD, the EKC, or one of the variants of traditional PA~PCA~ are viable extraction criteria provided that the sample is large. They also note the importance of theoretical considerations and that the resulting factor loading patterns should be interpretable and that the scale reliabilities should also be taken into account.
-
-Finally, empirical research suggests that overfactoring introduces much less error to factor loading estimates than underfactoring [@fava1996, @wood1996]. Although you should be skeptical of solutions with too many factors because the factors may not be meaningful and parsimony should also be considered.
-
-**Conclusion:** Use multiple criteria, including theory, to make a judgment call about how many factors to extract. When in doubt, favor more factors rather than fewer factors.
 
 ## Interpretation
 

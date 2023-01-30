@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.0.38">
+<meta name="generator" content="quarto-1.1.251">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -11,10 +11,15 @@
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-span.underline{text-decoration: underline;}
-div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
@@ -102,10 +107,14 @@ div.csl-indent {
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-md navbar-dark ">
       <div class="navbar-container container-fluid">
-      <a class="navbar-brand" href="../../../index.html">
-    <img src="../../../assets/img/atom-laboratory-science.svg" alt="">
+      <div class="navbar-brand-container">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../assets/img/atom-laboratory-science.svg" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../../index.html">
     <span class="navbar-title">How to Science</span>
-  </a>
+    </a>
+  </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
@@ -229,7 +238,7 @@ div.csl-indent {
 </nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc">
+        <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
   <ul>
@@ -299,7 +308,7 @@ div.csl-indent {
 </section>
 <section id="data" class="level2">
 <h2 class="anchored" data-anchor-id="data">Data</h2>
-<div class="cell" data-tbl-cap="TIPI items">
+<div class="cell">
 <div class="cell-output-display">
 
 <div id="htmlwidget-3198756dd4cceab6a2ba" style="width:100%;height:auto;" class="datatables html-widget"></div>
@@ -308,17 +317,17 @@ div.csl-indent {
 </div>
 </section>
 <section id="reference" class="level2">
-<h2 class="anchored" data-anchor-id="reference">Reference</h2>
-<div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="doc-bibliography">
-<div id="ref-gosling2003" class="csl-entry" role="doc-biblioentry">
-Gosling, S. D., Rentfrow, P. J., &amp; Swann, W. B. (2003). A very brief measure of the Big-Five personality domains. <em>Journal of Research in Personality</em>, <em>37</em>(6), 504–528. <a href="https://doi.org/10.1016/S0092-6566(03)00046-1">https://doi.org/10.1016/S0092-6566(03)00046-1</a>
-</div>
-</div>
+
+
 
 
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">Reference</h2><div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="doc-bibliography">
+<div id="ref-gosling2003" class="csl-entry" role="doc-biblioentry">
+Gosling, S. D., Rentfrow, P. J., &amp; Swann, W. B. (2003). A very brief measure of the Big-Five personality domains. <em>Journal of Research in Personality</em>, <em>37</em>(6), 504–528. <a href="https://doi.org/10.1016/S0092-6566(03)00046-1">https://doi.org/10.1016/S0092-6566(03)00046-1</a>
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -388,7 +397,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   for (var i=0; i<noterefs.length; i++) {
     const ref = noterefs[i];
     tippyHover(ref, function() {
-      let href = ref.getAttribute('href');
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);

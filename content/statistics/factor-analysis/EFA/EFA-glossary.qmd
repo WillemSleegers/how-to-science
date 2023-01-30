@@ -2,12 +2,20 @@
 title: "Glossary"
 ---
 
-## Glossary
+# Glossary
 
--   communality: the amount of variance in the item/variable explained by the (retained) factors. It is the sum of the squared loadings, a.k.a. *communality*.
+### communality
 
--   eigenvalue: the amount of variance explained by a factor; the sum of squared factor loadings
+The amount of variance in the item/variable explained by the (retained) factors. It is the sum of the squared loadings.
 
--   h2: See communality.
+### eigenvalue
 
--   `u2`: 1 - `h2`. residual variance, a.k.a. *uniqueness*
+The amount of variance explained by a factor; the sum of squared factor loadings.
+
+### h2
+
+See communality.
+
+### u2
+
+1 - `h2`. residual variance, a.k.a. *uniqueness*

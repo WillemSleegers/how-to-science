@@ -99,15 +99,13 @@ Others say that more is not always better [@koran2020]. @koran2020, using a simu
 
 ## Estimator
 
-If the data is normally distributed, use the ML estimator.
-
-the findings of Chou and Bentler make it possible to qualify these remarks. These authors showed that in the presence of a sufficiently large sample, maximum likelihood estimation method and generalized least squares method do not make the results suffer, even when the multivariate normality is slightly violated.
+If the data is normally distributed, use the ML estimator. If the sample size is sufﬁciently large, the model is speciﬁed correctly, and the data stem from a multivariate normal distribution, the estimator is consistent, efﬁcient, and normally distributed.
 
 In case of violations, the following estimators can be used:
 
--   MLM
+-   Maximum likelihood estimation with robust standard errors and a Satorra-Bentler scaled test statistic (MLM): In case of a normality violation, not as good in the case of a misspecification.
 
--   MLR: Similar to MLM but better suited for small sample sizes (Gana & Broc).
+-   Maximum likelihood estimation with robust (Huber-White) standard errors and a scaled test statistic that is (asymptotically) equal to the Yuan-Bentler test statistic (MLR): Similar to MLM but better suited for small sample sizes and is robust to both nonnormality and model misfit.
 
 -   weighted least squares method (WLS): Requires a large sample size (FLO 04) and frequently runs into convergence issues and improper solutions
 
@@ -137,7 +135,19 @@ Mardia calculation to determine violations from normal distribution. It can be n
 
 : Recommendations concerning the main estimators available in lavaan according to the type of data (Gana & Broc).
 
-## Assessing model fit
+## Model evaluation
+
+### Estimate plausibility
+
+The ﬁrst step in evaluating the model ﬁt is to determine the plausibility of the estimates. Values outside their theoretically admissable parameter space (e.g., negative variances) signal that something is wrong.
+
+### Model fit
+
+Due to conﬂicting indices and lack of consensus about what constitutes a good ﬁt, a general recommendation is to take a multifaceted approach in which multiple indices are considered jointly (see, e.g., Schermelleh-Engel et al., 2003).
+
+Although the number of available ﬁt indices is relatively large, there is only one that allows for a formal statistical test of overall model ﬁt. By use of the chi-squared, one can test the null hypothesis that the model-implied covariance matrix equals the population covariance matrix
+
+Despite its intuitive appeal, the test has a couple of drawbacks suggesting that its signiﬁcance level should not be interpreted too strictly. First, it appears to be highly sensitive to sample size. For large samples, the null hypothesis is easily rejected, even for negligable discrepancies (Bentler, 1990). Second, violations of assumptions might inﬂate the values of the test statistic (Kaplan, 2009). Accordingly, Satorra and Bentler (1988, 1994) proposed a scaled version of the test statistic, in which the regular χ 2 is divided by a kurtosis correction factor to better approximate a chi-square under non-normality.
 
 Probably the most common way to assess model fit is to rely on cut-off points for several fit indices. However, these cut off points make no sense. The reason is that the suitability of a particular model fit index depends on a multitude of factors, including the number of items per factor, factor loading size, type of misspecification, model type, and violations of multivariate normality [@greiff2017]. It therefore makes no sense to use one cut-off point for all models.
 

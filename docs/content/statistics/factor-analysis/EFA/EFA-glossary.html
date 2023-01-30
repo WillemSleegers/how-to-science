@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.0.38">
+<meta name="generator" content="quarto-1.1.251">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -11,10 +11,15 @@
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-span.underline{text-decoration: underline;}
-div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
 </style>
 
 
@@ -66,10 +71,14 @@ ul.task-list{list-style: none;}
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-md navbar-dark ">
       <div class="navbar-container container-fluid">
-      <a class="navbar-brand" href="../../../../index.html">
-    <img src="../../../../assets/img/atom-laboratory-science.svg" alt="">
+      <div class="navbar-brand-container">
+    <a href="../../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../../assets/img/atom-laboratory-science.svg" alt="" class="navbar-logo">
+    </a>
+    <a class="navbar-brand" href="../../../../index.html">
     <span class="navbar-title">How to Science</span>
-  </a>
+    </a>
+  </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
@@ -207,16 +216,26 @@ ul.task-list{list-style: none;}
 
 </header>
 
-<section id="glossary" class="level2">
-<h2 class="anchored" data-anchor-id="glossary">Glossary</h2>
-<ul>
-<li><p>communality: the amount of variance in the item/variable explained by the (retained) factors. It is the sum of the squared loadings, a.k.a.&nbsp;<em>communality</em>.</p></li>
-<li><p>eigenvalue: the amount of variance explained by a factor; the sum of squared factor loadings</p></li>
-<li><p>h2: See communality.</p></li>
-<li><p><code>u2</code>: 1 -&nbsp;<code>h2</code>. residual variance, a.k.a.&nbsp;<em>uniqueness</em></p></li>
-</ul>
+<section id="glossary" class="level1">
+<h1>Glossary</h1>
+<section id="communality" class="level3">
+<h3 class="anchored" data-anchor-id="communality">communality</h3>
+<p>The amount of variance in the item/variable explained by the (retained) factors. It is the sum of the squared loadings.</p>
+</section>
+<section id="eigenvalue" class="level3">
+<h3 class="anchored" data-anchor-id="eigenvalue">eigenvalue</h3>
+<p>The amount of variance explained by a factor; the sum of squared factor loadings.</p>
+</section>
+<section id="h2" class="level3">
+<h3 class="anchored" data-anchor-id="h2">h2</h3>
+<p>See communality.</p>
+</section>
+<section id="u2" class="level3">
+<h3 class="anchored" data-anchor-id="u2">u2</h3>
+<p>1 -&nbsp;<code>h2</code>. residual variance, a.k.a.&nbsp;<em>uniqueness</em></p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -289,7 +308,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   for (var i=0; i<noterefs.length; i++) {
     const ref = noterefs[i];
     tippyHover(ref, function() {
-      let href = ref.getAttribute('href');
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);

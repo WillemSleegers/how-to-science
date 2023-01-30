@@ -17,14 +17,14 @@ website:
     left:
       - text: "Methodology"
         menu:
-         - sidebar:survey-design
+          - sidebar:survey-design
       - text: "Statistics"
         menu:
-         - sidebar:factor-analysis
-         - sidebar:group-differences
+          - sidebar:factor-analysis
+          - sidebar:group-differences
       - text: "Materials"
         menu:
-         - sidebar:scales
+          - sidebar:scales
 
   sidebar:
     - id: survey-design
@@ -32,12 +32,13 @@ website:
       style: "floating" # floating, docked
       align: left
       contents:
-       - section: "Survey Design"
-         contents:
-          - content/methodology/survey-design/index.qmd
-          - content/methodology/survey-design/item-development.qmd
-          - content/methodology/survey-design/response-options.qmd
-          - content/methodology/survey-design/recommended-reading.qmd
+        - section: "Survey Design"
+          contents:
+            - content/methodology/survey-design/index.qmd
+            - content/methodology/survey-design/item-development.qmd
+            - content/methodology/survey-design/response-options.qmd
+            - content/methodology/survey-design/reliability-validity.qmd
+            - content/methodology/survey-design/recommended-reading.qmd
 
     - id: factor-analysis
       title: "Factor analysis"
@@ -65,14 +66,15 @@ website:
         - content/materials/scales/index.qmd
         - section: "Animals"
           contents:
-          - content/materials/scales/speciesism.qmd
+            - content/materials/scales/speciesism.qmd
         - section: "Environmentalism"
           contents:
-          - content/materials/scales/NEP.qmd
+            - content/materials/scales/NEP.qmd
         - section: "Personality"
           contents:
-          - content/materials/scales/TIPI.qmd
-          - content/materials/scales/BFI-2-XS.qmd
+            - content/materials/scales/TIPI.qmd
+            - content/materials/scales/BFI-2-XS.qmd
+            - content/materials/scales/SOP2.qmd
 
 format:
   html:

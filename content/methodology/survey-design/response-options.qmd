@@ -122,6 +122,8 @@ For an example of biopolar labels for a 2- to 11-point Likert scale, see Table 1
 
 It is also recommended to avoid agree-disagree response labels because asking respondents to rate their level of agreement is a cognitively demanding task that increases respondent error and reduces responding effort [@gehlbach2011].
 
+Possible labels, from CampusLabs:
+
 **Agreement:** Strongly agree, Moderately agree, Neither agree nor disagree, Moderately disagree, Strongly disagree (another version removes the "moderately" qualifier and/or uses "neutral")
 
 **Comparison:** Much X, Slightly X, About the same, Slightly (opposite of X), Much (opposite of X)

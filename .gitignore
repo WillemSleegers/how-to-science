@@ -30,3 +30,5 @@ vignettes/*.pdf
 
 /.quarto/
 /_freeze/
+
+/_*.local

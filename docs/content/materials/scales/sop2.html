@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>How to Science - Factor analysis</title>
+<title>How to Science - The Optimism–Pessimism Short Scale–2 (SOP2)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,6 +20,25 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
 </style>
 
 
@@ -30,7 +49,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../../">
-<link href="../../../content/statistics/factor-analysis/EFA/EFA-best-practices.html" rel="next">
+<link href="../../../content/materials/scales/BFI-2-XS.html" rel="prev">
 <script src="../../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -60,11 +79,28 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+<script src="../../../site_libs/htmlwidgets-1.6.1/htmlwidgets.js"></script>
+<link href="../../../site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
+<script src="../../../site_libs/datatables-binding-0.26/datatables.js"></script>
+<script src="../../../site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<link href="../../../site_libs/dt-core-1.12.1/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="../../../site_libs/dt-core-1.12.1/css/jquery.dataTables.extra.css" rel="stylesheet">
+<script src="../../../site_libs/dt-core-1.12.1/js/jquery.dataTables.min.js"></script>
+<script src="../../../site_libs/jszip-1.12.1/jszip.min.js"></script>
+<link href="../../../site_libs/dt-ext-buttons-1.12.1/css/buttons.dataTables.min.css" rel="stylesheet">
+<script src="../../../site_libs/dt-ext-buttons-1.12.1/js/dataTables.buttons.min.js"></script>
+<script src="../../../site_libs/dt-ext-buttons-1.12.1/js/buttons.html5.min.js"></script>
+<script src="../../../site_libs/dt-ext-buttons-1.12.1/js/buttons.colVis.min.js"></script>
+<script src="../../../site_libs/dt-ext-buttons-1.12.1/js/buttons.print.min.js"></script>
+<link href="../../../site_libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
+<script src="../../../site_libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+
 
 <link rel="stylesheet" href="../../../assets/css/styles.css">
+<link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-sidebar floating nav-fixed fullcontent">
+<body class="nav-sidebar floating nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -128,7 +164,7 @@ ul.task-list li input[type="checkbox"] {
     </nav>
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">Factor analysis</h1>
+      <h1 class="quarto-secondary-nav-title">The Optimism–Pessimism Short Scale–2 (SOP2)</h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -143,12 +179,12 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../content/statistics/factor-analysis/index.html" class="sidebar-item-text sidebar-link active">Factor analysis</a>
+  <a href="../../../content/materials/scales/index.html" class="sidebar-item-text sidebar-link">Scales</a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Exploratory factor analysis</a>
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Animals</a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -156,29 +192,14 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../content/statistics/factor-analysis/EFA/EFA-best-practices.html" class="sidebar-item-text sidebar-link">Best practices in EFA</a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../content/statistics/factor-analysis/EFA/EFA-example.html" class="sidebar-item-text sidebar-link">EFA example</a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../content/statistics/factor-analysis/EFA/EFA-recommended-reading.html" class="sidebar-item-text sidebar-link">Recommend reading</a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../content/statistics/factor-analysis/EFA/EFA-glossary.html" class="sidebar-item-text sidebar-link">Glossary</a>
+  <a href="../../../content/materials/scales/speciesism.html" class="sidebar-item-text sidebar-link">Speciesism Scale</a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Confirmatory factor analysis</a>
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Environmentalism</a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -186,7 +207,32 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../content/statistics/factor-analysis/CFA/CFA-best-practices.html" class="sidebar-item-text sidebar-link">Best practices in CFA</a>
+  <a href="../../../content/materials/scales/NEP.html" class="sidebar-item-text sidebar-link">New Ecological Paradigm Scale</a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">Personality</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../content/materials/scales/TIPI.html" class="sidebar-item-text sidebar-link">TIPI</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../content/materials/scales/BFI-2-XS.html" class="sidebar-item-text sidebar-link">BFI-2-XS</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../content/materials/scales/sop2.html" class="sidebar-item-text sidebar-link active">The Optimism–Pessimism Short Scale–2 (SOP2)</a>
   </div>
 </li>
       </ul>
@@ -195,13 +241,24 @@ ul.task-list li input[type="checkbox"] {
     </div>
 </nav>
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#items" id="toc-items" class="nav-link active" data-scroll-target="#items">Items</a></li>
+  <li><a href="#response-options" id="toc-response-options" class="nav-link" data-scroll-target="#response-options">Response options</a></li>
+  <li><a href="#download" id="toc-download" class="nav-link" data-scroll-target="#download">Download</a></li>
+  <li><a href="#reference" id="toc-reference" class="nav-link" data-scroll-target="#reference">Reference</a></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/willemsleegers/how-to-science/edit/main/content/materials/scales/sop2.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/willemsleegers/how-to-science/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block">Factor analysis</h1>
+<h1 class="title d-none d-lg-block">The Optimism–Pessimism Short Scale–2 (SOP2)</h1>
 </div>
 
 
@@ -215,18 +272,53 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>This section is about the two types of factor analysis:</p>
+<div class="cell">
+
+</div>
+<p>The Optimism–Pessimism Short Scale–2 (SOP2) is a 2-item measure of optimism—the tendency to look to the future with confidence and mostly expect good things to happen, rather than to look at the future full of doubt and mostly expect bad things to happen.</p>
+<section id="items" class="level2">
+<h2 class="anchored" data-anchor-id="items">Items</h2>
 <ol type="1">
-<li>Exploratory factor analysis (EFA)</li>
-<li>Confirmatory factor analysis (CFA)</li>
+<li>The next question deals with optimism. Optimists are people who look to the future with confidence and who mostly expect good things to happen. How would you describe yourself? How optimistic are you in general?</li>
+<li>The next question is about pessimism. Pessimists are people who are full of doubt when they look to the future and who mostly expect bad things to happen. How would you describe yourself? How pessimistic are you in general?</li>
 </ol>
-<p>Each section consists of a best practices section in which I cover the different decisions you have to make to run the analysis. I cover the literature and offer a conclusion for each step that should be, to my knowledge, the best way to perform that step.</p>
-<p>Other sections consist of an example of the analysis (with code), recommended reading, and a glossary.</p>
-<p>Do note that both sections are still a work in progress.</p>
+</section>
+<section id="response-options" class="level2">
+<h2 class="anchored" data-anchor-id="response-options">Response options</h2>
+<p>Each question is rated on a 7-point scale, but only the first and last option is labelled.</p>
+<p>For the optimism item:</p>
+<ul>
+<li>not at all optimistic</li>
+<li>very optimistic</li>
+</ul>
+<p>For the pessimism item:</p>
+<ul>
+<li>not at all pessimistic</li>
+<li>very pessimistic</li>
+</ul>
+</section>
+<section id="download" class="level2">
+<h2 class="anchored" data-anchor-id="download">Download</h2>
+<div class="cell">
+<div class="cell-output-display">
+
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-56dc265e46d0b65dea05" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-56dc265e46d0b65dea05">{"x":{"filter":"none","vertical":false,"extensions":["Buttons"],"data":[[1,2],["The next question deals with optimism. Optimists are people who look to the future with confidence and who mostly expect good things to happen. How would you describe yourself? How optimistic are you in general?","The next question is about pessimism. Pessimists are people who are full of doubt when they look to the future and who mostly expect bad things to happen. How would you describe yourself? How pessimistic are you in general?"],[0,1]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>item_nr<\/th>\n      <th>item<\/th>\n      <th>reverse<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"Bip","buttons":["copy",{"extend":"collection","buttons":["csv","excel"],"text":"Download"}],"columnDefs":[{"className":"dt-right","targets":[0,2]}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section id="reference" class="level2">
 
 
 
-</main> <!-- /main -->
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">Reference</h2><div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="doc-bibliography">
+<div id="ref-niessen2022" class="csl-entry" role="doc-biblioentry">
+Nießen, D., Groskurth, K., Kemper, C. J., Rammstedt, B., &amp; Lechner, C. M. (2022). The <span>Optimism</span> (<span>SOP2</span>): <span>A</span> comprehensive validation of the <span class="nocase">English-language</span> adaptation. <em>Measurement Instruments for the Social Sciences</em>, <em>4</em>(1), 1. <a href="https://doi.org/10.1186/s42409-021-00027-6">https://doi.org/10.1186/s42409-021-00027-6</a>
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -327,11 +419,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="../../../content/materials/scales/BFI-2-XS.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">BFI-2-XS</span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../../content/statistics/factor-analysis/EFA/EFA-best-practices.html" class="pagination-link">
-        <span class="nav-page-text">Best practices in EFA</span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->
