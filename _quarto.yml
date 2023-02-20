@@ -66,6 +66,7 @@ website:
         - content/materials/scales/index.qmd
         - section: "Animals"
           contents:
+            - content/materials/scales/AASa picture of maaike and willem digital art.qmd
             - content/materials/scales/speciesism.qmd
         - section: "Environmentalism"
           contents:

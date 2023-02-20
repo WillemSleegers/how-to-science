@@ -1,0 +1,82 @@
+---
+title: "Animal Attitude Scale"
+execute:
+  echo: false
+format: 
+   html:
+     df-print: kable
+     css: styles.css
+     toc: true
+knitr:
+  opts_chunk: 
+    R.options:
+      knitr.kable.NA: ''
+bibliography: references.bib
+nocite: |
+  @herzog1991, @herzog2015
+---
+
+```{r}
+#| label: setup
+#| message: false
+library(tidyverse)
+library(DT)
+items <- read_csv("AAS-items.csv")
+```
+
+The Animal Attitudes Scale is a 20-item measure of pro-animal welfare attitudes. Two short versions of the scale are available (a 5 and a 10 item version).
+
+## Items
+
+```{r}
+#| results: asis
+items %>%
+  select(item_nr, item) %>%
+  unite(col = item, everything(), sep = ". ") %>%
+  pull(item) %>%
+  str_c("\n") %>%
+  str_flatten() %>%
+  cat()
+```
+
+## Instructions
+
+> Listed below are 20 statements regarding the use of animals. Circle the letters that indicate the extent to which you agree or disagree with the statement.
+
+## Response options
+
+-   Strongly disagree
+-   Disagree
+-   Undecided
+-   Agree
+-   Strongly agree
+
+## Download
+
+```{r}
+#| label: table
+#| tbl-cap: Animal Attitude Scale items
+
+items %>%
+  select(where(~ sum(is.na(.x)) != length(.x))) %>%
+  datatable(
+    rownames = FALSE, 
+    extensions = 'Buttons', 
+    options = list(
+      dom = 'Bip',
+      buttons = list(
+        'copy', 
+        list(
+          extend = 'collection',
+          buttons = c('csv', 'excel'),
+          text = 'Download'
+        )
+      )
+    )
+  )
+```
+
+## Reference
+
+::: {#refs}
+:::

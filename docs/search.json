@@ -203,6 +203,34 @@
     "text": "Data"
   },
   {
+    "objectID": "content/materials/scales/SOP2.html",
+    "href": "content/materials/scales/SOP2.html",
+    "title": "The Optimism–Pessimism Short Scale–2 (SOP2)",
+    "section": "",
+    "text": "The Optimism–Pessimism Short Scale–2 (SOP2) is a 2-item measure of optimism—the tendency to look to the future with confidence and mostly expect good things to happen, rather than to look at the future full of doubt and mostly expect bad things to happen."
+  },
+  {
+    "objectID": "content/materials/scales/SOP2.html#items",
+    "href": "content/materials/scales/SOP2.html#items",
+    "title": "The Optimism–Pessimism Short Scale–2 (SOP2)",
+    "section": "Items",
+    "text": "Items\n\nThe next question deals with optimism. Optimists are people who look to the future with confidence and who mostly expect good things to happen. How would you describe yourself? How optimistic are you in general?\nThe next question is about pessimism. Pessimists are people who are full of doubt when they look to the future and who mostly expect bad things to happen. How would you describe yourself? How pessimistic are you in general?"
+  },
+  {
+    "objectID": "content/materials/scales/SOP2.html#response-options",
+    "href": "content/materials/scales/SOP2.html#response-options",
+    "title": "The Optimism–Pessimism Short Scale–2 (SOP2)",
+    "section": "Response options",
+    "text": "Response options\nEach question is rated on a 7-point scale, but only the first and last option is labelled.\nFor the optimism item:\n\nnot at all optimistic\nvery optimistic\n\nFor the pessimism item:\n\nnot at all pessimistic\nvery pessimistic"
+  },
+  {
+    "objectID": "content/materials/scales/SOP2.html#download",
+    "href": "content/materials/scales/SOP2.html#download",
+    "title": "The Optimism–Pessimism Short Scale–2 (SOP2)",
+    "section": "Download",
+    "text": "Download"
+  },
+  {
     "objectID": "content/materials/scales/index.html",
     "href": "content/materials/scales/index.html",
     "title": "Scales",
@@ -315,6 +343,41 @@
     "text": "Download"
   },
   {
+    "objectID": "content/materials/scales/AAS.html",
+    "href": "content/materials/scales/AAS.html",
+    "title": "Animal Attitude Scale",
+    "section": "",
+    "text": "The Animal Attitudes Scale is a 20-item measure of pro-animal welfare attitudes. Two short versions of the scale are available (a 5 and a 10 item version)."
+  },
+  {
+    "objectID": "content/materials/scales/AAS.html#items",
+    "href": "content/materials/scales/AAS.html#items",
+    "title": "Animal Attitude Scale",
+    "section": "Items",
+    "text": "Items\n\nIt is morally wrong to hunt wild animals just for sport.\nI do not think that there is anything wrong with using animals in medical research.\nThere should be extremely stiff penalties including jail sentences for people who participate in cock fighting.\nWild animals, such as mink and raccoons, should not be trapped and their skins made into fur coats.\nThere is nothing morally wrong with hunting wild animals for food.\nI think people who object to raising animals for meat are too sentimental.\nMuch of the scientific research done with animals is unnecessary and cruel.\nI think it is perfectly acceptable for cattle and hogs to be raised for human consumption.\nBasically, humans have the right to use animals as we see fit.\nThe slaughter of whales and dolphins should be immediately stopped even if it means some people will be put out of work.\nI sometimes get upset when I see wild animals in cages at zoos.\nIn general, I think that human economic gain is more important than setting aside more land for wildlife.\nToo much fuss is made over the welfare of animals these days when there are many human problems that need to be solved.\nBreeding animals for their skins is a legitimate use of animals.\nSome aspects of biology can only be learned through dissecting preserved animals such as cats.\nContinued research with animals will be necessary if we are to ever conquer diseases such as cancer, heart disease, and AIDS.\nIt is unethical to breed purebred dogs for pets when millions of dogs are killed in animal shelters each year.\nThe production of inexpensive meat, eggs, and dairy products justifies maintaining animals under crowded conditions.\nThe use of animals such as rabbits for testing the safety of cosmetics and household products is unnecessary and should be stopped.\nThe use of animals in rodeos and circuses is cruel."
+  },
+  {
+    "objectID": "content/materials/scales/AAS.html#instructions",
+    "href": "content/materials/scales/AAS.html#instructions",
+    "title": "Animal Attitude Scale",
+    "section": "Instructions",
+    "text": "Instructions\n\nListed below are 20 statements regarding the use of animals. Circle the letters that indicate the extent to which you agree or disagree with the statement."
+  },
+  {
+    "objectID": "content/materials/scales/AAS.html#response-options",
+    "href": "content/materials/scales/AAS.html#response-options",
+    "title": "Animal Attitude Scale",
+    "section": "Response options",
+    "text": "Response options\n\nStrongly disagree\nDisagree\nUndecided\nAgree\nStrongly agree"
+  },
+  {
+    "objectID": "content/materials/scales/AAS.html#download",
+    "href": "content/materials/scales/AAS.html#download",
+    "title": "Animal Attitude Scale",
+    "section": "Download",
+    "text": "Download"
+  },
+  {
     "objectID": "content/methodology/survey-design/recommended-reading.html",
     "href": "content/methodology/survey-design/recommended-reading.html",
     "title": "Recommended Reading",
@@ -418,33 +481,5 @@
     "title": "How to Science",
     "section": "Acknowledgements",
     "text": "Acknowledgements\nThe following people have contributed to this book:\n\nWillem Sleegers\n\nIf I’ve missed your contributions and you deserve to be on this list, please don’t hesitate to contact me or add yourself via a Pull Request on GitHub!"
-  },
-  {
-    "objectID": "content/materials/scales/sop2.html",
-    "href": "content/materials/scales/sop2.html",
-    "title": "The Optimism–Pessimism Short Scale–2 (SOP2)",
-    "section": "",
-    "text": "The Optimism–Pessimism Short Scale–2 (SOP2) is a 2-item measure of optimism—the tendency to look to the future with confidence and mostly expect good things to happen, rather than to look at the future full of doubt and mostly expect bad things to happen."
-  },
-  {
-    "objectID": "content/materials/scales/sop2.html#items",
-    "href": "content/materials/scales/sop2.html#items",
-    "title": "The Optimism–Pessimism Short Scale–2 (SOP2)",
-    "section": "Items",
-    "text": "Items\n\nThe next question deals with optimism. Optimists are people who look to the future with confidence and who mostly expect good things to happen. How would you describe yourself? How optimistic are you in general?\nThe next question is about pessimism. Pessimists are people who are full of doubt when they look to the future and who mostly expect bad things to happen. How would you describe yourself? How pessimistic are you in general?"
-  },
-  {
-    "objectID": "content/materials/scales/sop2.html#response-options",
-    "href": "content/materials/scales/sop2.html#response-options",
-    "title": "The Optimism–Pessimism Short Scale–2 (SOP2)",
-    "section": "Response options",
-    "text": "Response options\nEach question is rated on a 7-point scale, but only the first and last option is labelled.\nFor the optimism item:\n\nnot at all optimistic\nvery optimistic\n\nFor the pessimism item:\n\nnot at all pessimistic\nvery pessimistic"
-  },
-  {
-    "objectID": "content/materials/scales/sop2.html#download",
-    "href": "content/materials/scales/sop2.html#download",
-    "title": "The Optimism–Pessimism Short Scale–2 (SOP2)",
-    "section": "Download",
-    "text": "Download"
   }
 ]
