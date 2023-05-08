@@ -66,16 +66,19 @@ website:
         - content/materials/scales/index.qmd
         - section: "Animals"
           contents:
-            - content/materials/scales/AASa picture of maaike and willem digital art.qmd
-            - content/materials/scales/speciesism.qmd
+            - content/materials/scales/AAS/AAS.qmd
+            - content/materials/scales/speciesism/speciesism.qmd
         - section: "Environmentalism"
           contents:
-            - content/materials/scales/NEP.qmd
+            - content/materials/scales/NEP/NEP.qmd
+        - section: "Ethics"
+          contents:
+            - content/materials/scales/OUS/OUS.qmd
         - section: "Personality"
           contents:
-            - content/materials/scales/TIPI.qmd
-            - content/materials/scales/BFI-2-XS.qmd
-            - content/materials/scales/SOP2.qmd
+            - content/materials/scales/TIPI/TIPI.qmd
+            - content/materials/scales/BFI-2-XS/BFI-2-XS.qmd
+            - content/materials/scales/SOP2/SOP2.qmd
 
 format:
   html:

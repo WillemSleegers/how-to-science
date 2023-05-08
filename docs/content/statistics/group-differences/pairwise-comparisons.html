@@ -312,10 +312,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
-SAMPLING FOR MODEL '26506c9e129ffc36bd1658ecb9d890c1' NOW (CHAIN 1).
+SAMPLING FOR MODEL 'fccf7c9febbc328167e179f62cd6df23' NOW (CHAIN 1).
 Chain 1: 
-Chain 1: Gradient evaluation took 2.9e-05 seconds
-Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.29 seconds.
+Chain 1: Gradient evaluation took 2.7e-05 seconds
+Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.27 seconds.
 Chain 1: Adjust your expectations accordingly!
 Chain 1: 
 Chain 1: 
@@ -332,15 +332,15 @@ Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 1: 
-Chain 1:  Elapsed Time: 0.066951 seconds (Warm-up)
-Chain 1:                0.063802 seconds (Sampling)
-Chain 1:                0.130753 seconds (Total)
+Chain 1:  Elapsed Time: 0.070093 seconds (Warm-up)
+Chain 1:                0.07575 seconds (Sampling)
+Chain 1:                0.145843 seconds (Total)
 Chain 1: 
 
-SAMPLING FOR MODEL '26506c9e129ffc36bd1658ecb9d890c1' NOW (CHAIN 2).
+SAMPLING FOR MODEL 'fccf7c9febbc328167e179f62cd6df23' NOW (CHAIN 2).
 Chain 2: 
-Chain 2: Gradient evaluation took 1.7e-05 seconds
-Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.17 seconds.
+Chain 2: Gradient evaluation took 1e-05 seconds
+Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.1 seconds.
 Chain 2: Adjust your expectations accordingly!
 Chain 2: 
 Chain 2: 
@@ -357,15 +357,15 @@ Chain 2: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 2: 
-Chain 2:  Elapsed Time: 0.065013 seconds (Warm-up)
-Chain 2:                0.066012 seconds (Sampling)
-Chain 2:                0.131025 seconds (Total)
+Chain 2:  Elapsed Time: 0.073741 seconds (Warm-up)
+Chain 2:                0.078186 seconds (Sampling)
+Chain 2:                0.151927 seconds (Total)
 Chain 2: 
 
-SAMPLING FOR MODEL '26506c9e129ffc36bd1658ecb9d890c1' NOW (CHAIN 3).
+SAMPLING FOR MODEL 'fccf7c9febbc328167e179f62cd6df23' NOW (CHAIN 3).
 Chain 3: 
-Chain 3: Gradient evaluation took 1.4e-05 seconds
-Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.14 seconds.
+Chain 3: Gradient evaluation took 1e-05 seconds
+Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.1 seconds.
 Chain 3: Adjust your expectations accordingly!
 Chain 3: 
 Chain 3: 
@@ -382,15 +382,15 @@ Chain 3: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 3: 
-Chain 3:  Elapsed Time: 0.064023 seconds (Warm-up)
-Chain 3:                0.060927 seconds (Sampling)
-Chain 3:                0.12495 seconds (Total)
+Chain 3:  Elapsed Time: 0.071493 seconds (Warm-up)
+Chain 3:                0.066388 seconds (Sampling)
+Chain 3:                0.137881 seconds (Total)
 Chain 3: 
 
-SAMPLING FOR MODEL '26506c9e129ffc36bd1658ecb9d890c1' NOW (CHAIN 4).
+SAMPLING FOR MODEL 'fccf7c9febbc328167e179f62cd6df23' NOW (CHAIN 4).
 Chain 4: 
-Chain 4: Gradient evaluation took 1.3e-05 seconds
-Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.13 seconds.
+Chain 4: Gradient evaluation took 1.1e-05 seconds
+Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.11 seconds.
 Chain 4: Adjust your expectations accordingly!
 Chain 4: 
 Chain 4: 
@@ -407,9 +407,9 @@ Chain 4: Iteration: 1600 / 2000 [ 80%]  (Sampling)
 Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 Chain 4: 
-Chain 4:  Elapsed Time: 0.062924 seconds (Warm-up)
-Chain 4:                0.06255 seconds (Sampling)
-Chain 4:                0.125474 seconds (Total)
+Chain 4:  Elapsed Time: 0.073044 seconds (Warm-up)
+Chain 4:                0.074436 seconds (Sampling)
+Chain 4:                0.14748 seconds (Total)
 Chain 4: </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>model</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -423,15 +423,15 @@ Formula: DV ~ 0 + Intercept + condition
 
 Population-Level Effects: 
            Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-Intercept      0.00      0.06    -0.11     0.12 1.00     1318     2081
-conditionB     0.09      0.09    -0.07     0.27 1.00     1699     2226
-conditionC     0.20      0.09     0.03     0.36 1.00     1695     2561
-conditionD     0.29      0.09     0.13     0.46 1.00     1869     2470
-conditionE     0.39      0.09     0.22     0.57 1.00     1865     2380
+Intercept      0.01      0.06    -0.12     0.14 1.00     1339     1815
+conditionB     0.09      0.09    -0.09     0.26 1.00     1807     2047
+conditionC     0.19      0.09     0.01     0.37 1.00     1725     1829
+conditionD     0.29      0.09     0.11     0.46 1.00     1726     2200
+conditionE     0.39      0.09     0.21     0.57 1.00     1750     2030
 
 Family Specific Parameters: 
       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sigma     1.00      0.02     0.96     1.04 1.00     2851     2421
+sigma     1.00      0.02     0.96     1.04 1.00     2830     2528
 
 Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -447,16 +447,16 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>contrasts</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> contrast estimate lower.HPD upper.HPD
- A - B     -0.0946    -0.273    0.0652
- A - C     -0.1951    -0.370   -0.0376
- A - D     -0.2940    -0.460   -0.1246
- A - E     -0.3939    -0.560   -0.2216
- B - C     -0.0998    -0.273    0.0722
- B - D     -0.1986    -0.384   -0.0246
- B - E     -0.3002    -0.470   -0.1280
- C - D     -0.0995    -0.279    0.0813
- C - E     -0.1997    -0.365   -0.0218
- D - E     -0.1024    -0.270    0.0893
+ A - B     -0.0910    -0.273    0.0744
+ A - C     -0.1898    -0.372   -0.0160
+ A - D     -0.2908    -0.468   -0.1208
+ A - E     -0.3904    -0.559   -0.2083
+ B - C     -0.1003    -0.273    0.0719
+ B - D     -0.1995    -0.363   -0.0139
+ B - E     -0.2991    -0.461   -0.1189
+ C - D     -0.0996    -0.280    0.0668
+ C - E     -0.2005    -0.378   -0.0227
+ D - E     -0.1002    -0.278    0.0782
 
 Point estimate displayed: median 
 HPD interval probability: 0.95 </code></pre>
@@ -486,9 +486,9 @@ HPD interval probability: 0.95 </code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Hypothesis Tests for class b:
                 Hypothesis Estimate Est.Error CI.Lower CI.Upper Evid.Ratio
-1 (conditionB-Inter... &gt; 0     0.09      0.14    -0.13     0.31       2.94
+1 (conditionB-Inter... &gt; 0     0.08      0.14    -0.15     0.32       2.85
   Post.Prob Star
-1      0.75     
+1      0.74     
 ---
 'CI': 90%-CI for one-sided and 95%-CI for two-sided hypotheses.
 '*': For one-sided hypotheses, the posterior probability exceeds 95%;
@@ -497,7 +497,7 @@ Posterior probabilities of point hypotheses assume equal prior probabilities.</c
 </div>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sum(contrast_A_B$samples$H1 &gt; 0) / sum(contrast_A_B$samples$H1 &lt; 0)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>This gives us an estimate of 0.1 (as expected) and an evidence ratio of 2.9408867.</p>
+<p>This gives us an estimate of 0.1 (as expected) and an evidence ratio of 2.8461538.</p>
 <p>We can also test whether this contrast is equal to 0. This is a Bayes factor computed via the Savage-Dickey density ratio method. That is, the posterior density at a point of interest is divided by the prior density at the same point.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>contrast_A_B_null <span class="ot">&lt;-</span> <span class="fu">hypothesis</span>(model, <span class="st">"conditionB - Intercept = 0"</span>)</span>
@@ -505,9 +505,9 @@ Posterior probabilities of point hypotheses assume equal prior probabilities.</c
 <div class="cell-output cell-output-stdout">
 <pre><code>Hypothesis Tests for class b:
                 Hypothesis Estimate Est.Error CI.Lower CI.Upper Evid.Ratio
-1 (conditionB-Inter... = 0     0.09      0.14    -0.18     0.35       8.24
+1 (conditionB-Inter... = 0     0.08      0.14     -0.2     0.36       8.56
   Post.Prob Star
-1      0.89     
+1       0.9     
 ---
 'CI': 90%-CI for one-sided and 95%-CI for two-sided hypotheses.
 '*': For one-sided hypotheses, the posterior probability exceeds 95%;
@@ -515,7 +515,7 @@ for two-sided hypotheses, the value tested against lies outside the 95%-CI.
 Posterior probabilities of point hypotheses assume equal prior probabilities.</code></pre>
 </div>
 </div>
-<p>This gives us a Bayes factor of 8.2376557.</p>
+<p>This gives us a Bayes factor of 8.5605476.</p>
 <p>Alternatively, we can compare another contrast, say, D vs.&nbsp;B. We can get this contrast by subtracting the coefficient for condition B from the coefficient for condition D.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>contrast_D_B <span class="ot">&lt;-</span> <span class="fu">hypothesis</span>(model, <span class="st">"conditionD - conditionB &gt; 0"</span>)</span>
@@ -523,9 +523,9 @@ Posterior probabilities of point hypotheses assume equal prior probabilities.</c
 <div class="cell-output cell-output-stdout">
 <pre><code>Hypothesis Tests for class b:
                 Hypothesis Estimate Est.Error CI.Lower CI.Upper Evid.Ratio
-1 (conditionD-condi... &gt; 0      0.2      0.09     0.05     0.36      65.67
+1 (conditionD-condi... &gt; 0      0.2      0.09     0.06     0.34      70.43
   Post.Prob Star
-1      0.98    *
+1      0.99    *
 ---
 'CI': 90%-CI for one-sided and 95%-CI for two-sided hypotheses.
 '*': For one-sided hypotheses, the posterior probability exceeds 95%;
@@ -533,7 +533,7 @@ for two-sided hypotheses, the value tested against lies outside the 95%-CI.
 Posterior probabilities of point hypotheses assume equal prior probabilities.</code></pre>
 </div>
 </div>
-<p>As expected, we see an estimate of 0.2 (0.4 - 0.2). We also see an evidence ratio of 65.6666667 for the hypothesis that this is larger than 0.</p>
+<p>As expected, we see an estimate of 0.2 (0.4 - 0.2). We also see an evidence ratio of 70.4285714 for the hypothesis that this is larger than 0.</p>
 
 
 </section>

@@ -1,0 +1,77 @@
+---
+title: "Oxford Utilitarianism Scale"
+execute:
+  echo: false
+format: 
+   html:
+     df-print: kable
+     toc: true
+knitr:
+  opts_chunk: 
+    R.options:
+      knitr.kable.NA: ''
+nocite: |
+  @kahane2018
+bibliography: references.bib
+---
+
+```{r}
+#| label: setup
+#| message: false
+library(tidyverse)
+library(DT)
+items <- read_csv("OUS-items.csv")
+```
+
+The scale consists of 9 items in two subscales. The first subscale--Impartial Beneficence (OUSIB)--consists of 5 items that all tap endorsement of the impartial maximization of the greater good, even at the cost of personal self-sacrifice. The second subscale was labeled Instrumental Harm (OUS-IH). This subscale consists of 4 items that all tap into a willingness to cause harm to bring about the greater good.
+
+## Items
+
+```{r}
+#| results: asis
+items %>%
+  select(item_nr, item) %>%
+  unite(col = item, everything(), sep = ". ") %>%
+  pull(item) %>%
+  str_c("\n") %>%
+  str_flatten() %>%
+  cat()
+```
+
+## Instructions
+
+> Indicate how much you agree or disagree with each of the following statements (1 = strongly disagree, 4 = neither agree nor disagree, 7 = strongly agree)
+
+## Response options
+
+A 7-point Likert scale with at least 3 of the response options labeled: 1 = strongly disagree, 4 = neither agree nor disagree, 7 = strongly agree.
+
+## Download
+
+```{r}
+#| label: table
+#| tbl-cap: Speciesism Scale items
+
+items %>%
+  select(where(~ sum(is.na(.x)) != length(.x))) %>%
+  datatable(
+    rownames = FALSE,
+    extensions = "Buttons",
+    options = list(
+      dom = "Bip",
+      buttons = list(
+        "copy",
+        list(
+          extend = "collection",
+          buttons = c("csv", "excel"),
+          text = "Download"
+        )
+      )
+    )
+  )
+```
+
+## Reference
+
+::: {#refs}
+:::

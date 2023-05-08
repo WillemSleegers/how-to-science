@@ -1,0 +1,83 @@
+---
+title: "The Optimism–Pessimism Short Scale–2"
+execute:
+  echo: false
+format: 
+   html:
+     df-print: kable
+     toc: true
+knitr:
+  opts_chunk: 
+    R.options:
+      knitr.kable.NA: ''
+nocite: |
+  @nießen2022
+bibliography: references.bib
+---
+
+```{r}
+#| label: setup
+#| message: false
+library(tidyverse)
+library(DT)
+items <- read_csv("SOP2-items.csv")
+```
+
+The Optimism--Pessimism Short Scale--2 (SOP2) is a 2-item measure of optimism---the tendency to look to the future with confidence and mostly expect good things to happen, rather than to look at the future full of doubt and mostly expect bad things to happen.
+
+## Items
+
+```{r}
+#| results: asis
+items %>%
+  select(item_nr, item) %>%
+  unite(col = item, everything(), sep = ". ") %>%
+  pull(item) %>%
+  str_c("\n") %>%
+  str_flatten() %>%
+  cat()
+```
+
+## Response options
+
+Each question is rated on a 7-point scale, but only the first and last option is labelled.
+
+For the optimism item:
+
+-   not at all optimistic
+-   very optimistic
+
+For the pessimism item:
+
+-   not at all pessimistic
+-   very pessimistic
+
+## Download
+
+```{r}
+#| label: table
+#| tbl-cap: Speciesism Scale items
+
+items %>%
+  select(where(~ sum(is.na(.x)) != length(.x))) %>%
+  datatable(
+    rownames = FALSE, 
+    extensions = 'Buttons', 
+    options = list(
+      dom = 'Bip',
+      buttons = list(
+        'copy', 
+        list(
+          extend = 'collection',
+          buttons = c('csv', 'excel'),
+          text = 'Download'
+        )
+      )
+    )
+  )
+```
+
+## Reference
+
+::: {#refs}
+:::

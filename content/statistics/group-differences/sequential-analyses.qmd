@@ -44,8 +44,8 @@ labels <- c("control", "experimental")
 
 # Produce the variance-covariance matrix
 Sigma <- matrix(
-  nrow = length(Ms), 
-  ncol = length(Ms), 
+  nrow = length(Ms),
+  ncol = length(Ms),
   data = c(
     SDs^2, 0,
     0, SDs^2
@@ -61,9 +61,9 @@ colnames(m) <- labels
 data <- as_tibble(m)
 
 data <- pivot_longer(
-  data = data, 
-  cols = everything(), 
-  names_to = "condition", 
+  data = data,
+  cols = everything(),
+  names_to = "condition",
   values_to = "DV"
 )
 
@@ -87,17 +87,17 @@ results <- tibble()
 for (i in 1:length(ns)) {
   # Get the sample size
   n <- ns[i]
-  
+
   # Draw a sample of size n
   sample <- slice_head(data, n = n)
-  
+
   # If this is the first iteration, run the full brms model
   # Else update the model
   if (i == 1) {
     model <- brm(
-      formula = DV ~ 0 + Intercept + condition, 
-      data = sample, 
-      family = gaussian(), 
+      formula = DV ~ 0 + Intercept + condition,
+      data = sample,
+      family = gaussian(),
       prior = c(
         set_prior(coef = "Intercept", prior = "normal(0, 1)"),
         set_prior(class = "b", prior = "normal(0, 1)"),
@@ -107,16 +107,16 @@ for (i in 1:length(ns)) {
   } else {
     model <- update(model, newdata = sample)
   }
-  
+
   # Get the posteriors of the model estimates
   draws <- as_draws_df(model)
-  
+
   # Add sample information
   draws <- mutate(draws, step = i, n = n)
-  
+
   # Add the draws to the results data frame
   results <- bind_rows(
-    results, 
+    results,
     draws
   )
 }
@@ -149,7 +149,7 @@ Below I use both `brms` and `BayesFactor` to calculate Bayes factors for the eff
 #| label: sequential-analyses-2-groups
 #| message: false
 #| results: false
-#| 
+#|
 #| cache: true
 ns <- c(10, 20, 30, 40, 50, 75, 100, 150, 200, 250)
 results <- tibble()
@@ -157,37 +157,37 @@ results <- tibble()
 for (i in 1:length(ns)) {
   # Get the sample size
   n <- ns[i]
-  
+
   # Draw a sample of size n
   sample <- slice_head(data, n = n)
-  
+
   # If this is the first iteration, run the full brms model
   # Else update the model
   if (i == 1) {
     model <- brm(
-      formula = DV ~ 0 + Intercept + condition, 
-      data = sample, 
-      family = gaussian(), 
+      formula = DV ~ 0 + Intercept + condition,
+      data = sample,
+      family = gaussian(),
       prior = c(
         set_prior(coef = "Intercept", prior = "normal(0, 1)"),
         set_prior(class = "b", prior = "normal(0, 1)"),
         set_prior(class = "sigma", prior = "normal(1, 1)")
-      ), 
+      ),
       sample_prior = TRUE
     )
   } else {
     model <- update(model, newdata = sample)
   }
-  
+
   # Calculate the BF
   BF_brms <- hypothesis(model, "conditionexperimental = 0")
 
   # Also calculate the BF with the testBF() function from BayesFactor
   BF_BF <- ttestBF(formula = DV ~ condition, data = as.data.frame(sample))
-  
+
   # Add the information to the bayes factors data frame
   results <- bind_rows(
-    results, 
+    results,
     tibble(
       step = i,
       n = n,
@@ -206,18 +206,19 @@ Next we plot the Bayes factors for each sample size and for each method of calcu
 results_long <- results %>%
   mutate(BayesFactor = 1 / BayesFactor) %>%
   pivot_longer(
-    cols = c(brms, BayesFactor), 
-    names_to = "method", 
-    values_to = "BF")
+    cols = c(brms, BayesFactor),
+    names_to = "method",
+    values_to = "BF"
+  )
 
 ggplot(
-    data = results_long, 
-    mapping = aes(x = factor(n), y = BF, linetype = method, group = method)
-  ) +
+  data = results_long,
+  mapping = aes(x = factor(n), y = BF, linetype = method, group = method)
+) +
   geom_line() +
   labs(
-    x = "Sample size per condition (n)", 
-    y = expression(BF["10"]), 
+    x = "Sample size per condition (n)",
+    y = expression(BF["10"]),
     linetype = "Method"
   )
 ```
@@ -237,8 +238,8 @@ labels <- c("A", "B", "C", "D")
 
 # Produce the variance-covariance matrix
 Sigma <- matrix(
-  nrow = length(Ms), 
-  ncol = length(Ms), 
+  nrow = length(Ms),
+  ncol = length(Ms),
   data = c(
     SDs^2, 0, 0, 0,
     0, SDs^2, 0, 0,
@@ -256,9 +257,9 @@ colnames(m) <- labels
 data <- as_tibble(m)
 
 data <- pivot_longer(
-  data = data, 
-  cols = everything(), 
-  names_to = "condition", 
+  data = data,
+  cols = everything(),
+  names_to = "condition",
   values_to = "DV"
 )
 
@@ -280,17 +281,17 @@ results <- tibble()
 for (i in 1:length(ns)) {
   # Get the sample size
   n <- ns[i]
-  
+
   # Draw a sample of size n
   sample <- slice_head(data, n = n)
-  
+
   # If this is the first iteration, run the full brms model
   # Else update the model
   if (i == 1) {
     model <- brm(
-      formula = DV ~ 0 + Intercept + condition, 
-      data = sample, 
-      family = gaussian(), 
+      formula = DV ~ 0 + Intercept + condition,
+      data = sample,
+      family = gaussian(),
       prior = c(
         set_prior(coef = "Intercept", prior = "normal(0, 1)"),
         set_prior(class = "b", prior = "normal(0, 1)"),
@@ -300,20 +301,20 @@ for (i in 1:length(ns)) {
   } else {
     model <- update(model, newdata = sample)
   }
-  
+
   # Get the estimated marginal means
   emmeans <- emmeans(model, specs = pairwise ~ condition)
   contrasts <- emmeans$contrasts
-  
+
   # Get draws of the posterior of each contrast
   draws <- gather_emmeans_draws(contrasts)
-  
+
   # Add sample information
   draws <- mutate(draws, step = i, n = n)
-  
+
   # Add the draws to the results data frame
   results <- bind_rows(
-    results, 
+    results,
     draws
   )
 }
@@ -333,17 +334,17 @@ final_quantiles <- results %>%
     final_lower = quantile(.value, .025),
     final_upper = quantile(.value, .975)
   ) %>%
-  pivot_longer(cols = -contrast, names_to = "bound", "value")
+  pivot_longer(cols = -contrast, names_to = "bound", values_to = "value")
 
 ggplot(results, aes(x = factor(n), y = .value)) +
   stat_slabinterval() +
   geom_hline(
-    mapping = aes(yintercept = value), 
-    data = final_quantiles, 
-    linetype = "dashed", 
+    mapping = aes(yintercept = value),
+    data = final_quantiles,
+    linetype = "dashed",
     alpha = .5
-  ) +  
-  facet_wrap(~ contrast, ncol = 1, scales = "free_y") +
+  ) +
+  facet_wrap(~contrast, ncol = 1, scales = "free_y") +
   labs(x = "Sample size per condition (n)", y = "Contrast estimate") +
   scale_color_viridis(option = "mako", discrete = TRUE)
 ```
@@ -363,28 +364,28 @@ results <- tibble()
 for (i in 1:length(ns)) {
   # Get the sample size
   n <- ns[i]
-  
+
   # Draw a sample of size n
   sample <- slice_head(data, n = n)
-  
+
   # If this is the first iteration, run the full brms model
   # Else update the model
   if (i == 1) {
     model <- brm(
-      formula = DV ~ 0 + Intercept + condition, 
-      data = sample, 
-      family = gaussian(), 
+      formula = DV ~ 0 + Intercept + condition,
+      data = sample,
+      family = gaussian(),
       prior = c(
         set_prior(coef = "Intercept", prior = "normal(0, 1)"),
         set_prior(class = "b", prior = "normal(0, 1)"),
         set_prior(class = "sigma", prior = "normal(1, 1)")
-      ), 
+      ),
       sample_prior = TRUE
     )
   } else {
     model <- update(model, newdata = sample)
   }
-  
+
   # Get the bayes factors for each contrast
   BF_AB <- hypothesis(model, "Intercept = conditionB")
   BF_AC <- hypothesis(model, "Intercept = conditionC")
@@ -392,7 +393,7 @@ for (i in 1:length(ns)) {
   BF_BC <- hypothesis(model, "conditionB = conditionC")
   BF_BD <- hypothesis(model, "conditionB = conditionD")
   BF_CD <- hypothesis(model, "conditionC = conditionD")
-  
+
   # Create a tibble with the Bayes factors and sample information
   bayes_factors <- tibble(
     i = i,
@@ -407,7 +408,7 @@ for (i in 1:length(ns)) {
 
   # Add the draws to the results data frame
   results <- bind_rows(
-    results, 
+    results,
     bayes_factors
   )
 }
@@ -422,10 +423,10 @@ results_long <- results %>%
 
 ggplot(data = results_long, mapping = aes(x = factor(n), y = BF, group = 1)) +
   geom_line() +
-  facet_wrap(~ contrast) + 
+  facet_wrap(~contrast) +
   labs(
-    x = "Sample size per condition (n)", 
-    y = expression(BF["10"]), 
+    x = "Sample size per condition (n)",
+    y = expression(BF["10"]),
     linetype = "Method"
   )
 ```

@@ -1,0 +1,83 @@
+---
+title: "Speciesism Scale"
+execute:
+  echo: false
+format: 
+   html:
+     df-print: kable
+     toc: true
+knitr:
+  opts_chunk: 
+    R.options:
+      knitr.kable.NA: ''
+nocite: |
+  @caviola2019
+bibliography: references.bib
+---
+
+```{r}
+#| label: setup
+#| message: false
+library(tidyverse)
+library(DT)
+items <- read_csv("speciesism-items.csv")
+```
+
+The Speciesism Scale is a 6-item measure of speciesism---the assignment of different inherent moral status based solely on an individual's species membership.
+
+## Items
+
+```{r}
+#| results: asis
+items %>%
+  select(item_nr, item) %>%
+  unite(col = item, everything(), sep = ". ") %>%
+  pull(item) %>%
+  str_c("\n") %>%
+  str_flatten() %>%
+  cat()
+```
+
+## Response options
+
+-   Strongly disagree
+-   Disagree
+-   Somewhat disagree
+-   Neither agree nor disagree
+-   Somewhat agree
+-   Agree
+-   Strongly agree
+
+::: callout-note
+The original paper only reports the labels for the end points of the scale ('Strongly disagree' and 'Strongly agree'), not the options in between.
+:::
+
+## Download
+
+```{r}
+#| label: table
+#| tbl-cap: Speciesism Scale items
+
+items %>%
+  select(where(~ sum(is.na(.x)) != length(.x))) %>%
+  datatable(
+    rownames = FALSE, 
+    extensions = 'Buttons', 
+    options = list(
+      dom = 'Bip',
+      buttons = list(
+        'copy', 
+        list(
+          extend = 'collection',
+          buttons = c('csv', 'excel'),
+          text = 'Download'
+        )
+      )
+    )
+  )
+```
+
+## Reference
+
+::: {#refs}
+:::
