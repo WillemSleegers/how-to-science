@@ -1,10 +1,10 @@
-item_nr,item,reverse
-1,"If the only way to save another person’s life during an emergency is to sacrifice one’s own leg, then one is morally required to make this sacrifice.",0
-2,It is morally right to harm an innocent person if harming them is a necessary means to helping several other innocent people.,0
-3,"From a moral point of view, we should feel obliged to give one of our kidneys to a person with kidney failure since we don’t need two kidneys to survive, but really only one to be healthy.",0
-4,"If the only way to ensure the overall well-being and happiness of the people is through the use of political oppression for a short, limited period, then political oppression should be used.",0
-5,"From a moral perspective, people should care about the well-being of all human beings on the planet equally; they should not favor the well-being of people who are especially close to them either physically or emotionally.",0
-6,It is permissible to torture an innocent person if this would be necessary to provide information to prevent a bomb going off that would kill hundreds of people.,0
-7,It is just as wrong to fail to help someone as it is to actively harm them yourself.,0
-8,Sometimes it is morally necessary for innocent people to die as collateral damage if more people are saved overall.,0
-9,It is morally wrong to keep money that one doesn’t really need if one can donate it to causes that provide effective help to those who will benefit a great deal.,0
+item_nr,item,subscale,reverse
+1,"If the only way to save another person’s life during an emergency is to sacrifice one’s own leg, then one is morally required to make this sacrifice.",Impartial Beneficence,0
+2,It is morally right to harm an innocent person if harming them is a necessary means to helping several other innocent people.,Instrumental Harm,0
+3,"From a moral point of view, we should feel obliged to give one of our kidneys to a person with kidney failure since we don’t need two kidneys to survive, but really only one to be healthy.",Impartial Beneficence,0
+4,"If the only way to ensure the overall well-being and happiness of the people is through the use of political oppression for a short, limited period, then political oppression should be used.",Instrumental Harm,0
+5,"From a moral perspective, people should care about the well-being of all human beings on the planet equally; they should not favor the well-being of people who are especially close to them either physically or emotionally.",Impartial Beneficence,0
+6,It is permissible to torture an innocent person if this would be necessary to provide information to prevent a bomb going off that would kill hundreds of people.,Instrumental Harm,0
+7,It is just as wrong to fail to help someone as it is to actively harm them yourself.,Impartial Beneficence,0
+8,Sometimes it is morally necessary for innocent people to die as collateral damage if more people are saved overall.,Instrumental Harm,0
+9,It is morally wrong to keep money that one doesn’t really need if one can donate it to causes that provide effective help to those who will benefit a great deal.,Impartial Beneficence,0
