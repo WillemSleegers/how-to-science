@@ -57,6 +57,7 @@ website:
     - id: group-differences
       title: "Group differences"
       contents:
+        - content/statistics/group-differences/confidence-intervals.qmd
         - content/statistics/group-differences/pairwise-comparisons.qmd
         - content/statistics/group-differences/sequential-analyses.qmd
 
