@@ -1,24 +1,5 @@
----
-title: "Confidence intervals"
-toc: true
-code-tools: true
-code-fold: true
----
-
-```{r}
-#| label: setup
-#| message: false
-
-library(MASS)
-library(tidyverse)
-library(lmerTest)
-library(marginaleffects)
-
-theme_set(theme_minimal())
-
-set.seed(1)
-```
-## 4 groups
+<!-- 
+## Within-subjects
 
 ```{r}
 #| label: simulation-2-groups
@@ -26,14 +7,16 @@ set.seed(1)
 # Set the simulation parameters
 Ms <- c(3, 3.2, 3.5, 3.8)
 SDs <- c(1, 1, 1, 1)
+r <- .75
 labels <- c("A", "B", "C", "D")
 
 # Produce the variance-covariance matrix
 Sigma <- matrix(
   nrow = length(Ms),
   ncol = length(Ms),
-  data = diag(SDs)
+  data = r
 )
+diag(Sigma) <- SDs
 
 preds <- tibble()
 Ns <- c(20, 50, 100, 200, 300, 400)
@@ -46,21 +29,23 @@ for (n in Ns) {
 
   data <- m |>
     as_tibble() |>
+    mutate(id = 1:n()) |>
     pivot_longer(
-      cols = everything(),
+      cols = -id,
       names_to = "predictor",
       values_to = "response"
     )
 
-  mod <- lm(response ~ predictor, data = data)
+  mod <- lmer(response ~ predictor + (1 | id), data = data)
+
+  temp2 <- avg_comparisons(mod)
+
 
   preds <- mod |>
-    avg_predictions(variables = "predictor") |>
+    avg_predictions(variables = "predictor", re.form = NA) |>
     as_tibble() |>
     mutate(n = n) |>
     bind_rows(preds)
-
-  temp1 <- avg_comparisons(mod)
 }
 
 ggplot(preds, aes(x = predictor, y = estimate)) +
@@ -84,3 +69,4 @@ ggplot(preds, aes(x = predictor, y = estimate)) +
   ) +
   scale_y_continuous(limits = c(1, 5), breaks = 1:5)
 ```
+ -->
