@@ -22,6 +22,7 @@ set.seed(1)
 
 ```{r}
 #| label: simulation-2-groups
+#| height: 1000
 
 # Set the simulation parameters
 Ms <- c(3, 3.2, 3.5, 3.8)
@@ -77,7 +78,11 @@ ggplot(preds, aes(x = predictor, y = estimate)) +
     aes(ymin = conf.low, ymax = conf.high),
     width = .2, position = position_dodge(.9)
   ) +
-  facet_wrap(~n, labeller = labeller(n = function(x) paste("n = ", x))) +
+  facet_wrap(
+    ~n, 
+    ncol = 2, 
+    labeller = labeller(n = function(x) paste("n = ", x))
+  ) +
   labs(
     x = "Group",
     y = "Predicted average"

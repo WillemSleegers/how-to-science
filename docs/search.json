@@ -1,0 +1,30 @@
+[
+  {
+    "objectID": "content/statistics/group-differences/confidence-intervals.html",
+    "href": "content/statistics/group-differences/confidence-intervals.html",
+    "title": "Confidence intervals",
+    "section": "",
+    "text": "Code\nlibrary(MASS)\nlibrary(tidyverse)\nlibrary(lmerTest)\nlibrary(marginaleffects)\n\ntheme_set(theme_minimal())\n\nset.seed(1)"
+  },
+  {
+    "objectID": "content/statistics/group-differences/confidence-intervals.html#groups",
+    "href": "content/statistics/group-differences/confidence-intervals.html#groups",
+    "title": "Confidence intervals",
+    "section": "4 groups",
+    "text": "4 groups\n\n\nCode\n# Set the simulation parameters\nMs <- c(3, 3.2, 3.5, 3.8)\nSDs <- c(1, 1, 1, 1)\nlabels <- c(\"A\", \"B\", \"C\", \"D\")\n\n# Produce the variance-covariance matrix\nSigma <- matrix(\n  nrow = length(Ms),\n  ncol = length(Ms),\n  data = diag(SDs)\n)\n\npreds <- tibble()\nNs <- c(20, 50, 100, 200, 300, 400)\n\n# Simulate\nfor (n in Ns) {\n  m <- mvrnorm(n = n, mu = Ms, Sigma = Sigma, empirical = TRUE)\n\n  colnames(m) <- labels\n\n  data <- m |>\n    as_tibble() |>\n    pivot_longer(\n      cols = everything(),\n      names_to = \"predictor\",\n      values_to = \"response\"\n    )\n\n  mod <- lm(response ~ predictor, data = data)\n\n  preds <- mod |>\n    avg_predictions(variables = \"predictor\") |>\n    as_tibble() |>\n    mutate(n = n) |>\n    bind_rows(preds)\n\n  temp1 <- avg_comparisons(mod)\n}\n\nggplot(preds, aes(x = predictor, y = estimate)) +\n  geom_point(position = position_dodge(.9)) +\n  geom_rect(\n    aes(\n      ymin = conf.low, ymax = conf.high,\n      xmin = 0, xmax = 4,\n      group = predictor\n    ),\n    alpha = .25\n  ) +\n  geom_errorbar(\n    aes(ymin = conf.low, ymax = conf.high),\n    width = .2, position = position_dodge(.9)\n  ) +\n  facet_wrap(\n    ~n, \n    ncol = 2, \n    labeller = labeller(n = function(x) paste(\"n = \", x))\n  ) +\n  labs(\n    x = \"Group\",\n    y = \"Predicted average\"\n  ) +\n  scale_y_continuous(limits = c(1, 5), breaks = 1:5)"
+  },
+  {
+    "objectID": "content/WIP/item-development.html",
+    "href": "content/WIP/item-development.html",
+    "title": "Item Development",
+    "section": "",
+    "text": "Reverse-scored or reverse worded items can be included to determine whether participants are paying attention and don’t just select the same response on each item. However, there is some evidence that reverse-scored items reduce the reliability of the scale or produce an unexpected factor structure [@swain2008].\nAnother important consideration is that reverse-worded items can affect the model fit. Factor analyses of scales with some RW items frequently indicate the presence of method covariance obscuring or confounding substantive covariance (e.g., Brown, 2003; Roszkowski & Soven, 2010)."
+  },
+  {
+    "objectID": "content/WIP/item-development.html#number-of-items",
+    "href": "content/WIP/item-development.html#number-of-items",
+    "title": "Item Development",
+    "section": "Number of items",
+    "text": "Number of items\nThere are no hard-and-fast rules guiding this decision, but keeping a measure short is an effective means of minimizing response biases caused by boredom or fatigue (Schmitt & Stults, 1985; Schriesheim & Eisenbach, 1990). Additional items also demand more time in both the development and administration of a measure (Carmines & Zeller, 1979). Harvey, Billings, and Nilan (1985) suggest that at least four items per scale are needed to test the homogeneity of items within each latent construct. Adequate internal consistency reliabilities can be obtained with as few as three items (Cook et al., 1981), and adding items indefinitely makes progressively less impact on scale reliability (Carmines & Zeller, 1979). It is difficult to improve on the internal consistency reliabilities of five appropriate items by adding items to a scale (Hinkin, 1985; Hinkin & Schriesheim, 1989; Schriesheim & Hinkin, 1990). Cortina (1993) found that scales with many\nitems may have high internal consistency reliabilities even if item intercorrelations are low, an argument in favor of shorter scales with high internal consistency. It is also important to assure that the domain has been adequately sampled, as inadequate sampling is a primary source of measurement error (Churchill, 1979). As Thurstone (1947) points out, scales should possess simple structure, or parsimony. Not only should any one measure have the simplest possible factor constitution, but any scale should require the contribution of a minimum number of items that adequately tap the domain of interest. These findings would suggest that the eventual goal will be the retention of four to six items for most constructs, but the final determination must be made only with accumulated evidence in support of the construct validity of the measure. It should be anticipated that approximately one half of the created items will be retained for use in the final scales, so at least twice as many items as will be needed in the final scales should be generated to be administered in a survey questionnaire.\nhttps://twitter.com/dingding_peng/status/1481683536499331079\nhttps://psyarxiv.com/4kra2/"
+  }
+]
