@@ -38,6 +38,7 @@ website:
             - content/methodology/survey-design/item-development.qmd
             - content/methodology/survey-design/response-options.qmd
             - content/methodology/survey-design/reliability-validity.qmd
+            - content/methodology/survey-design/attention-checks.qmd
             - content/methodology/survey-design/recommended-reading.qmd
 
     - id: factor-analysis

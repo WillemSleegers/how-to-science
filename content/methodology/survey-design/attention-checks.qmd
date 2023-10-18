@@ -1,0 +1,71 @@
+---
+title: "Attention checks"
+toc: true
+bibliography: references.bib
+---
+
+Unfortunately, not all respondents pay careful attention to survey instructions and survey items. We therefore would like to be able to detect these participants and prevent them from participating in the survey or to exclude them afterwards.
+
+There are two types of checks you could perform: attention checks and comprehension checks.
+
+## Attention checks
+
+Attention checks are defined as simple ways to determine who is paying attention to your study instructions, and the amount of effort participants devote to reading questions before answering them (Oppenheimer Meyvis, & Davidenko, 2009).
+
+### Instructional Manipulation Checks (IMCs)
+
+IMCs explicitly instruct a participant to complete a task in a certain way, and are therefore designed to see whether or not a participant has paid attention to the question being asked.
+
+#### Examples
+
+1. The colour test you are about to take part in is very simple, when asked for your favourite colour you must select 'Green'. This is an attention check. Based on the text you read above, what colour have you been asked to enter? [Red, Blue, Green, Organce, Brown]
+
+2. For this question, please select 'Somewhat Agree' as your answer. [Strongly disagree, Disagree, Somewhat disagree, Somewhat agree, Agree, Strongly agree]
+
+3. In the box below, please type the word 'Survey' to indicate you are paying attention. [Text box]
+
+4. Please select 'True' for this question. [True, False]
+
+5. Please enter the number '5' in the box below. [Text box]
+
+6. Please position the slider to the number 5. [Slider]
+
+7. Write in the word "purple". [Text box]
+
+8. This is a simple question. You don't need to be a wine connoisseur or avid beer drinker to answer. When asked for your favorite drink, you need to select carrot juice. Based on the text above, what is your favorite drink? [Wine; Beer; Vodka; Whiskey; Carrot juice; Other]
+
+### Nonsensical Items
+
+Nonsensical item checks embed a nonsensical item within a survey, to which only one or two responses to the question's options can be justified as objectively correct (see Paolacci, Chandler, & Ipeirotis, 2010).
+
+#### Examples
+
+1. I swim across the Atlanic Ocean to get to work every day. [Strongly disagree, Disagree, Agree, Strongly agree]
+
+2. I work fourteen months in a year. [Yes, this is true of me; No, this is not true of me]
+
+3. I have never used a computer. [Yes, this is true of me; No, this is not true of me]
+
+### Factual or logical questions
+
+Factual or logical questions consist of asking a question with a correct answer that everyone is likely to know.
+
+#### Examples
+
+1. What is 2 + 2? [Text box]
+
+2. Which of the following is a primary color? [Green, Orange, Blue]
+
+3. If yesterday was Monday, what is today? [Text box]
+
+4. Which of these is a vegetable? [Egg, Salmon, Broccoli, Cheeseburger, Pizza, Milk]
+
+5. Which of the following words is most closely associated with 'book'? [Pen; Saw; Car; Pants; House]
+
+## Comprehension checks
+
+Comprehension checks are used to measure participant's level of understanding of specific study instructions to ensure that they understand what is required of them
+
+## Survey platform rules
+
+Some survey platforms have rules about what kind of checks they allow. [Prolific](https://researcher-help.prolific.com/hc/en-gb/articles/360009223553-Prolific-s-Attention-and-Comprehension-Check-Policy) is one of them. Make sure to follow the link to check their rules so you don't break them.
