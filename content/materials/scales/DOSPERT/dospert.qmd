@@ -1,0 +1,84 @@
+---
+title: "Domain-Specific Risk-Taking (DOSPERT) Scale"
+execute:
+  echo: false
+format: 
+   html:
+     df-print: kable
+     toc: true
+knitr:
+  opts_chunk: 
+    R.options:
+      knitr.kable.NA: ''
+nocite: |
+  @blais2006
+bibliography: references.bib
+---
+
+```{r}
+#| label: setup
+#| message: false
+library(tidyverse)
+library(DT)
+items <- read_csv("dospert-items.csv")
+```
+
+Domain-Specific Risk-Taking (DOSPERT) Scale is a psychometric scale that assesses general and domain-specific dimensions of risk preference: financial decisions (separately for investing versus gambling), health/safety, recreational, ethical, and social decisions. Respondents rate the likelihood that they would engage in domain-specific risky activities.
+
+## Items
+
+```{r}
+#| results: asis
+items %>%
+  select(item_nr, item) %>%
+  unite(col = item, everything(), sep = ". ") %>%
+  pull(item) %>%
+  str_c("\n") %>%
+  str_flatten() %>%
+  cat()
+```
+
+## Instructions
+
+Domain-Speciﬁc Risk-Taking (Adult) Scale — RT scale:
+
+> For each of the following statements, please indicate the likelihood that you would engage in the described activity or behavior if you were to ﬁnd yourself in that situation. Provide a rating from Extremely Unlikely to Extremely Likely, using the following scale: Extremely Unlikely, Moderately Unlikely, Somewhat Unlikely, Not Sure, Somewhat Likely, Moderately Likely, Extremely Likely
+
+Domain-Speciﬁc Risk-Taking (Adult) Scale — RP subscale
+
+> People often see some risk in situations that contain uncertainty about what the outcome or consequences will be and for which there is the possibility of negative consequences. However, riskiness is a very personal and intuitive notion, and we are interested in your gut level assessment of how risky each situation or behavior is.
+> 
+> For each of the following statements, please indicate how risky you perceive each situation. Provide a rating from Not at all Risky to Extremely Risky, using the following scale: Not at all Risky, Slightly Risky, Somewhat Risky, Moderately Risky, Risky, Very Risky, Extremely Risky
+
+## Response options
+
+A 7-point Likert scale with all response options labeled (see instructions).
+
+## Download
+
+```{r}
+#| label: table
+#| tbl-cap: Speciesism Scale items
+items %>%
+  select(where(~ sum(is.na(.x)) != length(.x))) %>%
+  datatable(
+    rownames = FALSE,
+    extensions = "Buttons",
+    options = list(
+      dom = "Bip",
+      buttons = list(
+        "copy",
+        list(
+          extend = "collection",
+          buttons = c("csv", "excel"),
+          text = "Download"
+        )
+      )
+    )
+  )
+```
+
+## Reference
+
+::: {#refs}
+:::

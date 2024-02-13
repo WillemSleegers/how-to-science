@@ -81,6 +81,9 @@ website:
             - content/materials/scales/TIPI/TIPI.qmd
             - content/materials/scales/BFI-2-XS/BFI-2-XS.qmd
             - content/materials/scales/SOP2/SOP2.qmd
+        - section: "Risk"
+          contents:
+            - content/materials/scales/DOSPERT/dospert.qmd
 
 format:
   html:
