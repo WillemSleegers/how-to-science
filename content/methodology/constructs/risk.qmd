@@ -1,0 +1,12 @@
+---
+title: "Risk Attitudes"
+bibliography: references.bib
+---
+
+@dohmen2011 asked respondents about their risk attitude with a single item.
+
+> How do you see yourself: are you generally a person who is fully prepared to take risks or do you try to avoid taking risks?
+
+They found decently sized correlations with decisions in a lottery experiment and domain-specific risk attitudes. They also found it could predict risky behaviors such as holding stocks, driving a car, doing sports, being self-employed, and smoking.
+
+Notably, they find that the general measure is a good predictor, but that context-specific measures of risk are more powerful predictors of risk in the same context.

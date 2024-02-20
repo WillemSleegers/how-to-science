@@ -18,6 +18,7 @@ website:
       - text: "Methodology"
         menu:
           - sidebar:survey-design
+          - sidebar:constructs
       - text: "Statistics"
         menu:
           - sidebar:factor-analysis
@@ -40,7 +41,11 @@ website:
             - content/methodology/survey-design/reliability-validity.qmd
             - content/methodology/survey-design/attention-checks.qmd
             - content/methodology/survey-design/recommended-reading.qmd
-
+    - id: constructs
+      title: "Constructs"
+      contents:
+        - content/methodology/constructs/index.qmd
+        - content/methodology/constructs/risk.qmd
     - id: factor-analysis
       title: "Factor analysis"
       contents:

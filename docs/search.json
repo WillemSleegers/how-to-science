@@ -991,6 +991,16 @@
     ]
   },
   {
+    "objectID": "content/methodology/constructs/index.html",
+    "href": "content/methodology/constructs/index.html",
+    "title": "Overview",
+    "section": "",
+    "text": "This chapter is about how to best measure various constructs such as risk attitudes.",
+    "crumbs": [
+      "Overview"
+    ]
+  },
+  {
     "objectID": "content/WIP/item-development.html",
     "href": "content/WIP/item-development.html",
     "title": "Item Development",
@@ -1003,5 +1013,15 @@
     "title": "Item Development",
     "section": "Number of items",
     "text": "Number of items\nThere are no hard-and-fast rules guiding this decision, but keeping a measure short is an effective means of minimizing response biases caused by boredom or fatigue (Schmitt & Stults, 1985; Schriesheim & Eisenbach, 1990). Additional items also demand more time in both the development and administration of a measure (Carmines & Zeller, 1979). Harvey, Billings, and Nilan (1985) suggest that at least four items per scale are needed to test the homogeneity of items within each latent construct. Adequate internal consistency reliabilities can be obtained with as few as three items (Cook et al., 1981), and adding items indefinitely makes progressively less impact on scale reliability (Carmines & Zeller, 1979). It is difficult to improve on the internal consistency reliabilities of five appropriate items by adding items to a scale (Hinkin, 1985; Hinkin & Schriesheim, 1989; Schriesheim & Hinkin, 1990). Cortina (1993) found that scales with many\nitems may have high internal consistency reliabilities even if item intercorrelations are low, an argument in favor of shorter scales with high internal consistency. It is also important to assure that the domain has been adequately sampled, as inadequate sampling is a primary source of measurement error (Churchill, 1979). As Thurstone (1947) points out, scales should possess simple structure, or parsimony. Not only should any one measure have the simplest possible factor constitution, but any scale should require the contribution of a minimum number of items that adequately tap the domain of interest. These findings would suggest that the eventual goal will be the retention of four to six items for most constructs, but the final determination must be made only with accumulated evidence in support of the construct validity of the measure. It should be anticipated that approximately one half of the created items will be retained for use in the final scales, so at least twice as many items as will be needed in the final scales should be generated to be administered in a survey questionnaire.\nhttps://twitter.com/dingding_peng/status/1481683536499331079\nhttps://psyarxiv.com/4kra2/"
+  },
+  {
+    "objectID": "content/methodology/constructs/risk.html",
+    "href": "content/methodology/constructs/risk.html",
+    "title": "Risk Attitudes",
+    "section": "",
+    "text": "Dohmen et al. (2011) asked respondents about their risk attitude with a single item.\n\nHow do you see yourself: are you generally a person who is fully prepared to take risks or do you try to avoid taking risks?\n\nThey found decently sized correlations with decisions in a lottery experiment and domain-specific risk attitudes. They also found it could predict risky behaviors such as holding stocks, driving a car, doing sports, being self-employed, and smoking.\nNotably, they find that the general measure is a good predictor, but that context-specific measures of risk are more powerful predictors of risk in the same context.\n\n\n\n\nReferences\n\nDohmen, T., Falk, A., Huffman, D., Sunde, U., Schupp, J., & Wagner, G. G. (2011). Individual risk attitudes: Measurement, determinants, and behavioral consequences. Journal of the European Economic Association, 9(3), 522–550. https://doi.org/10.1111/j.1542-4774.2011.01015.x",
+    "crumbs": [
+      "Risk Attitudes"
+    ]
   }
 ]
