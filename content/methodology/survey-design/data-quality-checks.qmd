@@ -64,6 +64,8 @@ Nonsensical item checks embed a nonsensical item within a survey, to which only 
 
 4.  What type of social media accounts do you use (if any)? Please answer honestly. \[do they select the option “TisFask” which does not exist nor sound like any social media option\] [@stagnaro2024]
 
+5.  While watching the television, have you ever had a fatal heart attack? \[6-point Likert ranging from "Never" to "Often"\] [@paolacci2010]
+
 ### Factual or logical questions
 
 Factual or logical questions consist of asking a question with a correct answer that everyone is likely to know.
