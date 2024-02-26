@@ -1,38 +1,60 @@
 ---
-title: "Attention checks"
+title: "Data quality checks"
 toc: true
 bibliography: references.bib
 ---
 
-Unfortunately, not all respondents pay careful attention to survey instructions and survey items. We therefore would like to be able to detect these participants and prevent them from participating in the survey or to exclude them afterwards.
+Unfortunately, not all respondents pay careful attention to survey instructions and survey items. We therefore would like to be able to detect these participants and prevent them from participating in the survey or exclude them from data analysis.
 
-There are two types of checks you could perform: attention checks and comprehension checks.
+There are different types of checks to detect inattentive participants:
+
+-   Attention checks
+
+-   Comprehension checks
+
+-   Commitment checks
 
 ## Attention checks
 
-Attention checks are defined as simple ways to determine who is paying attention to your study instructions, and the amount of effort participants devote to reading questions before answering them (Oppenheimer Meyvis, & Davidenko, 2009).
+Attention checks are defined as simple ways to determine who is paying attention to your study instructions, and the amount of effort participants devote to reading questions before answering them [@oppenheimer2009].
 
 ### Instructional Manipulation Checks (IMCs)
 
-IMCs explicitly instruct a participant to complete a task in a certain way, and are therefore designed to see whether or not a participant has paid attention to the question being asked.
+Instructional manipulation checks (IMCs) explicitly instruct a participant to complete a task in a certain way, and are therefore designed to see whether or not a participant has paid attention to the question being asked.
+
+IMCs can be used in different formats (e.g., multiple-choice, text-based). Each format has advantages and disadvantages. Multiple-choice formats can be answered correctly randomly but text-based answers may be more difficult to analyze.
 
 #### Examples
 
-1. The colour test you are about to take part in is very simple, when asked for your favourite colour you must select 'Green'. This is an attention check. Based on the text you read above, what colour have you been asked to enter? [Red, Blue, Green, Organce, Brown]
+##### Binary
 
-2. For this question, please select 'Somewhat Agree' as your answer. [Strongly disagree, Disagree, Somewhat disagree, Somewhat agree, Agree, Strongly agree]
+1.  Please select 'True' for this question. \[True, False\]
 
-3. In the box below, please type the word 'Survey' to indicate you are paying attention. [Text box]
+##### Multiple-choice
 
-4. Please select 'True' for this question. [True, False]
+1.  The color test you are about to take part in is very simple, when asked for your favorite color you must select 'Green'. This is an attention check. Based on the text you read above, what color have you been asked to enter? \[Red, Blue, Green, Organce, Brown\] [@prolific2024]
 
-5. Please enter the number '5' in the box below. [Text box]
+2.  For this question, please select 'Somewhat Agree' as your answer. \[Strongly disagree, Disagree, Somewhat disagree, Somewhat agree, Agree, Strongly agree\]
 
-6. Please position the slider to the number 5. [Slider]
+3.  This is a simple question. You don't need to be a wine connoisseur or avid beer drinker to answer. When asked for your favorite drink, you need to select carrot juice. Based on the text above, what is your favorite drink? \[Wine; Beer; Vodka; Whiskey; Carrot juice; Other\]
 
-7. Write in the word "purple". [Text box]
+4.  Help us keep track of who is paying attention. Please select “Somewhat disagree” from the options below. \[Multiple choice: Strongly agree - Strongly disagree\] [@stagnaro2024]
 
-8. This is a simple question. You don't need to be a wine connoisseur or avid beer drinker to answer. When asked for your favorite drink, you need to select carrot juice. Based on the text above, what is your favorite drink? [Wine; Beer; Vodka; Whiskey; Carrot juice; Other]
+5.  Please ignore this question and do not answer. \[choose all that apply: Strongly agree Strongly disagree\] [@stagnaro2024]
+
+##### Text-based
+
+1.  In the box below, please type the word 'Survey' to indicate you are paying attention.
+
+2.  Please enter the number '5' in the box below.
+
+3.  The following is to verify that you are a real person. Please enter the word "purple" in the box below. [@geisen2022]
+
+4.  Please write "twenty-five" using numbers. \[Text box\] [@stagnaro2024]
+
+##### Slider
+
+1.  Please position the slider to the number 5. \[Slider\]
 
 ### Nonsensical Items
 
@@ -40,11 +62,13 @@ Nonsensical item checks embed a nonsensical item within a survey, to which only 
 
 #### Examples
 
-1. I swim across the Atlanic Ocean to get to work every day. [Strongly disagree, Disagree, Agree, Strongly agree]
+1.  I swim across the Atlanic Ocean to get to work every day. \[Strongly disagree, Disagree, Agree, Strongly agree\] [@prolific2024]
 
-2. I work fourteen months in a year. [Yes, this is true of me; No, this is not true of me]
+2.  I work fourteen months in a year. \[Yes, this is true of me; No, this is not true of me\]
 
-3. I have never used a computer. [Yes, this is true of me; No, this is not true of me]
+3.  I have never used a computer. \[Yes, this is true of me; No, this is not true of me\]
+
+4.  What type of social media accounts do you use (if any)? Please answer honestly. \[do they select the option “TisFask” which does not exist nor sound like any social media option\] [@stagnaro2024]
 
 ### Factual or logical questions
 
@@ -52,19 +76,27 @@ Factual or logical questions consist of asking a question with a correct answer 
 
 #### Examples
 
-1. What is 2 + 2? [Text box]
+1.  What is 2 + 2? \[Text box\]
 
-2. Which of the following is a primary color? [Green, Orange, Blue]
+2.  Which of the following is a primary color? \[Green, Orange, Blue\]
 
-3. If yesterday was Monday, what is today? [Text box]
+3.  If yesterday was Monday, what is today? \[Text box\]
 
-4. Which of these is a vegetable? [Egg, Salmon, Broccoli, Cheeseburger, Pizza, Milk]
+4.  Which of these is a vegetable? \[Egg, Salmon, Broccoli, Cheeseburger, Pizza, Milk\] [@geisen2022]
 
-5. Which of the following words is most closely associated with 'book'? [Pen; Saw; Car; Pants; House]
+5.  Which of the following words is most closely associated with 'book'? \[Pen; Saw; Car; Pants; House\]
 
 ## Comprehension checks
 
 Comprehension checks are used to measure participant's level of understanding of specific study instructions to ensure that they understand what is required of them
+
+## Commitment checks
+
+Commitment checks can be used to measure whether participants are motivated to answer questions and answer them honestly.
+
+Examples
+
+1.  We care about the quality of our survey data. For us to get the most accurate measures of your opinions, it is important that you provide thoughtful answers to each question in this survey. Do you commit to providing thoughtful answers to the questions in this survey? \[I can't promise either way; Yes, I will; No, I will not\] [@geisen2022]
 
 ## Survey platform rules
 

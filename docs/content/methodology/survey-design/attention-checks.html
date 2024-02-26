@@ -20,7 +20,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -101,6 +121,10 @@ ul.task-list li input[type="checkbox"] {
         <li>
     <a class="dropdown-item" href="../../../content/methodology/survey-design/index.html">
  <span class="dropdown-text">Survey Design</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../content/methodology/constructs/index.html">
+ <span class="dropdown-text">Constructs</span></a>
   </li>  
     </ul>
   </li>
@@ -205,29 +229,6 @@ ul.task-list li input[type="checkbox"] {
 </li>
       </ul>
   </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
- <span class="menu-text">Constructs</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../content/methodology/constructs/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Overview</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../content/methodology/constructs/risk.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">How to Measure Risk Attitudes</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
     </ul>
     </div>
 </nav>
@@ -245,6 +246,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#factual-or-logical-questions" id="toc-factual-or-logical-questions" class="nav-link" data-scroll-target="#factual-or-logical-questions">Factual or logical questions</a></li>
   </ul></li>
   <li><a href="#comprehension-checks" id="toc-comprehension-checks" class="nav-link" data-scroll-target="#comprehension-checks">Comprehension checks</a></li>
+  <li><a href="#commitment-checks" id="toc-commitment-checks" class="nav-link" data-scroll-target="#commitment-checks">Commitment checks</a></li>
   <li><a href="#survey-platform-rules" id="toc-survey-platform-rules" class="nav-link" data-scroll-target="#survey-platform-rules">Survey platform rules</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/willemsleegers/how-to-science/edit/main/content/methodology/survey-design/attention-checks.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/willemsleegers/how-to-science/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -271,26 +273,53 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Unfortunately, not all respondents pay careful attention to survey instructions and survey items. We therefore would like to be able to detect these participants and prevent them from participating in the survey or to exclude them afterwards.</p>
-<p>There are two types of checks you could perform: attention checks and comprehension checks.</p>
+<p>Unfortunately, not all respondents pay careful attention to survey instructions and survey items. We therefore would like to be able to detect these participants and prevent them from participating in the survey or exclude them from data analysis.</p>
+<p>There are different types of checks to detect inattentive participants:</p>
+<ul>
+<li><p>Attention checks</p></li>
+<li><p>Comprehension checks</p></li>
+<li><p>Commitment checks</p></li>
+</ul>
 <section id="attention-checks" class="level2">
 <h2 class="anchored" data-anchor-id="attention-checks">Attention checks</h2>
-<p>Attention checks are defined as simple ways to determine who is paying attention to your study instructions, and the amount of effort participants devote to reading questions before answering them (Oppenheimer Meyvis, &amp; Davidenko, 2009).</p>
+<p>Attention checks are defined as simple ways to determine who is paying attention to your study instructions, and the amount of effort participants devote to reading questions before answering them <span class="citation" data-cites="oppenheimer2009">(<a href="#ref-oppenheimer2009" role="doc-biblioref">Oppenheimer et al., 2009</a>)</span>.</p>
 <section id="instructional-manipulation-checks-imcs" class="level3">
 <h3 class="anchored" data-anchor-id="instructional-manipulation-checks-imcs">Instructional Manipulation Checks (IMCs)</h3>
-<p>IMCs explicitly instruct a participant to complete a task in a certain way, and are therefore designed to see whether or not a participant has paid attention to the question being asked.</p>
+<p>Instructional manipulation checks (IMCs) explicitly instruct a participant to complete a task in a certain way, and are therefore designed to see whether or not a participant has paid attention to the question being asked.</p>
+<p>IMCs can be used in different formats (e.g., multiple-choice, text-based). Each format has advantages and disadvantages. Multiple-choice formats can be answered correctly randomly but text-based answers may be more difficult to analyze.</p>
 <section id="examples" class="level4">
 <h4 class="anchored" data-anchor-id="examples">Examples</h4>
+<section id="binary" class="level5">
+<h5 class="anchored" data-anchor-id="binary">Binary</h5>
 <ol type="1">
-<li><p>The colour test you are about to take part in is very simple, when asked for your favourite colour you must select ‘Green’. This is an attention check. Based on the text you read above, what colour have you been asked to enter? [Red, Blue, Green, Organce, Brown]</p></li>
-<li><p>For this question, please select ‘Somewhat Agree’ as your answer. [Strongly disagree, Disagree, Somewhat disagree, Somewhat agree, Agree, Strongly agree]</p></li>
-<li><p>In the box below, please type the word ‘Survey’ to indicate you are paying attention. [Text box]</p></li>
-<li><p>Please select ‘True’ for this question. [True, False]</p></li>
-<li><p>Please enter the number ‘5’ in the box below. [Text box]</p></li>
-<li><p>Please position the slider to the number 5. [Slider]</p></li>
-<li><p>Write in the word “purple”. [Text box]</p></li>
-<li><p>This is a simple question. You don’t need to be a wine connoisseur or avid beer drinker to answer. When asked for your favorite drink, you need to select carrot juice. Based on the text above, what is your favorite drink? [Wine; Beer; Vodka; Whiskey; Carrot juice; Other]</p></li>
+<li>Please select ‘True’ for this question. [True, False]</li>
 </ol>
+</section>
+<section id="multiple-choice" class="level5">
+<h5 class="anchored" data-anchor-id="multiple-choice">Multiple-choice</h5>
+<ol type="1">
+<li><p>The color test you are about to take part in is very simple, when asked for your favorite color you must select ‘Green’. This is an attention check. Based on the text you read above, what color have you been asked to enter? [Red, Blue, Green, Organce, Brown] <span class="citation" data-cites="prolific2024">(<a href="#ref-prolific2024" role="doc-biblioref"><em>Prolific’s Attention and Comprehension Check Policy</em>, 2024</a>)</span></p></li>
+<li><p>For this question, please select ‘Somewhat Agree’ as your answer. [Strongly disagree, Disagree, Somewhat disagree, Somewhat agree, Agree, Strongly agree]</p></li>
+<li><p>This is a simple question. You don’t need to be a wine connoisseur or avid beer drinker to answer. When asked for your favorite drink, you need to select carrot juice. Based on the text above, what is your favorite drink? [Wine; Beer; Vodka; Whiskey; Carrot juice; Other]</p></li>
+<li><p>Help us keep track of who is paying attention. Please select “Somewhat disagree” from the options below. [Multiple choice: Strongly agree - Strongly disagree] <span class="citation" data-cites="stagnaro2024">(<a href="#ref-stagnaro2024" role="doc-biblioref">Stagnaro et al., 2024</a>)</span></p></li>
+<li><p>Please ignore this question and do not answer. [choose all that apply: Strongly agree Strongly disagree] <span class="citation" data-cites="stagnaro2024">(<a href="#ref-stagnaro2024" role="doc-biblioref">Stagnaro et al., 2024</a>)</span></p></li>
+</ol>
+</section>
+<section id="text-based" class="level5">
+<h5 class="anchored" data-anchor-id="text-based">Text-based</h5>
+<ol type="1">
+<li><p>In the box below, please type the word ‘Survey’ to indicate you are paying attention.</p></li>
+<li><p>Please enter the number ‘5’ in the box below.</p></li>
+<li><p>The following is to verify that you are a real person. Please enter the word “purple” in the box below. <span class="citation" data-cites="geisen2022">(<a href="#ref-geisen2022" role="doc-biblioref">Geisen, 2022</a>)</span></p></li>
+<li><p>Please write “twenty-five” using numbers. [Text box] <span class="citation" data-cites="stagnaro2024">(<a href="#ref-stagnaro2024" role="doc-biblioref">Stagnaro et al., 2024</a>)</span></p></li>
+</ol>
+</section>
+<section id="slider" class="level5">
+<h5 class="anchored" data-anchor-id="slider">Slider</h5>
+<ol type="1">
+<li>Please position the slider to the number 5. [Slider]</li>
+</ol>
+</section>
 </section>
 </section>
 <section id="nonsensical-items" class="level3">
@@ -299,9 +328,10 @@ ul.task-list li input[type="checkbox"] {
 <section id="examples-1" class="level4">
 <h4 class="anchored" data-anchor-id="examples-1">Examples</h4>
 <ol type="1">
-<li><p>I swim across the Atlanic Ocean to get to work every day. [Strongly disagree, Disagree, Agree, Strongly agree]</p></li>
+<li><p>I swim across the Atlanic Ocean to get to work every day. [Strongly disagree, Disagree, Agree, Strongly agree] <span class="citation" data-cites="prolific2024">(<a href="#ref-prolific2024" role="doc-biblioref"><em>Prolific’s Attention and Comprehension Check Policy</em>, 2024</a>)</span></p></li>
 <li><p>I work fourteen months in a year. [Yes, this is true of me; No, this is not true of me]</p></li>
 <li><p>I have never used a computer. [Yes, this is true of me; No, this is not true of me]</p></li>
+<li><p>What type of social media accounts do you use (if any)? Please answer honestly. [do they select the option “TisFask” which does not exist nor sound like any social media option] <span class="citation" data-cites="stagnaro2024">(<a href="#ref-stagnaro2024" role="doc-biblioref">Stagnaro et al., 2024</a>)</span></p></li>
 </ol>
 </section>
 </section>
@@ -314,7 +344,7 @@ ul.task-list li input[type="checkbox"] {
 <li><p>What is 2 + 2? [Text box]</p></li>
 <li><p>Which of the following is a primary color? [Green, Orange, Blue]</p></li>
 <li><p>If yesterday was Monday, what is today? [Text box]</p></li>
-<li><p>Which of these is a vegetable? [Egg, Salmon, Broccoli, Cheeseburger, Pizza, Milk]</p></li>
+<li><p>Which of these is a vegetable? [Egg, Salmon, Broccoli, Cheeseburger, Pizza, Milk] <span class="citation" data-cites="geisen2022">(<a href="#ref-geisen2022" role="doc-biblioref">Geisen, 2022</a>)</span></p></li>
 <li><p>Which of the following words is most closely associated with ‘book’? [Pen; Saw; Car; Pants; House]</p></li>
 </ol>
 </section>
@@ -324,14 +354,36 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="comprehension-checks">Comprehension checks</h2>
 <p>Comprehension checks are used to measure participant’s level of understanding of specific study instructions to ensure that they understand what is required of them</p>
 </section>
+<section id="commitment-checks" class="level2">
+<h2 class="anchored" data-anchor-id="commitment-checks">Commitment checks</h2>
+<p>Commitment checks can be used to measure whether participants are motivated to answer questions and answer them honestly.</p>
+<p>Examples</p>
+<ol type="1">
+<li>We care about the quality of our survey data. For us to get the most accurate measures of your opinions, it is important that you provide thoughtful answers to each question in this survey. Do you commit to providing thoughtful answers to the questions in this survey? [I can’t promise either way; Yes, I will; No, I will not] <span class="citation" data-cites="geisen2022">(<a href="#ref-geisen2022" role="doc-biblioref">Geisen, 2022</a>)</span></li>
+</ol>
+</section>
 <section id="survey-platform-rules" class="level2">
 <h2 class="anchored" data-anchor-id="survey-platform-rules">Survey platform rules</h2>
 <p>Some survey platforms have rules about what kind of checks they allow. <a href="https://researcher-help.prolific.com/hc/en-gb/articles/360009223553-Prolific-s-Attention-and-Comprehension-Check-Policy">Prolific</a> is one of them. Make sure to follow the link to check their rules so you don’t break them.</p>
 
 
+
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
+<div id="ref-geisen2022" class="csl-entry" role="listitem">
+Geisen, E. (2022). <em>Using attention checks in your surveys may harm data quality</em>. <a href="https://www.qualtrics.com/blog/attention-checks-and-data-quality/">https://www.qualtrics.com/blog/attention-checks-and-data-quality/</a>
+</div>
+<div id="ref-oppenheimer2009" class="csl-entry" role="listitem">
+Oppenheimer, D. M., Meyvis, T., &amp; Davidenko, N. (2009). Instructional manipulation checks: Detecting satisficing to increase statistical power. <em>Journal of Experimental Social Psychology</em>, <em>45</em>(4), 867–872. <a href="https://doi.org/10.1016/j.jesp.2009.03.009">https://doi.org/10.1016/j.jesp.2009.03.009</a>
+</div>
+<div id="ref-prolific2024" class="csl-entry" role="listitem">
+<em>Prolific’s attention and comprehension check policy</em>. (2024). <a href="https://researcher-help.prolific.com/hc/en-gb/articles/360009223553-Prolific-s-Attention-and-Comprehension-Check-Policy">https://researcher-help.prolific.com/hc/en-gb/articles/360009223553-Prolific-s-Attention-and-Comprehension-Check-Policy</a>
+</div>
+<div id="ref-stagnaro2024" class="csl-entry" role="listitem">
+Stagnaro, M. N., Druckman, J., Berinsky, A., Arechar, A. A., Willer, R., &amp; Rand, D. (2024). <em>Representativeness versus attentiveness: A comparison across nine online survey samples</em>. <a href="https://doi.org/10.31234/osf.io/h9j2d">https://doi.org/10.31234/osf.io/h9j2d</a>
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
