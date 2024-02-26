@@ -6,13 +6,7 @@ bibliography: references.bib
 
 Unfortunately, not all respondents pay careful attention to survey instructions and survey items. We therefore would like to be able to detect these participants and prevent them from participating in the survey or exclude them from data analysis.
 
-There are different types of checks to detect inattentive participants:
-
--   Attention checks
-
--   Comprehension checks
-
--   Commitment checks
+There are different types of checks to detect inattentive participants: attention checks, comprehension checks, and commitment checks.
 
 ## Attention checks
 
@@ -50,11 +44,11 @@ IMCs can be used in different formats (e.g., multiple-choice, text-based). Each 
 
 3.  The following is to verify that you are a real person. Please enter the word "purple" in the box below. [@geisen2022]
 
-4.  Please write "twenty-five" using numbers. \[Text box\] [@stagnaro2024]
+4.  Please write "twenty-five" using numbers. [@stagnaro2024]
 
 ##### Slider
 
-1.  Please position the slider to the number 5. \[Slider\]
+1.  Please position the slider to the number 5.
 
 ### Nonsensical Items
 
@@ -94,7 +88,7 @@ Comprehension checks are used to measure participant's level of understanding of
 
 Commitment checks can be used to measure whether participants are motivated to answer questions and answer them honestly.
 
-Examples
+### Examples
 
 1.  We care about the quality of our survey data. For us to get the most accurate measures of your opinions, it is important that you provide thoughtful answers to each question in this survey. Do you commit to providing thoughtful answers to the questions in this survey? \[I can't promise either way; Yes, I will; No, I will not\] [@geisen2022]
 
