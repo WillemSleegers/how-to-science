@@ -52,7 +52,7 @@ IMCs can be used in different formats (e.g., multiple-choice, text-based). Each 
 
 ### Nonsensical Items
 
-Nonsensical item checks embed a nonsensical item within a survey, to which only one or two responses to the question's options can be justified as objectively correct (see Paolacci, Chandler, & Ipeirotis, 2010).
+Nonsensical item checks embed a nonsensical item within a survey, to which only one or two responses to the question's options can be justified as objectively correct.
 
 #### Examples
 
