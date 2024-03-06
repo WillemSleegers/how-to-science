@@ -6,6 +6,8 @@ bibliography: references.bib
 
 Unfortunately, not all respondents pay careful attention to survey instructions and survey items. We therefore would like to be able to detect these participants and prevent them from participating in the survey or exclude them from data analysis.
 
+Some survey platforms have rules about what kind of checks they allow. [Prolific](https://researcher-help.prolific.com/hc/en-gb/articles/360009223553-Prolific-s-Attention-and-Comprehension-Check-Policy) is one of them. Make sure to follow the link to check their rules so you don't break them.
+
 There are different types of checks to detect inattentive participants: attention checks, comprehension checks, and commitment checks.
 
 ## Attention checks
@@ -66,6 +68,10 @@ Nonsensical item checks embed a nonsensical item within a survey, to which only 
 
 5.  While watching the television, have you ever had a fatal heart attack? \[6-point Likert ranging from "Never" to "Often"\] [@paolacci2010]
 
+6.  Are you licensed to operate a class SSGN submarine? \[Yes/No\] [@kennedy2022]
+
+7.  Which of the following did you do in the past week? Check all that apply. \[Purchased a private jet; Climbed a peak in the Karakoram Mountains; Watched TV; Learned to cook halusky; Played jai alai; Read a book; None of the above\] [@kennedy2022]
+
 ### Factual or logical questions
 
 Factual or logical questions consist of asking a question with a correct answer that everyone is likely to know.
@@ -93,7 +99,3 @@ Commitment checks can be used to measure whether participants are motivated to a
 ### Examples
 
 1.  We care about the quality of our survey data. For us to get the most accurate measures of your opinions, it is important that you provide thoughtful answers to each question in this survey. Do you commit to providing thoughtful answers to the questions in this survey? \[I can't promise either way; Yes, I will; No, I will not\] [@geisen2022]
-
-## Survey platform rules
-
-Some survey platforms have rules about what kind of checks they allow. [Prolific](https://researcher-help.prolific.com/hc/en-gb/articles/360009223553-Prolific-s-Attention-and-Comprehension-Check-Policy) is one of them. Make sure to follow the link to check their rules so you don't break them.
