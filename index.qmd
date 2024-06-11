@@ -2,8 +2,6 @@
 sidebar: false
 ---
 
-![](assets/img/atom-laboratory-science.svg){fig-alt="How to Science" fig-align="center" width="200"}
-
 # How to Science
 
 This is a website to organize my conclusions about topics in methodology and statistics.

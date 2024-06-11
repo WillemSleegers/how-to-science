@@ -1,0 +1,31 @@
+// https://quarto.org/docs/output-formats/html-themes.html
+
+/*-- scss:defaults --*/
+$white: #c9d1d9 !default;
+$black: #0d1117 !default;
+$link: #58a6ff;
+$highlight: red !default;
+
+$font: system-ui, sans-serif;
+$mono: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+
+// Colors
+$body-bg: $black;
+$body-color: $white;
+$link-color: $link;
+$popover-bg: $black;
+
+// Fonts
+$font-family-sans-serif: $font;
+
+// Navigation
+$navbar-bg: $black;
+$navbar-fg: $white;
+$navbar-hl: $link;
+
+/*-- scss:rules --*/
+
+// Navigation
+#quarto-header {
+  border-bottom: none; // Remove the bottom border
+}

@@ -1,0 +1,33 @@
+// https://quarto.org/docs/output-formats/html-themes.html
+
+/*-- scss:defaults --*/
+
+$white: #fff !default;
+$black: #000 !default;
+
+$link: #0e77ef;
+
+$font: system-ui, sans-serif;
+$link-color: $link;
+$mono: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+
+
+
+$navbar-bg: $white;
+$navbar-fg: $black;
+$navbar-hl: $link;
+
+$sidebar-fg: $black;
+
+$footer-fg: $black;
+
+$toc-color: $black;
+
+$font-family-sans-serif: $font;
+
+/*-- scss:rules --*/
+
+/* Add a border to the bottom of the navigation bar */
+#quarto-header {
+  border-bottom: 1px solid #dee2e6;
+}

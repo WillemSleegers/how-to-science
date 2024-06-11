@@ -5,20 +5,19 @@ project:
 website:
   title: "How to Science"
   page-navigation: true
-  reader-mode: true
+  reader-mode: false
   repo-url: https://github.com/willemsleegers/how-to-science/
   repo-actions: [edit, issue]
   navbar:
-    background: light
-    pinned: false
+    pinned: true
     collapse: true
     collapse-below: md # sm, md, lg, xl, or xxl
-    logo: assets/img/atom-laboratory-science.svg
     left:
       - text: "Methodology"
         menu:
           - sidebar:survey-design
           - sidebar:constructs
+          - sidebar:contingent-valuation
       - text: "Statistics"
         menu:
           - sidebar:factor-analysis
@@ -41,6 +40,11 @@ website:
             - content/methodology/survey-design/reliability-validity.qmd
             - content/methodology/survey-design/data-quality-checks.qmd
             - content/methodology/survey-design/recommended-reading.qmd
+    - id: contingent-valuation
+      title: "Contingent valuation"
+      contents:
+        - content/methodology/contingent-valuation/index.qmd
+        - content/methodology/contingent-valuation/wtp.qmd
     - id: constructs
       title: "Constructs"
       contents:
@@ -92,8 +96,9 @@ website:
 
 format:
   html:
-    theme: cosmo
-    css: assets/css/styles.css
+    theme:
+      - cosmo
+      - assets/css/light.scss
     csl: assets/bib/apa.csl
 
 editor: visual

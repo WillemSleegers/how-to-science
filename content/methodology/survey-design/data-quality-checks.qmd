@@ -86,7 +86,17 @@ Factual or logical questions consist of asking a question with a correct answer 
 
 4.  Which of these is a vegetable? \[Egg, Salmon, Broccoli, Cheeseburger, Pizza, Milk\] [@geisen2022]
 
-5.  Which of the following words is most closely associated with 'book'? \[Pen; Saw; Car; Pants; House\]
+5.  Which of the following is a fruit? \[Cow, Elephant, Chair, Banana\].
+
+6.  Which of the following words is most closely associated with 'book'? \[Pen; Saw; Car; Pants; House\]
+
+### Reverse wording
+
+Questions with reverse wording ask the same thing twice but in a different way such that a response to one has the opposite meaning of the response to the other. If they respondent is paying attention, they should provide roughly the same answer for the first question and the inverse of the second question.
+
+### Examples
+
+1. "I always order the most expensive item on the menu." vs. "I never order the cheapest item on the menu."
 
 ## Comprehension checks
 

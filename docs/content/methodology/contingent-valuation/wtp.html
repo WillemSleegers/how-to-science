@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.554">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>How to Science - Assessing willingness to pay</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../content/methodology/contingent-valuation/index.html" rel="prev">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-md " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">How to Science</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-methodology" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Methodology</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-methodology">    
+        <li>
+    <a class="dropdown-item" href="../../../content/methodology/survey-design/index.html">
+ <span class="dropdown-text">Survey Design</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../content/methodology/constructs/index.html">
+ <span class="dropdown-text">Constructs</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../content/methodology/contingent-valuation/index.html">
+ <span class="dropdown-text">Contingent valuation</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-statistics" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Statistics</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-statistics">    
+        <li>
+    <a class="dropdown-item" href="../../../content/statistics/factor-analysis/index.html">
+ <span class="dropdown-text">Factor analysis</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../content/statistics/group-differences/confidence-intervals.html">
+ <span class="dropdown-text">Group differences</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-materials" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Materials</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-materials">    
+        <li>
+    <a class="dropdown-item" href="../../../content/materials/scales/index.html">
+ <span class="dropdown-text">Scales</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../content/methodology/contingent-valuation/wtp.html">Assessing willingness to pay</a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../content/methodology/contingent-valuation/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Overview</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../content/methodology/contingent-valuation/wtp.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Assessing willingness to pay</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#different-methods" id="toc-different-methods" class="nav-link active" data-scroll-target="#different-methods">Different methods</a>
+  <ul class="collapse">
+  <li><a href="#direct-elicitation-methods" id="toc-direct-elicitation-methods" class="nav-link" data-scroll-target="#direct-elicitation-methods">Direct elicitation methods</a></li>
+  <li><a href="#dichotomous-choice-method" id="toc-dichotomous-choice-method" class="nav-link" data-scroll-target="#dichotomous-choice-method">Dichotomous choice method</a></li>
+  </ul></li>
+  <li><a href="#contingent-valuation-issues" id="toc-contingent-valuation-issues" class="nav-link" data-scroll-target="#contingent-valuation-issues">Contingent valuation issues</a>
+  <ul class="collapse">
+  <li><a href="#specifying-the-payment-vehicle" id="toc-specifying-the-payment-vehicle" class="nav-link" data-scroll-target="#specifying-the-payment-vehicle">Specifying the payment vehicle</a></li>
+  <li><a href="#hypotheticality-meaning-and-context-problems" id="toc-hypotheticality-meaning-and-context-problems" class="nav-link" data-scroll-target="#hypotheticality-meaning-and-context-problems">Hypotheticality, meaning, and context problems</a></li>
+  <li><a href="#neutrality" id="toc-neutrality" class="nav-link" data-scroll-target="#neutrality">Neutrality</a></li>
+  <li><a href="#decision-making-and-judgment-biases" id="toc-decision-making-and-judgment-biases" class="nav-link" data-scroll-target="#decision-making-and-judgment-biases">Decision-making and judgment biases</a></li>
+  <li><a href="#the-strategic-response-honesty-problem" id="toc-the-strategic-response-honesty-problem" class="nav-link" data-scroll-target="#the-strategic-response-honesty-problem">The strategic response (honesty) problem</a></li>
+  </ul></li>
+  <li><a href="#heuristics-for-the-design-and-use-of-cvm-surveys" id="toc-heuristics-for-the-design-and-use-of-cvm-surveys" class="nav-link" data-scroll-target="#heuristics-for-the-design-and-use-of-cvm-surveys">Heuristics for the design and use of CVM surveys</a></li>
+  <li><a href="#acceptability-of-the-contingent-valuation-method" id="toc-acceptability-of-the-contingent-valuation-method" class="nav-link" data-scroll-target="#acceptability-of-the-contingent-valuation-method">Acceptability of the contingent valuation method</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/willemsleegers/how-to-science/edit/main/content/methodology/contingent-valuation/wtp.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/willemsleegers/how-to-science/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Assessing willingness to pay</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>The contingent valuation method (CVM) is a stated preference method to obtain individuals’ valuation of a particular good.</p>
+<p>The summary below is mainly taken from <span class="citation" data-cites="boardman2018">Boardman et al. (<a href="#ref-boardman2018" role="doc-biblioref">2018</a>)</span>.</p>
+<section id="different-methods" class="level2">
+<h2 class="anchored" data-anchor-id="different-methods">Different methods</h2>
+<section id="direct-elicitation-methods" class="level3">
+<h3 class="anchored" data-anchor-id="direct-elicitation-methods">Direct elicitation methods</h3>
+<section id="open-ended-willingness-to-pay-method" class="level4">
+<h4 class="anchored" data-anchor-id="open-ended-willingness-to-pay-method">Open-ended willingness-to-pay method</h4>
+<p>Respondents are simply asked to state their maximum WTP for the good, or policy. For example:</p>
+<blockquote class="blockquote">
+<p>What is the most that you would be prepared to pay in additional federal income taxes to guarantee that the Wildwood wilderness area will remain closed to development?</p>
+</blockquote>
+<p>This method had fallen out of favor as analysts feared unrealistic responses because respondents needed some initial guidance on valuations. Concerns that open-ended questions result in unrealistically large estimates of WTP, however, seem unfounded. Yet a serious problem does appear to be that respondents who have low valuations of the good often state a zero rather than the low value.</p>
+</section>
+<section id="closed-ended-iterative-bidding-method" class="level4">
+<h4 class="anchored" data-anchor-id="closed-ended-iterative-bidding-method">Closed-ended iterative bidding method</h4>
+<p>In the closed-ended iterative bidding method, respondents are asked whether they would pay a specified amount for the good or policy that has been described to them. If respondents answer affirmatively, then the amount is incrementally increased. The increments continue until the respondent expresses an unwillingness to pay the amount specified. Similarly, if respondents answer negatively to the initial amount specified, the interviewer lowers the amount by increments until the respondent expresses a WTP that amount.</p>
+<p>Although iterative bidding was at one time the most common method in use, it is rarely used now because of considerable evidence that its results are highly sensitive to the initially presented (starting) value.</p>
+</section>
+<section id="contingent-ranking-method" class="level4">
+<h4 class="anchored" data-anchor-id="contingent-ranking-method">Contingent ranking method</h4>
+<p>In the contingent ranking, or ranked choice, method, respondents are asked to rank specific feasible combinations of quantities of the good being valued and monetary payments.</p>
+<p>Unlike either the open-ended WTP method or the closed-ended iterative bidding method, the WTP of interest must be inferred from ordinal rankings rather than directly elicited. Additionally, responses appear to be sensitive to the order in which alternatives are presented to respondents.</p>
+</section>
+</section>
+<section id="dichotomous-choice-method" class="level3">
+<h3 class="anchored" data-anchor-id="dichotomous-choice-method">Dichotomous choice method</h3>
+<p>In the dichotomous choice method, respondents are asked whether they would be willing to pay a particular specified price to obtain a change in the quantity or quality of a good or the adoption of a policy that would induce the change in the quantity or quality of a good.</p>
+<p>A major advantage of a binary choice formulation is that it meets the necessary condition for incentive compatibility – that is, the presence of incentives for respondents to give truthful rather than strategic answers.</p>
+<p>In the double dichotomous choice (also sometimes called double-bounded dichotomous choice), depending on the answer to the first offer, a follow-up offer is made that is either double (if yes) or half (if no) the first offer.</p>
+<p>There is danger that the respondent’s exposure to the first offer may affect the probability that he or she will accept the follow-up offer. Those who initially rejected bids may take the lower follow-up bid as an indication that the bid price is negotiable and reject bids that they previously would have accepted. Alternatively, those who initially accepted bids may believe that there is some possibility that the good could be provided at the lower price and reject the higher second bid even though it is below their WTP. Also, in responding to the follow-up bid price, respondents may base their responses not on that price but on some weighted average of the two bid prices they encountered.</p>
+<p>Whether the greater amount of information generated by the double dichotomous choice method is worth the risk of such response behaviors remains an open research question.</p>
+</section>
+</section>
+<section id="contingent-valuation-issues" class="level2">
+<h2 class="anchored" data-anchor-id="contingent-valuation-issues">Contingent valuation issues</h2>
+<section id="specifying-the-payment-vehicle" class="level3">
+<h3 class="anchored" data-anchor-id="specifying-the-payment-vehicle">Specifying the payment vehicle</h3>
+<p>A payment vehicle describes how the good would be paid for if the policy were to be implemented. Depending on the policy and fiscal context, plausible payment vehicles could include taxes paid into a fund specifically earmarked for the good, increased utility bills, higher income or sales taxes, or higher product prices. Specifying a payment vehicle, along with reminders that payments reduce the availability of funds for expenditures on other goods, helps ensure that respondents perceive the questions as if they pose real economic choices.</p>
+</section>
+<section id="hypotheticality-meaning-and-context-problems" class="level3">
+<h3 class="anchored" data-anchor-id="hypotheticality-meaning-and-context-problems">Hypotheticality, meaning, and context problems</h3>
+<p>A major concern in CVM design is whether respondents are truly able to understand and place into context the questions they are being asked and can thus accurately value the good or policy in question.</p>
+<p>Clearly specifying the project and its impacts increases the likelihood of correspondence between attitudes and behavior; so too does providing explicit detail about the payment vehicle. Visual aids also assist in understanding. One important class of visual aids useful in reducing hypotheticality is known as quality ladders. Quality ladders help respondents understand both what quality is under the status quo, and what particular increments of quality mean.</p>
+<p>The only effective way to minimize hypotheticality and meaning problems in CVM surveys is to devote extensive effort to developing detailed, clear, informative, and highly contextual materials and to pretest these materials extensively on typical respondents.</p>
+</section>
+<section id="neutrality" class="level3">
+<h3 class="anchored" data-anchor-id="neutrality">Neutrality</h3>
+<p>As CBA deals with increasingly controversial and complex topics, the neutrality of the CVM questionnaire becomes an increasingly important issue.</p>
+<p>Neutrality can best be ensured by pretesting the survey instrument with substantive experts who have no axe to grind in terms of the specific project that is being considered. If neutral experts cannot be found, then pretesting with opposing advocates can be an alternative, perhaps enabling researchers to avoid the most serious challenges from those with positions not supported by the results.</p>
+</section>
+<section id="decision-making-and-judgment-biases" class="level3">
+<h3 class="anchored" data-anchor-id="decision-making-and-judgment-biases">Decision-making and judgment biases</h3>
+<section id="risk-related-biases" class="level4">
+<h4 class="anchored" data-anchor-id="risk-related-biases">Risk-related biases</h4>
+<p>Both decision-making and judgment biases appear to be most serious for activities or projects that would generate small changes in the probabilities of (already) low-probability events that have “catastrophic” costs if they occur (for example, activities that might cause a marginal change in the probability of a nuclear power plant accident). As WTP depends on how likely respondents perceive such events to be, their perception of probabilities and changes in them are important in CVM studies.</p>
+<p>The major types of judgmental biases to which individuals are particularly prone include:</p>
+<ul>
+<li>Availability bias, whereby individuals estimate the probabilities of events by the ease with which occurrences can be recalled – more salient instances, such as those covered by the media, are more likely to be recalled</li>
+<li>Representativeness or conjunction bias, whereby individuals judge the probabilities of events on the basis of their plausibility – people perceive the probability of an event as being higher as more detail is added, even though the detail is irrelevant</li>
+<li>Optimism bias, whereby people believe that they can beat the objective odds</li>
+<li>Anchoring bias, whereby individuals do not fully update their probability assessments as new information becomes available</li>
+<li>Hindsight bias, whereby individuals believe, after an event occurs, that it was more predictable than it actually was</li>
+<li>Status quo bias, whereby individuals stick with the status quo even when it is inexpensive to experiment or when the potential benefits from changing are large</li>
+<li>Probability assessment bias, whereby people tend either to overestimate or to ignore small probabilities and underestimate large probabilities</li>
+</ul>
+<p>Research on risk communication suggests you should present all risks in similar formats that do not mix frequencies, percentages, or proportions; provide graphics to help convey probabilities; and present absolute rather than relative risks, because people often have difficulty interpreting the latter. More generally, CVM surveys should be designed to assess and accommodate the varying levels of numerical and risk literacy of respondents.</p>
+</section>
+<section id="non-commitment-bias" class="level4">
+<h4 class="anchored" data-anchor-id="non-commitment-bias">Non-commitment bias</h4>
+<p>It is well recognized in the marketing literature that respondents to surveys tend to overstate their willingness to purchase a product that is described to them.</p>
+<p>An indirect way of testing for the bias is to introduce elements to the survey that encourage respondents to think more carefully about their income and their budget constraints.</p>
+<p>For example, after respondents were asked about their WTP to avoid a specified oil spill, they were then asked about their valuations of environmental protection versus reduction in crime, homelessness, and other social problems (see Michael Kemp and Christopher Maxwell).</p>
+<p>Asking questions that encourage respondents to think about how much of their income is discretionary may help avoid non-commitment bias.</p>
+<p>A less complicated and likely effective approach in dichotomous choice elicitations has been commonly used following research showing that adjusting bid acceptances to reflect respondent certainty provided estimates of WTP closer to those from a revealed preference method. This approach requires a follow-up question to the elicitation that asks respondents who accept bids about the certainty of their acceptance. Only acceptances at face value for which the respondent is “definitely sure” appear to provide adjusted acceptance rates very close to actual purchase rates. This suggests that analysts should routinely include a certainty question following a dichotomous choice elicitation and convert bid acceptances to bid rejections for respondents who were unsure about their initial acceptances.</p>
+</section>
+<section id="order-effects" class="level4">
+<h4 class="anchored" data-anchor-id="order-effects">Order effects</h4>
+<p>CVM studies have also found important order, or sequence, effects. These findings could be explained by either an income effect, a substitution effect, or a combination of both. The issue of whether substitution effects could account for much of the order inconsistency in CVM surveys of passive use values is still unclear. Critics argue that the phenomenon is explained neither by income nor by substitution effects, but it instead demonstrates that respondents cannot really understand these kinds of questions. Hence, they inevitably engage in judgment heuristics that usually cause them to overstate valuations. Thus, it is uncertain that income and substitution effects provide a complete explanation for order effects.</p>
+<p>As the interpretation of order effects remains ambiguous, analysts generally avoid asking respondents to value more than one good.</p>
+</section>
+<section id="embedding-effects" class="level4">
+<h4 class="anchored" data-anchor-id="embedding-effects">Embedding effects</h4>
+<p>A fundamental axiom in the standard economic description of preferences is that individuals value more of a good more highly than less of it. This is sometimes referred to as a scope test.</p>
+<p>However, research indicates that individuals often do not readily distinguish between small and large quantities in their valuations of a good when the different quantities are embedded in one another. For example, William Desvousges and colleagues found that different samples of respondents value 2000 migratory birds approximately the same as 200,000 birds, and small oil spills much the same as much larger oil spills (given that these are different samples, it does not directly test whether given individuals prefer more to less).</p>
+<p>When dealing with passive-use values, embedding is probably the most worrisome problem identified by critics of the use of CVM in CBA.</p>
+<p>Critics argue that the empirical evidence suggests that in these contexts respondents are not actually expressing their valuations but instead are expressing broad moral attitudes to environmental issues – a “warm glow” or “moral satisfaction.” However, Richard Carson and colleagues have argued that most studies that manifest embedding problems, or scope insensitivity, are poorly designed and executed, and well-designed CVM instruments do not manifest the problem. Nonetheless, although costly because it doubles the required sample size, in valuing changes in non-use goods, analysts should conduct a scope test by randomly splitting their respondents into two subsamples with each valuing a different magnitude of change in the good.</p>
+</section>
+<section id="starting-point-bias" class="level4">
+<h4 class="anchored" data-anchor-id="starting-point-bias">Starting point bias</h4>
+<p>A problem arises in CVM when starting values are presented to respondents. The iterative bidding method is particularly prone to this problem because it provides respondents with a specific initial starting “price.”</p>
+<p>The dichotomous choice question format seeks to eliminate starting point bias. It has been argued, however, that “responses to dichotomous choice questions are very strongly influenced by starting-point bias, because respondents are likely to take initial cues of resource value from the solicited contribution amount (e.g., assuming it to be his/her share of the needed contribution).” There is, in fact, some empirical evidence to support the contention that the dichotomous choice method is subject to starting point bias, although WTP estimated from dichotomous choice responses appears to be less affected by the provision of information about the total cost of providing a good or the size of the group receiving it than does WTP estimated from open-ended surveys. Whether or not starting point bias arises from information provided within a single elicitation, it is very likely to arise from information provided in the first of a series of elicitations to the same respondent. Like the order effect, starting point bias further supports the general practice of one elicitation per respondent.</p>
+</section>
+</section>
+<section id="the-strategic-response-honesty-problem" class="level3">
+<h3 class="anchored" data-anchor-id="the-strategic-response-honesty-problem">The strategic response (honesty) problem</h3>
+<p>It is frequently argued that respondents in CVM surveys have incentives to behave strategically, that is, to misrepresent their true preferences in order to achieve a more desired outcome than would result if they honestly revealed their preferences.</p>
+<p>We should not expect respondents’ answers necessarily to be consistent with economic theory, and hence appropriate for inclusion in CBA, unless respondents believe that the survey is consequential in the sense that it could potentially influence some outcomes about which they care. In contrast, if respondents believe that the survey will have absolutely no influence on outcomes about which they care, then it is inconsequential, and economic theory offers no predictions about the nature of responses.</p>
+<p>Mechanisms that provide incentives for individuals to reveal their preferences truthfully are called incentive-compatible.</p>
+<p>As it involves a binary response, the dichotomous choice method may be incentive compatible.</p>
+<p>An important reason why the open-ended WTP method is now rarely used, is that it will generally be subject to strategic response bias, most likely leading to aggregate WTP estimates that are too small if payments are coerced and too large if payments are voluntary.</p>
+</section>
+</section>
+<section id="heuristics-for-the-design-and-use-of-cvm-surveys" class="level2">
+<h2 class="anchored" data-anchor-id="heuristics-for-the-design-and-use-of-cvm-surveys">Heuristics for the design and use of CVM surveys</h2>
+<ol type="1">
+<li>Design survey instrument to reduce hypotheticality bias
+<ul>
+<li>The survey instrument should provide respondents with sufficient and understandable information to remove their uncertainty about the good being valued. When possible, respondents should have familiarity with the type of choice being posed or given experience with it within the survey.</li>
+</ul></li>
+<li>Use the dichotomous choice method with one elicitation per respondent</li>
+<li>Always include budget reminder; consider priming with disposable income question</li>
+<li>Be more confident in eliciting WTP; use social budget constraints in eliciting WTA</li>
+<li>Include a spilt-sample scope test (especially for non-use goods)</li>
+<li>Include a follow-up certainty question to allow adjustment for non-commitment bias</li>
+<li>Use respondent income or disposable income to address “fat tails”</li>
+</ol>
+</section>
+<section id="acceptability-of-the-contingent-valuation-method" class="level2">
+<h2 class="anchored" data-anchor-id="acceptability-of-the-contingent-valuation-method">Acceptability of the contingent valuation method</h2>
+<p>The US federal courts have held that surveys of citizens’ valuations enjoy “rebuttable presumption” status in cases involving the assessment of damage to natural resources.</p>
+<p>A blue-ribbon panel of social scientists convened by the National Oceanic and Atmospheric Administration (NOAA) further legitimized the use of CVM by concluding that it could be the basis for estimating passive use values for inclusion in natural resource damage assessment cases.</p>
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
+<div id="ref-boardman2018" class="csl-entry" role="listitem">
+Boardman, A. E., Greenberg, D. H., Vining, A. R., &amp; Weimer, D. L. (2018). <em>Cost-benefit analysis: Concepts and practice</em> (5th ed.). Cambridge University Press. <a href="https://www.cambridge.org/highereducation/books/costbenefit-analysis/484720E57798B7E7A29C7156407CD4A1#contents">https://www.cambridge.org/highereducation/books/costbenefit-analysis/484720E57798B7E7A29C7156407CD4A1#contents</a>
+</div>
+</div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../../content/methodology/contingent-valuation/index.html" class="pagination-link" aria-label="Overview">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Overview</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/willemsleegers/how-to-science/edit/main/content/methodology/contingent-valuation/wtp.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/willemsleegers/how-to-science/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
