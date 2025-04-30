@@ -20,8 +20,9 @@ website:
           - sidebar:contingent-valuation
       - text: "Statistics"
         menu:
-          - sidebar:factor-analysis
+          - sidebar:regression
           - sidebar:group-differences
+          - sidebar:factor-analysis
       - text: "Materials"
         menu:
           - sidebar:scales
@@ -70,6 +71,11 @@ website:
         - content/statistics/group-differences/confidence-intervals.qmd
         - content/statistics/group-differences/pairwise-comparisons.qmd
         - content/statistics/group-differences/sequential-analyses.qmd
+
+    - id: regression
+      title: "Regression"
+      contents:
+        - content/statistics/regression/collinearity.qmd
 
     - id: scales
       title: "Scales"

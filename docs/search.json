@@ -1110,5 +1110,15 @@
     "crumbs": [
       "Assessing willingness to pay"
     ]
+  },
+  {
+    "objectID": "content/statistics/regression/collinearity.html",
+    "href": "content/statistics/regression/collinearity.html",
+    "title": "Collinearity",
+    "section": "",
+    "text": "Collinearity isn’t a problem. If anything, it’s likely to be misunderstood.",
+    "crumbs": [
+      "Collinearity"
+    ]
   }
 ]
