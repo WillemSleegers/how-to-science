@@ -18,6 +18,7 @@ theme_set(theme_minimal())
 
 set.seed(1)
 ```
+
 ## 4 groups
 
 ```{r}
