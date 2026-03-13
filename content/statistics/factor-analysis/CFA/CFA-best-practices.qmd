@@ -1,7 +1,6 @@
 ---
 title: "Best practices in CFA"
 toc: true
-bibliography: references.bib
 ---
 
 ::: callout-warning

@@ -12,7 +12,6 @@ knitr:
       knitr.kable.NA: ''
 nocite: |
   @caviola2019
-bibliography: references.bib
 ---
 
 ```{r}

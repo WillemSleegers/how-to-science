@@ -1,7 +1,6 @@
 ---
 title: "Data quality checks"
 toc: true
-bibliography: references.bib
 ---
 
 Unfortunately, not all respondents pay careful attention to survey instructions and survey items. We therefore would like to be able to detect these participants and prevent them from participating in the survey or exclude them from data analysis.

@@ -1,7 +1,6 @@
 ---
 title: "Assessing willingness to pay"
 toc: true
-bibliography: references.bib
 ---
 
 The contingent valuation method (CVM) is a stated preference method to obtain individuals' valuation of a particular good.

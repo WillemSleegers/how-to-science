@@ -1,7 +1,6 @@
 ---
 title: "Response Options"
 toc: true
-bibliography: references.bib
 ---
 
 ::: callout-warning

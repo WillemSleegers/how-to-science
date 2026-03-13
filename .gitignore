@@ -32,3 +32,5 @@ vignettes/*.pdf
 /_freeze/
 
 /_*.local
+
+**/*.quarto_ipynb

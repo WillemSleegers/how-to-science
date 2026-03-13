@@ -16,7 +16,7 @@ website:
       - text: "Methodology"
         menu:
           - sidebar:survey-design
-          - sidebar:constructs
+          - sidebar:scale-development
           - sidebar:contingent-valuation
       - text: "Statistics"
         menu:
@@ -30,27 +30,29 @@ website:
   sidebar:
     - id: survey-design
       title: "Survey Design"
-      style: "floating" # floating, docked
+      style: "floating"
       align: left
       contents:
-        - section: "Survey Design"
-          contents:
-            - content/methodology/survey-design/index.qmd
-            - content/methodology/survey-design/item-development.qmd
-            - content/methodology/survey-design/response-options.qmd
-            - content/methodology/survey-design/reliability-validity.qmd
-            - content/methodology/survey-design/data-quality-checks.qmd
-            - content/methodology/survey-design/recommended-reading.qmd
+        - content/methodology/survey-design/index.qmd
+        - content/methodology/survey-design/response-options.qmd
+        - content/methodology/survey-design/clarification-features.qmd
+        - content/methodology/survey-design/data-quality-checks.qmd
+
+    - id: scale-development
+      title: "Scale Development"
+      style: "floating"
+      align: left
+      contents:
+        - content/methodology/scale-development/index.qmd
+        - content/methodology/scale-development/item-development.qmd
+        - content/methodology/scale-development/reliability-validity.qmd
+        - content/methodology/scale-development/recommended-reading.qmd
+
     - id: contingent-valuation
       title: "Contingent valuation"
       contents:
         - content/methodology/contingent-valuation/index.qmd
         - content/methodology/contingent-valuation/wtp.qmd
-    - id: constructs
-      title: "Constructs"
-      contents:
-        - content/methodology/constructs/index.qmd
-        - content/methodology/constructs/risk.qmd
     - id: factor-analysis
       title: "Factor analysis"
       contents:
@@ -99,6 +101,8 @@ website:
         - section: "Risk"
           contents:
             - content/materials/scales/DOSPERT/dospert.qmd
+
+bibliography: assets/bib/references.bib
 
 format:
   html:

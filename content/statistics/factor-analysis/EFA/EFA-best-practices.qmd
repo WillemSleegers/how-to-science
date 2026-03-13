@@ -4,7 +4,6 @@ toc: true
 format:
   html:
     code-fold: true
-bibliography: references.bib
 ---
 
 ::: callout-warning

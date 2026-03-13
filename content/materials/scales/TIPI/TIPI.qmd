@@ -12,7 +12,6 @@ knitr:
       knitr.kable.NA: ''
 nocite: |
   @gosling2003
-bibliography: references.bib
 ---
 
 ```{r}
