@@ -1,0 +1,61 @@
+---
+title: "AI-generated survey data"
+toc: true
+---
+
+::: callout-warning
+This page is still a work in progress.
+:::
+
+LLMs can be prompted to respond to survey questions as a person with given demographic characteristics. This section reviews what the evidence says about when this works, when it fails, and whether it can substitute for human survey data.
+
+## Can LLMs simulate human survey responses?
+
+**Silicon sampling** conditions an LLM on a sociodemographic backstory drawn from a real survey sample and asks it to respond as that person would [@argyle2023]. Applied to US presidential vote choice across three ANES election years, GPT-3 silicon samples correlated 0.90–0.94 (tetrachoric) with actual responses and reproduced inter-variable associations closely (mean Cramér's V difference = 0.026). The method works at the aggregate level only — individual predictions are not expected to match.
+
+**Random silicon sampling** extends this by drawing demographics from a group's *distribution* rather than from individual records, removing the requirement for individual-level data [@sun2024]. Applied to ANES 2020 vote choice, it produced similarly close results (KL-divergence = 0.0004) and was reproducible across runs (SD of Biden vote rate = 0.46%). A minimum of ~200 synthetic respondents was needed for stable estimates.
+
+Higher accuracy is achievable with **interview-based agents**: 2-hour qualitative interviews with real participants, with the full transcript injected into the model at query time [@park2024]. These agents predicted GSS responses with normalised accuracy 0.85 — comparable to participants' own two-week retest consistency — outperforming demographic-based (0.71) and persona-based (0.70) agents. They replicated the same 4 of 5 experimental studies as human participants (effect size correlation r = 0.98).
+
+## When does it fail?
+
+**Ideologically sorted subgroups.** Silicon sampling struggles with party ID subgroups: simulated Democrats and Republicans voted 99.96% and 99.22% for their candidate [@sun2024], far more extreme than actual ANES respondents. Political independents were the hardest group to replicate [@argyle2023; @sun2024].
+
+**Sensitive topics.** Random silicon sampling replicated only 1 of 10 multiple-choice questions beyond vote choice [@sun2024]. On sensitive topics (race, gender, religion, sexuality), the model defaulted to "harmless" responses regardless of demographic conditioning — a bias more pronounced for Black and Democratic subgroups.
+
+**Economic behaviour.** Interview-based agents showed no advantage over demographic or persona baselines on economic games [@park2024].
+
+**New domains.** The strong results for silicon sampling are for US electoral politics. Performance in other domains or countries is substantially worse [@bisbee2024], and algorithmic fidelity must be validated domain by domain [@argyle2023].
+
+## Does aggregate similarity imply inferential validity?
+
+No. While ChatGPT aggregate feeling thermometer scores fall within one SD of ANES averages, **48% of regression coefficients** from synthetic data are statistically significantly different from their ANES counterparts — and of those, **32% flip sign** [@bisbee2024]. Synthetic responses also have far less variance, causing power analyses to underestimate required sample sizes by roughly an order of magnitude.
+
+## Do LLMs reflect the population's opinions?
+
+No. LM opinion misalignment with US demographic groups is on par with the Democrat-Republican divide on climate change, and every human subgroup — including the least representative — is more aligned with the overall population than any LM tested [@santurkar2023].
+
+RLHF fine-tuning makes this worse: models shift from reflecting lower-income, moderate internet users (the training data base) toward the demographics of crowdworkers used for feedback (liberal, educated, high-income, non-religious). RLHF-tuned models also collapse opinion diversity — text-davinci-003 assigns >99% probability to a single answer on most questions [@santurkar2023].
+
+## Are results reproducible?
+
+Not for closed-source models. The same prompt produced substantially different results between April and July 2023 due to undisclosed model updates, and results are sensitive to minor prompt wording variations [@bisbee2024].
+
+## Study overview
+
+| Study | Model | Data | Key finding |
+|---|---|---|---|
+| @argyle2023 | GPT-3 | ANES (2012–2020) | r = 0.90–0.94 for vote choice; fails for independents |
+| @sun2024 | GPT-3.5 | ANES 2020 | Group-level demographics sufficient; fails for sorted subgroups and sensitive topics |
+| @park2024 | GPT-4o | GSS + experiments (N = 1,052) | Normalised accuracy 0.85; no advantage for economic games |
+| @bisbee2024 | ChatGPT 3.5 | ANES feeling thermometers | 48% of coefficients wrong; 32% flip sign; not reproducible |
+| @santurkar2023 | GPT-3, InstructGPT | Pew surveys | Every human subgroup more representative than any LM; RLHF worsens alignment |
+
+## Recommendations
+
+- **Do not use LLM-generated data as a substitute for human survey data.** Aggregate similarity to benchmarks does not guarantee valid inference, and regression coefficients are frequently wrong in sign.
+- **Silicon sampling can be useful for cheap hypothesis exploration** before collecting human data, particularly for US political attitudes where the evidence base is strongest.
+- **Validate in your specific domain** before treating any LLM simulation as trustworthy. Strong results in US electoral politics do not generalise.
+- **Use interview-based agents if accuracy is critical** and resources allow. Demographic prompting is a poor substitute for rich individual data.
+- **Avoid RLHF-tuned models for opinion simulation.** Base models are more representative of the US population than instruction-tuned variants.
+- **Do not use closed-source models for reproducible research.** Undisclosed updates can change results substantially.

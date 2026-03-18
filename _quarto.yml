@@ -18,7 +18,7 @@ website:
           - sidebar:survey-design
           - sidebar:scale-development
           - sidebar:contingent-valuation
-      - text: "Statistics"
+      - text: "Data Analysis"
         menu:
           - sidebar:regression
           - sidebar:group-differences
@@ -37,6 +37,7 @@ website:
         - content/methodology/survey-design/response-options.qmd
         - content/methodology/survey-design/clarification-features.qmd
         - content/methodology/survey-design/data-quality-checks.qmd
+        - content/methodology/survey-design/ai-surveys.qmd
 
     - id: scale-development
       title: "Scale Development"
