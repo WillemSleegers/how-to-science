@@ -18,6 +18,7 @@ website:
           - sidebar:survey-design
           - sidebar:scale-development
           - sidebar:contingent-valuation
+          - sidebar:ai-in-research
       - text: "Data Analysis"
         menu:
           - sidebar:regression
@@ -37,7 +38,14 @@ website:
         - content/methodology/survey-design/response-options.qmd
         - content/methodology/survey-design/clarification-features.qmd
         - content/methodology/survey-design/data-quality-checks.qmd
-        - content/methodology/survey-design/ai-surveys.qmd
+
+    - id: ai-in-research
+      title: "AI in Research"
+      style: "floating"
+      align: left
+      contents:
+        - content/methodology/ai/index.qmd
+        - content/methodology/ai/synthetic-respondents.qmd
 
     - id: scale-development
       title: "Scale Development"

@@ -15,7 +15,11 @@ Papers are managed in Zotero, accessible via the local API at `http://localhost:
 
 ### Step 1: Paper summaries
 
-For each paper, create or update a summary file in `assets/papers/` named by citation key (e.g., `gilardi2023.md`). Each file records the claims used from that paper in the following format:
+For each paper, create or update a summary file in `assets/papers/` named by citation key (e.g., `gilardi2023.md`). Each file has two parts:
+
+**Part 1 — Brief summary** (2–4 sentences): What the paper does, what it finds, and why it matters for the page being written. This gives a quick overview without reading the claims.
+
+**Part 2 — Claims**: Each claim used from the paper in the following format:
 
 **Claim** — a specific finding or conclusion
 **Quote** — the exact quote from the paper supporting the claim

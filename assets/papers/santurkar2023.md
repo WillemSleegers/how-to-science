@@ -4,6 +4,8 @@ description: Introduces OpinionQA dataset; finds substantial misalignment betwee
 type: reference
 ---
 
+Santurkar et al. (2023) introduce the OpinionQA dataset (1,500 questions from Pew Research surveys) to benchmark LM alignment with 60 US demographic groups. They find substantial misalignment between LM opinions and actual US demographic groups — comparable in magnitude to the Democrat-Republican divide on climate change — and that every human subgroup, including the least representative, is more aligned with the overall US population than any LM tested. RLHF fine-tuning makes this worse, shifting models toward the demographics of crowdworkers (liberal, educated, high-income) and collapsing opinion diversity.
+
 **Claim** — LM opinions are substantially misaligned with those of the US population overall; the degree of misalignment is comparable to the Democrat-Republican divide on climate change.
 **Quote** — "we find substantial misalignment between the views reflected by current LMs and those of US demographic groups: on par with the Democrat-Republican divide on climate change."
 **Page** — 1 (abstract)

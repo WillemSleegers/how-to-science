@@ -4,6 +4,8 @@ description: Critical evaluation of ChatGPT as synthetic survey data; finds aggr
 type: reference
 ---
 
+Bisbee et al. (2024) critically evaluate ChatGPT 3.5 as a source of synthetic survey data using ANES feeling thermometers as a benchmark. While aggregate means fall within one standard deviation of real responses, 48% of regression coefficients from synthetic data differ significantly from their ANES counterparts — and of those, 32% flip sign. Synthetic responses also have far less variance than human responses, causing power analyses to underestimate required sample sizes by nearly an order of magnitude. Results are also non-reproducible: the same prompt produced substantially different outputs between April and July 2023 due to undisclosed model updates.
+
 **Claim** — Average synthetic responses from ChatGPT 3.5 fall within one standard deviation of ANES feeling thermometer averages, and rank ordering of group thermometers is largely preserved. However, this surface-level agreement masks serious inferential problems.
 **Quote** — "While the average of ChatGPT responses does not exactly match the average survey response in the ANES, every synthetic mean falls within one standard deviation of the ANES average. In addition, the rank ordering of feeling thermometers is largely intact across both samples."
 **Page** — 6

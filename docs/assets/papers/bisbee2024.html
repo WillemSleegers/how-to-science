@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="description" content="Critical evaluation of ChatGPT as synthetic survey data; finds aggregate means close to ANES but regression coefficients frequently wrong, variance too low, and results non-reproducible across time and prompt variations">
 
-<title>conrad2006 – How to Science</title>
+<title>bisbee2024 – How to Science</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -157,62 +158,17 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="conrad-et-al.-2006" class="level1">
-<h1>Conrad et al.&nbsp;(2006)</h1>
-<p><strong>Full citation:</strong> Conrad, F. G., Couper, M. P., Tourangeau, R., &amp; Peytchev, A. (2006). Use and non-use of clarification features in web surveys. <em>Journal of Official Statistics, 22</em>(2), 245–269.</p>
-<section id="study-overview" class="level2">
-<h2 class="anchored" data-anchor-id="study-overview">Study overview</h2>
-<ul>
-<li><strong>Mode:</strong> Web survey (two separate experiments)</li>
-<li><strong>Survey topic:</strong> Food and nutrition consumption (“lifestyle” survey)</li>
-<li><strong>Clarification type:</strong> Hyperlinked definitions for food/nutrition terms (e.g., polyunsaturated fatty acid, vegetables, cholesterol)</li>
-<li><strong>Definition content:</strong> Half were “useful” (counter-intuitive information likely to shift responses, e.g., vegetables include French fries) and half were “not useful” (confirmatory/neutral)</li>
-</ul>
-</section>
-<section id="experiment-1" class="level2">
-<h2 class="anchored" data-anchor-id="experiment-1">Experiment 1</h2>
-<ul>
-<li><strong>N:</strong> ~2,871</li>
-<li><strong>Sample:</strong> Online panel (web-based)</li>
-<li><strong>Interface conditions:</strong> One-click, Two-click, Click-and-scroll</li>
-<li><strong>Concept conditions:</strong> Technical terms (e.g., polyunsaturated fatty acid) vs.&nbsp;ordinary terms (e.g., vegetables)</li>
-<li><strong>Definition usefulness:</strong> Useful (counter-intuitive, likely to shift responses) vs.&nbsp;not useful (confirmatory)</li>
-<li><strong>Key findings:</strong>
-<ul>
-<li>Overall: only <strong>13.8% of respondents</strong> requested any definitions</li>
-<li>Requests were far more common for <strong>technical</strong> than ordinary terms</li>
-<li><strong>One-click</strong> produced more requests than two-click or click-and-scroll</li>
-<li>When respondents obtained a definition, response patterns differed from non-requesters — suggesting definitions were read and used</li>
-</ul></li>
-</ul>
-</section>
-<section id="experiment-2" class="level2">
-<h2 class="anchored" data-anchor-id="experiment-2">Experiment 2</h2>
-<ul>
-<li><strong>N:</strong> ~3,050</li>
-<li><strong>Sample:</strong> Online panel (web-based); plus a replication with ~941 Knowledge Networks probability-sample respondents</li>
-<li><strong>Interface conditions:</strong> One-click, Two-click, Rollover (mouse hover)</li>
-<li><strong>Concept conditions:</strong> Ordinary terms only (e.g., fat, vegetables, dairy, cholesterol) — deliberately more stringent than Experiment 1</li>
-<li><strong>Instruction conditions:</strong> Encouraging (“please click on the word to obtain a definition”) vs.&nbsp;neutral</li>
-<li><strong>Key findings:</strong>
-<ul>
-<li>Overall: <strong>22.4%</strong> of respondents requested at least one definition</li>
-<li><strong>Rollover:</strong> 36.5% of respondents requested at least one definition</li>
-<li><strong>One-click:</strong> 8.9%</li>
-<li><strong>Two-click:</strong> 6.5%</li>
-<li><strong>Instructions had no effect:</strong> 18.1% (encouraging) vs.&nbsp;16.8% (neutral) — not significant</li>
-<li>Rollover respondents answered faster than click-based requesters despite having more definitions available</li>
-<li>KN replication confirmed the pattern</li>
-</ul></li>
-</ul>
-</section>
-<section id="relevance-to-tooltip-usage" class="level2">
-<h2 class="anchored" data-anchor-id="relevance-to-tooltip-usage">Relevance to tooltip usage</h2>
-<p>Core reference establishing that (1) voluntary use of tooltip-style clarification features is very low under click-based access, (2) usage is highly sensitive to interaction cost, and (3) rollover/hover dramatically outperforms click-based access.</p>
+<p><strong>Claim</strong> — Average synthetic responses from ChatGPT 3.5 fall within one standard deviation of ANES feeling thermometer averages, and rank ordering of group thermometers is largely preserved. However, this surface-level agreement masks serious inferential problems. <strong>Quote</strong> — “While the average of ChatGPT responses does not exactly match the average survey response in the ANES, every synthetic mean falls within one standard deviation of the ANES average. In addition, the rank ordering of feeling thermometers is largely intact across both samples.” <strong>Page</strong> — 6</p>
+<p><strong>Claim</strong> — 48% of regression coefficients estimated from ChatGPT responses are statistically significantly different from ANES-derived counterparts, and among those cases the sign flips 32% of the time — meaning synthetic data can lead to opposite substantive conclusions. <strong>Quote</strong> — “48% of coefficients estimated from the ChatGPT responses are statistically significantly different from their ANES-derived counterpart; among these cases, the sign of the effect flips 32% of the time. Simply put, researchers cannot take for granted that responses from a pretrained LLM will match traditional survey data.” <strong>Page</strong> — 2–3</p>
+<p><strong>Claim</strong> — Synthetic responses have substantially less variance than human survey responses, making them unreliable for power analyses and study design — they would wildly underestimate required sample sizes. <strong>Quote</strong> — “the distribution of synthetic responses for some questions exhibits far less variation than human responses… Using the estimates of the magnitude and variation in the ChatGPT-generated measures of affective polarization, we calculate the sample size required to detect a difference… Even for 99% power, the ChatGPT estimates imply that just 33 partisan respondents would be necessary… almost an order of magnitude less than what we calculate from the ANES benchmark.” <strong>Page</strong> — 6–7 (Table 1, p.&nbsp;8)</p>
+<p><strong>Claim</strong> — ChatGPT exaggerates political polarization at the subgroup level: Democrats in the synthetic data like liberals more and dislike conservatives more than their human counterparts, with differences of 10–20 points on the 100-point scale. <strong>Quote</strong> — “these results suggest that Democrats like liberals more, and conservatives less, than their human counterparts, exaggerating the out-group antipathy along ideological lines… the patterns reported in Figure 2 highlight that synthetic responses would suggest that society is more politically hostile than it actually is.” <strong>Page</strong> — 6</p>
+<p><strong>Claim</strong> — LLM performance is primarily driven by political covariates (ideology, party ID); including only demographic information (age, race, gender, income) dramatically increases error for politically salient groups. <strong>Quote</strong> — “failing to include information on the respondent’s politics dramatically inflates the error for certain groups, notably those groups which are more politically salient (the parties, ideological groups, gays and lesbians, and Muslims).” <strong>Page</strong> — 10</p>
+<p><strong>Claim</strong> — Synthetic responses are highly sensitive to minor changes in prompt wording, raising concerns about researcher degrees of freedom. <strong>Quote</strong> — “the distribution of responses is highly sensitive to differences in the prompt used to generate data, which version of ChatGPT is used, and even changes over time in the ‘same’ model. Similar to the concerns about the effects of a ‘garden of forking paths’… the differences we find highlight the fact that extracting responses from an LLM inevitably requires making data-dependent analytical decisions.” <strong>Page</strong> — 10</p>
+<p><strong>Claim</strong> — The same prompt produced substantially different results between April 2023 and July 2023 due to undisclosed changes to the underlying model, making reproducibility impossible for closed-source LLMs. <strong>Quote</strong> — “The most concerning of these is that the distribution of responses to the same prompt changed between our initial run in April 2023 and a rerun in July 2023 due to changes in the underlying algorithm. This is a key illustration of how closed-source generative models pose a threat to the reproducibility norms of contemporary social science.” <strong>Page</strong> — 3</p>
+<p><strong>Claim</strong> — Performance in non-US contexts and on non-political questions is substantially worse than the already-problematic US results, suggesting the US political domain represents a best-case scenario. <strong>Quote</strong> — “The variation in accuracy we find when applying similar prompts to different questions and non-U.S. contexts in SI Section 13 reveals how the same prompt can yield different levels of accuracy in ways that raise questions about the ability to develop generalizable prompting practices.” <strong>Page</strong> — 11</p>
+<p><strong>Claim</strong> — The authors argue there are fundamental ethical concerns with using LLM-generated synthetic opinion as a substitute for actual human survey responses, as it risks encoding the past into characterizations of current public opinion. <strong>Quote</strong> — “relying on available preexisting content to generate/extrapolate synthetic opinions risks hard-wiring the past into the present… we should be cognizant of the difference between characterizing the opinions and behavior of actual human beings—however imperfect and complicated those efforts may be—and studying outputs from an algorithm with unknown properties.” <strong>Page</strong> — 14</p>
 
 
-</section>
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -620,4 +576,4 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions"><ul><li><a href="https://github.com/willemsleegers/how-to-science/edit/main/assets/papers/conrad2006.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/willemsleegers/how-to-science/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions"><ul><li><a href="https://github.com/willemsleegers/how-to-science/edit/main/assets/papers/bisbee2024.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/willemsleegers/how-to-science/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

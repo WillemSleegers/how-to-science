@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="description" content="Proposes “random silicon sampling” — using only group-level demographic distributions (not individual-level data) to simulate sub-population opinions; works well for overall population and some subgroups but fails on sensitive topics due to model harmlessness bias">
 
-<title>conrad2006 – How to Science</title>
+<title>sun2024 – How to Science</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -157,62 +158,16 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="conrad-et-al.-2006" class="level1">
-<h1>Conrad et al.&nbsp;(2006)</h1>
-<p><strong>Full citation:</strong> Conrad, F. G., Couper, M. P., Tourangeau, R., &amp; Peytchev, A. (2006). Use and non-use of clarification features in web surveys. <em>Journal of Official Statistics, 22</em>(2), 245–269.</p>
-<section id="study-overview" class="level2">
-<h2 class="anchored" data-anchor-id="study-overview">Study overview</h2>
-<ul>
-<li><strong>Mode:</strong> Web survey (two separate experiments)</li>
-<li><strong>Survey topic:</strong> Food and nutrition consumption (“lifestyle” survey)</li>
-<li><strong>Clarification type:</strong> Hyperlinked definitions for food/nutrition terms (e.g., polyunsaturated fatty acid, vegetables, cholesterol)</li>
-<li><strong>Definition content:</strong> Half were “useful” (counter-intuitive information likely to shift responses, e.g., vegetables include French fries) and half were “not useful” (confirmatory/neutral)</li>
-</ul>
-</section>
-<section id="experiment-1" class="level2">
-<h2 class="anchored" data-anchor-id="experiment-1">Experiment 1</h2>
-<ul>
-<li><strong>N:</strong> ~2,871</li>
-<li><strong>Sample:</strong> Online panel (web-based)</li>
-<li><strong>Interface conditions:</strong> One-click, Two-click, Click-and-scroll</li>
-<li><strong>Concept conditions:</strong> Technical terms (e.g., polyunsaturated fatty acid) vs.&nbsp;ordinary terms (e.g., vegetables)</li>
-<li><strong>Definition usefulness:</strong> Useful (counter-intuitive, likely to shift responses) vs.&nbsp;not useful (confirmatory)</li>
-<li><strong>Key findings:</strong>
-<ul>
-<li>Overall: only <strong>13.8% of respondents</strong> requested any definitions</li>
-<li>Requests were far more common for <strong>technical</strong> than ordinary terms</li>
-<li><strong>One-click</strong> produced more requests than two-click or click-and-scroll</li>
-<li>When respondents obtained a definition, response patterns differed from non-requesters — suggesting definitions were read and used</li>
-</ul></li>
-</ul>
-</section>
-<section id="experiment-2" class="level2">
-<h2 class="anchored" data-anchor-id="experiment-2">Experiment 2</h2>
-<ul>
-<li><strong>N:</strong> ~3,050</li>
-<li><strong>Sample:</strong> Online panel (web-based); plus a replication with ~941 Knowledge Networks probability-sample respondents</li>
-<li><strong>Interface conditions:</strong> One-click, Two-click, Rollover (mouse hover)</li>
-<li><strong>Concept conditions:</strong> Ordinary terms only (e.g., fat, vegetables, dairy, cholesterol) — deliberately more stringent than Experiment 1</li>
-<li><strong>Instruction conditions:</strong> Encouraging (“please click on the word to obtain a definition”) vs.&nbsp;neutral</li>
-<li><strong>Key findings:</strong>
-<ul>
-<li>Overall: <strong>22.4%</strong> of respondents requested at least one definition</li>
-<li><strong>Rollover:</strong> 36.5% of respondents requested at least one definition</li>
-<li><strong>One-click:</strong> 8.9%</li>
-<li><strong>Two-click:</strong> 6.5%</li>
-<li><strong>Instructions had no effect:</strong> 18.1% (encouraging) vs.&nbsp;16.8% (neutral) — not significant</li>
-<li>Rollover respondents answered faster than click-based requesters despite having more definitions available</li>
-<li>KN replication confirmed the pattern</li>
-</ul></li>
-</ul>
-</section>
-<section id="relevance-to-tooltip-usage" class="level2">
-<h2 class="anchored" data-anchor-id="relevance-to-tooltip-usage">Relevance to tooltip usage</h2>
-<p>Core reference establishing that (1) voluntary use of tooltip-style clarification features is very low under click-based access, (2) usage is highly sensitive to interaction cost, and (3) rollover/hover dramatically outperforms click-based access.</p>
+<p><strong>Claim</strong> — “Random silicon sampling” extends Argyle et al.’s silicon sampling by using only the demographic distribution of a target group (not individual-level data), making it feasible for contexts where individual respondent data is unavailable before a survey. <strong>Quote</strong> — “Our study proposes ‘random silicon sampling,’ which generates the opinions correspond with a real human group through LLMs based on the demographic distribution of the group without requiring individual-level data to address this research gap.” <strong>Page</strong> — 1</p>
+<p><strong>Claim</strong> — On the overall ANES 2020 sample, random silicon sampling produced a Biden/Trump vote distribution with an average KL-divergence of 0.0004, which was more similar to actual ANES responses than Argyle et al.’s silicon sampling. <strong>Quote</strong> — “Table 1 illustrates that, through random silicon sampling, the language model generated a response distribution that is remarkably similar to the actual ANES responses (average KL-divergence = 0.0004), exhibiting higher similarity than the silicon sample.” <strong>Page</strong> — 6</p>
+<p><strong>Claim</strong> — Results were reproducible across ten repeated random silicon samplings in the same setting: average Biden vote rate was 57.43% with a standard deviation of only 0.46%. <strong>Quote</strong> — “the voting choice distributions from ten repeated random silicon samplings in the same setting demonstrated high consistency with an average vote rate for Biden of 57.43% and a standard deviation of 0.46%.” <strong>Page</strong> — 6</p>
+<p><strong>Claim</strong> — A minimum sample size of approximately 200 is required; replicability degraded below that threshold, with the 2% (n=108) sample incorrectly favouring Trump. <strong>Quote</strong> — “replication was feasible with a sample size of 4% (217)… At 2% (=108), the random silicon sample incorrectly favored Donald Trump (51.58%) over Joe Biden (48.42%). A possible interpretation could be similar to the emphasis in social science research on possessing a minimum of 200 samples.” <strong>Page</strong> — 7</p>
+<p><strong>Claim</strong> — Party ID subgroups (Democrats, Republicans, Independents) were poorly replicated: Democratic and Republican simulated vote rates were 99.96% and 99.22% respectively — far more extreme than actual ANES distributions. Independents were the hardest group to replicate. <strong>Quote</strong> — “The Joe Biden and Donald Trump voting rates among democratic and republican supporters in random silicon sample were 99.96% and 99.22%, respectively, which are more extreme than those in the actual ANES groups. Further, the model struggled the most in replicating the response distribution of the independent group.” <strong>Page</strong> — 6–7</p>
+<p><strong>Claim</strong> — Across 10 multiple-choice questions on different topics, random silicon sampling successfully replicated actual ANES distributions for only 1 out of 10 (income inequality). On sensitive topics, the model defaulted to “harmless” responses regardless of demographic conditioning. <strong>Quote</strong> — “the random silicon sample can replicate opinions only for questions regarding ‘income inequality’ (p &gt; 0.05, KL-divergence = 0.00096)… we speculate that this tendency reflects the GPT-3.5’s bias towards ‘harmlessness,’ considering the sensitivity of the question topics.” <strong>Page</strong> — 7</p>
+<p><strong>Claim</strong> — The “harmlessness” bias is more extreme for certain demographic subgroups: Black and Democratic groups showed stronger over-correction toward innocuous responses than White and Republican groups (e.g., same-sex marriage approval: 95.67% for Black simulated respondents vs.&nbsp;57.08% in actual ANES Black respondents). <strong>Quote</strong> — “ANES responses from the white group showed a 70.43% approval rate for same-sex marriages, which was higher than the 57.08% observed for the black group. In a random silicon sample, the approval rate among the white group was 77.46%, whereas it was significantly higher in the black group at 95.67%.” <strong>Page</strong> — 8</p>
+<p><strong>Claim</strong> — Generating 5,441 synthetic responses cost only $0.70 using GPT-3.5-turbo, demonstrating cost efficiency as a practical advantage over traditional surveys. <strong>Quote</strong> — “their cost-effectiveness (generating 5441 synthetic responses for only $0.7 in an hour) makes them invaluable for preliminary testing.” <strong>Page</strong> — 7</p>
 
 
-</section>
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -620,4 +575,4 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions"><ul><li><a href="https://github.com/willemsleegers/how-to-science/edit/main/assets/papers/conrad2006.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/willemsleegers/how-to-science/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions"><ul><li><a href="https://github.com/willemsleegers/how-to-science/edit/main/assets/papers/sun2024.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/willemsleegers/how-to-science/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Clarification Features – How to Science</title>
+<title>Silicon sampling – How to Science</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -49,8 +49,7 @@ div.csl-indent {
 <script src="../../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../../">
-<link href="../../../content/methodology/survey-design/data-quality-checks.html" rel="next">
-<link href="../../../content/methodology/survey-design/response-options.html" rel="prev">
+<link href="../../../content/methodology/ai/index.html" rel="prev">
 <script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -129,6 +128,10 @@ div.csl-indent {
     <a class="dropdown-item" href="../../../content/methodology/contingent-valuation/index.html">
  <span class="dropdown-text">Contingent valuation</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../../../content/methodology/ai/index.html">
+ <span class="dropdown-text">AI in Research</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
@@ -172,7 +175,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../content/methodology/survey-design/clarification-features.html">Clarification Features</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../content/methodology/ai/silicon-sampling.html">AI-generated survey data</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -190,31 +193,13 @@ div.csl-indent {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../content/methodology/survey-design/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Overview</span></a>
+  <a href="../../../content/methodology/ai/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">AI in Research</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../content/methodology/survey-design/response-options.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Response Options</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../content/methodology/survey-design/clarification-features.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Clarification Features</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../content/methodology/survey-design/data-quality-checks.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Data quality checks</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../content/methodology/survey-design/ai-surveys.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../content/methodology/ai/silicon-sampling.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">AI-generated survey data</span></a>
   </div>
 </li>
@@ -228,22 +213,22 @@ div.csl-indent {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#what-are-clarification-features" id="toc-what-are-clarification-features" class="nav-link active" data-scroll-target="#what-are-clarification-features">What Are Clarification Features?</a></li>
-  <li><a href="#do-respondents-use-clarification-features" id="toc-do-respondents-use-clarification-features" class="nav-link" data-scroll-target="#do-respondents-use-clarification-features">Do Respondents Use Clarification Features?</a></li>
-  <li><a href="#does-using-clarification-features-affect-response-quality" id="toc-does-using-clarification-features-affect-response-quality" class="nav-link" data-scroll-target="#does-using-clarification-features-affect-response-quality">Does Using Clarification Features Affect Response Quality?</a></li>
-  <li><a href="#study-overview" id="toc-study-overview" class="nav-link" data-scroll-target="#study-overview">Study Overview</a></li>
-  <li><a href="#business-surveys" id="toc-business-surveys" class="nav-link" data-scroll-target="#business-surveys">Business Surveys</a></li>
+  <li><a href="#can-llms-simulate-human-survey-responses" id="toc-can-llms-simulate-human-survey-responses" class="nav-link active" data-scroll-target="#can-llms-simulate-human-survey-responses">Can LLMs simulate human survey responses?</a></li>
+  <li><a href="#when-does-it-fail" id="toc-when-does-it-fail" class="nav-link" data-scroll-target="#when-does-it-fail">When does it fail?</a></li>
+  <li><a href="#does-aggregate-similarity-imply-inferential-validity" id="toc-does-aggregate-similarity-imply-inferential-validity" class="nav-link" data-scroll-target="#does-aggregate-similarity-imply-inferential-validity">Does aggregate similarity imply inferential validity?</a></li>
+  <li><a href="#do-llms-reflect-the-populations-opinions" id="toc-do-llms-reflect-the-populations-opinions" class="nav-link" data-scroll-target="#do-llms-reflect-the-populations-opinions">Do LLMs reflect the population’s opinions?</a></li>
+  <li><a href="#are-results-reproducible" id="toc-are-results-reproducible" class="nav-link" data-scroll-target="#are-results-reproducible">Are results reproducible?</a></li>
+  <li><a href="#study-overview" id="toc-study-overview" class="nav-link" data-scroll-target="#study-overview">Study overview</a></li>
   <li><a href="#recommendations" id="toc-recommendations" class="nav-link" data-scroll-target="#recommendations">Recommendations</a></li>
-  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/willemsleegers/how-to-science/edit/main/content/methodology/survey-design/clarification-features.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/willemsleegers/how-to-science/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/willemsleegers/how-to-science/edit/main/content/methodology/ai/silicon-sampling.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/willemsleegers/how-to-science/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Clarification Features</h1>
+<h1 class="title">Silicon sampling</h1>
 </div>
 
 
@@ -270,149 +255,117 @@ Warning
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>This chapter is still a work in progress.</p>
+<p>This page is still a work in progress.</p>
 </div>
 </div>
-<p>Surveys often include clarification features — supplementary information attached to terms, questions, or response options to help respondents interpret them correctly. Common examples include tooltips (small pop-ups revealed by hovering or clicking), always-visible definitions displayed below a question, and hyperlinked terms that expand to show an explanation. A key question is whether respondents actually read and use these features, and whether they improve response quality.</p>
-<section id="what-are-clarification-features" class="level2">
-<h2 class="anchored" data-anchor-id="what-are-clarification-features">What Are Clarification Features?</h2>
-<p>Clarification features provide additional context without requiring it to be read by everyone. They are commonly used to define technical or ambiguous terms, clarify the intended scope of a question, or provide examples for response options.</p>
-<p>The term <em>clarification feature</em> is standard in the survey methodology literature. You may also encounter <em>definitions</em>, <em>rollover definitions</em>, or <em>help text</em> — these refer to the same thing. Tooltips are one specific implementation: a definition revealed by hovering or clicking on a highlighted term.</p>
-<p>The underlying assumption is that clarification features reduce respondent confusion without burdening attentive respondents who do not need the extra information. Whether this holds depends on whether respondents actually use them when they need them.</p>
+<p>LLMs can be prompted to respond to survey questions as a person with given demographic characteristics. This section reviews what the evidence says about when this works, when it fails, and whether it can substitute for human survey data.</p>
+<section id="can-llms-simulate-human-survey-responses" class="level2">
+<h2 class="anchored" data-anchor-id="can-llms-simulate-human-survey-responses">Can LLMs simulate human survey responses?</h2>
+<p><strong>Silicon sampling</strong> conditions an LLM on a sociodemographic backstory drawn from a real survey sample and asks it to respond as that person would <span class="citation" data-cites="argyle2023">(<a href="#ref-argyle2023" role="doc-biblioref">Argyle et al., 2023</a>)</span>. Applied to US presidential vote choice across three ANES election years, GPT-3 silicon samples correlated 0.90–0.94 (tetrachoric) with actual responses and reproduced inter-variable associations closely (mean Cramér’s V difference = 0.026). The method works at the aggregate level only — individual predictions are not expected to match.</p>
+<p><strong>Random silicon sampling</strong> extends this by drawing demographics from a group’s <em>distribution</em> rather than from individual records, removing the requirement for individual-level data <span class="citation" data-cites="sun2024">(<a href="#ref-sun2024" role="doc-biblioref">Sun et al., 2024</a>)</span>. Applied to ANES 2020 vote choice, it produced similarly close results (KL-divergence = 0.0004) and was reproducible across runs (SD of Biden vote rate = 0.46%). A minimum of ~200 synthetic respondents was needed for stable estimates.</p>
+<p>Higher accuracy is achievable with <strong>interview-based agents</strong>: 2-hour qualitative interviews with real participants, with the full transcript injected into the model at query time <span class="citation" data-cites="park2024">(<a href="#ref-park2024" role="doc-biblioref">Park et al., 2024</a>)</span>. These agents predicted GSS responses with normalised accuracy 0.85 — comparable to participants’ own two-week retest consistency — outperforming demographic-based (0.71) and persona-based (0.70) agents. They replicated the same 4 of 5 experimental studies as human participants (effect size correlation r = 0.98).</p>
 </section>
-<section id="do-respondents-use-clarification-features" class="level2">
-<h2 class="anchored" data-anchor-id="do-respondents-use-clarification-features">Do Respondents Use Clarification Features?</h2>
-<p><span class="citation" data-cites="conrad2006">Conrad et al. (<a href="#ref-conrad2006" role="doc-biblioref">2006</a>)</span> reported two experiments on food and nutrition consumption surveys in which definitions for key terms were made available via different access methods. In Experiment 1 (N ≈ 2,871), which compared one-click, two-click, and click-and-scroll interfaces across both technical terms (e.g., “polyunsaturated fatty acid”) and ordinary terms (e.g., “vegetables”), only <strong>13.8% of respondents</strong> requested any definitions. Requests were far more common for technical than ordinary terms, suggesting respondents sought clarification when they recognized unfamiliarity but not when they felt confident in an interpretation that may nonetheless have been wrong. One-click access produced more requests than two-click or click-and-scroll.</p>
-<p>Experiment 2 (N ≈ 3,050) focused deliberately on ordinary terms — a more stringent test — and compared one-click, two-click, and rollover access. It also experimentally varied whether respondents received encouraging instructions (“please click on the word to obtain a definition”) or neutral instructions. Overall, 22.4% of respondents requested at least one definition. The access method mattered greatly: rollover produced a 36.5% usage rate, compared to 8.9% for one-click and 6.5% for two-click. Crucially, the instruction manipulation had no effect — 18.1% of respondents with encouraging instructions requested definitions vs.&nbsp;16.8% with neutral instructions, a non-significant difference.</p>
-<p><span class="citation" data-cites="peytchev2010">Peytchev et al. (<a href="#ref-peytchev2010" role="doc-biblioref">2010</a>)</span> conducted a larger field experiment (N = 2,481) on health and lifestyle topics, comparing three conditions: no definitions, rollover definitions, and always-on definitions displayed below each question. Usage rates were:</p>
-<ul>
-<li>Always-on: 60.7% of respondents consulted definitions (self-report)</li>
-<li>Rollover: 45.4% (behavioral log data), 35.6% (self-report)</li>
-</ul>
-<p>An important and counterintuitive finding from <span class="citation" data-cites="peytchev2010">Peytchev et al. (<a href="#ref-peytchev2010" role="doc-biblioref">2010</a>)</span> was that respondents explicitly trained to use definitions actually used them <em>less</em> (38%) compared to untrained respondents (53%). The authors suggest that deliberate instruction makes respondents more aware of the effort involved, leading them to opt out.</p>
-<p><span class="citation" data-cites="lind2001">Lind et al. (<a href="#ref-lind2001" role="doc-biblioref">2001</a>)</span> ran a small lab study (N = 48) in which participants answered questions about housing and purchases with definitions available via click. Usage ranged from ~23% for originally-worded questions to ~43% when an irrelevant part of the definition was embedded in the question — demonstrating how sensitive usage is to the surrounding context.</p>
-<p>A key problem underlying all of these findings is that respondents often do not recognize that their interpretation of a question differs from the intended meaning <span class="citation" data-cites="conradschober2000">(<a href="#ref-conradschober2000" role="doc-biblioref">Conrad &amp; Schober, 2000</a>)</span>. They therefore do not seek clarification even when it is available, because they do not know they need it.</p>
-<p>The empirical base for this section is thin. The studies reviewed here span just a handful of labs and field experiments, conducted across different countries, survey topics, and technical implementations. There have been no large-scale replication efforts, no preregistered studies, and no systematic variation of the features that matter most (e.g., topic difficulty, respondent literacy, device type). The settings vary enough — a 48-person lab study vs.&nbsp;a 2,481-person national field survey — that direct comparisons are difficult. Treating any specific usage percentage as a benchmark would be premature.</p>
+<section id="when-does-it-fail" class="level2">
+<h2 class="anchored" data-anchor-id="when-does-it-fail">When does it fail?</h2>
+<p><strong>Ideologically sorted subgroups.</strong> Silicon sampling struggles with party ID subgroups: simulated Democrats and Republicans voted 99.96% and 99.22% for their candidate <span class="citation" data-cites="sun2024">(<a href="#ref-sun2024" role="doc-biblioref">Sun et al., 2024</a>)</span>, far more extreme than actual ANES respondents. Political independents were the hardest group to replicate <span class="citation" data-cites="argyle2023 sun2024">(<a href="#ref-argyle2023" role="doc-biblioref">Argyle et al., 2023</a>; <a href="#ref-sun2024" role="doc-biblioref">Sun et al., 2024</a>)</span>.</p>
+<p><strong>Sensitive topics.</strong> Random silicon sampling replicated only 1 of 10 multiple-choice questions beyond vote choice <span class="citation" data-cites="sun2024">(<a href="#ref-sun2024" role="doc-biblioref">Sun et al., 2024</a>)</span>. On sensitive topics (race, gender, religion, sexuality), the model defaulted to “harmless” responses regardless of demographic conditioning — a bias more pronounced for Black and Democratic subgroups.</p>
+<p><strong>Economic behaviour.</strong> Interview-based agents showed no advantage over demographic or persona baselines on economic games <span class="citation" data-cites="park2024">(<a href="#ref-park2024" role="doc-biblioref">Park et al., 2024</a>)</span>.</p>
+<p><strong>New domains.</strong> The strong results for silicon sampling are for US electoral politics. Performance in other domains or countries is substantially worse <span class="citation" data-cites="bisbee2024">(<a href="#ref-bisbee2024" role="doc-biblioref">Bisbee et al., 2024</a>)</span>, and algorithmic fidelity must be validated domain by domain <span class="citation" data-cites="argyle2023">(<a href="#ref-argyle2023" role="doc-biblioref">Argyle et al., 2023</a>)</span>.</p>
 </section>
-<section id="does-using-clarification-features-affect-response-quality" class="level2">
-<h2 class="anchored" data-anchor-id="does-using-clarification-features-affect-response-quality">Does Using Clarification Features Affect Response Quality?</h2>
-<p>When respondents do consult definitions, the evidence suggests it improves accuracy. <span class="citation" data-cites="conradschober2000">Conrad &amp; Schober (<a href="#ref-conradschober2000" role="doc-biblioref">2000</a>)</span> showed in a telephone survey context that conversational clarification led to responses more consistent with official definitions — 95% accuracy in the conversational condition vs.&nbsp;57% in the standardized condition. In web surveys, <span class="citation" data-cites="peytchev2010">Peytchev et al. (<a href="#ref-peytchev2010" role="doc-biblioref">2010</a>)</span> found that always-on definitions changed response patterns on 4 of 8 questions tested (compared to control), while rollover definitions changed 2 of 8. Respondents in the definitions conditions also spent more time on questions — ~60 seconds more for always-on, ~7 seconds more for rollover — suggesting genuine reading rather than skipping.</p>
-<p><span class="citation" data-cites="lind2001">Lind et al. (<a href="#ref-lind2001" role="doc-biblioref">2001</a>)</span> found that clarification only improved accuracy when the definition was specifically relevant to the respondent’s situation (85% correct vs.&nbsp;42% without clarification). Including definitional information that was irrelevant to a respondent’s actual circumstances increased survey duration without improving accuracy.</p>
-<p><span class="citation" data-cites="conrad2007">Conrad et al. (<a href="#ref-conrad2007" role="doc-biblioref">2007</a>)</span> extended this line of work by introducing <em>mixed-initiative</em> clarification in a lab web survey: rather than relying solely on respondents to request definitions, the system also proactively offered clarification when respondents were slow to respond. Accuracy on complicated scenarios improved from 41% (no clarification) to 68% (user-initiated) and was similar for mixed-initiative. Framing definitions as “essential” rather than merely “available” further improved accuracy to ~80%. This suggests that both availability and perceived importance shape whether clarification translates into better data.</p>
-<p>The key qualification is that response quality improvements depend on whether respondents actually access the definitions — and in the studies reviewed, a majority did not under click-based access.</p>
+<section id="does-aggregate-similarity-imply-inferential-validity" class="level2">
+<h2 class="anchored" data-anchor-id="does-aggregate-similarity-imply-inferential-validity">Does aggregate similarity imply inferential validity?</h2>
+<p>No.&nbsp;While ChatGPT aggregate feeling thermometer scores fall within one SD of ANES averages, <strong>48% of regression coefficients</strong> from synthetic data are statistically significantly different from their ANES counterparts — and of those, <strong>32% flip sign</strong> <span class="citation" data-cites="bisbee2024">(<a href="#ref-bisbee2024" role="doc-biblioref">Bisbee et al., 2024</a>)</span>. Synthetic responses also have far less variance, causing power analyses to underestimate required sample sizes by roughly an order of magnitude.</p>
+</section>
+<section id="do-llms-reflect-the-populations-opinions" class="level2">
+<h2 class="anchored" data-anchor-id="do-llms-reflect-the-populations-opinions">Do LLMs reflect the population’s opinions?</h2>
+<p>No.&nbsp;LM opinion misalignment with US demographic groups is on par with the Democrat-Republican divide on climate change, and every human subgroup — including the least representative — is more aligned with the overall population than any LM tested <span class="citation" data-cites="santurkar2023">(<a href="#ref-santurkar2023" role="doc-biblioref">Santurkar et al., 2023</a>)</span>.</p>
+<p>RLHF fine-tuning makes this worse: models shift from reflecting lower-income, moderate internet users (the training data base) toward the demographics of crowdworkers used for feedback (liberal, educated, high-income, non-religious). RLHF-tuned models also collapse opinion diversity — text-davinci-003 assigns &gt;99% probability to a single answer on most questions <span class="citation" data-cites="santurkar2023">(<a href="#ref-santurkar2023" role="doc-biblioref">Santurkar et al., 2023</a>)</span>.</p>
+</section>
+<section id="are-results-reproducible" class="level2">
+<h2 class="anchored" data-anchor-id="are-results-reproducible">Are results reproducible?</h2>
+<p>Not for closed-source models. The same prompt produced substantially different results between April and July 2023 due to undisclosed model updates, and results are sensitive to minor prompt wording variations <span class="citation" data-cites="bisbee2024">(<a href="#ref-bisbee2024" role="doc-biblioref">Bisbee et al., 2024</a>)</span>.</p>
 </section>
 <section id="study-overview" class="level2">
-<h2 class="anchored" data-anchor-id="study-overview">Study Overview</h2>
+<h2 class="anchored" data-anchor-id="study-overview">Study overview</h2>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
 </colgroup>
 <thead>
 <tr class="header">
 <th>Study</th>
-<th>N</th>
-<th>Mode</th>
-<th>Survey topic</th>
-<th>Clarification type</th>
+<th>Model</th>
+<th>Data</th>
 <th>Key finding</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><span class="citation" data-cites="conradschober2000">Conrad &amp; Schober (<a href="#ref-conradschober2000" role="doc-biblioref">2000</a>)</span></td>
-<td>227</td>
-<td>Telephone</td>
-<td>Housing (CPI), purchases (CPOPS)</td>
-<td>Conversational interviewing (proactive clarification by interviewer)</td>
-<td>95% accuracy (conversational) vs.&nbsp;57% (standardized)</td>
+<td><span class="citation" data-cites="argyle2023">Argyle et al. (<a href="#ref-argyle2023" role="doc-biblioref">2023</a>)</span></td>
+<td>GPT-3</td>
+<td>ANES (2012–2020)</td>
+<td>r = 0.90–0.94 for vote choice; fails for independents</td>
 </tr>
 <tr class="even">
-<td><span class="citation" data-cites="lind2001">Lind et al. (<a href="#ref-lind2001" role="doc-biblioref">2001</a>)</span></td>
-<td>48</td>
-<td>Web (lab)</td>
-<td>Housing, purchases</td>
-<td>Click-to-reveal; question rewording with embedded partial definitions</td>
-<td>Relevant rewording: 85% accuracy; irrelevant rewording: 47% (no better than control)</td>
+<td><span class="citation" data-cites="sun2024">Sun et al. (<a href="#ref-sun2024" role="doc-biblioref">2024</a>)</span></td>
+<td>GPT-3.5</td>
+<td>ANES 2020</td>
+<td>Group-level demographics sufficient; fails for sorted subgroups and sensitive topics</td>
 </tr>
 <tr class="odd">
-<td><span class="citation" data-cites="conrad2006">Conrad et al. (<a href="#ref-conrad2006" role="doc-biblioref">2006</a>)</span></td>
-<td>~2,871 / ~3,050</td>
-<td>Web (field)</td>
-<td>Food/nutrition consumption</td>
-<td>Click-based (1-click, 2-click, scroll) and rollover</td>
-<td>13.8% overall usage; rollover 36.5% vs.&nbsp;1-click 8.9% vs.&nbsp;2-click 6.5%</td>
+<td><span class="citation" data-cites="park2024">Park et al. (<a href="#ref-park2024" role="doc-biblioref">2024</a>)</span></td>
+<td>GPT-4o</td>
+<td>GSS + experiments (N = 1,052)</td>
+<td>Normalised accuracy 0.85; no advantage for economic games</td>
 </tr>
 <tr class="even">
-<td><span class="citation" data-cites="peytchev2010">Peytchev et al. (<a href="#ref-peytchev2010" role="doc-biblioref">2010</a>)</span></td>
-<td>2,481</td>
-<td>Web (field)</td>
-<td>Health and lifestyles (food/nutrition)</td>
-<td>Rollover vs.&nbsp;always-on display</td>
-<td>Always-on: 60.7% usage; rollover: 35.6%; training <em>reduced</em> usage</td>
+<td><span class="citation" data-cites="bisbee2024">Bisbee et al. (<a href="#ref-bisbee2024" role="doc-biblioref">2024</a>)</span></td>
+<td>ChatGPT 3.5</td>
+<td>ANES feeling thermometers</td>
+<td>48% of coefficients wrong; 32% flip sign; not reproducible</td>
 </tr>
 <tr class="odd">
-<td><span class="citation" data-cites="conrad2007">Conrad et al. (<a href="#ref-conrad2007" role="doc-biblioref">2007</a>)</span></td>
-<td>54 (Exp. 1)</td>
-<td>Web (lab)</td>
-<td>Employment, housing, purchases</td>
-<td>User-initiated click + mixed-initiative (system-proactive)</td>
-<td>Mixed-initiative ≈ user-initiated accuracy; “essential” framing improved accuracy to ~80%</td>
+<td><span class="citation" data-cites="santurkar2023">Santurkar et al. (<a href="#ref-santurkar2023" role="doc-biblioref">2023</a>)</span></td>
+<td>GPT-3, InstructGPT</td>
+<td>Pew surveys</td>
+<td>Every human subgroup more representative than any LM; RLHF worsens alignment</td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="business-surveys" class="level2">
-<h2 class="anchored" data-anchor-id="business-surveys">Business Surveys</h2>
-<p>The issues described above are arguably more severe in business surveys, where organizations are asked to report financial, employment, or operational data to national statistics institutes. <span class="citation" data-cites="snijkers2013">Snijkers et al. (<a href="#ref-snijkers2013" role="doc-biblioref">2013</a>)</span> identify three specific comprehension challenges:</p>
-<ul>
-<li><strong>Ambiguity</strong>: Business surveys use everyday terms (e.g., “employment,” “turnover”) with technical definitions that differ from how those terms are used in routine business operations. Respondents assume familiar terms mean what they ordinarily mean and do not seek clarification.</li>
-<li><strong>Vagueness</strong>: Reference periods and include/exclude criteria are often unclear. When definitions seem obvious, respondents ignore them; when they are not obvious, respondents still tend not to read them — the same double-bind as in household surveys.</li>
-<li><strong>Mapping discrepancies</strong>: Even with clear definitions, respondents struggle to classify borderline cases (e.g., part-time workers, temporary staff, intercompany transactions) that do not map cleanly onto survey categories.</li>
-</ul>
-<p>An additional complication is that business survey response is often a distributed process involving multiple employees — a response coordinator, subject-matter experts, and data providers who may never see the questionnaire itself. Clarification features are only useful to the person who actually reads them, not to the person who ultimately supplies the data.</p>
-<p>There is no empirical literature specifically on clarification feature usage rates in business surveys. The household survey findings (low voluntary usage, improvement with always-on display) should be treated as a lower bound on the problem rather than a direct estimate, given the greater complexity of business survey concepts.</p>
-</section>
 <section id="recommendations" class="level2">
 <h2 class="anchored" data-anchor-id="recommendations">Recommendations</h2>
-<p>Given the limited and heterogeneous evidence base, these recommendations are tentative. They reflect consistent directional patterns across the available studies, but none have been replicated at scale or under preregistered conditions.</p>
 <ul>
-<li><p><strong>Be skeptical of click-to-reveal clarification features for important definitions.</strong> Usage rates under click-based access are consistently around 10–15% across the studies reviewed. If accurate interpretation is important for a given item, relying on respondents to seek out clarification voluntarily is probably insufficient — though how insufficient depends on the stakes of the item.</p></li>
-<li><p><strong>Always-on display appears more effective than hidden alternatives.</strong> Displaying definitions below or beside the question item tends to increase both usage and time-on-question. Whether this translates into meaningfully better data depends on the item and population, and the evidence comes from a small number of studies.</p></li>
-<li><p><strong>Hover/rollover may be a useful middle ground in desktop contexts.</strong> It achieves higher usage than click-based access while keeping the interface less cluttered than always-on display. It is not available on mobile devices, and there is no evidence on how it performs relative to always-on across typical respondent populations today.</p></li>
-<li><p><strong>Training respondents to use clarification features is unlikely to help.</strong> The one study that tested this found it reduced usage rather than increased it. Designing for spontaneous use is more promising than instructing respondents.</p></li>
-<li><p><strong>Embedding definitional content directly in question wording may be the most reliable approach.</strong> <span class="citation" data-cites="lind2001">Lind et al. (<a href="#ref-lind2001" role="doc-biblioref">2001</a>)</span> found that incorporating a relevant part of the definition into the question itself dramatically improved accuracy, more so than a separate clarification feature. This only works when the definition is relevant to most respondents — irrelevant embedded content added burden without benefit.</p></li>
+<li><strong>Do not use LLM-generated data as a substitute for human survey data.</strong> Aggregate similarity to benchmarks does not guarantee valid inference, and regression coefficients are frequently wrong in sign.</li>
+<li><strong>Silicon sampling can be useful for cheap hypothesis exploration</strong> before collecting human data, particularly for US political attitudes where the evidence base is strongest.</li>
+<li><strong>Validate in your specific domain</strong> before treating any LLM simulation as trustworthy. Strong results in US electoral politics do not generalise.</li>
+<li><strong>Use interview-based agents if accuracy is critical</strong> and resources allow. Demographic prompting is a poor substitute for rich individual data.</li>
+<li><strong>Avoid RLHF-tuned models for opinion simulation.</strong> Base models are more representative of the US population than instruction-tuned variants.</li>
+<li><strong>Do not use closed-source models for reproducible research.</strong> Undisclosed updates can change results substantially.</li>
 </ul>
-</section>
-<section id="references" class="level2">
-
 
 
 
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
-<div id="ref-conrad2006" class="csl-entry" role="listitem">
-Conrad, F. G., Couper, M. P., Tourangeau, R., &amp; Peytchev, A. (2006). Use and non-use of clarification features in web surveys. <em>Journal of Official Statistics</em>, <em>22</em>(2), 245–269.
+<div id="ref-argyle2023" class="csl-entry" role="listitem">
+Argyle, L. P., Busby, E. C., Fulda, N., Gubler, J. R., Rytting, C., &amp; Wingate, D. (2023). Out of one, many: Using language models to simulate human samples. <em>Political Analysis</em>, <em>31</em>(3), 337–355. <a href="https://doi.org/10.1017/pan.2023.2">https://doi.org/10.1017/pan.2023.2</a>
 </div>
-<div id="ref-conradschober2000" class="csl-entry" role="listitem">
-Conrad, F. G., &amp; Schober, M. F. (2000). Clarifying question meaning in a household telephone survey. <em>Public Opinion Quarterly</em>, <em>64</em>(1), 1–28. <a href="https://doi.org/10.1086/316757">https://doi.org/10.1086/316757</a>
+<div id="ref-bisbee2024" class="csl-entry" role="listitem">
+Bisbee, J., Clinton, J., Dorff, C., Kenkel, B., &amp; Larson, J. (2024). Synthetic replacements for human survey data? The perils of large language models. <em>Political Analysis</em>, <em>32</em>(3), 401–416. <a href="https://doi.org/10.1017/pan.2023.27">https://doi.org/10.1017/pan.2023.27</a>
 </div>
-<div id="ref-conrad2007" class="csl-entry" role="listitem">
-Conrad, F. G., Schober, M. F., &amp; Coiner, T. (2007). Bringing features of human dialogue to web surveys. <em>Applied Cognitive Psychology</em>, <em>21</em>(2), 165–187. <a href="https://doi.org/10.1002/acp.1335">https://doi.org/10.1002/acp.1335</a>
+<div id="ref-park2024" class="csl-entry" role="listitem">
+Park, J. S., Zou, C. Q., Shaw, A., Hill, B. M., Cai, C., Morris, M. R., Willer, R., Liang, P., &amp; Bernstein, M. S. (2024). Generative agent simulations of 1,000 people. <em>arXiv</em>. <a href="https://doi.org/10.48550/arXiv.2411.10109">https://doi.org/10.48550/arXiv.2411.10109</a>
 </div>
-<div id="ref-lind2001" class="csl-entry" role="listitem">
-Lind, L. H., Schober, M. F., &amp; Conrad, F. G. (2001). Clarifying question meaning in a web-based survey. <em>Proceedings of the American Statistical Association, Section on Survey Research Methods</em>.
+<div id="ref-santurkar2023" class="csl-entry" role="listitem">
+Santurkar, S., Durmus, E., Ladhak, F., Lee, C., Liang, P., &amp; Hashimoto, T. (2023). Whose opinions do language models reflect? <em>Proceedings of the 40th International Conference on Machine Learning</em>.
 </div>
-<div id="ref-peytchev2010" class="csl-entry" role="listitem">
-Peytchev, A., Conrad, F. G., Couper, M. P., &amp; Tourangeau, R. (2010). Increasing respondents’ use of definitions in web surveys. <em>Journal of Official Statistics</em>, <em>26</em>(4), 633–650.
-</div>
-<div id="ref-snijkers2013" class="csl-entry" role="listitem">
-Snijkers, G., Haraldsen, G., Jones, J., &amp; Willimack, D. K. (2013). <em>Designing and conducting business surveys</em>. Wiley. <a href="https://doi.org/10.1002/9781118447895">https://doi.org/10.1002/9781118447895</a>
+<div id="ref-sun2024" class="csl-entry" role="listitem">
+Sun, S., Lee, E., Nan, D., Zhao, X., Lee, W., Jansen, B. J., &amp; Kim, J. H. (2024). Random silicon sampling: Simulating human sub-population opinion using a large language model based on group-level demographic information. <em>Findings of the Association for Computational Linguistics: ACL 2024</em>.
 </div>
 </div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -817,14 +770,11 @@ Snijkers, G., Haraldsen, G., Jones, J., &amp; Willimack, D. K. (2013). <em>Desig
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../../content/methodology/survey-design/response-options.html" class="pagination-link" aria-label="Response Options">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Response Options</span>
+      <a href="../../../content/methodology/ai/index.html" class="pagination-link" aria-label="AI in Research">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">AI in Research</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../../content/methodology/survey-design/data-quality-checks.html" class="pagination-link" aria-label="Data quality checks">
-        <span class="nav-page-text">Data quality checks</span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->
@@ -832,4 +782,4 @@ Snijkers, G., Haraldsen, G., Jones, J., &amp; Willimack, D. K. (2013). <em>Desig
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/willemsleegers/how-to-science/edit/main/content/methodology/survey-design/clarification-features.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/willemsleegers/how-to-science/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/willemsleegers/how-to-science/edit/main/content/methodology/ai/silicon-sampling.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/willemsleegers/how-to-science/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

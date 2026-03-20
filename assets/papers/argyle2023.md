@@ -4,6 +4,8 @@ description: Introduces "silicon sampling" — conditioning LLMs on demographic 
 type: reference
 ---
 
+Argyle et al. (2023) introduce "silicon sampling" — conditioning GPT-3 on sociodemographic backstories drawn from a nationally representative survey to simulate the response distributions of human subpopulations. Applied to US presidential vote choice across three ANES election years, silicon samples achieve tetrachoric correlations of 0.90–0.94 with actual human responses and reproduce inter-variable associations closely. The paper coins the term "algorithmic fidelity" for this property, cautions that it is domain-specific and must be validated before use, and demonstrates the method at aggregate level only — individual predictions are not expected to match.
+
 **Claim** — The paper coins the term "silicon sampling" and defines it as a method for conditioning a language model on sociodemographic backstories drawn from a nationally representative sample, to correct for the skewed demographics of the LLM's training data.
 **Quote** — "We propose a general methodology, which we term silicon sampling, that corrects skewed marginal statistics of a language model... we leverage the conditional nature of language models and sample backstories from a known, nationally representative sample (e.g., the ANES) and then estimate P(V) based on those ANES-sampled backstories."
 **Page** — 4

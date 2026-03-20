@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="description" content="Introduces OpinionQA dataset; finds substantial misalignment between LM opinions and US demographic groups, with RLHF fine-tuning making misalignment worse rather than better">
 
-<title>conrad2006 – How to Science</title>
+<title>santurkar2023 – How to Science</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -157,62 +158,17 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="conrad-et-al.-2006" class="level1">
-<h1>Conrad et al.&nbsp;(2006)</h1>
-<p><strong>Full citation:</strong> Conrad, F. G., Couper, M. P., Tourangeau, R., &amp; Peytchev, A. (2006). Use and non-use of clarification features in web surveys. <em>Journal of Official Statistics, 22</em>(2), 245–269.</p>
-<section id="study-overview" class="level2">
-<h2 class="anchored" data-anchor-id="study-overview">Study overview</h2>
-<ul>
-<li><strong>Mode:</strong> Web survey (two separate experiments)</li>
-<li><strong>Survey topic:</strong> Food and nutrition consumption (“lifestyle” survey)</li>
-<li><strong>Clarification type:</strong> Hyperlinked definitions for food/nutrition terms (e.g., polyunsaturated fatty acid, vegetables, cholesterol)</li>
-<li><strong>Definition content:</strong> Half were “useful” (counter-intuitive information likely to shift responses, e.g., vegetables include French fries) and half were “not useful” (confirmatory/neutral)</li>
-</ul>
-</section>
-<section id="experiment-1" class="level2">
-<h2 class="anchored" data-anchor-id="experiment-1">Experiment 1</h2>
-<ul>
-<li><strong>N:</strong> ~2,871</li>
-<li><strong>Sample:</strong> Online panel (web-based)</li>
-<li><strong>Interface conditions:</strong> One-click, Two-click, Click-and-scroll</li>
-<li><strong>Concept conditions:</strong> Technical terms (e.g., polyunsaturated fatty acid) vs.&nbsp;ordinary terms (e.g., vegetables)</li>
-<li><strong>Definition usefulness:</strong> Useful (counter-intuitive, likely to shift responses) vs.&nbsp;not useful (confirmatory)</li>
-<li><strong>Key findings:</strong>
-<ul>
-<li>Overall: only <strong>13.8% of respondents</strong> requested any definitions</li>
-<li>Requests were far more common for <strong>technical</strong> than ordinary terms</li>
-<li><strong>One-click</strong> produced more requests than two-click or click-and-scroll</li>
-<li>When respondents obtained a definition, response patterns differed from non-requesters — suggesting definitions were read and used</li>
-</ul></li>
-</ul>
-</section>
-<section id="experiment-2" class="level2">
-<h2 class="anchored" data-anchor-id="experiment-2">Experiment 2</h2>
-<ul>
-<li><strong>N:</strong> ~3,050</li>
-<li><strong>Sample:</strong> Online panel (web-based); plus a replication with ~941 Knowledge Networks probability-sample respondents</li>
-<li><strong>Interface conditions:</strong> One-click, Two-click, Rollover (mouse hover)</li>
-<li><strong>Concept conditions:</strong> Ordinary terms only (e.g., fat, vegetables, dairy, cholesterol) — deliberately more stringent than Experiment 1</li>
-<li><strong>Instruction conditions:</strong> Encouraging (“please click on the word to obtain a definition”) vs.&nbsp;neutral</li>
-<li><strong>Key findings:</strong>
-<ul>
-<li>Overall: <strong>22.4%</strong> of respondents requested at least one definition</li>
-<li><strong>Rollover:</strong> 36.5% of respondents requested at least one definition</li>
-<li><strong>One-click:</strong> 8.9%</li>
-<li><strong>Two-click:</strong> 6.5%</li>
-<li><strong>Instructions had no effect:</strong> 18.1% (encouraging) vs.&nbsp;16.8% (neutral) — not significant</li>
-<li>Rollover respondents answered faster than click-based requesters despite having more definitions available</li>
-<li>KN replication confirmed the pattern</li>
-</ul></li>
-</ul>
-</section>
-<section id="relevance-to-tooltip-usage" class="level2">
-<h2 class="anchored" data-anchor-id="relevance-to-tooltip-usage">Relevance to tooltip usage</h2>
-<p>Core reference establishing that (1) voluntary use of tooltip-style clarification features is very low under click-based access, (2) usage is highly sensitive to interaction cost, and (3) rollover/hover dramatically outperforms click-based access.</p>
+<p><strong>Claim</strong> — LM opinions are substantially misaligned with those of the US population overall; the degree of misalignment is comparable to the Democrat-Republican divide on climate change. <strong>Quote</strong> — “we find substantial misalignment between the views reflected by current LMs and those of US demographic groups: on par with the Democrat-Republican divide on climate change.” <strong>Page</strong> — 1 (abstract)</p>
+<p><strong>Claim</strong> — Every demographic human subgroup — even the least representative — is more aligned with the overall US population than any of the LMs tested. <strong>Quote</strong> — “every one of these groups is more representative of the overall populace than any of the LMs we consider (i.e., cf.&nbsp;representativeness scores of ‘human (worst)’ to all the LMs).” <strong>Page</strong> — 8</p>
+<p><strong>Claim</strong> — RLHF/human feedback fine-tuning makes overall opinion misalignment worse, not better; more recent instruction-tuned models score lower on population representativeness than base LMs. <strong>Quote</strong> — “more recent models trained to be more human-aligned (Ouyang et al., 2022; AI21Labs, 2022) are actually worse—cf.&nbsp;OpenAI’s text-davinci-003 and davinci models.” <strong>Page</strong> — 8</p>
+<p><strong>Claim</strong> — Base LMs best reflect the opinions of lower-income, moderate, Protestant/Catholic groups (reflecting internet training data demographics); RLHF-tuned models shift to liberal, high-income, educated, and non-religious groups (reflecting crowdworker demographics). <strong>Quote</strong> — “The opinions reflected by these models align more with people who are liberal, high income, well-educated, and not religious… These groups line up with the demographics of the crowdworkers reported in OpenAI’s InstructGPT paper.” <strong>Page</strong> — 8–9</p>
+<p><strong>Claim</strong> — RLHF-tuned models collapse to modal/caricature opinions: text-davinci-003 assigns &gt;99% probability to a single answer on most questions, unlike humans who show genuine diversity of opinion even on contentious topics. <strong>Quote</strong> — “it has an extremely sharp (and low entropy) opinion distribution for most questions—it typically assigns &gt; 0.99 probability to one of the options. This is unlike humans, who even on contentious topics (like gun rights), tend to exhibit some diversity in opinions.” <strong>Page</strong> — 9</p>
+<p><strong>Claim</strong> — Steering LMs toward a demographic group (via persona prompting) improves alignment modestly, but does not resolve the underlying representativeness problems. <strong>Quote</strong> — “Most models do tend to become better-aligned with a group when prompted to behave like it. However, these improvements are modest: none of the aforementioned representativeness problems are resolved by steering.” <strong>Page</strong> — 3</p>
+<p><strong>Claim</strong> — LMs are not consistent in which groups they align with across different topics — even models with general liberal tendencies express conservative views on topics such as religion. <strong>Quote</strong> — “Although specific LMs are preferentially aligned with certain groups (see 1. above), this skew is not consistent across topics. For instance, even generally liberal models such as text-davinci-00{2,3} express conservative views on topics such as religion.” <strong>Page</strong> — 3</p>
+<p><strong>Claim</strong> — Certain demographic groups are poorly represented by all LMs tested: people aged 65+, widowed individuals, and those with high religious attendance — groups also likely underrepresented in crowdsourcing platforms used for model training. <strong>Quote</strong> — “a broader analysis across all the groups in the Pew survey highlights several that have low representativeness scores for all LMs, such as individuals of age 65+, widowed, and high religious attendance… it is likely that the other groups (widowed, high religious attendance) may also be difficult to recruit through standard crowdsourcing vendors.” <strong>Page</strong> — 9</p>
+<p><strong>Claim</strong> — The results are robust to prompt formatting and option ordering: the relative ranking of models and subgroup alignment patterns remain consistent across prompt variants. <strong>Quote</strong> — “Even though we see small fluctuations in the actual representativeness scores through these interventions, the overall trends remain unchanged—the relative ranking of models and the subgroups they tend to align with.” <strong>Page</strong> — 39</p>
 
 
-</section>
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -620,4 +576,4 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions"><ul><li><a href="https://github.com/willemsleegers/how-to-science/edit/main/assets/papers/conrad2006.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/willemsleegers/how-to-science/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions"><ul><li><a href="https://github.com/willemsleegers/how-to-science/edit/main/assets/papers/santurkar2023.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/willemsleegers/how-to-science/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
