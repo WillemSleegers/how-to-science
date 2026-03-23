@@ -1,10 +1,11 @@
 {
   "permissions": {
     "allow": [
-      "Bash(curl -s \"http://localhost:23119/*\")",
       "Read(//Users/willem/Documents/Papers/Zotero/**)",
       "Bash(pdftoppm -v)",
-      "Bash(pdftotext \"$pdf\" -)"
+      "Bash(pdftotext \"$pdf\" -)",
+      "Bash(quarto render*)",
+      "Bash(npx tsc --noEmit)"
     ]
   }
 }

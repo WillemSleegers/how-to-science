@@ -1,0 +1,292 @@
+---
+title: Best practices in CFA
+toc: true
+---
+
+
+- [Sample size](#sample-size)
+  - [Rules of thumb](#rules-of-thumb)
+  - [Monte Carlo method](#monte-carlo-method)
+  - [Satorra-Saris method](#satorra-saris-method)
+  - [RMSEA method](#rmsea-method)
+  - [Power analysis software](#power-analysis-software)
+- [Number of indicators](#number-of-indicators)
+- [Estimator](#estimator)
+- [Model evaluation](#model-evaluation)
+  - [Estimate plausibility](#estimate-plausibility)
+  - [Model fit](#model-fit)
+  - [Use flexible cut off points](#use-flexible-cut-off-points)
+- [Reliability](#reliability)
+- [Misc](#misc)
+  - [How to model reverse-worded items?](#how-to-model-reverse-worded-items)
+- [Recommended Reading](#recommended-reading)
+
+- [Sample size](#sample-size)
+  - [Rules of thumb](#rules-of-thumb)
+  - [Monte Carlo method](#monte-carlo-method)
+  - [Satorra-Saris method](#satorra-saris-method)
+  - [RMSEA method](#rmsea-method)
+  - [Power analysis software](#power-analysis-software)
+- [Number of indicators](#number-of-indicators)
+- [Estimator](#estimator)
+- [Model evaluation](#model-evaluation)
+  - [Estimate plausibility](#estimate-plausibility)
+  - [Model fit](#model-fit)
+  - [Use flexible cut off points](#use-flexible-cut-off-points)
+- [Reliability](#reliability)
+- [Misc](#misc)
+  - [How to model reverse-worded items?](#how-to-model-reverse-worded-items)
+- [Recommended Reading](#recommended-reading)
+
+> \[!WARNING\]
+>
+> This chapter is still a work in progress.
+
+Confirmatory factor analysis (CFA) is used to specify a particular structural model. In the context of a factor analysis, that means you have a clear theoretical and/or empirical basis about the number of factors and which items should load on which factor. In this case, CFA is more appropriate than an exploratory factor analysis (EFA because it allows you to test how well your model fit the data.
+
+## Sample size
+
+For confirmatory factor analyses there are several ways to determine the appropriate sample size, including:
+
+1.  Rules of thumb
+2.  Monte Carlo simulation
+3.  The Satorra-Saris method
+4.  The RMSEA method
+
+### Rules of thumb
+
+Just like with EFA, there are many rules of thumb for the sample size of a CFA. However, just like with EFA, these are gross oversimplifications and might easily provide a misleading estimate. Rules of thumb usually consist of only a fixed sample size (e.g., use N = 300) or a sample size ratio (e.g., *n* = 5-10 per estimated parameter). In reality, the sample size depends on many more factors, including the type of model and the goal of the researcher (e.g., powering for overall misfit or a specific parameter).
+
+**Conclusion**: Try to avoid relying on rules of thumb
+
+### Monte Carlo method
+
+The Monte Carlo method is a simulation-based method to obtain the sample size for a given model and statistical test. It works by generating a large number of data sets from a population model, fitting the model to each data set, storing the target statistic, and calculating the proportion of data sets for which the statistic of interest (e.g., $χ^2$ value, fit statistic, regression coefficient) is statistically significant. This proportion is the statistical power for the statistical test.
+
+This method is probably the most difficult of the methods because it requires being able to simulate the population data. Depending on which analysis you will run on each data set, this method may also take a lot of time. It is, however, the most flexible method and can tell you the power for the exact test you want to run, whether that’s a commonly-used fit statistic or something else (e.g., confidence interval range, multiple parameters being significant).
+
+In the context of a factor analysis, this method is difficult to apply because there are usually many parameters to simulate. For example, you have to simulate the factor loadings, variances, and correlations between factors. If you also want to include potential sources of misfit, you have to additionally simulate different number of factors, cross loadings, and possibly correlated residuals. Compared to a simple mediation model, these are many more parameters to estimate. It doesn’t help that factor analyses are usually used to assess the validity of a new scale, meaning that relatively little is known about the exact parameters, making the simulation extra difficult—possibly too difficult.
+
+For instructions on how to conduct Monte Carlo power analyses, see Muthén and Muthén (2002) or Wang and Rhemtulla (2021).
+
+**Conclusion**: Too difficult for factor analysis purposes.
+
+### Satorra-Saris method
+
+The Satorra-Saris method can be used to estimate the power of model misspecifications.
+
+The idea is that there is a population covariance matrix and a model-implied covariance matrix. If the model is correct, the model-implied covariance matrix is the same as the population covariance matrix. If the model is incorrect, there is a misspecification (called $F_0$). The expected misspecifcation error is a function of the discrepancy and the sample size. This is called the noncentrality parameter, $\lambda$.
+
+Obtaining the noncentrality parameter is the hard part. It requires specifying both the model you expect to be true and a different model with a different specification that you’d like to be able to detect. This is the hard part because there are many ways for the population model to be different from your model, so you have to decided what kind of misspecification you’d like to be able to detect.
+
+Once you have specified both models, you can fit your model to the population model and obtain the $χ^2$ value, which can be used as the noncentrality parameter $\lambda$.
+
+You can also test the difference between two nested models and obtain $\Deltaχ^2$, which can be used as the noncentrality parameter for comparing these two models.
+
+Calculating the power once the noncentrality parameter is obtained is easy. You need the degrees of freedom of the model, the alpha, and the power level. You can put these numbers in an online calculators or use R to obtain the sample size needed.
+
+Just like with the Monte Carlo method, this method seems less suitable for factor analyses because it requires specifying the exact misspecification. Since there are many possible misspecification in a factor analysis, it becomes difficult to figure out what exactly you want to power for. It could be for a cross loading or for a correlated residual between any of the items, or, if there are multiple factors, the correlations between them.
+
+**Conclusion**: Useful when you have a clear misspecification in mind or when you have two models you want to compare; less useful in factor analysis.
+
+### RMSEA method
+
+The RMSEA method is a power calculation method based on the RMSEA fit index.
+
+The RMSEA assumes that the specified model will only be an approximation to reality, and thus some specification error should be allowed
+
+The advantage of power calculations using the RMSEA is that the noncentrality parameter (λ) can be derived from the RMSEA. You therefore only need to set the RMSEA of the true model and an alternative model.
+
+MacCallum et al. (1996) suggested calculating the power to reject close fit (RMSEA ≤ .05) when in the population there is not close fit (RMSEA = .08). Alternatively, you can also flip this logic and calculate the power of no-close fit (RMSEA \> .05) while in the population there is a close fit (RMSEA = .01). Jak et al. (2021) recommend power analyses for both the test for close fit and the test for not-close fit.
+
+An advantage of this method is that it is easy to use, but a disadvantage is that it is more difficult to interpret because there is no targeted misfit, so you don’t know exactly what kind of misspecifications you’re powering for. This does seem better suited for a factor analysis because it covers multiple kinds of misspecifications.
+
+Additionally, this method requires setting good RMSEA cut off points. Although there are some recommendations for which values to use, there is also work showing that the RMSEA cut off points should be determined dynamically, rather than fixed for each model (Wolf & McNeish, 2021). It seems necessary, therefore, to do some prior work to determine what a suitable cut off point could be and use this in subsequent power analyses.
+
+**Conclusion**: Seems like the best method for determining power for a factor analysis.
+
+### Power analysis software
+
+There are several tools to run power analyses for CFAs.
+
+#### Online tools
+
+- [power4SEM](https://sjak.shinyapps.io/power4SEM/ "power4SEM")
+
+- [WebPower](https://webpower.psychstat.org/wiki/models/index "WebPower")
+
+- [pwrSEM](https://yilinandrewang.shinyapps.io/pwrSEM/ "pwrSEM")
+
+#### R packages
+
+- [semPower](https://cran.r-project.org/web/packages/semPower/index.html "semPower")
+
+- [semTools](https://cran.r-project.org/web/packages/semTools/index.html "semTools")
+
+## Number of indicators
+
+Some argue that when it comes to the number of indicators, more is better Marsh et al. (1998).
+
+Others say that more is not always better (Koran, 2020). Koran (2020), using a simulation study, showed that:
+
+> Models with relatively weak loadings tended to have a larger desirable number of indicators per factor than models with stronger loadings based on considerations of sample size, solution propriety, bias, and power. Models with few factors also tended to have a larger desirable number of indicators per factor than models with more factors. Models with many factors and strong indicators reached a minimum required sample size with as few as three indicators per factor.
+
+## Estimator
+
+If the data is normally distributed, use the ML estimator. If the sample size is sufﬁciently large, the model is speciﬁed correctly, and the data stem from a multivariate normal distribution, the estimator is consistent, efﬁcient, and normally distributed.
+
+In case of violations, the following estimators can be used:
+
+- Maximum likelihood estimation with robust standard errors and a Satorra-Bentler scaled test statistic (MLM): In case of a normality violation, not as good in the case of a misspecification.
+
+- Maximum likelihood estimation with robust (Huber-White) standard errors and a scaled test statistic that is (asymptotically) equal to the Yuan-Bentler test statistic (MLR): Similar to MLM but better suited for small sample sizes and is robust to both nonnormality and model misfit.
+
+- weighted least squares method (WLS): Requires a large sample size (FLO 04) and frequently runs into convergence issues and improper solutions
+
+- Diagonally Weighted Least Squares (DWLS): For small samples and non-normal data (\[JÖR 89)
+
+- WLSM: Robust alternative to DWLS
+
+- WLSMV: Robust alternative to DWLS
+
+- bootstrapping: Not recommended for dichotomous and ordinal measures with few response categories)
+
+Mardia calculation to determine violations from normal distribution. It can be noted that not only is this standardized coefficient statistically significant, but its value is greater than 5, which is the threshold value beyond which multivariate normality seems to fail.
+
+| Data type and normality assumption | Recommended estimator |
+|----|----|
+| *Continuous data* |  |
+| Approximately normal distribution | ML |
+| Violation of normality assumption | ML (in case of moderate violation) |
+|  | MLM, MLR, Bootstrap |
+| *Ordinal/categorical data* |  |
+| Approximately normal distribution | ML (if at least 6 response categories) |
+|  | MLM, MLR (if at least 4 response categories) |
+|  | WLSMV (binary response or 3 response categories) |
+| Violation of normality assumption | ML (if at least 6 response categories) |
+|  | MLM, MLR (if at least 4 response categories) |
+|  | WLSMV (in case of severe violation) |
+
+Recommendations concerning the main estimators available in lavaan according to the type of data (Gana & Broc).
+
+## Model evaluation
+
+### Estimate plausibility
+
+The ﬁrst step in evaluating the model ﬁt is to determine the plausibility of the estimates. Values outside their theoretically admissable parameter space (e.g., negative variances) signal that something is wrong.
+
+### Model fit
+
+Due to conﬂicting indices and lack of consensus about what constitutes a good ﬁt, a general recommendation is to take a multifaceted approach in which multiple indices are considered jointly (see, e.g., Schermelleh-Engel et al., 2003).
+
+Although the number of available ﬁt indices is relatively large, there is only one that allows for a formal statistical test of overall model ﬁt. By use of the chi-squared, one can test the null hypothesis that the model-implied covariance matrix equals the population covariance matrix
+
+Despite its intuitive appeal, the test has a couple of drawbacks suggesting that its signiﬁcance level should not be interpreted too strictly. First, it appears to be highly sensitive to sample size. For large samples, the null hypothesis is easily rejected, even for negligable discrepancies (Bentler, 1990). Second, violations of assumptions might inﬂate the values of the test statistic (Kaplan, 2009). Accordingly, Satorra and Bentler (1988, 1994) proposed a scaled version of the test statistic, in which the regular χ 2 is divided by a kurtosis correction factor to better approximate a chi-square under non-normality.
+
+Probably the most common way to assess model fit is to rely on cut-off points for several fit indices. However, these cut off points make no sense. The reason is that the suitability of a particular model fit index depends on a multitude of factors, including the number of items per factor, factor loading size, type of misspecification, model type, and violations of multivariate normality (Greiff & Heene, 2017). It therefore makes no sense to use one cut-off point for all models.
+
+Instead, it is recommend to do the following:
+
+Step 1: Perform the chi squared test and see whether it indicates a significant misfit. Although it appears that the norm is to ignore a significant chi squared test, it seems that is considered to be a mistake, leading to many misfitted models to not be rejected McIntosh (2007).
+
+Step 2: In the case of a significant chi squared test, inspect potential sources of misfit.
+
+- If your model depends on the multivariate normality assumption, look for signs of a violation of this assumption. Given that much research is done using Likert scales, this could be a likely source. To solve this misfit issue, one can transform the data or use a different estimator.
+
+- Inspect the discrepancies between the observed and model-implied covariance matrices.
+
+- Use tools to locate misfits, such as looking at modification indices or performing Fisher’s C test or the Wald test.
+
+Note that it is important to avoid the problem of overfitting. Any modifications to the model should be tested again on new independent data.
+
+The modifications should also have a theoretical backing.
+
+Finally, although it should not be necessary to point this out, but it is possible to be wrong. You may have to conclude that the data simply does not support your theory and that you need to go back to the drawing board.
+
+### Use flexible cut off points
+
+See https://flexiblecutoffs.org
+
+See McNeish and Wolf
+
+## Reliability
+
+Reliability increases the closer the value gets to 1.00, with an acceptability threshold of 0.70.
+
+## Misc
+
+### How to model reverse-worded items?
+
+## Recommended Reading
+
+- Dynamic Fit Index Cutoffs for Confirmatory Factor Analysis Models by McNeish & Wolf (2021)
+
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0" line-spacing="2">
+
+<div id="ref-barrett2007" class="csl-entry">
+
+Barrett, P. (2007). Structural equation modelling: Adjudging model fit. *Personality and Individual Differences*, *42*(5), 815–824. <https://doi.org/10.1016/j.paid.2006.09.018>
+
+</div>
+
+<div id="ref-greiff2017" class="csl-entry">
+
+Greiff, S., & Heene, M. (2017). Why psychological assessment needs to start worrying about model fit. *European Journal of Psychological Assessment*, *33*(5), 313–317. <https://doi.org/10.1027/1015-5759/a000450>
+
+</div>
+
+<div id="ref-jak2021" class="csl-entry">
+
+Jak, S., Jorgensen, T. D., Verdam, M. G. E., Oort, F. J., & Elffers, L. (2021). Analytical power calculations for structural equation modeling: A tutorial and Shiny app. *Behavior Research Methods*, *53*(4), 1385–1406. <https://doi.org/10.3758/s13428-020-01479-0>
+
+</div>
+
+<div id="ref-koran2020" class="csl-entry">
+
+Koran, J. (2020). Indicators per factor in confirmatory factor analysis: More is not always better. *Structural Equation Modeling: A Multidisciplinary Journal*, *27*(5), 765–772. <https://doi.org/10.1080/10705511.2019.1706527>
+
+</div>
+
+<div id="ref-maccallum1996" class="csl-entry">
+
+MacCallum, R. C., Browne, M. W., & Sugawara, H. M. (1996). Power analysis and determination of sample size for covariance structure modeling. *Psychological Methods*, *1*(2), 130–149. <https://doi.org/10.1037/1082-989X.1.2.130>
+
+</div>
+
+<div id="ref-marsh1998" class="csl-entry">
+
+Marsh, H. W., Hau, K.-T., Balla, J. R., & Grayson, D. (1998). Is more ever too much? The number of indicators per factor in confirmatory factor analysis. *Multivariate Behavioral Research*, *33*(2), 181–220. <https://doi.org/10.1207/s15327906mbr3302_1>
+
+</div>
+
+<div id="ref-mcintosh2007" class="csl-entry">
+
+McIntosh, C. N. (2007). Rethinking fit assessment in structural equation modelling: A commentary and elaboration on Barrett (2007). *Personality and Individual Differences*, *42*(5), 859–867. <https://doi.org/10.1016/j.paid.2006.09.020>
+
+</div>
+
+<div id="ref-mcneish2021" class="csl-entry">
+
+McNeish, D., & Wolf, M. G. (2021). Dynamic fit index cutoffs for confirmatory factor analysis models. *Psychological Methods*. <https://doi.org/10.1037/met0000425>
+
+</div>
+
+<div id="ref-muthen2002" class="csl-entry">
+
+Muthén, L. K., & Muthén, B. O. (2002). How to use a monte carlo study to decide on sample size and determine power. *Structural Equation Modeling: A Multidisciplinary Journal*, *9*(4), 599–620. <https://doi.org/10.1207/S15328007SEM0904_8>
+
+</div>
+
+<div id="ref-wang2021" class="csl-entry">
+
+Wang, Y. A., & Rhemtulla, M. (2021). Power analysis for parameter estimation in structural equation modeling: A discussion and tutorial. *Advances in Methods and Practices in Psychological Science*, *4*(1), 1–17.
+
+</div>
+
+<div id="ref-wolf2021" class="csl-entry">
+
+Wolf, M. G., & McNeish, D. (2021). *Dynamic fit index cutoffs for one-factor models*. <https://doi.org/10.31234/osf.io/rve58>
+
+</div>
+
+</div>

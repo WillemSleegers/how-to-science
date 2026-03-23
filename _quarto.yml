@@ -1,129 +1,17 @@
 project:
-  type: website
-  output-dir: docs
-
-website:
-  title: "How to Science"
-  page-navigation: true
-  reader-mode: false
-  repo-url: https://github.com/willemsleegers/how-to-science/
-  repo-actions: [edit, issue]
-  navbar:
-    pinned: true
-    collapse: true
-    collapse-below: md # sm, md, lg, xl, or xxl
-    left:
-      - text: "Methodology"
-        menu:
-          - sidebar:survey-design
-          - sidebar:scale-development
-          - sidebar:contingent-valuation
-          - sidebar:ai-in-research
-      - text: "Data Analysis"
-        menu:
-          - sidebar:regression
-          - sidebar:group-differences
-          - sidebar:factor-analysis
-      - text: "Materials"
-        menu:
-          - sidebar:scales
-
-  sidebar:
-    - id: survey-design
-      title: "Survey Design"
-      style: "floating"
-      align: left
-      contents:
-        - content/methodology/survey-design/index.qmd
-        - content/methodology/survey-design/response-options.qmd
-        - content/methodology/survey-design/clarification-features.qmd
-        - content/methodology/survey-design/data-quality-checks.qmd
-
-    - id: ai-in-research
-      title: "AI in Research"
-      style: "floating"
-      align: left
-      contents:
-        - content/methodology/ai/index.qmd
-        - content/methodology/ai/synthetic-respondents.qmd
-
-    - id: scale-development
-      title: "Scale Development"
-      style: "floating"
-      align: left
-      contents:
-        - content/methodology/scale-development/index.qmd
-        - content/methodology/scale-development/item-development.qmd
-        - content/methodology/scale-development/reliability-validity.qmd
-        - content/methodology/scale-development/recommended-reading.qmd
-
-    - id: contingent-valuation
-      title: "Contingent valuation"
-      contents:
-        - content/methodology/contingent-valuation/index.qmd
-        - content/methodology/contingent-valuation/wtp.qmd
-    - id: factor-analysis
-      title: "Factor analysis"
-      contents:
-        - content/statistics/factor-analysis/index.qmd
-        - section: "Exploratory factor analysis"
-          contents:
-            - content/statistics/factor-analysis/EFA/EFA-best-practices.qmd
-            - content/statistics/factor-analysis/EFA/EFA-example.qmd
-            - content/statistics/factor-analysis/EFA/EFA-recommended-reading.qmd
-            - content/statistics/factor-analysis/EFA/EFA-glossary.qmd
-        - section: "Confirmatory factor analysis"
-          contents:
-            - content/statistics/factor-analysis/CFA/CFA-best-practices.qmd
-
-    - id: group-differences
-      title: "Group differences"
-      contents:
-        - content/statistics/group-differences/confidence-intervals.qmd
-        - content/statistics/group-differences/pairwise-comparisons.qmd
-        - content/statistics/group-differences/sequential-analyses.qmd
-
-    - id: regression
-      title: "Regression"
-      contents:
-        - content/statistics/regression/collinearity.qmd
-
-    - id: scales
-      title: "Scales"
-      contents:
-        - content/materials/scales/index.qmd
-        - section: "Animals"
-          contents:
-            - content/materials/scales/AAS/AAS.qmd
-            - content/materials/scales/speciesism/speciesism.qmd
-        - section: "Environmentalism"
-          contents:
-            - content/materials/scales/NEP/NEP.qmd
-        - section: "Ethics"
-          contents:
-            - content/materials/scales/OUS/OUS.qmd
-        - section: "Personality"
-          contents:
-            - content/materials/scales/TIPI/TIPI.qmd
-            - content/materials/scales/BFI-2-XS/BFI-2-XS.qmd
-            - content/materials/scales/SOP2/SOP2.qmd
-        - section: "Risk"
-          contents:
-            - content/materials/scales/DOSPERT/dospert.qmd
+  type: default
 
 bibliography: assets/bib/references.bib
+csl: assets/bib/apa.csl
 
 filters:
   - cite-quote
 
 format:
-  html:
-    theme:
-      - cosmo
-      - assets/css/light.scss
-    csl: assets/bib/apa.csl
-    citation-hover: false
-    include-after-body: assets/js/cite-quote.html
+  gfm:
+    variant: +yaml_metadata_block
+    wrap: none
+    toc: false
 
 editor: visual
 

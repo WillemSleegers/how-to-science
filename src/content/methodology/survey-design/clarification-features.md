@@ -1,0 +1,134 @@
+---
+title: Clarification Features
+toc: true
+---
+
+
+- [What Are Clarification Features?](#what-are-clarification-features)
+- [Do Respondents Use Clarification Features?](#do-respondents-use-clarification-features)
+- [Does Using Clarification Features Affect Response Quality?](#does-using-clarification-features-affect-response-quality)
+- [Study Overview](#study-overview)
+- [Business Surveys](#business-surveys)
+- [Recommendations](#recommendations)
+- [References](#references)
+
+> [!WARNING]
+>
+> This chapter is still a work in progress.
+
+Surveys often include clarification features — supplementary information attached to terms, questions, or response options to help respondents interpret them correctly. Common examples include tooltips (small pop-ups revealed by hovering or clicking), always-visible definitions displayed below a question, and hyperlinked terms that expand to show an explanation. A key question is whether respondents actually read and use these features, and whether they improve response quality.
+
+## What Are Clarification Features?
+
+Clarification features provide additional context without requiring it to be read by everyone. They are commonly used to define technical or ambiguous terms, clarify the intended scope of a question, or provide examples for response options.
+
+The term *clarification feature* is standard in the survey methodology literature. You may also encounter *definitions*, *rollover definitions*, or *help text* — these refer to the same thing. Tooltips are one specific implementation: a definition revealed by hovering or clicking on a highlighted term.
+
+The underlying assumption is that clarification features reduce respondent confusion without burdening attentive respondents who do not need the extra information. Whether this holds depends on whether respondents actually use them when they need them.
+
+## Do Respondents Use Clarification Features?
+
+Conrad et al. (2006) reported two experiments on food and nutrition consumption surveys in which definitions for key terms were made available via different access methods. In Experiment 1 (N ≈ 2,871), which compared one-click, two-click, and click-and-scroll interfaces across both technical terms (e.g., “polyunsaturated fatty acid”) and ordinary terms (e.g., “vegetables”), only **13.8% of respondents** requested any definitions. Requests were far more common for technical than ordinary terms, suggesting respondents sought clarification when they recognized unfamiliarity but not when they felt confident in an interpretation that may nonetheless have been wrong. One-click access produced more requests than two-click or click-and-scroll.
+
+Experiment 2 (N ≈ 3,050) focused deliberately on ordinary terms — a more stringent test — and compared one-click, two-click, and rollover access. It also experimentally varied whether respondents received encouraging instructions (“please click on the word to obtain a definition”) or neutral instructions. Overall, 22.4% of respondents requested at least one definition. The access method mattered greatly: rollover produced a 36.5% usage rate, compared to 8.9% for one-click and 6.5% for two-click. Crucially, the instruction manipulation had no effect — 18.1% of respondents with encouraging instructions requested definitions vs. 16.8% with neutral instructions, a non-significant difference.
+
+Peytchev et al. (2010) conducted a larger field experiment (N = 2,481) on health and lifestyle topics, comparing three conditions: no definitions, rollover definitions, and always-on definitions displayed below each question. Usage rates were:
+
+- Always-on: 60.7% of respondents consulted definitions (self-report)
+- Rollover: 45.4% (behavioral log data), 35.6% (self-report)
+
+An important and counterintuitive finding from Peytchev et al. (2010) was that respondents explicitly trained to use definitions actually used them *less* (38%) compared to untrained respondents (53%). The authors suggest that deliberate instruction makes respondents more aware of the effort involved, leading them to opt out.
+
+Lind et al. (2001) ran a small lab study (N = 48) in which participants answered questions about housing and purchases with definitions available via click. Usage ranged from ~23% for originally-worded questions to ~43% when an irrelevant part of the definition was embedded in the question — demonstrating how sensitive usage is to the surrounding context.
+
+A key problem underlying all of these findings is that respondents often do not recognize that their interpretation of a question differs from the intended meaning (Conrad & Schober, 2000). They therefore do not seek clarification even when it is available, because they do not know they need it.
+
+The empirical base for this section is thin. The studies reviewed here span just a handful of labs and field experiments, conducted across different countries, survey topics, and technical implementations. There have been no large-scale replication efforts, no preregistered studies, and no systematic variation of the features that matter most (e.g., topic difficulty, respondent literacy, device type). The settings vary enough — a 48-person lab study vs. a 2,481-person national field survey — that direct comparisons are difficult. Treating any specific usage percentage as a benchmark would be premature.
+
+## Does Using Clarification Features Affect Response Quality?
+
+When respondents do consult definitions, the evidence suggests it improves accuracy. Conrad & Schober (2000) showed in a telephone survey context that conversational clarification led to responses more consistent with official definitions — 95% accuracy in the conversational condition vs. 57% in the standardized condition. In web surveys, Peytchev et al. (2010) found that always-on definitions changed response patterns on 4 of 8 questions tested (compared to control), while rollover definitions changed 2 of 8. Respondents in the definitions conditions also spent more time on questions — ~60 seconds more for always-on, ~7 seconds more for rollover — suggesting genuine reading rather than skipping.
+
+Lind et al. (2001) found that clarification only improved accuracy when the definition was specifically relevant to the respondent’s situation (85% correct vs. 42% without clarification). Including definitional information that was irrelevant to a respondent’s actual circumstances increased survey duration without improving accuracy.
+
+Conrad et al. (2007) extended this line of work by introducing *mixed-initiative* clarification in a lab web survey: rather than relying solely on respondents to request definitions, the system also proactively offered clarification when respondents were slow to respond. Accuracy on complicated scenarios improved from 41% (no clarification) to 68% (user-initiated) and was similar for mixed-initiative. Framing definitions as “essential” rather than merely “available” further improved accuracy to ~80%. This suggests that both availability and perceived importance shape whether clarification translates into better data.
+
+The key qualification is that response quality improvements depend on whether respondents actually access the definitions — and in the studies reviewed, a majority did not under click-based access.
+
+## Study Overview
+
+| Study | N | Mode | Survey topic | Clarification type | Key finding |
+|----|----|----|----|----|----|
+| Conrad & Schober (2000) | 227 | Telephone | Housing (CPI), purchases (CPOPS) | Conversational interviewing (proactive clarification by interviewer) | 95% accuracy (conversational) vs. 57% (standardized) |
+| Lind et al. (2001) | 48 | Web (lab) | Housing, purchases | Click-to-reveal; question rewording with embedded partial definitions | Relevant rewording: 85% accuracy; irrelevant rewording: 47% (no better than control) |
+| Conrad et al. (2006) | ~2,871 / ~3,050 | Web (field) | Food/nutrition consumption | Click-based (1-click, 2-click, scroll) and rollover | 13.8% overall usage; rollover 36.5% vs. 1-click 8.9% vs. 2-click 6.5% |
+| Peytchev et al. (2010) | 2,481 | Web (field) | Health and lifestyles (food/nutrition) | Rollover vs. always-on display | Always-on: 60.7% usage; rollover: 35.6%; training *reduced* usage |
+| Conrad et al. (2007) | 54 (Exp. 1) | Web (lab) | Employment, housing, purchases | User-initiated click + mixed-initiative (system-proactive) | Mixed-initiative ≈ user-initiated accuracy; “essential” framing improved accuracy to ~80% |
+
+## Business Surveys
+
+The issues described above are arguably more severe in business surveys, where organizations are asked to report financial, employment, or operational data to national statistics institutes. Snijkers et al. (2013) identify three specific comprehension challenges:
+
+- **Ambiguity**: Business surveys use everyday terms (e.g., “employment,” “turnover”) with technical definitions that differ from how those terms are used in routine business operations. Respondents assume familiar terms mean what they ordinarily mean and do not seek clarification.
+- **Vagueness**: Reference periods and include/exclude criteria are often unclear. When definitions seem obvious, respondents ignore them; when they are not obvious, respondents still tend not to read them — the same double-bind as in household surveys.
+- **Mapping discrepancies**: Even with clear definitions, respondents struggle to classify borderline cases (e.g., part-time workers, temporary staff, intercompany transactions) that do not map cleanly onto survey categories.
+
+An additional complication is that business survey response is often a distributed process involving multiple employees — a response coordinator, subject-matter experts, and data providers who may never see the questionnaire itself. Clarification features are only useful to the person who actually reads them, not to the person who ultimately supplies the data.
+
+There is no empirical literature specifically on clarification feature usage rates in business surveys. The household survey findings (low voluntary usage, improvement with always-on display) should be treated as a lower bound on the problem rather than a direct estimate, given the greater complexity of business survey concepts.
+
+## Recommendations
+
+Given the limited and heterogeneous evidence base, these recommendations are tentative. They reflect consistent directional patterns across the available studies, but none have been replicated at scale or under preregistered conditions.
+
+- **Be skeptical of click-to-reveal clarification features for important definitions.** Usage rates under click-based access are consistently around 10–15% across the studies reviewed. If accurate interpretation is important for a given item, relying on respondents to seek out clarification voluntarily is probably insufficient — though how insufficient depends on the stakes of the item.
+
+- **Always-on display appears more effective than hidden alternatives.** Displaying definitions below or beside the question item tends to increase both usage and time-on-question. Whether this translates into meaningfully better data depends on the item and population, and the evidence comes from a small number of studies.
+
+- **Hover/rollover may be a useful middle ground in desktop contexts.** It achieves higher usage than click-based access while keeping the interface less cluttered than always-on display. It is not available on mobile devices, and there is no evidence on how it performs relative to always-on across typical respondent populations today.
+
+- **Training respondents to use clarification features is unlikely to help.** The one study that tested this found it reduced usage rather than increased it. Designing for spontaneous use is more promising than instructing respondents.
+
+- **Embedding definitional content directly in question wording may be the most reliable approach.** Lind et al. (2001) found that incorporating a relevant part of the definition into the question itself dramatically improved accuracy, more so than a separate clarification feature. This only works when the definition is relevant to most respondents — irrelevant embedded content added burden without benefit.
+
+## References
+
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0" line-spacing="2">
+
+<div id="ref-conrad2006" class="csl-entry">
+
+Conrad, F. G., Couper, M. P., Tourangeau, R., & Peytchev, A. (2006). Use and non-use of clarification features in web surveys. *Journal of Official Statistics*, *22*(2), 245–269.
+
+</div>
+
+<div id="ref-conradschober2000" class="csl-entry">
+
+Conrad, F. G., & Schober, M. F. (2000). Clarifying question meaning in a household telephone survey. *Public Opinion Quarterly*, *64*(1), 1–28. <https://doi.org/10.1086/316757>
+
+</div>
+
+<div id="ref-conrad2007" class="csl-entry">
+
+Conrad, F. G., Schober, M. F., & Coiner, T. (2007). Bringing features of human dialogue to web surveys. *Applied Cognitive Psychology*, *21*(2), 165–187. <https://doi.org/10.1002/acp.1335>
+
+</div>
+
+<div id="ref-lind2001" class="csl-entry">
+
+Lind, L. H., Schober, M. F., & Conrad, F. G. (2001). Clarifying question meaning in a web-based survey. *Proceedings of the American Statistical Association, Section on Survey Research Methods*.
+
+</div>
+
+<div id="ref-peytchev2010" class="csl-entry">
+
+Peytchev, A., Conrad, F. G., Couper, M. P., & Tourangeau, R. (2010). Increasing respondents’ use of definitions in web surveys. *Journal of Official Statistics*, *26*(4), 633–650.
+
+</div>
+
+<div id="ref-snijkers2013" class="csl-entry">
+
+Snijkers, G., Haraldsen, G., Jones, J., & Willimack, D. K. (2013). *Designing and conducting business surveys*. Wiley. <https://doi.org/10.1002/9781118447895>
+
+</div>
+
+</div>

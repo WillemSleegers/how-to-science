@@ -1,0 +1,34 @@
+---
+import Layout from "@/layouts/main.astro"
+import { nav } from "@/lib/nav"
+---
+
+<Layout title="How to Science">
+  <div class="min-h-screen px-8 py-16 max-w-3xl mx-auto">
+    <h1 class="text-3xl font-semibold mb-2">How to Science</h1>
+    <p class="text-muted-foreground mb-12 text-base">
+      Best practices in research methodology and statistics.
+    </p>
+
+    <div class="space-y-10">
+      {nav.map((group) => (
+        <div>
+          <h2 class="text-lg font-semibold mb-4">{group.label}</h2>
+          <div class="grid gap-3 sm:grid-cols-2">
+            {group.sections.map((section) => (
+              <a
+                href={`/${section.pages[0].slug}`}
+                class="block rounded-lg border px-4 py-3 hover:bg-accent transition-colors"
+              >
+                <div class="font-medium text-sm">{section.title}</div>
+                <div class="text-xs text-muted-foreground mt-0.5">
+                  {section.pages.length} {section.pages.length === 1 ? "page" : "pages"}
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</Layout>

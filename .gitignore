@@ -36,3 +36,12 @@ vignettes/*.pdf
 **/*.quarto_ipynb
 
 /.luarc.json
+
+# Astro
+dist/
+.astro/
+node_modules/
+npm-debug.log*
+.env
+.env.production
+.idea/
