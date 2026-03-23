@@ -8,11 +8,13 @@ This is a website to organize my conclusions about topics in methodology and sta
 
 ## Word of Caution
 
-Some sections in the book are not yet finished. They're work in progress. Sometimes I think they're already a bit useful, so I make them public. If I think they're not finished/polished yet, I put a warning at the start of the page to indicate that.
+Some sections on the website are not yet finished. They're work in progress. Sometimes I think they're already a bit useful, so I make them public. If I think they're not finished/polished yet, I put a warning at the start of the page to indicate that.
 
-Having said that, this website will forever be a work in progress because the content is about current best practices. As best practices are likely to change over time, so the content of this website will change with it. I will add a warning to a page when I realize that something is heavily outdated.
+Having said that, this website will forever be a work in progress because the content is about current best practices. As best practices are likely to change over time, so the content of this website will change with it.
 
-It's also very likely that there are mistakes. These mistakes can theoretically range from gross errors to simple typos, or a reliance on outdated information. If you find a mistake, please contact me or click on the GitHub link on each page and create an Issue.
+It's also likely that there are mistakes. That's first and foremost because science is hard and I'd argue particularly so when it involves the study is humans. Humans are extremely complicated and hard to study. Generally speaking, to discover anything approach the truth, it requires large-scaled well-conducted studies, involving practices like pre-registeration, replication studies, (adversial collaborations), and more. As you can see for many of the topics discussed on this website, that's rarely described the literature on any given topic. Given incomplete evidence, it is my position that the most reliable mechanism to get at the truth is what an expert on the topic, who is aware of the literature and its limitations, can tell you. I will try to mimick that process here by transparently
+
+If you find a mistake, please contact me or click on the GitHub link on each page and create an Issue.
 
 ## Acknowledgements
 

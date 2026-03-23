@@ -118,19 +118,19 @@ In case of violations, the following estimators can be used:
 
 Mardia calculation to determine violations from normal distribution. It can be noted that not only is this standardized coefficient statistically significant, but its value is greater than 5, which is the threshold value beyond which multivariate normality seems to fail.
 
-| Data type and normality assumption | Recommended estimator                            |
+| Data type and normality assumption | Recommended estimator |
 |------------------------------|------------------------------------------|
-| *Continuous data*                  |                                                  |
-| Approximately normal distribution  | ML                                               |
-| Violation of normality assumption  | ML (in case of moderate violation)               |
-|                                    | MLM, MLR, Bootstrap                              |
-| *Ordinal/categorical data*         |                                                  |
-| Approximately normal distribution  | ML (if at least 6 response categories)           |
-|                                    | MLM, MLR (if at least 4 response categories)     |
-|                                    | WLSMV (binary response or 3 response categories) |
-| Violation of normality assumption  | ML (if at least 6 response categories)           |
-|                                    | MLM, MLR (if at least 4 response categories)     |
-|                                    | WLSMV (in case of severe violation)              |
+| *Continuous data* |  |
+| Approximately normal distribution | ML |
+| Violation of normality assumption | ML (in case of moderate violation) |
+|  | MLM, MLR, Bootstrap |
+| *Ordinal/categorical data* |  |
+| Approximately normal distribution | ML (if at least 6 response categories) |
+|  | MLM, MLR (if at least 4 response categories) |
+|  | WLSMV (binary response or 3 response categories) |
+| Violation of normality assumption | ML (if at least 6 response categories) |
+|  | MLM, MLR (if at least 4 response categories) |
+|  | WLSMV (in case of severe violation) |
 
 : Recommendations concerning the main estimators available in lavaan according to the type of data (Gana & Broc).
 

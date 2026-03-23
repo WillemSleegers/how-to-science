@@ -1,0 +1,12 @@
+<script>
+// Quarto attaches Tippy tooltips to span.citation elements via DOMContentLoaded.
+// window "load" fires after that, so we can safely destroy those instances here
+// for any citations that are already wrapped in our custom cite-quote-wrapper.
+window.addEventListener("load", function () {
+  document.querySelectorAll(".cite-quote-wrapper .citation").forEach(function (el) {
+    if (el._tippy) {
+      el._tippy.destroy();
+    }
+  });
+});
+</script>

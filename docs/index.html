@@ -38,7 +38,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-ba9e85f711c8a110b68561f40daaed2e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-fce09d645d66eb3904078555b938bd9c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -104,6 +104,10 @@ ul.task-list li input[type="checkbox"] {
     <a class="dropdown-item" href="./content/methodology/contingent-valuation/index.html">
  <span class="dropdown-text">Contingent valuation</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="./content/methodology/ai/index.html">
+ <span class="dropdown-text">AI in Research</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
@@ -159,9 +163,10 @@ ul.task-list li input[type="checkbox"] {
 <p>This is a website to organize my conclusions about topics in methodology and statistics. It also contains materials, such as various scales, to use in your research.</p>
 <section id="word-of-caution" class="level2">
 <h2 class="anchored" data-anchor-id="word-of-caution">Word of Caution</h2>
-<p>Some sections in the book are not yet finished. They’re work in progress. Sometimes I think they’re already a bit useful, so I make them public. If I think they’re not finished/polished yet, I put a warning at the start of the page to indicate that.</p>
-<p>Having said that, this website will forever be a work in progress because the content is about current best practices. As best practices are likely to change over time, so the content of this website will change with it. I will add a warning to a page when I realize that something is heavily outdated.</p>
-<p>It’s also very likely that there are mistakes. These mistakes can theoretically range from gross errors to simple typos, or a reliance on outdated information. If you find a mistake, please contact me or click on the GitHub link on each page and create an Issue.</p>
+<p>Some sections on the website are not yet finished. They’re work in progress. Sometimes I think they’re already a bit useful, so I make them public. If I think they’re not finished/polished yet, I put a warning at the start of the page to indicate that.</p>
+<p>Having said that, this website will forever be a work in progress because the content is about current best practices. As best practices are likely to change over time, so the content of this website will change with it.</p>
+<p>It’s also likely that there are mistakes. That’s first and foremost because science is hard and I’d argue particularly so when it involves the study is humans. Humans are extremely complicated and hard to study. Generally speaking, to discover anything approach the truth, it requires large-scaled well-conducted studies, involving practices like pre-registeration, replication studies, (adversial collaborations), and more. As you can see for many of the topics discussed on this website, that’s rarely described the literature on any given topic. Given incomplete evidence, it is my position that the most reliable mechanism to get at the truth is what an expert on the topic, who is aware of the literature and its limitations, can tell you. I will try to mimick that process here by transparently</p>
+<p>If you find a mistake, please contact me or click on the GitHub link on each page and create an Issue.</p>
 </section>
 <section id="acknowledgements" class="level2">
 <h2 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h2>
@@ -176,6 +181,18 @@ ul.task-list li input[type="checkbox"] {
 </section>
 
 </main> <!-- /main -->
+<script>
+// Quarto attaches Tippy tooltips to span.citation elements via DOMContentLoaded.
+// window "load" fires after that, so we can safely destroy those instances here
+// for any citations that are already wrapped in our custom cite-quote-wrapper.
+window.addEventListener("load", function () {
+  document.querySelectorAll(".cite-quote-wrapper .citation").forEach(function (el) {
+    if (el._tippy) {
+      el._tippy.destroy();
+    }
+  });
+});
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

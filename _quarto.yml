@@ -113,12 +113,17 @@ website:
 
 bibliography: assets/bib/references.bib
 
+filters:
+  - cite-quote
+
 format:
   html:
     theme:
       - cosmo
       - assets/css/light.scss
     csl: assets/bib/apa.csl
+    citation-hover: false
+    include-after-body: assets/js/cite-quote.html
 
 editor: visual
 

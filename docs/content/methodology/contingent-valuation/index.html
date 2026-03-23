@@ -39,7 +39,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../site_libs/bootstrap/bootstrap-ba9e85f711c8a110b68561f40daaed2e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-fce09d645d66eb3904078555b938bd9c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -105,13 +105,17 @@ ul.task-list li input[type="checkbox"] {
     <a class="dropdown-item" href="../../../content/methodology/contingent-valuation/index.html">
  <span class="dropdown-text">Contingent valuation</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../../../content/methodology/ai/index.html">
+ <span class="dropdown-text">AI in Research</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-statistics" role="link" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">Statistics</span>
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-data-analysis" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Data Analysis</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-statistics">    
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-data-analysis">    
         <li>
     <a class="dropdown-item" href="../../../content/statistics/regression/collinearity.html">
  <span class="dropdown-text">Regression</span></a>
@@ -205,6 +209,17 @@ ul.task-list li input[type="checkbox"] {
 
 
 </main> <!-- /main -->
+// Remove Quarto's built-in citation popover from any citation
+// that already has a custom quote popup via .cite-quote-wrapper
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll(".cite-quote-wrapper .citation").forEach(function (el) {
+    var popover = bootstrap.Popover.getInstance(el);
+    if (popover) popover.dispose();
+    el.removeAttribute("data-bs-toggle");
+    el.removeAttribute("data-bs-content");
+    el.removeAttribute("data-bs-placement");
+  });
+});
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
