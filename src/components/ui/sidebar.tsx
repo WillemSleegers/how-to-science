@@ -74,7 +74,7 @@ function SidebarProvider({
   const isMobile = useIsMobile(1280)
   const isMobileRight = useIsMobile(1024)
 
-  // Left sidebar state
+  // Left sidebar state — initialize from window width so narrow screens start collapsed
   const [_open, _setOpen] = React.useState(() =>
     typeof window !== "undefined" ? window.innerWidth >= 1280 : true
   )
@@ -93,7 +93,7 @@ function SidebarProvider({
   )
   const toggleSidebar = React.useCallback(() => setOpen((v) => !v), [setOpen])
 
-  // Right sidebar state
+  // Right sidebar state — initialize from window width so narrow screens start collapsed
   const [openRight, setOpenRight] = React.useState(() =>
     typeof window !== "undefined" ? window.innerWidth >= 1024 : true
   )

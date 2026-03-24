@@ -14,7 +14,6 @@ nocite: |
 #| label: setup
 #| message: false
 library(tidyverse)
-library(DT)
 items <- read_csv("BFI-2-XS-items.csv")
 ```
 
@@ -45,29 +44,14 @@ items %>%
 -   Agree a little
 -   Agree strongly
 
-## Download
+## Scale items
 
 ```{r}
 #| label: table
-#| tbl-cap: BFI-2-XS items
 
 items %>%
   select(where(~ sum(is.na(.x)) != length(.x))) %>%
-  datatable(
-    rownames = FALSE,
-    extensions = "Buttons",
-    options = list(
-      dom = "Bip",
-      buttons = list(
-        "copy",
-        list(
-          extend = "collection",
-          buttons = c("csv", "excel"),
-          text = "Download"
-        )
-      )
-    )
-  )
+  knitr::kable()
 ```
 
 ## Extra

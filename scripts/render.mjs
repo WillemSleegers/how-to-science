@@ -5,7 +5,7 @@
  *
  * Usage:
  *   node scripts/render.mjs                          # render all .qmd files
- *   node scripts/render.mjs src/content/foo.qmd      # render one file
+ *   node scripts/render.mjs content/foo.qmd           # render one file
  */
 
 import { execSync } from "node:child_process"
@@ -14,7 +14,7 @@ import { join, resolve, relative, dirname, basename } from "node:path"
 import { fileURLToPath } from "node:url"
 
 const ROOT = resolve(fileURLToPath(import.meta.url), "../..")
-const CONTENT_DIR = join(ROOT, "src", "content")
+const CONTENT_DIR = join(ROOT, "content")
 const PUBLIC_DIR = join(ROOT, "public")
 
 function copyFigures(qmdPath) {

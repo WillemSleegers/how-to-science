@@ -5,7 +5,21 @@
       "Bash(pdftoppm -v)",
       "Bash(pdftotext \"$pdf\" -)",
       "Bash(quarto render*)",
-      "Bash(npx tsc --noEmit)"
+      "Bash(npx tsc --noEmit)",
+      "Bash(wc -l /Users/willem/GitHub/how-to-science/src/components/ui/*.tsx)",
+      "Bash(npm run cleanup)",
+      "Bash(npm install js-yaml)",
+      "Bash(npm install -D @types/js-yaml)",
+      "Bash(npm install -D @types/node)",
+      "Bash(grep -c \"collapsible\" /Users/willem/GitHub/how-to-science/dist/_astro/*.css)",
+      "Bash(grep \"collapsible\" /Users/willem/GitHub/how-to-science/dist/_astro/*.css)",
+      "Bash(grep -o 'collapsible[^{;]*{[^}]*}' /Users/willem/GitHub/how-to-science/dist/_astro/*.css)",
+      "Bash(curl -s http://localhost:4324/methodology/survey-design/acquiescence)",
+      "Bash(ls /Users/willem/GitHub/how-to-science/dist/_astro/*.js)",
+      "Bash(grep \"transition-\\\\[left\" /Users/willem/GitHub/how-to-science/dist/_astro/*.css)",
+      "Bash(grep \"transition-property\" /Users/willem/GitHub/how-to-science/dist/_astro/*.css)",
+      "Bash(git show 6db220a:src/pages/[...slug].astro)",
+      "Bash(ls node_modules/@fontsource-variable/geist/*.css)"
     ]
   }
 }

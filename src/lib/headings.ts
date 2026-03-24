@@ -20,13 +20,14 @@ export function slugify(text: string): string {
 
 export function extractHeadings(markdown: string): Heading[] {
   const headings: Heading[] = []
-  const lines = markdown.split("\n")
-  for (const line of lines) {
+  let inCodeBlock = false
+  for (const line of markdown.split("\n")) {
+    if (line.startsWith("```")) { inCodeBlock = !inCodeBlock; continue }
+    if (inCodeBlock) continue
     const match = line.match(/^(#{2,3})\s+(.+)/)
     if (!match) continue
-    const level = match[1].length
     const text = match[2].trim()
-    headings.push({ id: slugify(text), text, level })
+    headings.push({ id: slugify(text), text, level: match[1].length })
   }
   return headings
 }

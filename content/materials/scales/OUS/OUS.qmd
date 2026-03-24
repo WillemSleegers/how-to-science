@@ -14,7 +14,6 @@ nocite: |
 #| label: setup
 #| message: false
 library(tidyverse)
-library(DT)
 items <- read_csv("OUS-items.csv")
 ```
 
@@ -41,29 +40,14 @@ items %>%
 
 A 7-point Likert scale with at least 3 of the response options labeled: 1 = strongly disagree, 4 = neither agree nor disagree, 7 = strongly agree.
 
-## Download
+## Scale items
 
 ```{r}
 #| label: table
-#| tbl-cap: Speciesism Scale items
 
 items %>%
   select(where(~ sum(is.na(.x)) != length(.x))) %>%
-  datatable(
-    rownames = FALSE,
-    extensions = "Buttons",
-    options = list(
-      dom = "Bip",
-      buttons = list(
-        "copy",
-        list(
-          extend = "collection",
-          buttons = c("csv", "excel"),
-          text = "Download"
-        )
-      )
-    )
-  )
+  knitr::kable()
 ```
 
 ## Reference

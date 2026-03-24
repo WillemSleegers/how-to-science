@@ -5,12 +5,22 @@ import matter from "gray-matter"
 import Layout from "@/layouts/main.astro"
 import { AppShell } from "@/components/AppShell"
 import { extractHeadings, stripQuartoToc } from "@/lib/headings"
-import { nav } from "@/lib/nav"
+import { loadNav } from "@/lib/nav"
+import type { NavSection } from "@/lib/nav"
+
+export async function getStaticPaths() {
+  const nav = loadNav()
+  return nav.flatMap((group) =>
+    group.sections.flatMap((section) =>
+      section.pages.map((page) => ({ params: { slug: page.slug }, props: { section } }))
+    )
+  )
+}
 
 const { slug } = Astro.params
-if (!slug) return Astro.redirect("/")
+const { section } = Astro.props as { section: NavSection }
 
-const mdPath = resolve(process.cwd(), `src/content/${slug}.md`)
+const mdPath = resolve(process.cwd(), `content/${slug}.md`)
 if (!existsSync(mdPath)) {
   return new Response(null, { status: 404 })
 }
@@ -19,13 +29,6 @@ const raw = readFileSync(mdPath, "utf-8")
 const { content: rawContent, data } = matter(raw)
 const content = stripQuartoToc(rawContent)
 const headings = extractHeadings(content)
-
-export async function getStaticPaths() {
-  const pages = nav.flatMap((group) =>
-    group.sections.flatMap((section) => section.pages)
-  )
-  return pages.map((page) => ({ params: { slug: page.slug } }))
-}
 ---
 
 <Layout title={data.title ?? slug}>
@@ -35,5 +38,6 @@ export async function getStaticPaths() {
     title={data.title ?? ""}
     slug={slug}
     headings={headings}
+    section={section}
   />
 </Layout>

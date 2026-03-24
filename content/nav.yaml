@@ -1,0 +1,96 @@
+- label: Methodology
+  sections:
+    - title: Survey Design
+      indexSlug: methodology/survey-design/index
+      pages:
+        - title: Overview
+          slug: methodology/survey-design/index
+        - title: Acquiescence bias
+          slug: methodology/survey-design/acquiescence
+        - title: Response options
+          slug: methodology/survey-design/response-options
+        - title: Clarification features
+          slug: methodology/survey-design/clarification-features
+        - title: Data quality checks
+          slug: methodology/survey-design/data-quality-checks
+    - title: Scale Development
+      indexSlug: methodology/scale-development/index
+      pages:
+        - title: Overview
+          slug: methodology/scale-development/index
+        - title: Item development
+          slug: methodology/scale-development/item-development
+        - title: Reliability & validity
+          slug: methodology/scale-development/reliability-validity
+        - title: Recommended reading
+          slug: methodology/scale-development/recommended-reading
+    - title: Contingent Valuation
+      indexSlug: methodology/contingent-valuation/index
+      pages:
+        - title: Overview
+          slug: methodology/contingent-valuation/index
+        - title: Willingness to pay
+          slug: methodology/contingent-valuation/wtp
+    - title: AI in Research
+      indexSlug: methodology/ai/index
+      pages:
+        - title: Overview
+          slug: methodology/ai/index
+        - title: Synthetic respondents
+          slug: methodology/ai/synthetic-respondents
+
+- label: Data Analysis
+  sections:
+    - title: Regression
+      indexSlug: statistics/regression/collinearity
+      pages:
+        - title: Collinearity
+          slug: statistics/regression/collinearity
+    - title: Group Differences
+      indexSlug: statistics/group-differences/confidence-intervals
+      pages:
+        - title: Confidence intervals
+          slug: statistics/group-differences/confidence-intervals
+        - title: Pairwise comparisons
+          slug: statistics/group-differences/pairwise-comparisons
+        - title: Sequential analyses
+          slug: statistics/group-differences/sequential-analyses
+    - title: Factor Analysis
+      indexSlug: statistics/factor-analysis/index
+      pages:
+        - title: Overview
+          slug: statistics/factor-analysis/index
+        - title: EFA best practices
+          slug: statistics/factor-analysis/EFA/EFA-best-practices
+        - title: EFA example
+          slug: statistics/factor-analysis/EFA/EFA-example
+        - title: EFA glossary
+          slug: statistics/factor-analysis/EFA/EFA-glossary
+        - title: EFA recommended reading
+          slug: statistics/factor-analysis/EFA/EFA-recommended-reading
+        - title: CFA best practices
+          slug: statistics/factor-analysis/CFA/CFA-best-practices
+
+- label: Materials
+  sections:
+    - title: Scales
+      indexSlug: materials/scales/index
+      pages:
+        - title: Overview
+          slug: materials/scales/index
+        - title: AAS
+          slug: materials/scales/AAS/AAS
+        - title: Speciesism
+          slug: materials/scales/speciesism/speciesism
+        - title: NEP
+          slug: materials/scales/NEP/NEP
+        - title: OUS
+          slug: materials/scales/OUS/OUS
+        - title: TIPI
+          slug: materials/scales/TIPI/TIPI
+        - title: BFI-2-XS
+          slug: materials/scales/BFI-2-XS/BFI-2-XS
+        - title: SOP2
+          slug: materials/scales/SOP2/SOP2
+        - title: DOSPERT
+          slug: materials/scales/DOSPERT/dospert

@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "node scripts/render.mjs && astro build",
     "preview": "astro preview",
     "astro": "astro",
     "lint": "eslint .",
@@ -26,6 +26,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "gray-matter": "^4.0.3",
+    "js-yaml": "^4.1.1",
     "lucide-react": "^0.577.0",
     "radix-ui": "^1.4.3",
     "react": "^19.2.4",
@@ -45,6 +46,8 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^25.5.0",
     "eslint": "^9.39.4",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.5.2",

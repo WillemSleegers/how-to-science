@@ -8,30 +8,24 @@ import {
   SidebarTrigger,
   SidebarInset,
 } from "@/components/ui/sidebar"
-import { Library } from "lucide-react"
-import { nav, type NavSection } from "@/lib/nav"
-import { QmdPage } from "@/components/QmdPage"
-
-interface Heading {
-  id: string
-  text: string
-  level: number
-}
+import type { NavSection } from "@/lib/nav"
+import { MarkdownContent } from "@/components/MarkdownContent"
+import type { Heading } from "@/lib/headings"
 
 interface AppShellProps {
   content: string
   title: string
   slug: string
   headings: Heading[]
+  section: NavSection | undefined
 }
 
 function PageSidebar({ currentSlug, section }: { currentSlug: string; section: NavSection | undefined }) {
   return (
     <Sidebar variant="inset">
       <SidebarContent className="px-4 py-6">
-        <a href="/" className="mb-6 flex flex-col items-center gap-1 text-sm font-semibold text-sidebar-foreground hover:text-sidebar-foreground">
-          <Library size={28} />
-          <span className="text-center">How to Science</span>
+        <a href="/" className="mb-6 block text-sm font-semibold text-sidebar-foreground hover:text-sidebar-foreground">
+          How to Science
         </a>
         {section && (
           <>
@@ -62,66 +56,58 @@ function PageSidebar({ currentSlug, section }: { currentSlug: string; section: N
 }
 
 function TocSidebar({ headings }: { headings: Heading[] }) {
-  const filtered = headings.filter((h) => h.level === 2)
   const [activeId, setActiveId] = useState("")
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) setActiveId(entry.target.id)
-        }
-      },
-      { rootMargin: "-14px 0% -80% 0%", threshold: 0 }
-    )
-    for (const h of filtered) {
-      const el = document.getElementById(h.id)
-      if (el) observer.observe(el)
+    const onScroll = () => {
+      const atBottom = window.innerHeight + window.scrollY >= document.body.scrollHeight - 4
+      if (atBottom) { setActiveId(headings[headings.length - 1]?.id ?? ""); return }
+      const threshold = window.innerHeight * 0.5
+      let active = headings[0]?.id ?? ""
+      for (const h of headings) {
+        const el = document.getElementById(h.id)
+        if (el && el.getBoundingClientRect().top <= threshold) active = h.id
+      }
+      setActiveId(active)
     }
-    return () => observer.disconnect()
+    window.addEventListener("scroll", onScroll, { passive: true })
+    onScroll()
+    return () => window.removeEventListener("scroll", onScroll)
   }, [headings])
 
   return (
     <SidebarRight style={{ "--sidebar-width": "14rem" } as React.CSSProperties}>
       <SidebarContent className="px-4 py-6">
-        {filtered.length > 0 && (
-          <>
-            <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-              On this page
-            </p>
-            <ul className="space-y-1">
-              {filtered.map((h) => (
-                <li key={h.id}>
-                  <a
-                    href={`#${h.id}`}
-                    onClick={(e) => {
-                      e.preventDefault()
-                      document.getElementById(h.id)?.scrollIntoView({ behavior: "smooth" })
-                    }}
-                    className={`block text-sm transition-colors ${
-                      activeId === h.id
-                        ? "text-foreground"
-                        : "text-muted-foreground hover:text-foreground"
-                    }`}
-                  >
-                    {h.text}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </>
-        )}
+        <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+          On this page
+        </p>
+        <ul className="space-y-1">
+          {headings.map((h) => (
+            <li key={h.id}>
+              <a
+                href={`#${h.id}`}
+                onClick={(e) => {
+                  e.preventDefault()
+                  document.getElementById(h.id)?.scrollIntoView({ behavior: "smooth" })
+                }}
+                className={`block text-sm transition-colors ${
+                  activeId === h.id
+                    ? "text-foreground"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                {h.text}
+              </a>
+            </li>
+          ))}
+        </ul>
       </SidebarContent>
     </SidebarRight>
   )
 }
 
-export function AppShell({ content, title, slug, headings }: AppShellProps) {
-  const section = nav
-    .flatMap((g) => g.sections)
-    .find((s) => s.pages.some((p) => p.slug === slug))
-
-  const hasToc = headings.some((h) => h.level === 2)
+export function AppShell({ content, title, slug, headings, section }: AppShellProps) {
+  const tocHeadings = headings.filter((h) => h.level === 2)
 
   return (
     <SidebarProvider>
@@ -130,17 +116,17 @@ export function AppShell({ content, title, slug, headings }: AppShellProps) {
         <header className="sticky top-0 z-20 flex h-14 shrink-0 items-center gap-2 bg-background px-4">
           <SidebarTrigger />
           <div className="flex-1" />
-          {hasToc && <SidebarRightTrigger />}
+          {tocHeadings.length > 0 && <SidebarRightTrigger />}
         </header>
 
         <div className="flex flex-1">
-          <div className="flex-1 px-8 py-8">
-            <div className="prose prose-neutral max-w-prose mx-auto">
+          <div className="flex-1 px-8 py-8 pb-[50vh]">
+            <div className="prose prose-neutral max-w-3xl mx-auto dark:prose-invert">
               <h1>{title}</h1>
-              <QmdPage content={content} />
+              <MarkdownContent content={content} />
             </div>
           </div>
-          {hasToc && <TocSidebar headings={headings} />}
+          {tocHeadings.length > 0 && <TocSidebar headings={tocHeadings} />}
         </div>
       </SidebarInset>
     </SidebarProvider>
