@@ -4,15 +4,11 @@ import {
   SidebarRight,
   SidebarRightTrigger,
   Sidebar,
-  SidebarHeader,
   SidebarContent,
-  SidebarGroup,
-  SidebarMenu,
-  SidebarMenuItem,
-  SidebarMenuButton,
   SidebarTrigger,
   SidebarInset,
 } from "@/components/ui/sidebar"
+import { Library } from "lucide-react"
 import { nav, type NavSection } from "@/lib/nav"
 import { QmdPage } from "@/components/QmdPage"
 
@@ -30,24 +26,36 @@ interface AppShellProps {
 }
 
 function PageSidebar({ currentSlug, section }: { currentSlug: string; section: NavSection | undefined }) {
-  if (!section) return null
   return (
-    <Sidebar>
-      <SidebarHeader className="px-4 py-3">
-        <span className="font-semibold text-sm">{section.title}</span>
-      </SidebarHeader>
-      <SidebarContent>
-        <SidebarGroup>
-          <SidebarMenu>
-            {section.pages.map((page) => (
-              <SidebarMenuItem key={page.slug}>
-                <SidebarMenuButton asChild isActive={currentSlug === page.slug}>
-                  <a href={`/${page.slug}`}>{page.title}</a>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            ))}
-          </SidebarMenu>
-        </SidebarGroup>
+    <Sidebar variant="inset">
+      <SidebarContent className="px-4 py-6">
+        <a href="/" className="mb-6 flex flex-col items-center gap-1 text-sm font-semibold text-sidebar-foreground hover:text-sidebar-foreground">
+          <Library size={28} />
+          <span className="text-center">How to Science</span>
+        </a>
+        {section && (
+          <>
+            <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-sidebar-foreground/50 text-left">
+              {section.title}
+            </p>
+            <ul className="space-y-1">
+              {section.pages.map((page) => (
+                <li key={page.slug}>
+                  <a
+                    href={`/${page.slug}`}
+                    className={`block text-sm transition-colors ${
+                      currentSlug === page.slug
+                        ? "text-sidebar-foreground"
+                        : "text-sidebar-foreground/50 hover:text-sidebar-foreground"
+                    }`}
+                  >
+                    {page.title}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
       </SidebarContent>
     </Sidebar>
   )
@@ -86,9 +94,13 @@ function TocSidebar({ headings }: { headings: Heading[] }) {
                 <li key={h.id}>
                   <a
                     href={`#${h.id}`}
+                    onClick={(e) => {
+                      e.preventDefault()
+                      document.getElementById(h.id)?.scrollIntoView({ behavior: "smooth" })
+                    }}
                     className={`block text-sm transition-colors ${
                       activeId === h.id
-                        ? "font-medium text-foreground"
+                        ? "text-foreground"
                         : "text-muted-foreground hover:text-foreground"
                     }`}
                   >
@@ -112,27 +124,25 @@ export function AppShell({ content, title, slug, headings }: AppShellProps) {
   const hasToc = headings.some((h) => h.level === 2)
 
   return (
-    <SidebarProvider className="flex-col">
-      <header className="sticky top-0 z-20 flex h-14 shrink-0 items-center gap-2 bg-background px-4">
-        <SidebarTrigger />
-        <a href="/" className="flex-1 text-sm font-semibold">
-          How to Science
-        </a>
-        {hasToc && <SidebarRightTrigger />}
-      </header>
+    <SidebarProvider>
+      <PageSidebar currentSlug={slug} section={section} />
+      <SidebarInset className="m-2 ml-0 rounded-xl shadow-sm overflow-hidden">
+        <header className="sticky top-0 z-20 flex h-14 shrink-0 items-center gap-2 bg-background px-4">
+          <SidebarTrigger />
+          <div className="flex-1" />
+          {hasToc && <SidebarRightTrigger />}
+        </header>
 
-      <div className="flex flex-1">
-        <PageSidebar currentSlug={slug} section={section} />
-        <SidebarInset>
-          <div className="px-8 py-8 max-w-prose mx-auto">
-            <div className="prose prose-neutral">
+        <div className="flex flex-1">
+          <div className="flex-1 px-8 py-8">
+            <div className="prose prose-neutral max-w-prose mx-auto">
               <h1>{title}</h1>
               <QmdPage content={content} />
             </div>
           </div>
-        </SidebarInset>
-        <TocSidebar headings={headings} />
-      </div>
+          {hasToc && <TocSidebar headings={headings} />}
+        </div>
+      </SidebarInset>
     </SidebarProvider>
   )
 }

@@ -99,9 +99,17 @@ function SidebarProvider({
   )
   const toggleSidebarRight = React.useCallback(() => setOpenRight((v) => !v), [])
 
-  // Auto-collapse on breakpoint crossing (animates via CSS transitions)
-  React.useEffect(() => { _setOpen(!isMobile) }, [isMobile])
-  React.useEffect(() => { setOpenRight(!isMobileRight) }, [isMobileRight])
+  // Auto-collapse on breakpoint crossing — skip initial mount (state already initialized from window.innerWidth)
+  const mountedRef = React.useRef(false)
+  React.useEffect(() => {
+    if (!mountedRef.current) { mountedRef.current = true; return }
+    _setOpen(!isMobile)
+  }, [isMobile])
+  const mountedRightRef = React.useRef(false)
+  React.useEffect(() => {
+    if (!mountedRightRef.current) { mountedRightRef.current = true; return }
+    setOpenRight(!isMobileRight)
+  }, [isMobileRight])
 
   React.useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -272,7 +280,7 @@ function SidebarRight({
         <div
           data-sidebar="sidebar"
           data-slot="sidebar-inner"
-          className="flex size-full flex-col bg-sidebar"
+          className="flex size-full flex-col bg-background"
         >
           {children}
         </div>

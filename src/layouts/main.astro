@@ -1,5 +1,6 @@
 ---
 import "@/styles/global.css"
+import geistFont from "@fontsource-variable/geist/files/geist-latin-wght-normal.woff2?url"
 
 interface Props {
   title?: string
@@ -14,6 +15,7 @@ const { title = "How to Science" } = Astro.props
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title} · How to Science</title>
+    <link rel="preload" href={geistFont} as="font" type="font/woff2" crossorigin />
   </head>
   <body>
     <slot />
