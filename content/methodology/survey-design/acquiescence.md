@@ -1,5 +1,0 @@
----
-title: Acquiescence Bias
----
-
-

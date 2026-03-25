@@ -1,8 +1,0 @@
----
-title: "Recommended Reading"
-nocite: |
-  @wolf2019
-  @gehlbach2011
----
-
-The following papers are useful overview or review papers that are, in my mind, particular useful to read:
