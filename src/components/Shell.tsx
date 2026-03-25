@@ -84,12 +84,14 @@ export function Shell({ nav, section, currentSlug, headerRight, children }: Shel
   return (
     <SidebarProvider>
       <PageSidebar nav={nav} section={section} currentSlug={currentSlug} />
-      <SidebarInset className="m-2 ml-0 rounded-xl shadow-sm overflow-hidden">
-        <header className="sticky top-0 z-20 flex h-14 shrink-0 items-center gap-2 bg-background px-4">
+      <SidebarInset className="m-2 ml-0 rounded-xl shadow-sm">
+        <header className="sticky top-0 z-20 flex h-14 shrink-0 items-center gap-2 bg-background px-4 rounded-t-xl">
           <SidebarTrigger />
           {headerRight && <><div className="flex-1" />{headerRight}</>}
         </header>
-        {children}
+        <div className="flex-1 overflow-hidden rounded-b-xl">
+          {children}
+        </div>
       </SidebarInset>
     </SidebarProvider>
   )
