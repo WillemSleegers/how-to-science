@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, Suspense } from "react"
 import {
   SidebarRight,
   SidebarRightTrigger,
@@ -14,10 +14,11 @@ interface AppShellProps {
   title: string
   slug: string
   headings: Heading[]
+  tocDepth: number
   section: NavSection | undefined
 }
 
-function TocSidebar({ headings }: { headings: Heading[] }) {
+function TocSidebar({ headings, tocDepth }: { headings: Heading[], tocDepth: number }) {
   const [activeId, setActiveId] = useState("")
 
   useEffect(() => {
@@ -45,14 +46,16 @@ function TocSidebar({ headings }: { headings: Heading[] }) {
         </p>
         <ul className="space-y-1">
           {headings.map((h) => (
-            <li key={h.id}>
+            <li key={h.id} style={{ paddingLeft: `${(h.level - 2) * 12}px` }}>
               <a
                 href={`#${h.id}`}
                 onClick={(e) => {
                   e.preventDefault()
                   document.getElementById(h.id)?.scrollIntoView({ behavior: "smooth" })
                 }}
-                className={`block text-sm transition-colors ${
+                className={`block transition-colors ${
+                  h.level === 2 ? "text-sm" : "text-xs"
+                } ${
                   activeId === h.id
                     ? "text-foreground"
                     : "text-muted-foreground hover:text-foreground"
@@ -68,8 +71,8 @@ function TocSidebar({ headings }: { headings: Heading[] }) {
   )
 }
 
-export function AppShell({ content, title, slug, headings, section }: AppShellProps) {
-  const tocHeadings = headings.filter((h) => h.level === 2)
+export function AppShell({ content, title, slug, headings, tocDepth, section }: AppShellProps) {
+  const tocHeadings = headings.filter((h) => h.level <= tocDepth)
 
   return (
     <Shell
@@ -81,10 +84,12 @@ export function AppShell({ content, title, slug, headings, section }: AppShellPr
         <div className="flex-1 px-8 py-8 pb-[50vh]">
           <div className="prose prose-neutral max-w-3xl mx-auto dark:prose-invert">
             <h1>{title}</h1>
-            <MarkdownContent content={content} />
+            <Suspense>
+              <MarkdownContent content={content} />
+            </Suspense>
           </div>
         </div>
-        {tocHeadings.length > 0 && <TocSidebar headings={tocHeadings} />}
+        {tocHeadings.length > 0 && <TocSidebar headings={tocHeadings} tocDepth={tocDepth} />}
       </div>
     </Shell>
   )

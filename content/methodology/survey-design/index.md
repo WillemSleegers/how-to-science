@@ -5,4 +5,4 @@ title: Overview
 
 This section covers best practices and common issues in designing surveys — how to present questions, provide clarification, and ensure response quality.
 
-For topics related to developing and validating measurement scales, see the [Scale Development](../../../../content/methodology/scale-development/item-development.qmd) section.
+For topics related to developing and validating measurement scales, see the [Scale Development](../../../content/methodology/scale-development/item-development.qmd) section.

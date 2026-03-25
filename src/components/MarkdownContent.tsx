@@ -5,6 +5,12 @@ import rehypeRaw from "rehype-raw"
 import { CitationDialog } from "./CitationDialog"
 import { slugify } from "@/lib/headings"
 import { preprocessCallouts } from "@/lib/callouts"
+import { createHighlighter } from "shiki"
+
+const highlighterPromise = createHighlighter({
+  themes: ["github-light", "github-dark"],
+  langs: ["r"],
+})
 
 interface MarkdownContentProps {
   content: string
@@ -18,6 +24,47 @@ function nodeText(children: React.ReactNode): string {
   return ""
 }
 
+function CodeBlock({ children }: { children?: React.ReactNode }) {
+  const highlighter = React.use(highlighterPromise)
+
+  const codeEl = React.Children.toArray(children).find(
+    (c): c is React.ReactElement<{ className?: string; children?: unknown }> =>
+      React.isValidElement(c) && (c as React.ReactElement).type === "code"
+  )
+
+  const plain = (code: React.ReactNode) => (
+    <pre className="not-prose rounded-lg bg-muted px-4 py-3 text-sm overflow-x-auto">
+      <code>{code}</code>
+    </pre>
+  )
+
+  if (!codeEl) return plain(children)
+
+  const lang = (codeEl.props.className ?? "").replace("language-", "").trim()
+  const raw = typeof codeEl.props.children === "string" ? codeEl.props.children : ""
+
+  if (!lang) return plain(raw)
+
+  let html: string
+  try {
+    const full = highlighter.codeToHtml(raw, {
+      lang,
+      themes: { light: "github-light", dark: "github-dark" },
+    })
+    // Extract just the inner <code>...</code> from shiki's <pre><code>...</code></pre>
+    const match = full.match(/<code>([\s\S]*)<\/code>/)
+    html = match ? match[1] : ""
+  } catch {
+    return plain(raw)
+  }
+
+  return (
+    <pre className="not-prose rounded-lg bg-muted px-4 py-3 text-sm overflow-x-auto">
+      <code dangerouslySetInnerHTML={{ __html: html }} />
+    </pre>
+  )
+}
+
 const components: Components = {
   h2: ({ node: _node, children, ...props }) => (
     <h2 id={slugify(nodeText(children))} {...props}>{children}</h2>
@@ -25,6 +72,7 @@ const components: Components = {
   h3: ({ node: _node, children, ...props }) => (
     <h3 id={slugify(nodeText(children))} {...props}>{children}</h3>
   ),
+  pre: ({ children }) => <CodeBlock>{children}</CodeBlock>,
 }
 
 export function MarkdownContent({ content }: MarkdownContentProps) {

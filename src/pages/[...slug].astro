@@ -7,6 +7,7 @@ import { AppShell } from "@/components/AppShell"
 import { extractHeadings, stripQuartoToc } from "@/lib/headings"
 import { loadNav } from "@/lib/nav"
 import type { NavSection } from "@/lib/nav"
+import { getGlobalTocDepth } from "@/lib/config"
 
 export async function getStaticPaths() {
   const nav = loadNav()
@@ -29,6 +30,7 @@ const raw = readFileSync(mdPath, "utf-8")
 const { content: rawContent, data } = matter(raw)
 const content = stripQuartoToc(rawContent)
 const headings = extractHeadings(content)
+const tocDepth: number = data["toc-depth"] ?? getGlobalTocDepth()
 ---
 
 <Layout title={data.title ?? slug}>
@@ -38,6 +40,7 @@ const headings = extractHeadings(content)
     title={data.title ?? ""}
     slug={slug}
     headings={headings}
+    tocDepth={tocDepth}
     section={section}
   />
 </Layout>
