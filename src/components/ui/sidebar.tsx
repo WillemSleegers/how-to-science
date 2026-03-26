@@ -59,7 +59,6 @@ function useSidebarRight() {
 }
 
 function SidebarProvider({
-  defaultOpen = true,
   open: openProp,
   onOpenChange: setOpenProp,
   className,
@@ -67,7 +66,6 @@ function SidebarProvider({
   children,
   ...props
 }: React.ComponentProps<"div"> & {
-  defaultOpen?: boolean
   open?: boolean
   onOpenChange?: (open: boolean) => void
 }) {
@@ -169,7 +167,6 @@ function Sidebar({
   collapsible = "offcanvas",
   className,
   children,
-  dir,
   ...props
 }: React.ComponentProps<"div"> & {
   side?: "left" | "right"
@@ -739,6 +736,7 @@ function SidebarMenuSubButton({
   )
 }
 
+/* eslint-disable react-refresh/only-export-components */
 export {
   Sidebar,
   SidebarRight,
@@ -768,3 +766,4 @@ export {
   SidebarTrigger,
   useSidebar,
 }
+/* eslint-enable react-refresh/only-export-components */

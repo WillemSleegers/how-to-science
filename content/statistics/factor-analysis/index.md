@@ -1,5 +1,6 @@
 ---
-title: Factor analysis
+title: "Factor Analysis"
+order: 3
 ---
 
 

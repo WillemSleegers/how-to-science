@@ -1,5 +1,6 @@
 ---
 title: Data quality checks
+order: 3
 toc: true
 ---
 

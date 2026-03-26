@@ -9,7 +9,7 @@ import { createHighlighter } from "shiki"
 
 const highlighterPromise = createHighlighter({
   themes: ["github-light", "github-dark"],
-  langs: ["r"],
+  langs: ["r", "python", "javascript", "typescript", "bash", "sql", "json", "yaml"],
 })
 
 interface MarkdownContentProps {

@@ -1,7 +1,5 @@
 ---
-import { readFileSync, existsSync } from "node:fs"
-import { resolve } from "node:path"
-import matter from "gray-matter"
+import { getEntry } from "astro:content"
 import Layout from "@/layouts/main.astro"
 import { AppShell } from "@/components/AppShell"
 import { extractHeadings, stripQuartoToc } from "@/lib/headings"
@@ -21,23 +19,21 @@ export async function getStaticPaths() {
 const { slug } = Astro.params
 const { section } = Astro.props as { section: NavSection }
 
-const mdPath = resolve(process.cwd(), `content/${slug}.md`)
-if (!existsSync(mdPath)) {
+const entry = await getEntry("docs", slug)
+if (!entry) {
   return new Response(null, { status: 404 })
 }
 
-const raw = readFileSync(mdPath, "utf-8")
-const { content: rawContent, data } = matter(raw)
-const content = stripQuartoToc(rawContent)
+const content = stripQuartoToc(entry.body ?? "")
 const headings = extractHeadings(content)
-const tocDepth: number = data["toc-depth"] ?? getGlobalTocDepth()
+const tocDepth: number = entry.data["toc-depth"] ?? getGlobalTocDepth()
 ---
 
-<Layout title={data.title ?? slug}>
+<Layout title={entry.data.title ?? slug}>
   <AppShell
     client:load
     content={content}
-    title={data.title ?? ""}
+    title={entry.data.title ?? ""}
     slug={slug}
     headings={headings}
     tocDepth={tocDepth}

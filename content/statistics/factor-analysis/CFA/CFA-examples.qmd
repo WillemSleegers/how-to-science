@@ -1,5 +1,6 @@
 ---
 title: CFA - Examples
+order: 3
 ---
 
 ```{r}

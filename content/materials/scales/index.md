@@ -1,5 +1,6 @@
 ---
-title: Scales
+title: "Scales"
+order: 1
 ---
 
 

@@ -9,7 +9,7 @@
  */
 
 import { execSync } from "node:child_process"
-import { existsSync, readdirSync, cpSync } from "node:fs"
+import { existsSync, readdirSync, cpSync, watch } from "node:fs"
 import { join, resolve, relative, dirname, basename } from "node:path"
 import { fileURLToPath } from "node:url"
 
@@ -48,12 +48,23 @@ function walk(dir) {
 }
 
 const arg = process.argv[2]
-if (arg) {
+if (arg === "--watch") {
+  const files = walk(CONTENT_DIR)
+  console.log(`Found ${files.length} .qmd files`)
+  for (const f of files) renderFile(f)
+  console.log("\nWatching for .qmd changes...")
+  watch(CONTENT_DIR, { recursive: true }, (_, filename) => {
+    if (filename?.endsWith(".qmd")) {
+      const fullPath = join(CONTENT_DIR, filename)
+      if (existsSync(fullPath)) renderFile(fullPath)
+    }
+  })
+} else if (arg) {
   renderFile(arg)
+  console.log("\nDone.")
 } else {
   const files = walk(CONTENT_DIR)
   console.log(`Found ${files.length} .qmd files`)
   for (const f of files) renderFile(f)
+  console.log("\nDone.")
 }
-
-console.log("\nDone.")

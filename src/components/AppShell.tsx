@@ -18,7 +18,7 @@ interface AppShellProps {
   section: NavSection | undefined
 }
 
-function TocSidebar({ headings, tocDepth }: { headings: Heading[], tocDepth: number }) {
+function TocSidebar({ headings }: { headings: Heading[] }) {
   const [activeId, setActiveId] = useState("")
 
   useEffect(() => {
@@ -89,7 +89,7 @@ export function AppShell({ content, title, slug, headings, tocDepth, section }: 
             </Suspense>
           </div>
         </div>
-        {tocHeadings.length > 0 && <TocSidebar headings={tocHeadings} tocDepth={tocDepth} />}
+        {tocHeadings.length > 0 && <TocSidebar headings={tocHeadings} />}
       </div>
     </Shell>
   )

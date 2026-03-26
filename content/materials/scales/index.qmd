@@ -1,5 +1,6 @@
 ---
 title: "Scales"
+order: 1
 ---
 
 Here you can find a list of scales to use in your research!
