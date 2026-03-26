@@ -8,7 +8,8 @@
       "Bash(npx tsc --noEmit)",
       "Bash(npm run cleanup)",
       "Bash(npm run typecheck)",
-      "Bash(npx tsc --noEmit --skipLibCheck)"
+      "Bash(npx tsc --noEmit --skipLibCheck)",
+      "Bash(npm run lint)"
     ]
   }
 }
