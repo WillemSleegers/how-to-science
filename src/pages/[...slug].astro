@@ -10,9 +10,10 @@ import { getGlobalTocDepth } from "@/lib/config"
 export async function getStaticPaths() {
   const nav = loadNav()
   return nav.flatMap((group) =>
-    group.sections.flatMap((section) =>
-      section.pages.map((page) => ({ params: { slug: page.slug }, props: { section } }))
-    )
+    group.sections.flatMap((section) => [
+      { params: { slug: section.indexSlug }, props: { section } },
+      ...section.pages.map((page) => ({ params: { slug: page.slug }, props: { section } })),
+    ])
   )
 }
 

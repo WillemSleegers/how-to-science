@@ -13,7 +13,7 @@ const { title = "How to Science" } = Astro.props
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg`} />
+    <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL.replace(/\/$/, "")}/favicon.svg`} />
     <title>{title} · How to Science</title>
     <link rel="preload" href={geistFont} as="font" type="font/woff2" crossorigin />
   </head>

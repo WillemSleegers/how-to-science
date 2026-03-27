@@ -1,4 +1,6 @@
 import React from "react"
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, "")
 import {
   SidebarProvider,
   Sidebar,
@@ -20,7 +22,7 @@ function PageSidebar({
   return (
     <Sidebar variant="inset">
       <SidebarContent className="px-4 py-6">
-        <a href={import.meta.env.BASE_URL} className="mb-6 block text-sm font-semibold text-sidebar-foreground hover:text-sidebar-foreground">
+        <a href={base} className="mb-6 block text-sm font-semibold text-sidebar-foreground hover:text-sidebar-foreground">
           How to Science
         </a>
 
@@ -33,7 +35,7 @@ function PageSidebar({
               {group.sections.map((s) => (
                 <li key={s.indexSlug}>
                   <a
-                    href={`${import.meta.env.BASE_URL}${s.indexSlug}`}
+                    href={`${base}/${s.indexSlug}`}
                     className="block text-sm transition-colors text-sidebar-foreground/50 hover:text-sidebar-foreground"
                   >
                     {s.title}
@@ -46,14 +48,17 @@ function PageSidebar({
 
         {section && (
           <>
-            <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-sidebar-foreground/50">
+            <a
+              href={`${base}/${section.indexSlug}`}
+              className="mb-2 block text-xs font-semibold uppercase tracking-wide text-sidebar-foreground/50 hover:text-sidebar-foreground"
+            >
               {section.title}
-            </p>
+            </a>
             <ul className="space-y-1">
               {section.pages.map((page) => (
                 <li key={page.slug}>
                   <a
-                    href={`${import.meta.env.BASE_URL}${page.slug}`}
+                    href={`${base}/${page.slug}`}
                     className={`block text-sm transition-colors ${
                       page.slug === currentSlug
                         ? "text-sidebar-foreground"

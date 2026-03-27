@@ -112,7 +112,6 @@ export function loadNav(): NavGroup[] {
         })
 
       const pages: NavPage[] = [
-        { title: sectionTitle, slug: sectionSlug },
         ...pageFiles.map((f) => {
           const fm = readFrontmatter(f)
           const slug = fileToSlug(relative(CONTENT_DIR, f))
