@@ -1,0 +1,93 @@
+---
+title: "Synthetic survey respondents"
+toc: true
+---
+
+**Silicon sampling** is the use of LLMs to generate synthetic responses that simulate how subpopulations would answer survey questions, a term coined by @argyle2023.
+
+The technique is used in two distinct ways. The first is **group-level simulation**: conditioning an LLM on demographic profiles to reproduce the distribution of responses a given subpopulation would give — for example, how Republicans aged 30–45 would answer a question about immigration policy. The goal is not to simulate any individual but to approximate the aggregate opinion of a group. The second is **individual prediction** (sometimes called a "digital twin"): constructing a model of a specific person from their survey history or demographic attributes and predicting how they would answer new questions.
+
+Proposed applications include replacing human survey respondents entirely, piloting survey instruments, pretesting question framings, stress-testing measurement instruments, and generating hypotheses about group differences before collecting primary data.
+
+## Study overview
+
+| Study | Goal | Key finding | Verdict |
+|------------------|------------------|------------------|:-----------------:|
+| @argyle2023 | Replace human polling samples | Conditioning GPT-3 on ANES demographic profiles reproduced vote choice distributions with r = 0.90–0.94 across three election years; fails for independents | Mixed |
+| @sun2024 | Replace human polling samples | Group-level demographic sampling reproduced ANES 2020 vote choice (KL-divergence = 0.0004); fails for sensitive topics and sorted partisan subgroups | Mixed |
+| @lyman2025 | Assess effect of RLHF on fidelity | Follow-up to @argyle2023 examining the trade-off between RLHF alignment and algorithmic fidelity; alignment suppresses minority opinion expression | Negative |
+| @bisbee2024 | Replace human survey respondents | Aggregate feeling thermometer scores fall within one SD of ANES, but 48% of regression coefficients differ significantly and 32% flip sign; results not reproducible across model versions | Negative |
+| @cerina2023 | Compare annotation vs simulation | LLMs better suited to annotating existing survey data than simulating responses; lack of explainability makes them unsuitable for silicon sampling | Negative |
+| @neumann2025 | Establish reliability thresholds | No model tested passed all quality control checks for a minimum reliability threshold for silicon sampling | Negative |
+| @karanjai2025 | Improve simulation accuracy with RAG | Prompting alone achieves reasonable adherence; RAG improves further, but results may reflect training data memorisation rather than generalisation | Mixed |
+| @lee2025 | Generalise silicon sampling cross-culturally | LLMs can replicate key ideological and demographic patterns in Korean survey data but overemphasise ideological differences on contentious issues | Mixed |
+| @xu2025 | Simulate opinion on legal questions | Models are better aligned with their training data than with actual survey respondents on US Supreme Court questions | Negative |
+| @lee2024 | Simulate climate opinion by demographic group | Including demographic and issue-related covariates improves alignment; models perform poorly for non-Hispanic Black Americans | Mixed |
+| @cao2025 | Cross-national opinion simulation via fine-tuning | Fine-tuning on World Values Survey data outperforms zero-shot by 34% (1-JSD); all models produce less diverse predictions than real human data | Mixed |
+| @durmus2023 | Simulate global public opinion | Models default to US/European perspectives; responses shift when prompted with country information but often reflect cultural stereotypes | Negative |
+| @boelaert2025 | Replace survey respondents for opinion research | Models cannot replace survey respondents for opinion research; response distributions show a systematic machine bias that varies randomly across topics | Negative |
+| @maier2025 | Replace human panels for consumer testing | Synthetic consumers achieve 90% of human test-retest reliability for ranking personal care products; response distributions are too narrow for absolute measurement | Mixed |
+| @kaiser2025 | Simulate consumer preference rankings | Models approximate aggregate rankings but produce overly positive results and reduced variance compared to real consumers | Mixed |
+| @aher2022 | Replicate classic human subject experiments | LLMs successfully replicated findings from economic, psycholinguistic, and social psychology experiments but showed a hyper-accuracy distortion absent in real human data | Mixed |
+| @peng2025 | Build individual digital twins | Across 19 pre-registered studies and 164 outcomes, mean r = 0.20 between digital twin and human responses; twins significantly under-dispersed in 94% of outcomes | Negative |
+| @kim2024 | Predict individual responses via fine-tuning | Fine-tuning on GSS data achieves AUC = 0.87 for questions in training data, falling to AUC = 0.73 for truly unasked questions | Mixed |
+| @amini2025 | Predict individual electoral choices | Survey Transfer Learning (non-LLM) achieves 93% accuracy for US electoral outcomes and substantially outperforms LLM-based methods on the same task | Negative |
+| @dillion2023 | Assess when LLMs can substitute for humans | Reviews conditions under which LLMs can substitute for human participants; concludes substitution is appropriate only for tasks with objectively correct answers, not for subjective opinion measurement | Negative |
+| @santurkar2023 | Assess whose opinions LLMs represent | Every human demographic subgroup is more representative of US public opinion than any LM tested; RLHF worsens group-level alignment | Negative |
+| @li2025a | Assess opinion distribution accuracy | LLMs assign extreme probability to the modal answer in 80–100% of subgroups on abortion and immigration questions (vs. 30–40% in ANES); structural inconsistency across levels of aggregation | Negative |
+| @park2024a | Measure opinion diversity in LLM outputs | LLMs express a single dominant opinion with very high probability on most questions, suppressing the diversity of thought present in human populations | Negative |
+| @tjuatja2024 | Test whether LLMs replicate response biases | LLMs do not exhibit human-like response biases across a range of survey design effects; models give uniform answers where humans show high variation | Negative |
+| @beck2024 | Assess robustness of sociodemographic prompting | Sociodemographic prompting is not robust; prompt formulation and model choice produce large variance in answers, with more than half of labels incorrectly classified | Negative |
+| @cheng2023 | Assess quality of social group representations | Models fail to capture the multidimensionality of social groups and instead produce caricatures that perpetuate stereotypes | Negative |
+| @morocho2026 | Test whether persona conditioning improves alignment | Persona conditioning produces no consistent improvement in aggregate alignment and frequently worsens subgroup fidelity for underrepresented strata | Negative |
+| @gao2025 | Simulate game-theoretic behavior | Nearly all advanced approaches fail to replicate human behavior distributions in a game-theoretic task; failure causes are diverse and unpredictable across models and prompt variations | Negative |
+| @suh2025 | Fine-tune for public opinion prediction | Fine-tuning on scaled public opinion survey data improves the ability to predict response distributions and generalises to unseen populations and question topics | Positive |
+| @lu2025 | Simulate human online navigation behavior | LLM agents show similar outcomes to humans in website navigation tasks but use more goal-directed strategies; hyper-accuracy distortion observed in behavioral simulation | Mixed |
+
+## What the reviews say
+
+Three review papers have synthesised the empirical literature on silicon sampling. Their overall conclusions converge but differ in emphasis.
+
+Silicon samples are not reliable substitutes for human respondents, especially in policy settings [@wihbey2025]. LLMs are useful complements for early-stage tasks — refining survey questions, pretesting framings, and exploratory concept testing — but the most defensible approach is a hybrid pipeline that keeps human samples as the gold standard for final data collection [@wihbey2025].
+
+Results vary considerably across domains, and silicon samples hold the most promise in upstream phases of the research process, such as qualitative pretesting and pilot studies, rather than in main studies [@sarstedt2024]. Fine-tuning models on group-specific data can backfire, pushing them to produce caricatures rather than authentic group representations [@sarstedt2024].
+
+LLMs may be appropriate participants in a narrow set of circumstances: topics where explicit situational features drive human judgment (such as moral scenarios with a clear intentional agent), tedious or high-volume tasks, early research stages such as hypothesis generation and item piloting, and Western English-speaking samples where training data coverage is strongest [@dillion2023]. Even so, LLMs collapse diversity into a single modal opinion and are better at approximating group averages than capturing within-group variation [@dillion2023].
+
+The point of agreement across all three reviews: silicon sampling is more defensible as a design tool than as a data collection method. The point of divergence is how much weight to give the positive cases — whether promising results in narrow domains (US electoral politics, moral judgment, consumer concept ranking) are evidence of a useful technique or anomalies that should not be generalised.
+
+## When silicon sampling holds promise
+
+The more consistent positive results cluster around a few conditions.
+
+**Politically structured outcomes with large group margins.** When the question being simulated has a strong and stable relationship with demographic predictors — as US vote choice does — LLMs can reproduce aggregate distributions with high accuracy [@argyle2023; @sun2024]. The model is effectively recovering well-documented group-level correlations that are heavily represented in its training data. Results degrade for groups with weaker predictable structure (independents, mixed partisans) and for sensitive topics where training data is sparse or suppressed [@sun2024].
+
+**Tasks with structurally determined answers.** Moral scenarios, economic games, and psycholinguistic tasks — where human responses are driven by explicit situational features — are the conditions where LLM output correlates most strongly with human judgment [@dillion2023; @aher2022]. The model is detecting the structural signal in the prompt. Divergence appears when competing intuitions are in play and the correct response is not deducible from surface features [@dillion2023].
+
+**Ranking rather than absolute measurement.** Synthetic respondents produce rankings of consumer product concepts that correlate with human rankings, but absolute scores are systematically inflated and distributions are too narrow for measurement use [@maier2025; @kaiser2025]. Comparisons within a set of stimuli are more reliable than any single rating.
+
+**Fine-tuned models on domain-specific data.** Fine-tuning on survey data improves performance and generalises to unseen questions and populations [@suh2025]. However, fine-tuning on group-specific profiles can backfire, pushing models to produce caricatures rather than authentic variation within groups [@sarstedt2024].
+
+## What limits silicon sampling
+
+The same studies that document positive results in narrow conditions also reveal a consistent set of failure modes that are structural, not fixable by scaling or prompting.
+
+**Under-dispersion.** Every model tested produces less diverse predictions than real human data [@cao2025; @li2025a; @park2024a; @peng2025]. LLMs assign extremely high probability to a single modal answer — often above 0.99 for a given option — whereas humans show genuine within-group variation even on contentious topics {{< cite santurkar2023 "it has an extremely sharp (and low entropy) opinion distribution for most questions—it typically assigns > 0.99 probability to one of the options. This is unlike humans, who even on contentious topics (like gun rights), tend to exhibit some diversity in opinions." 9 >}}. This is not incidental: alignment training pushes models toward consensus, socially desirable responses regardless of demographic conditioning [@lyman2025].
+
+**Structural inconsistency.** The opinion distribution an LLM predicts for a demographic group changes depending on how finely the persona is specified [@li2025a]. Real survey data trivially satisfies the constraint that group estimates should be consistent across levels of aggregation; LLMs systematically violate it. This means silicon sampling can produce coherent-looking aggregate estimates that have no stable relationship to underlying subgroup opinion.
+
+**Training data skew.** Models default to US and European perspectives on cross-national topics and perform poorly for groups underrepresented in training data — non-Hispanic Black Americans, older adults, non-Western populations [@durmus2023; @santurkar2023; @lee2024]. Prompting with country or demographic information shifts responses but often toward stereotypes rather than genuine group distributions [@durmus2023; @cheng2023].
+
+**Prompt sensitivity.** Results vary substantially with prompt formulation and model version, making findings difficult to replicate or reproduce [@beck2024; @bisbee2024]. More than half of sociodemographic labels are incorrectly classified in some prompt configurations [@beck2024].
+
+**Individual prediction fails.** Digital twins that simulate individual survey respondents achieve a mean correlation of r = 0.20 with actual human responses across a large pre-registered study set, and are significantly under-dispersed in 94% of outcomes [@peng2025]. Non-LLM survey imputation methods substantially outperform LLMs on the same individual-prediction task [@amini2025].
+
+## Recommendations
+
+**Use silicon sampling for design, not data collection.** The clearest applications are upstream: generating survey items, pretesting question framing, exploring concept space before fielding human samples [@wihbey2025; @sarstedt2024; @dillion2023]. Treat silicon samples as a way to stress-test a questionnaire, not as a substitute for it.
+
+**Validate against human data before drawing conclusions.** Even in domains where group-level alignment looks acceptable, regression coefficients and subgroup estimates are unreliable [@bisbee2024]. If silicon sampling is used in a study, at minimum report the model and version, the full prompting approach, and a sensitivity check across prompt variants.
+
+**Do not use silicon sampling to measure minority opinion or within-group variation.** The systematic under-dispersion and training data skew make LLMs poorly suited for studying groups that are underrepresented in training corpora or whose opinions diverge from the modal position [@santurkar2023; @lyman2025; @lee2024]. This is precisely the research context where human samples are most needed and hardest to replace.
+
+## References

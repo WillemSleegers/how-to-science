@@ -37,8 +37,10 @@ vignettes/*.pdf
 
 /.luarc.json
 
+# Paper full texts (copyright — not for public distribution)
+assets/papers/fulltext/
+
 # Astro
-dist/
 .astro/
 node_modules/
 npm-debug.log*

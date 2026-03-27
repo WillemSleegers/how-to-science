@@ -1,5 +1,5 @@
 ---
-title: "Scale Development"
+title: Scale Development
 order: 2
 ---
 

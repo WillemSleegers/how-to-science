@@ -9,7 +9,7 @@
  */
 
 import { execSync } from "node:child_process"
-import { existsSync, readdirSync, cpSync, watch } from "node:fs"
+import { existsSync, readdirSync, cpSync, watch, statSync } from "node:fs"
 import { join, resolve, relative, dirname, basename } from "node:path"
 import { fileURLToPath } from "node:url"
 
@@ -27,6 +27,12 @@ function copyFigures(qmdPath) {
   const destDir = join(PUBLIC_DIR, relDir, `${stem}_files`)
   cpSync(figDir, destDir, { recursive: true })
   console.log(`  → copied figures to public/${relDir}/${stem}_files/`)
+}
+
+function isStale(qmdPath) {
+  const mdPath = qmdPath.replace(/\.qmd$/, ".md")
+  if (!existsSync(mdPath)) return true
+  return statSync(qmdPath).mtimeMs > statSync(mdPath).mtimeMs
 }
 
 function renderFile(qmdPath) {
@@ -50,8 +56,9 @@ function walk(dir) {
 const arg = process.argv[2]
 if (arg === "--watch") {
   const files = walk(CONTENT_DIR)
-  console.log(`Found ${files.length} .qmd files`)
-  for (const f of files) renderFile(f)
+  const stale = files.filter(isStale)
+  console.log(`Found ${files.length} .qmd files, ${stale.length} need rendering`)
+  for (const f of stale) renderFile(f)
   console.log("\nWatching for .qmd changes...")
   watch(CONTENT_DIR, { recursive: true }, (_, filename) => {
     if (filename?.endsWith(".qmd")) {

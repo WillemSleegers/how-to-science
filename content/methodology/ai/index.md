@@ -1,5 +1,5 @@
 ---
-title: "AI in Research"
+title: AI in Research
 order: 4
 toc: true
 ---

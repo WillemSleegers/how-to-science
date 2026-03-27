@@ -7,10 +7,14 @@ import { slugify } from "@/lib/headings"
 import { preprocessCallouts } from "@/lib/callouts"
 import { createHighlighter } from "shiki"
 
-const highlighterPromise = createHighlighter({
-  themes: ["github-light", "github-dark"],
-  langs: ["r", "python", "javascript", "typescript", "bash", "sql", "json", "yaml"],
-})
+const g = globalThis as typeof globalThis & { __shikiHighlighter?: ReturnType<typeof createHighlighter> }
+if (!g.__shikiHighlighter) {
+  g.__shikiHighlighter = createHighlighter({
+    themes: ["github-light", "github-dark"],
+    langs: ["r", "python", "javascript", "typescript", "bash", "sql", "json", "yaml"],
+  })
+}
+const highlighterPromise = g.__shikiHighlighter
 
 interface MarkdownContentProps {
   content: string

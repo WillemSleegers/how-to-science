@@ -1,9 +1,7 @@
 ---
-title: "Survey Design"
+title: Survey Design
 order: 1
 ---
 
 
 This section covers best practices and common issues in designing surveys — how to present questions, provide clarification, and ensure response quality.
-
-For topics related to developing and validating measurement scales, see the [Scale Development](../../../content/methodology/scale-development/item-development.qmd) section.

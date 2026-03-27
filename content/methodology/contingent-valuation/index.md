@@ -1,5 +1,5 @@
 ---
-title: "Contingent Valuation"
+title: Contingent Valuation
 order: 3
 ---
 
