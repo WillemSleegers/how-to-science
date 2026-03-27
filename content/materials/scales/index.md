@@ -4,4 +4,4 @@ order: 1
 ---
 
 
-Here you can find a list of scales to use in your research!
+This section contains various scales that have been relevant to my research. Each page contains a section on what the scale is supposed to measure, the items, scale instructions, the response options, and a table indicating additional item information.
