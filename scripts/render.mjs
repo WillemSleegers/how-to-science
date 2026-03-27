@@ -71,7 +71,8 @@ if (arg === "--watch") {
   console.log("\nDone.")
 } else {
   const files = walk(CONTENT_DIR)
-  console.log(`Found ${files.length} .qmd files`)
-  for (const f of files) renderFile(f)
+  const stale = files.filter(isStale)
+  console.log(`Found ${files.length} .qmd files, ${stale.length} need rendering`)
+  for (const f of stale) renderFile(f)
   console.log("\nDone.")
 }
