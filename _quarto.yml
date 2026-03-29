@@ -12,8 +12,10 @@ format:
     variant: +yaml_metadata_block
     wrap: none
     toc: false
+    fig-format: svg
 
-editor: visual
+
+editor: source
 
 execute:
   freeze: true
