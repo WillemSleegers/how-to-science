@@ -1,0 +1,63 @@
+# Navigation structure for the sidebar.
+#
+# Top-level entries:
+#   group: Title    — plain always-open label (non-collapsible)
+#   section: Title  — collapsible group with a toggle chevron
+#
+# Items within a group or section:
+#   path:           — page link (title falls back to the page's frontmatter title)
+#   path: + items:  — collapsible page link with sub-items
+#   title: + items: — non-clickable collapsible label with sub-items (no page)
+#   text:           — optional display label override on any path item
+
+- group: Methodology
+  items:
+    - title: Survey Design
+      items:
+        - path: methodology/survey-design/overview
+        - path: methodology/survey-design/response-options
+        - path: methodology/survey-design/clarification-features
+        - path: methodology/survey-design/data-quality-checks
+    - title: Scale Development
+      items:
+        - path: methodology/scale-development/overview
+        - path: methodology/scale-development/item-development
+        - path: methodology/scale-development/reliability-validity
+    - title: Contingent Valuation
+      items:
+        - path: methodology/contingent-valuation/overview
+        - path: methodology/contingent-valuation/wtp
+    - title: AI in Research
+      items:
+        - path: methodology/ai/overview
+        - path: methodology/ai/synthetic-respondents
+
+- group: Data Analysis
+  items:
+    - title: Regression
+      items:
+        - path: statistics/regression/collinearity
+    - title: Factor Analysis
+      items:
+        - path: statistics/factor-analysis/overview
+        - title: CFA
+          items:
+            - path: statistics/factor-analysis/CFA
+    - title: Representativeness
+      items:
+        - path: statistics/representativeness/overview
+        - path: statistics/representativeness/non-probability-sampling
+
+- group: Materials
+  items:
+    - title: Scales
+      items:
+        - path: materials/scales
+        - path: materials/scales/AAS
+        - path: materials/scales/BFI-2-XS
+        - path: materials/scales/DOSPERT
+        - path: materials/scales/NEP
+        - path: materials/scales/OUS
+        - path: materials/scales/SOP2
+        - path: materials/scales/TIPI
+        - path: materials/scales/speciesism

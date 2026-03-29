@@ -15,7 +15,7 @@ interface AppShellProps {
   slug: string
   headings: Heading[]
   tocDepth: number
-  section: NavSection | undefined
+  nav: NavSection[]
 }
 
 function TocSidebar({ headings }: { headings: Heading[] }) {
@@ -71,12 +71,12 @@ function TocSidebar({ headings }: { headings: Heading[] }) {
   )
 }
 
-export function AppShell({ content, title, slug, headings, tocDepth, section }: AppShellProps) {
+export function AppShell({ content, title, slug, headings, tocDepth, nav }: AppShellProps) {
   const tocHeadings = headings.filter((h) => h.level <= tocDepth)
 
   return (
     <Shell
-      section={section}
+      nav={nav}
       currentSlug={slug}
       headerRight={tocHeadings.length > 0 ? <SidebarRightTrigger /> : undefined}
     >

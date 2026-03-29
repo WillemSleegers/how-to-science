@@ -1,7 +1,9 @@
 import React from "react"
 import ReactMarkdown, { type Components } from "react-markdown"
 import remarkGfm from "remark-gfm"
+import remarkMath from "remark-math"
 import rehypeRaw from "rehype-raw"
+import rehypeKatex from "rehype-katex"
 import { CitationDialog } from "./CitationDialog"
 import { slugify } from "@/lib/headings"
 import { preprocessCallouts } from "@/lib/callouts"
@@ -82,7 +84,7 @@ const components: Components = {
 export function MarkdownContent({ content }: MarkdownContentProps) {
   return (
     <>
-      <ReactMarkdown components={components} remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>
+      <ReactMarkdown components={components} remarkPlugins={[remarkGfm, remarkMath]} rehypePlugins={[rehypeRaw, rehypeKatex]}>
         {preprocessCallouts(content)}
       </ReactMarkdown>
       <CitationDialog />

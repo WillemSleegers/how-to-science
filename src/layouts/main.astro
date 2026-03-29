@@ -14,8 +14,9 @@ const { title = "How to Science" } = Astro.props
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL.replace(/\/$/, "")}/favicon.svg`} />
-    <title>{title} · How to Science</title>
+    <title>{title}</title>
     <link rel="preload" href={geistFont} as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css" />
   </head>
   <body>
     <slot />

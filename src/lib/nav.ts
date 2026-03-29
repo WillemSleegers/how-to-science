@@ -1,24 +1,40 @@
-import { readFileSync, readdirSync, existsSync } from "node:fs"
-import { join, resolve, relative } from "node:path"
+import { readFileSync, existsSync } from "node:fs"
+import { join, resolve } from "node:path"
 import { load } from "js-yaml"
 
 const CONTENT_DIR = resolve(process.cwd(), "content")
+const NAV_FILE = resolve(process.cwd(), "_nav.yml")
 
-export interface NavPage {
+// ── Public types (used by sidebar rendering) ─────────────────────────────────
+
+export interface NavNode {
   title: string
-  slug: string
+  slug?: string // present → clickable page link
+  children: NavNode[]
 }
 
 export interface NavSection {
   title: string
-  indexSlug: string
-  pages: NavPage[]
+  kind: "group" | "section" // group = plain label, section = collapsible
+  nodes: NavNode[]
 }
 
-export interface NavGroup {
-  label: string
-  sections: NavSection[]
+// ── YAML config types ─────────────────────────────────────────────────────────
+
+interface ConfigItem {
+  path?: string
+  title?: string
+  text?: string
+  items?: ConfigItem[]
 }
+
+interface ConfigSection {
+  group?: string   // plain always-open label
+  section?: string // collapsible group
+  items?: ConfigItem[]
+}
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
 
 type Frontmatter = Record<string, unknown>
 
@@ -33,101 +49,85 @@ function readFrontmatter(filePath: string): Frontmatter {
   }
 }
 
-function fileToSlug(relPath: string): string {
-  return relPath
-    .replace(/\.md$/, "")
-    .split("/")
-    .map((s) => s.toLowerCase())
-    .join("/")
-    .replace(/\/index$/, "")
+/** Resolve a nav path to its markdown file path. */
+function resolveFile(navPath: string): string | null {
+  const asFile = join(CONTENT_DIR, `${navPath}.md`)
+  if (existsSync(asFile)) return asFile
+  const asIndex = join(CONTENT_DIR, navPath, "index.md")
+  if (existsSync(asIndex)) return asIndex
+  return null
 }
 
-function toTitleCase(kebab: string): string {
-  return kebab
+function titleFromPath(navPath: string): string {
+  const file = resolveFile(navPath)
+  if (file) {
+    const fm = readFrontmatter(file)
+    if (typeof fm.title === "string") return fm.title
+  }
+  // Fallback: last path segment, kebab-case → Title Case
+  const segment = navPath.split("/").pop() ?? navPath
+  return segment
     .split("-")
     .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
     .join(" ")
 }
 
-function listMdFiles(dir: string): string[] {
-  const results: string[] = []
-  for (const entry of readdirSync(dir, { withFileTypes: true })) {
-    const full = join(dir, entry.name)
-    if (entry.isDirectory()) results.push(...listMdFiles(full))
-    else if (entry.name.endsWith(".md")) results.push(full)
+// ── Config → NavNode ──────────────────────────────────────────────────────────
+
+function buildNode(item: ConfigItem): NavNode | null {
+  const children = (item.items ?? []).flatMap((child) => {
+    const node = buildNode(child)
+    return node ? [node] : []
+  })
+
+  if (item.path) {
+    // text: overrides title; falls back to frontmatter title
+    const title = item.text ?? item.title ?? titleFromPath(item.path)
+    // Normalise to lowercase so slugs match Astro's content entry IDs
+    const slug = item.path.toLowerCase()
+    return { title, slug, children }
   }
-  return results
+
+  if (item.title) {
+    // Grouping label — no slug
+    return { title: item.title, children }
+  }
+
+  return null
 }
 
-function getOrder(fm: Frontmatter): number {
-  return typeof fm.order === "number" ? fm.order : 999
-}
+// ── Public API ────────────────────────────────────────────────────────────────
 
-export function loadNav(): NavGroup[] {
-  const groups: NavGroup[] = []
+export function loadNav(): NavSection[] {
+  const raw = readFileSync(NAV_FILE, "utf-8")
+  const config = load(raw) as ConfigSection[]
 
-  const groupEntries = readdirSync(CONTENT_DIR, { withFileTypes: true })
-    .filter((e) => e.isDirectory())
-    .sort((a, b) => {
-      const oa = getOrder(readFrontmatter(join(CONTENT_DIR, a.name, "index.md")))
-      const ob = getOrder(readFrontmatter(join(CONTENT_DIR, b.name, "index.md")))
-      return oa - ob || a.name.localeCompare(b.name)
+  return config.flatMap((entry) => {
+    const title = entry.group ?? entry.section
+    if (!title) return []
+    const kind: "group" | "section" = entry.group ? "group" : "section"
+    const nodes = (entry.items ?? []).flatMap((item) => {
+      const node = buildNode(item)
+      return node ? [node] : []
     })
+    return [{ title, kind, nodes }]
+  })
+}
 
-  for (const groupEntry of groupEntries) {
-    const groupDir = join(CONTENT_DIR, groupEntry.name)
-    const groupIndexPath = join(groupDir, "index.md")
-    if (!existsSync(groupIndexPath)) continue
-
-    const groupFm = readFrontmatter(groupIndexPath)
-    const groupLabel = (groupFm.title as string) ?? toTitleCase(groupEntry.name)
-
-    const sectionEntries = readdirSync(groupDir, { withFileTypes: true })
-      .filter((e) => e.isDirectory())
-      .sort((a, b) => {
-        const oa = getOrder(readFrontmatter(join(groupDir, a.name, "index.md")))
-        const ob = getOrder(readFrontmatter(join(groupDir, b.name, "index.md")))
-        return oa - ob || a.name.localeCompare(b.name)
-      })
-
-    const sections: NavSection[] = []
-
-    for (const sectionEntry of sectionEntries) {
-      const sectionDir = join(groupDir, sectionEntry.name)
-      const sectionIndexPath = join(sectionDir, "index.md")
-      if (!existsSync(sectionIndexPath)) continue
-
-      const sectionFm = readFrontmatter(sectionIndexPath)
-      const sectionTitle = (sectionFm.title as string) ?? toTitleCase(sectionEntry.name)
-      const sectionSlug = fileToSlug(relative(CONTENT_DIR, sectionIndexPath))
-
-      const pageFiles = listMdFiles(sectionDir)
-        .filter((f) => f !== sectionIndexPath)
-        .sort((a, b) => {
-          const oa = getOrder(readFrontmatter(a))
-          const ob = getOrder(readFrontmatter(b))
-          const sa = fileToSlug(relative(CONTENT_DIR, a))
-          const sb = fileToSlug(relative(CONTENT_DIR, b))
-          return oa - ob || sa.localeCompare(sb)
-        })
-
-      const pages: NavPage[] = [
-        ...pageFiles.map((f) => {
-          const fm = readFrontmatter(f)
-          const slug = fileToSlug(relative(CONTENT_DIR, f))
-          const name = slug.split("/").pop() ?? ""
-          return {
-            title: (fm.title as string) ?? toTitleCase(name),
-            slug,
-          }
-        }),
-      ]
-
-      sections.push({ title: sectionTitle, indexSlug: sectionSlug, pages })
-    }
-
-    groups.push({ label: groupLabel, sections })
+/** Recursively collect all routable slugs from the nav tree. */
+export function collectAllSlugs(sections: NavSection[]): string[] {
+  function fromNodes(nodes: NavNode[]): string[] {
+    return nodes.flatMap((n) => [
+      ...(n.slug ? [n.slug] : []),
+      ...fromNodes(n.children),
+    ])
   }
+  return sections.flatMap((s) => fromNodes(s.nodes))
+}
 
-  return groups
+/** Returns true if any node in the tree matches the given slug. */
+export function treeContainsSlug(nodes: NavNode[], slug: string): boolean {
+  return nodes.some(
+    (n) => n.slug === slug || treeContainsSlug(n.children, slug)
+  )
 }
