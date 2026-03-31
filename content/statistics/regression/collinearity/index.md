@@ -1,8 +1,6 @@
 ---
 title: Collinearity
 toc: true
-code-tools: true
-code-fold: true
 ---
 
 

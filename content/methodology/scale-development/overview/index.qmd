@@ -1,6 +1,6 @@
 ---
-title: "Scale Development"
-order: 2
+title: "Overview"
+order: 1
 ---
 
 This section covers the development and validation of measurement scales — from writing items to assessing reliability and validity.

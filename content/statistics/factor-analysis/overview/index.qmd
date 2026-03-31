@@ -1,6 +1,6 @@
 ---
-title: "Factor Analysis"
-order: 3
+title: "Overview"
+order: 1
 ---
 
 This section is about the two types of factor analysis:

@@ -36,13 +36,13 @@
   items:
     - title: Regression
       items:
+        - path: statistics/regression/overview
         - path: statistics/regression/collinearity
     - title: Factor Analysis
       items:
         - path: statistics/factor-analysis/overview
-        - title: CFA
-          items:
-            - path: statistics/factor-analysis/CFA
+        - path: statistics/factor-analysis/efa
+        - path: statistics/factor-analysis/cfa
     - title: Representativeness
       items:
         - path: statistics/representativeness/overview
@@ -52,7 +52,7 @@
   items:
     - title: Scales
       items:
-        - path: materials/scales
+        - path: materials/scales/overview
         - path: materials/scales/AAS
         - path: materials/scales/BFI-2-XS
         - path: materials/scales/DOSPERT

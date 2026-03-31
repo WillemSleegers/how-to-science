@@ -1,6 +1,6 @@
 ---
-title: Non-probability sampling
-order: 1
+title: NPS
+order: 2
 ---
 
 ```{r}

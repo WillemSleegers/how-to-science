@@ -1,5 +1,5 @@
 ---
-title: Best practices in CFA
+title: CFA
 order: 2
 toc: true
 ---

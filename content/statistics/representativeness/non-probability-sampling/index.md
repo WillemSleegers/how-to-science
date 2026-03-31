@@ -1,6 +1,6 @@
 ---
-title: Non-probability sampling
-order: 1
+title: NPS
+order: 2
 ---
 
 
@@ -201,9 +201,6 @@ Survey A’s plausible range maps to a responder/non-responder difference of rou
 ``` r
 mult_A  <- sqrt((N_NL - n_A) / n_A)
 n_B_vec <- c(10000, 50000, 100000, 500000)
-
-rho_A_plausible <- c(0.001, 0.005)
-rho_B_plausible <- c(0.03,  0.10)
 
 rmse <- function(rho, mult, n) sqrt((rho * mult * sigma_Y)^2 + sigma_Y^2 / n)
 

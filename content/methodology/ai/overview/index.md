@@ -1,5 +1,5 @@
 ---
-title: AI in Research
+title: Overview
 order: 1
 toc: false
 ---

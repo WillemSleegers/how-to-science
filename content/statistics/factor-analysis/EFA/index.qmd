@@ -1,5 +1,5 @@
 ---
-title: "Best practices in EFA"
+title: "EFA"
 order: 1
 toc: true
 prefer-html: true
