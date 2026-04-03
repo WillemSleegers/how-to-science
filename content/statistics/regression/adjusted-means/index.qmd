@@ -1,0 +1,122 @@
+---
+title: "Controlling for covariates"
+toc: true
+code-fold: show
+---
+
+```{r}
+#| label: setup
+#| message: false
+
+library(tidyverse)
+library(emmeans)
+library(marginaleffects)
+```
+
+Suppose you want to estimate the mean of some outcome but sex also predicts it and is unevenly distributed in your sample. The raw sample mean will reflect both the true mean *and* the sex composition of your sample — these are confounded. Including sex in a regression and extracting a marginal mean disentangles them: it gives you an estimate that would hold in a sex-balanced sample.
+
+This is not the same as estimating separate means for males and females. Stratifying by sex gives you two group-specific estimates. Controlling for sex gives you one overall estimate that doesn't depend on how many of each sex are in the sample.
+
+## Setup
+
+We simulate data where females score one point higher than males on average, but our sample is 70% female.
+
+```{r}
+#| label: simulate-data
+set.seed(42)
+
+n <- 500
+
+sex <- sample(
+  c("male", "female"),
+  size = n,
+  replace = TRUE,
+  prob = c(0.3, 0.7)
+)
+
+y <- if_else(
+  sex == "male",
+  rnorm(n, mean = 3.0, sd = 1),
+  rnorm(n, mean = 4.0, sd = 1)
+)
+
+data <- tibble(sex = factor(sex, levels = c("male", "female")), y = y)
+```
+
+The true population mean — assuming equal numbers of males and females — is 3.5, the average of 3.0 and 4.0. Let's see what the raw sample mean gives us.
+
+```{r}
+#| label: raw-mean
+mean(data$y)
+```
+
+It's pulled above 3.5 by the overrepresentation of females. We can confirm by looking at the group breakdown:
+
+```{r}
+#| label: group-summary
+data |>
+  group_by(sex) |>
+  summarise(n = n(), mean_y = mean(y))
+```
+
+## Controlling for sex
+
+To get a mean that controls for sex, we fit a regression with sex as a predictor.
+
+```{r}
+#| label: model
+model <- lm(y ~ sex, data = data)
+```
+
+### emmeans
+
+`emmeans` extracts the marginal mean by averaging the predicted values for each sex level equally, regardless of how many observations each has.
+
+```{r}
+#| label: emmeans-marginal-mean
+emmeans(model, specs = ~1)
+```
+
+This is close to 3.5.
+
+### marginaleffects
+
+`avg_predictions` from `marginaleffects` gives the same result when you ask it to predict at each level of sex and then average:
+
+```{r}
+#| label: marginaleffects-marginal-mean
+avg_predictions(model, newdata = datagrid(sex = c("male", "female")))
+```
+
+The key difference from `emmeans` is what happens when you don't specify the grid. By default, `avg_predictions(model)` predicts for each row at its observed covariate values and averages — which for a linear model just recovers the raw mean:
+
+```{r}
+#| label: marginaleffects-default
+avg_predictions(model)
+```
+
+This is the *average prediction in the sample as it is*, not controlling for sex. Whether this or the equal-weighted version is more appropriate depends on the question: do you want the mean for a balanced population, or the mean for this particular sample adjusted for model fit?
+
+## Using population weights
+
+If the goal is to estimate the mean for a specific target population with known sex proportions, both packages support explicit weighting. For example, to match the sample's 30% male / 70% female composition, which should recover the raw mean from above:
+
+With `emmeans`, pass a numeric weight vector matching the factor level order (`c("male", "female")`):
+
+```{r}
+#| label: emmeans-population-weights
+emmeans(model, ~1, weights = c(0.3, 0.7))
+```
+
+With `marginaleffects`, use the `wts` argument:
+
+```{r}
+#| label: marginaleffects-population-weights
+avg_predictions(
+  model,
+  newdata = datagrid(sex = levels(data$sex)),
+  wts = c(0.3, 0.7)
+)
+```
+
+Both should match the raw sample mean computed at the top of the page.

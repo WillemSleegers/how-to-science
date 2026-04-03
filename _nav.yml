@@ -39,6 +39,7 @@
       items:
         - path: statistics/regression/overview
         - path: statistics/regression/collinearity
+        - path: statistics/regression/adjusted-means
     - title: Factor Analysis
       items:
         - path: statistics/factor-analysis/overview

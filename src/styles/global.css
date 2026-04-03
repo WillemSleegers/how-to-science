@@ -240,6 +240,21 @@
   }
 }
 
+/* Remove Tailwind Typography's default backtick wrapping on inline code */
+.prose code::before,
+.prose code::after {
+  content: none;
+}
+
+/* Inline code styling */
+.prose :not(pre) > code {
+  background: var(--muted);
+  border-radius: 0.25rem;
+  padding: 0.15em 0.35em;
+  font-size: 0.875em;
+  font-weight: normal;
+}
+
 /* List markers match body text color */
 .prose :where(ul > li)::marker,
 .prose :where(ol > li)::marker {

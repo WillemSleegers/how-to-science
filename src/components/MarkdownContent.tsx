@@ -44,12 +44,18 @@ function CodeBlock({ children }: { children?: React.ReactNode }) {
     </pre>
   )
 
+  const output = (code: React.ReactNode) => (
+    <pre className="not-prose rounded-lg border border-border bg-background px-4 py-3 text-sm overflow-x-auto">
+      <code>{code}</code>
+    </pre>
+  )
+
   if (!codeEl) return plain(children)
 
   const lang = (codeEl.props.className ?? "").replace("language-", "").trim()
   const raw = typeof codeEl.props.children === "string" ? codeEl.props.children : ""
 
-  if (!lang) return plain(raw)
+  if (!lang) return output(raw)
 
   let html: string
   try {
