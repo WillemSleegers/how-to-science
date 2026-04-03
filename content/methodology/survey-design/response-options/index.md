@@ -42,126 +42,126 @@ Table 1 shows an overview of various studies in which the topic of response opti
 </thead>
 <tbody>
 <tr>
-<td><span class="citation" data-cites="donnellan2020">Donnellan &amp; Rakhshani (2020)</span></td>
+<td><span class="cite-ref" data-cite-id="donnellan2020" data-cite-quote="" data-cite-page=""><span class="citation" data-cites="donnellan2020">Donnellan &amp; Rakhshani (2020)</span></span></td>
 <td>2- to 7-, and 11-point Likert</td>
 <td>Self-esteem</td>
 <td>Reliability; distribution; validity; quality</td>
 <td>5-point Likert or higher</td>
 </tr>
 <tr>
-<td><span class="citation" data-cites="simms2019">Simms et al. (2019)</span></td>
+<td><span class="cite-ref" data-cite-id="simms2019" data-cite-quote="" data-cite-page=""><span class="citation" data-cites="simms2019">Simms et al. (2019)</span></span></td>
 <td>2- to 11-point Likert + VAS</td>
 <td>Personality</td>
 <td>Reliability; validity</td>
 <td>6-point Likert</td>
 </tr>
 <tr>
-<td><span class="citation" data-cites="sung2018">Sung &amp; Wu (2018)</span></td>
+<td><span class="cite-ref" data-cite-id="sung2018" data-cite-quote="" data-cite-page=""><span class="citation" data-cites="sung2018">Sung &amp; Wu (2018)</span></span></td>
 <td>5-point Likert and VAS-RRP</td>
 <td>Career interest</td>
 <td>Reliability</td>
 <td>VAS-RPP</td>
 </tr>
 <tr>
-<td><span class="citation" data-cites="cox2017">Cox et al. (2017)</span></td>
+<td><span class="cite-ref" data-cite-id="cox2017" data-cite-quote="" data-cite-page=""><span class="citation" data-cites="cox2017">Cox et al. (2017)</span></span></td>
 <td>2- and 4-point Likert</td>
 <td>Personality</td>
 <td>Reliability; validity; duration</td>
 <td>Mixed</td>
 </tr>
 <tr>
-<td><span class="citation" data-cites="lewis2017">Lewis (2017)</span></td>
+<td><span class="cite-ref" data-cite-id="lewis2017" data-cite-quote="" data-cite-page=""><span class="citation" data-cites="lewis2017">Lewis (2017)</span></span></td>
 <td>7-, 11-point Likert and VAS</td>
 <td>Software usability</td>
 <td>Reliability; distribution; validity</td>
 <td>No difference</td>
 </tr>
 <tr>
-<td><span class="citation" data-cites="kuhlmann2017">Kuhlmann et al. (2017)</span></td>
+<td><span class="cite-ref" data-cite-id="kuhlmann2017" data-cite-quote="" data-cite-page=""><span class="citation" data-cites="kuhlmann2017">Kuhlmann et al. (2017)</span></span></td>
 <td>5-point Likert and VAS</td>
 <td>Personality</td>
 <td>Reliability; distribution; validity</td>
 <td>No difference</td>
 </tr>
 <tr>
-<td><span class="citation" data-cites="hilbert2016">Hilbert (2016)</span></td>
+<td><span class="cite-ref" data-cite-id="hilbert2016" data-cite-quote="" data-cite-page=""><span class="citation" data-cites="hilbert2016">Hilbert (2016)</span></span></td>
 <td>2- and 5-point and VAS</td>
 <td>Personality</td>
 <td>Reliability; validity; quality</td>
 <td>It depends</td>
 </tr>
 <tr>
-<td><span class="citation" data-cites="capik2015">Capik &amp; Gozum (2015)</span></td>
+<td><span class="cite-ref" data-cite-id="capik2015" data-cite-quote="" data-cite-page=""><span class="citation" data-cites="capik2015">Capik &amp; Gozum (2015)</span></span></td>
 <td>2- and 5-point Likert</td>
 <td>Health</td>
 <td>Reliability; validity</td>
 <td>No difference</td>
 </tr>
 <tr>
-<td><span class="citation" data-cites="eutsler2015">Eutsler &amp; Lang (2015)</span></td>
+<td><span class="cite-ref" data-cite-id="eutsler2015" data-cite-quote="" data-cite-page=""><span class="citation" data-cites="eutsler2015">Eutsler &amp; Lang (2015)</span></span></td>
 <td>5-, 7-, 9-, and 11-point Likert</td>
 <td>Judgment</td>
 <td>Distribution; power</td>
 <td>7-point Likert</td>
 </tr>
 <tr>
-<td><span class="citation" data-cites="finn2015">Finn et al. (2015)</span></td>
+<td><span class="cite-ref" data-cite-id="finn2015" data-cite-quote="" data-cite-page=""><span class="citation" data-cites="finn2015">Finn et al. (2015)</span></span></td>
 <td>2- and 4-point Likert</td>
 <td></td>
 <td></td>
 <td>4-point Likert</td>
 </tr>
 <tr>
-<td><span class="citation" data-cites="revilla2014">Revilla et al. (2014)</span></td>
+<td><span class="cite-ref" data-cite-id="revilla2014" data-cite-quote="" data-cite-page=""><span class="citation" data-cites="revilla2014">Revilla et al. (2014)</span></span></td>
 <td>5-, 7-, 11-point Likert</td>
 <td></td>
 <td></td>
 <td>5-point Likert</td>
 </tr>
 <tr>
-<td><span class="citation" data-cites="cox2012">Cox et al. (2012)</span></td>
+<td><span class="cite-ref" data-cite-id="cox2012" data-cite-quote="" data-cite-page=""><span class="citation" data-cites="cox2012">Cox et al. (2012)</span></span></td>
 <td>2- and 4-point Likert</td>
 <td></td>
 <td></td>
 <td>4-point Likert</td>
 </tr>
 <tr>
-<td><span class="citation" data-cites="janhunen2012">Janhunen (2012)</span></td>
+<td><span class="cite-ref" data-cite-id="janhunen2012" data-cite-quote="" data-cite-page=""><span class="citation" data-cites="janhunen2012">Janhunen (2012)</span></span></td>
 <td>7-point Likert and 30-point VAR</td>
 <td></td>
 <td></td>
 <td>VAR</td>
 </tr>
 <tr>
-<td><span class="citation" data-cites="dawes2008">Dawes (2008)</span></td>
+<td><span class="cite-ref" data-cite-id="dawes2008" data-cite-quote="" data-cite-page=""><span class="citation" data-cites="dawes2008">Dawes (2008)</span></span></td>
 <td>5-, 7-, and 10-point Likert</td>
 <td></td>
 <td></td>
 <td>No difference</td>
 </tr>
 <tr>
-<td><span class="citation" data-cites="weng2004">Weng (2004)</span></td>
+<td><span class="cite-ref" data-cite-id="weng2004" data-cite-quote="" data-cite-page=""><span class="citation" data-cites="weng2004">Weng (2004)</span></span></td>
 <td>3- to 9-point Likert</td>
 <td></td>
 <td></td>
 <td>5-point or higher</td>
 </tr>
 <tr>
-<td><span class="citation" data-cites="preston2000">Preston &amp; Colman (2000)</span></td>
+<td><span class="cite-ref" data-cite-id="preston2000" data-cite-quote="" data-cite-page=""><span class="citation" data-cites="preston2000">Preston &amp; Colman (2000)</span></span></td>
 <td>2- to 11-point Likert and VAS</td>
 <td></td>
 <td></td>
 <td>7-, 9-, or 10-point Likert</td>
 </tr>
 <tr>
-<td><span class="citation" data-cites="alwin1997">Alwin (1997)</span></td>
+<td><span class="cite-ref" data-cite-id="alwin1997" data-cite-quote="" data-cite-page=""><span class="citation" data-cites="alwin1997">Alwin (1997)</span></span></td>
 <td>7- and 11-point Likert</td>
 <td></td>
 <td></td>
 <td>11-point Likert</td>
 </tr>
 <tr>
-<td><span class="citation" data-cites="jaeschke1990">Jaeschke et al. (1990)</span></td>
+<td><span class="cite-ref" data-cite-id="jaeschke1990" data-cite-quote="" data-cite-page=""><span class="citation" data-cites="jaeschke1990">Jaeschke et al. (1990)</span></span></td>
 <td>7-point Likert and VAS</td>
 <td></td>
 <td></td>
@@ -169,21 +169,21 @@ Table 1 shows an overview of various studies in which the topic of response opti
 (slightly favor 7-point Likert)</td>
 </tr>
 <tr>
-<td><span class="citation" data-cites="flamer1983">Flamer (1983)</span></td>
+<td><span class="cite-ref" data-cite-id="flamer1983" data-cite-quote="" data-cite-page=""><span class="citation" data-cites="flamer1983">Flamer (1983)</span></span></td>
 <td>2- and 9-point Likert</td>
 <td></td>
 <td></td>
 <td>9-point Likert</td>
 </tr>
 <tr>
-<td><span class="citation" data-cites="matell1971">Matell &amp; Jacoby (1971)</span></td>
+<td><span class="cite-ref" data-cite-id="matell1971" data-cite-quote="" data-cite-page=""><span class="citation" data-cites="matell1971">Matell &amp; Jacoby (1971)</span></span></td>
 <td>2-point to 18-point Likert</td>
 <td></td>
 <td></td>
 <td>No difference</td>
 </tr>
 <tr>
-<td><span class="citation" data-cites="bendig1954">Bendig (1954)</span></td>
+<td><span class="cite-ref" data-cite-id="bendig1954" data-cite-quote="" data-cite-page=""><span class="citation" data-cites="bendig1954">Bendig (1954)</span></span></td>
 <td>2-, 3-, 5-, 7-, and 9-point Likert</td>
 <td></td>
 <td></td>
@@ -191,7 +191,7 @@ Table 1 shows an overview of various studies in which the topic of response opti
 (maybe 3-point or higher)</td>
 </tr>
 <tr>
-<td><span class="citation" data-cites="rhemtulla2012">Rhemtulla et al. (2012)</span></td>
+<td><span class="cite-ref" data-cite-id="rhemtulla2012" data-cite-quote="" data-cite-page=""><span class="citation" data-cites="rhemtulla2012">Rhemtulla et al. (2012)</span></span></td>
 <td>2- to 7-point Likert</td>
 <td></td>
 <td></td>
@@ -200,11 +200,11 @@ Table 1 shows an overview of various studies in which the topic of response opti
 </tbody>
 </table>
 
-There are also several review papers on the topic. Krosnick & Presser (2010) suggest that 7-point Likert scales are probably optimal. Lietz (2010) concludes a desirable Likert-scale consists of 5 to 8 response options. Similarly, Cox III (1980) recommends to use between 5 and 9 response options. Symonds (1924), in 1924, claims the optimum number is 7. Gehlbach & Brinkworth (2011) recommends using 5-points for unipolar items and 7-point for biopolar items.
+There are also several review papers on the topic. <span class="cite-ref" data-cite-id="krosnick2010" data-cite-quote="" data-cite-page="">Krosnick & Presser (2010)</span> suggest that 7-point Likert scales are probably optimal. <span class="cite-ref" data-cite-id="lietz2010" data-cite-quote="" data-cite-page="">Lietz (2010)</span> concludes a desirable Likert-scale consists of 5 to 8 response options. Similarly, <span class="cite-ref" data-cite-id="coxiii1980" data-cite-quote="" data-cite-page="">Cox III (1980)</span> recommends to use between 5 and 9 response options. <span class="cite-ref" data-cite-id="symonds1924" data-cite-quote="" data-cite-page="">Symonds (1924)</span>, in 1924, claims the optimum number is 7. <span class="cite-ref" data-cite-id="gehlbach2011" data-cite-quote="" data-cite-page="">Gehlbach & Brinkworth (2011)</span> recommends using 5-points for unipolar items and 7-point for biopolar items.
 
-There are also statistical arguments for why a particular number of response options is preferred. With more response options, the assumption of normality is more likely to be tenable. Some of the papers included in Table 1 (e.g., Rhemtulla et al. (2012)) are about this concern.
+There are also statistical arguments for why a particular number of response options is preferred. With more response options, the assumption of normality is more likely to be tenable. Some of the papers included in Table 1 (e.g., <span class="cite-ref" data-cite-id="rhemtulla2012" data-cite-quote="" data-cite-page="">Rhemtulla et al. (2012)</span>) are about this concern.
 
-Besides psychometric properties it may also be worth taking into account respondent preference. This involves ease of use of the scale and whether the response options allow for sufficient variation for respondents to express their view. Preston & Colman (2000) found that respondents found scales with 5, 7, and 10 points easy to use (compared to fewer options and a VAS) and that they preferred scales with more response options to allow them to express themselves (7 or more). Other studies also show that respondents favor more options (Cox et al., 2017).
+Besides psychometric properties it may also be worth taking into account respondent preference. This involves ease of use of the scale and whether the response options allow for sufficient variation for respondents to express their view. <span class="cite-ref" data-cite-id="preston2000" data-cite-quote="" data-cite-page="">Preston & Colman (2000)</span> found that respondents found scales with 5, 7, and 10 points easy to use (compared to fewer options and a VAS) and that they preferred scales with more response options to allow them to express themselves (7 or more). Other studies also show that respondents favor more options <span class="cite-ref" data-cite-id="cox2017" data-cite-quote="" data-cite-page="">(Cox et al., 2017)</span>.
 
 Note that if time is of the essence, fewer response options are preferred.
 
@@ -216,13 +216,13 @@ Another relevant factor is whether the scale is bipolar or unipolar. Bipolar sca
 
 The middle option of a scale can have an ambiguous meaning. Participants may use it to indicate a moderate standing on the issue (Rugg and Cantril, 1944), a lack of an opinion (Nadler, Weston, and Voyles, 2014), ambivalence (Klopfer and Madden, 1980; Schaeﬀer and Presser, 2003; Nadler, Weston, and Voyles, 2014), indifference (Schaeﬀer and Presser, 2003; Nadler, Weston, and Voyles, 2014), uncertainty (Baka, Figgou, and Triga, 2012; Nadler, Weston, and Voyles, 2014), confusion, or to signal context dependence (e.g., “it depends” or disputing the question, see Baka, Figgou, and Triga, 2012).
 
-The middle option may also be used for certain response styles, such as socially desirable responding (Sturgis, Roberts, and Smith, 2012) or satisficing (Krosnick, 1991), although there is not much research showing it actually leads to satisficing Wang & Krosnick (2020).
+The middle option may also be used for certain response styles, such as socially desirable responding (Sturgis, Roberts, and Smith, 2012) or satisficing (Krosnick, 1991), although there is not much research showing it actually leads to satisficing <span class="cite-ref" data-cite-id="wang2020" data-cite-quote="" data-cite-page="">Wang & Krosnick (2020)</span>.
 
 Af a middle alternative is explicitly oﬀered, the proportion endorsing it increases dramatically (e.g. Ayidiya & McClendon, 1990; Bishop, 1987; Bishop, Hippler, Schwarz, & Strack, 1988; Kalton, Collins, & Brook, 1978; Kalton, Roberts, & Holt, 1980; Rugg & Cantril, 1944).
 
 Some studies show that not including a middle option decreases validity and increases measurement error (O’Muircheartaigh, Krosnick, and Helic, 1999; Kahn, and Dhar, 2002)
 
-Recent study on this: Wang & Krosnick (2020)
+Recent study on this: <span class="cite-ref" data-cite-id="wang2020" data-cite-quote="" data-cite-page="">Wang & Krosnick (2020)</span>
 
 An alternative approach to this issue is to use branching. Respondents could first be asked whether they fall at the midpoint or on one side, followed by a question about their extremity on a side. This approach was found to be more reliable and valid than using a 7-point scale (Krosnick and Berent, 1993; Malhotra, Krosnick, and Thomas, 2009).
 
@@ -230,7 +230,7 @@ An alternative approach to this issue is to use branching. Respondents could fir
 
 ## Response Option Labeling
 
-There are several studies that show all response options should be labelled, rather than only labeling the end points (Krosnick & Berent, 1993; Weng, 2004).
+There are several studies that show all response options should be labelled, rather than only labeling the end points <span class="cite-ref" data-cite-id="weng2004" data-cite-quote="" data-cite-page="">(Krosnick & Berent, 1993; Weng, 2004)</span>.
 
 For an example of biopolar labels for a 2- to 11-point Likert scale, see Table 1.
 
@@ -250,11 +250,11 @@ For an example of biopolar labels for a 2- to 11-point Likert scale, see Table 1
 | Strongly agree |  |  | x | x | x | x | x | x | x | x |
 | Very strongly agree |  |  |  |  |  |  | x | x | x | x |
 
-Table 1: Likert response labels from Simms et al. (2019)
+Table 1: Likert response labels from <span class="cite-ref" data-cite-id="simms2019" data-cite-quote="" data-cite-page="">Simms et al. (2019)</span>
 
 </div>
 
-It is also recommended to avoid agree-disagree response labels because asking respondents to rate their level of agreement is a cognitively demanding task that increases respondent error and reduces responding effort (Gehlbach & Brinkworth, 2011).
+It is also recommended to avoid agree-disagree response labels because asking respondents to rate their level of agreement is a cognitively demanding task that increases respondent error and reduces responding effort <span class="cite-ref" data-cite-id="gehlbach2011" data-cite-quote="" data-cite-page="">(Gehlbach & Brinkworth, 2011)</span>.
 
 Possible labels, from CampusLabs:
 

@@ -83,8 +83,8 @@ model <- brm(
 
     SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).
     Chain 1: 
-    Chain 1: Gradient evaluation took 3.1e-05 seconds
-    Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.31 seconds.
+    Chain 1: Gradient evaluation took 2.5e-05 seconds
+    Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.25 seconds.
     Chain 1: Adjust your expectations accordingly!
     Chain 1: 
     Chain 1: 
@@ -101,15 +101,15 @@ model <- brm(
     Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
     Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
     Chain 1: 
-    Chain 1:  Elapsed Time: 0.049 seconds (Warm-up)
-    Chain 1:                0.046 seconds (Sampling)
-    Chain 1:                0.095 seconds (Total)
+    Chain 1:  Elapsed Time: 0.073 seconds (Warm-up)
+    Chain 1:                0.071 seconds (Sampling)
+    Chain 1:                0.144 seconds (Total)
     Chain 1: 
 
     SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 2).
     Chain 2: 
-    Chain 2: Gradient evaluation took 4e-06 seconds
-    Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.04 seconds.
+    Chain 2: Gradient evaluation took 7e-06 seconds
+    Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.07 seconds.
     Chain 2: Adjust your expectations accordingly!
     Chain 2: 
     Chain 2: 
@@ -126,15 +126,15 @@ model <- brm(
     Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
     Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
     Chain 2: 
-    Chain 2:  Elapsed Time: 0.052 seconds (Warm-up)
-    Chain 2:                0.05 seconds (Sampling)
-    Chain 2:                0.102 seconds (Total)
+    Chain 2:  Elapsed Time: 0.082 seconds (Warm-up)
+    Chain 2:                0.065 seconds (Sampling)
+    Chain 2:                0.147 seconds (Total)
     Chain 2: 
 
     SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 3).
     Chain 3: 
-    Chain 3: Gradient evaluation took 4e-06 seconds
-    Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.04 seconds.
+    Chain 3: Gradient evaluation took 7e-06 seconds
+    Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.07 seconds.
     Chain 3: Adjust your expectations accordingly!
     Chain 3: 
     Chain 3: 
@@ -151,15 +151,15 @@ model <- brm(
     Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
     Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
     Chain 3: 
-    Chain 3:  Elapsed Time: 0.051 seconds (Warm-up)
-    Chain 3:                0.045 seconds (Sampling)
-    Chain 3:                0.096 seconds (Total)
+    Chain 3:  Elapsed Time: 0.078 seconds (Warm-up)
+    Chain 3:                0.076 seconds (Sampling)
+    Chain 3:                0.154 seconds (Total)
     Chain 3: 
 
     SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 4).
     Chain 4: 
-    Chain 4: Gradient evaluation took 4e-06 seconds
-    Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.04 seconds.
+    Chain 4: Gradient evaluation took 7e-06 seconds
+    Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.07 seconds.
     Chain 4: Adjust your expectations accordingly!
     Chain 4: 
     Chain 4: 
@@ -176,9 +176,9 @@ model <- brm(
     Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
     Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
     Chain 4: 
-    Chain 4:  Elapsed Time: 0.05 seconds (Warm-up)
-    Chain 4:                0.049 seconds (Sampling)
-    Chain 4:                0.099 seconds (Total)
+    Chain 4:  Elapsed Time: 0.078 seconds (Warm-up)
+    Chain 4:                0.07 seconds (Sampling)
+    Chain 4:                0.148 seconds (Total)
     Chain 4: 
 
 ``` r
@@ -194,15 +194,15 @@ model
 
     Regression Coefficients:
                Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-    Intercept      0.00      0.06    -0.12     0.13 1.00     1345     2086
-    conditionB     0.10      0.09    -0.08     0.25 1.00     1643     2202
-    conditionC     0.20      0.09     0.02     0.37 1.00     1756     2316
-    conditionD     0.30      0.09     0.12     0.46 1.00     1842     2410
-    conditionE     0.39      0.09     0.22     0.56 1.00     1883     2521
+    Intercept      0.00      0.06    -0.12     0.12 1.00     1438     2234
+    conditionB     0.10      0.09    -0.08     0.27 1.00     1786     2513
+    conditionC     0.20      0.09     0.02     0.37 1.00     1854     2733
+    conditionD     0.30      0.09     0.13     0.47 1.00     1944     2811
+    conditionE     0.40      0.09     0.23     0.57 1.00     1831     2446
 
     Further Distributional Parameters:
           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-    sigma     1.00      0.02     0.96     1.04 1.00     3000     2490
+    sigma     1.00      0.02     0.96     1.04 1.00     2886     2801
 
     Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
     and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -220,16 +220,16 @@ contrasts
 ```
 
      contrast estimate lower.HPD upper.HPD
-     A - B     -0.0977    -0.258   0.07367
-     A - C     -0.1984    -0.361  -0.01598
-     A - D     -0.2967    -0.460  -0.12178
-     A - E     -0.3968    -0.560  -0.21833
-     B - C     -0.0997    -0.275   0.06663
-     B - D     -0.1997    -0.372  -0.02378
-     B - E     -0.2988    -0.468  -0.12897
-     C - D     -0.1003    -0.281   0.06865
-     C - E     -0.1982    -0.367  -0.00815
-     D - E     -0.0965    -0.263   0.07423
+     A - B      -0.101    -0.276    0.0704
+     A - C      -0.197    -0.367   -0.0246
+     A - D      -0.297    -0.479   -0.1368
+     A - E      -0.396    -0.568   -0.2239
+     B - C      -0.097    -0.268    0.0747
+     B - D      -0.199    -0.370   -0.0265
+     B - E      -0.298    -0.477   -0.1236
+     C - D      -0.101    -0.273    0.0726
+     C - E      -0.199    -0.377   -0.0220
+     D - E      -0.101    -0.273    0.0724
 
     Point estimate displayed: median 
     HPD interval probability: 0.95 
@@ -257,9 +257,9 @@ contrast_A_B
 
     Hypothesis Tests for class b:
                     Hypothesis Estimate Est.Error CI.Lower CI.Upper Evid.Ratio
-    1 (conditionB-Inter... > 0     0.09      0.14    -0.14     0.31       3.04
+    1 (conditionB-Inter... > 0      0.1      0.14    -0.13     0.32       3.18
       Post.Prob Star
-    1      0.75     
+    1      0.76     
     ---
     'CI': 90%-CI for one-sided and 95%-CI for two-sided hypotheses.
     '*': For one-sided hypotheses, the posterior probability exceeds 95%;
@@ -270,7 +270,7 @@ contrast_A_B
 # sum(contrast_A_B$samples$H1 > 0) / sum(contrast_A_B$samples$H1 < 0)
 ```
 
-This gives us an estimate of 0.1 (as expected) and an evidence ratio of 3.040404.
+This gives us an estimate of 0.1 (as expected) and an evidence ratio of 3.1797283.
 
 We can also test whether this contrast is equal to 0. This is a Bayes factor computed via the Savage-Dickey density ratio method. That is, the posterior density at a point of interest is divided by the prior density at the same point.
 
@@ -281,16 +281,16 @@ contrast_A_B_null
 
     Hypothesis Tests for class b:
                     Hypothesis Estimate Est.Error CI.Lower CI.Upper Evid.Ratio
-    1 (conditionB-Inter... = 0     0.09      0.14    -0.18     0.35       7.93
+    1 (conditionB-Inter... = 0      0.1      0.14    -0.18     0.36       7.18
       Post.Prob Star
-    1      0.89     
+    1      0.88     
     ---
     'CI': 90%-CI for one-sided and 95%-CI for two-sided hypotheses.
     '*': For one-sided hypotheses, the posterior probability exceeds 95%;
     for two-sided hypotheses, the value tested against lies outside the 95%-CI.
     Posterior probabilities of point hypotheses assume equal prior probabilities.
 
-This gives us a Bayes factor of 7.9262079.
+This gives us a Bayes factor of 7.1787155.
 
 Alternatively, we can compare another contrast, say, D vs. B. We can get this contrast by subtracting the coefficient for condition B from the coefficient for condition D.
 
@@ -301,7 +301,7 @@ contrast_D_B
 
     Hypothesis Tests for class b:
                     Hypothesis Estimate Est.Error CI.Lower CI.Upper Evid.Ratio
-    1 (conditionD-condi... > 0      0.2      0.09     0.06     0.35      75.92
+    1 (conditionD-condi... > 0      0.2      0.09     0.05     0.34      75.92
       Post.Prob Star
     1      0.99    *
     ---

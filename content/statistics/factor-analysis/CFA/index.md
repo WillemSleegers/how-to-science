@@ -55,7 +55,7 @@ This method is probably the most difficult of the methods because it requires be
 
 In the context of a factor analysis, this method is difficult to apply because there are usually many parameters to simulate. For example, you have to simulate the factor loadings, variances, and correlations between factors. If you also want to include potential sources of misfit, you have to additionally simulate different number of factors, cross loadings, and possibly correlated residuals. Compared to a simple mediation model, these are many more parameters to estimate. It doesn’t help that factor analyses are usually used to assess the validity of a new scale, meaning that relatively little is known about the exact parameters, making the simulation extra difficult—possibly too difficult.
 
-For instructions on how to conduct Monte Carlo power analyses, see Muthén and Muthén (2002) or Wang and Rhemtulla (2021).
+For instructions on how to conduct Monte Carlo power analyses, see Muthén and Muthén <span class="cite-ref" data-cite-id="muthen2002" data-cite-quote="" data-cite-page="">(2002)</span> or Wang and Rhemtulla <span class="cite-ref" data-cite-id="wang2021" data-cite-quote="" data-cite-page="">(2021)</span>.
 
 **Conclusion**: Too difficult for factor analysis purposes.
 
@@ -85,11 +85,11 @@ The RMSEA assumes that the specified model will only be an approximation to real
 
 The advantage of power calculations using the RMSEA is that the noncentrality parameter (λ) can be derived from the RMSEA. You therefore only need to set the RMSEA of the true model and an alternative model.
 
-MacCallum et al. (1996) suggested calculating the power to reject close fit (RMSEA ≤ .05) when in the population there is not close fit (RMSEA = .08). Alternatively, you can also flip this logic and calculate the power of no-close fit (RMSEA \> .05) while in the population there is a close fit (RMSEA = .01). Jak et al. (2021) recommend power analyses for both the test for close fit and the test for not-close fit.
+<span class="cite-ref" data-cite-id="maccallum1996" data-cite-quote="" data-cite-page="">MacCallum et al. (1996)</span> suggested calculating the power to reject close fit (RMSEA ≤ .05) when in the population there is not close fit (RMSEA = .08). Alternatively, you can also flip this logic and calculate the power of no-close fit (RMSEA \> .05) while in the population there is a close fit (RMSEA = .01). <span class="cite-ref" data-cite-id="jak2021" data-cite-quote="" data-cite-page="">Jak et al. (2021)</span> recommend power analyses for both the test for close fit and the test for not-close fit.
 
 An advantage of this method is that it is easy to use, but a disadvantage is that it is more difficult to interpret because there is no targeted misfit, so you don’t know exactly what kind of misspecifications you’re powering for. This does seem better suited for a factor analysis because it covers multiple kinds of misspecifications.
 
-Additionally, this method requires setting good RMSEA cut off points. Although there are some recommendations for which values to use, there is also work showing that the RMSEA cut off points should be determined dynamically, rather than fixed for each model (Wolf & McNeish, 2021). It seems necessary, therefore, to do some prior work to determine what a suitable cut off point could be and use this in subsequent power analyses.
+Additionally, this method requires setting good RMSEA cut off points. Although there are some recommendations for which values to use, there is also work showing that the RMSEA cut off points should be determined dynamically, rather than fixed for each model <span class="cite-ref" data-cite-id="wolf2021" data-cite-quote="" data-cite-page="">(Wolf & McNeish, 2021)</span>. It seems necessary, therefore, to do some prior work to determine what a suitable cut off point could be and use this in subsequent power analyses.
 
 **Conclusion**: Seems like the best method for determining power for a factor analysis.
 
@@ -113,9 +113,9 @@ There are several tools to run power analyses for CFAs.
 
 ## Number of indicators
 
-Some argue that when it comes to the number of indicators, more is better Marsh et al. (1998).
+Some argue that when it comes to the number of indicators, more is better <span class="cite-ref" data-cite-id="marsh1998" data-cite-quote="" data-cite-page="">Marsh et al. (1998)</span>.
 
-Others say that more is not always better (Koran, 2020). Koran (2020), using a simulation study, showed that:
+Others say that more is not always better <span class="cite-ref" data-cite-id="koran2020" data-cite-quote="" data-cite-page="">(Koran, 2020)</span>. <span class="cite-ref" data-cite-id="koran2020" data-cite-quote="" data-cite-page="">Koran (2020)</span>, using a simulation study, showed that:
 
 > Models with relatively weak loadings tended to have a larger desirable number of indicators per factor than models with stronger loadings based on considerations of sample size, solution propriety, bias, and power. Models with few factors also tended to have a larger desirable number of indicators per factor than models with more factors. Models with many factors and strong indicators reached a minimum required sample size with as few as three indicators per factor.
 
@@ -171,11 +171,11 @@ Although the number of available ﬁt indices is relatively large, there is only
 
 Despite its intuitive appeal, the test has a couple of drawbacks suggesting that its signiﬁcance level should not be interpreted too strictly. First, it appears to be highly sensitive to sample size. For large samples, the null hypothesis is easily rejected, even for negligable discrepancies (Bentler, 1990). Second, violations of assumptions might inﬂate the values of the test statistic (Kaplan, 2009). Accordingly, Satorra and Bentler (1988, 1994) proposed a scaled version of the test statistic, in which the regular χ 2 is divided by a kurtosis correction factor to better approximate a chi-square under non-normality.
 
-Probably the most common way to assess model fit is to rely on cut-off points for several fit indices. However, these cut off points make no sense. The reason is that the suitability of a particular model fit index depends on a multitude of factors, including the number of items per factor, factor loading size, type of misspecification, model type, and violations of multivariate normality (Greiff & Heene, 2017). It therefore makes no sense to use one cut-off point for all models.
+Probably the most common way to assess model fit is to rely on cut-off points for several fit indices. However, these cut off points make no sense. The reason is that the suitability of a particular model fit index depends on a multitude of factors, including the number of items per factor, factor loading size, type of misspecification, model type, and violations of multivariate normality <span class="cite-ref" data-cite-id="greiff2017" data-cite-quote="" data-cite-page="">(Greiff & Heene, 2017)</span>. It therefore makes no sense to use one cut-off point for all models.
 
 Instead, it is recommend to do the following:
 
-Step 1: Perform the chi squared test and see whether it indicates a significant misfit. Although it appears that the norm is to ignore a significant chi squared test, it seems that is considered to be a mistake, leading to many misfitted models to not be rejected McIntosh (2007).
+Step 1: Perform the chi squared test and see whether it indicates a significant misfit. Although it appears that the norm is to ignore a significant chi squared test, it seems that is considered to be a mistake, leading to many misfitted models to not be rejected <span class="cite-ref" data-cite-id="barrett2007" data-cite-quote="" data-cite-page="">McIntosh (2007)</span>.
 
 Step 2: In the case of a significant chi squared test, inspect potential sources of misfit.
 
@@ -207,7 +207,7 @@ Reliability increases the closer the value gets to 1.00, with an acceptability t
 
 ## Recommended Reading
 
-- Dynamic Fit Index Cutoffs for Confirmatory Factor Analysis Models by McNeish & Wolf (2021)
+- Dynamic Fit Index Cutoffs for Confirmatory Factor Analysis Models by <span class="cite-ref" data-cite-id="mcneish2021" data-cite-quote="" data-cite-page="">McNeish & Wolf (2021)</span>
 
 ``` r
 # Load packages
@@ -242,7 +242,7 @@ library(dynamic)
 
 The Rosenberg self-esteem scale (Rosenberg, 1989) is a unidimensional scale to assess global self-esteem. It is one of the most commonly used scales in psychology and could therefore serve as a nice illustration of how to assess whether the data fits a single factor model.
 
-It should be noted, however, that apparently there is some controversy whether the scale is actually unifactorial (Donnellan et al., 2016).
+It should be noted, however, that apparently there is some controversy whether the scale is actually unifactorial <span class="cite-ref" data-cite-id="donnellan2016" data-cite-quote="" data-cite-page="">(Donnellan et al., 2016)</span>.
 
 ### The Data
 
@@ -265,7 +265,7 @@ items <- read_csv("RSECSV.csv")
 items <- mutate(items, across(everything(), ~ na_if(.x, -9999)))
 ```
 
-The data was taken from Donnellan et al. (2016), who conducted a study to assess the factorial structure of the RSE. The data consists of `nrow(items)` participants, who were college students at a public university in the Southwestern United States.
+The data was taken from <span class="cite-ref" data-cite-id="donnellan2016" data-cite-quote="" data-cite-page="">Donnellan et al. (2016)</span>, who conducted a study to assess the factorial structure of the RSE. The data consists of `nrow(items)` participants, who were college students at a public university in the Southwestern United States.
 
 ### The Model
 

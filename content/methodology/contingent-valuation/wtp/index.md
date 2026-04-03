@@ -19,7 +19,7 @@ toc: true
 
 The contingent valuation method (CVM) is a stated preference method to obtain individuals’ valuation of a particular good.
 
-The summary below is mainly taken from Boardman et al. (2018).
+The summary below is mainly taken from <span class="cite-ref" data-cite-id="boardman2018" data-cite-quote="" data-cite-page="">Boardman et al. (2018)</span>.
 
 ## Different methods
 

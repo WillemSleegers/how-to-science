@@ -23,7 +23,7 @@ There are different types of checks to detect inattentive participants: attentio
 
 ## Attention checks
 
-Attention checks are defined as simple ways to determine who is paying attention to your study instructions, and the amount of effort participants devote to reading questions before answering them (Oppenheimer et al., 2009).
+Attention checks are defined as simple ways to determine who is paying attention to your study instructions, and the amount of effort participants devote to reading questions before answering them <span class="cite-ref" data-cite-id="oppenheimer2009" data-cite-quote="" data-cite-page="">(Oppenheimer et al., 2009)</span>.
 
 ### Instructional Manipulation Checks (IMCs)
 
@@ -39,15 +39,15 @@ IMCs can be used in different formats (e.g., multiple-choice, text-based). Each 
 
 ##### Multiple-choice
 
-1.  The color test you are about to take part in is very simple, when asked for your favorite color you must select ‘Green’. This is an attention check. Based on the text you read above, what color have you been asked to enter? \[Red, Blue, Green, Organce, Brown\] (*Prolific’s Attention and Comprehension Check Policy*, 2024)
+1.  The color test you are about to take part in is very simple, when asked for your favorite color you must select ‘Green’. This is an attention check. Based on the text you read above, what color have you been asked to enter? \[Red, Blue, Green, Organce, Brown\] <span class="cite-ref" data-cite-id="prolific2024" data-cite-quote="" data-cite-page="">(*Prolific’s Attention and Comprehension Check Policy*, 2024)</span>
 
 2.  For this question, please select ‘Somewhat Agree’ as your answer. \[Strongly disagree, Disagree, Somewhat disagree, Somewhat agree, Agree, Strongly agree\]
 
 3.  This is a simple question. You don’t need to be a wine connoisseur or avid beer drinker to answer. When asked for your favorite drink, you need to select carrot juice. Based on the text above, what is your favorite drink? \[Wine; Beer; Vodka; Whiskey; Carrot juice; Other\]
 
-4.  Help us keep track of who is paying attention. Please select “Somewhat disagree” from the options below. \[Multiple choice: Strongly agree - Strongly disagree\] (Stagnaro et al., 2024)
+4.  Help us keep track of who is paying attention. Please select “Somewhat disagree” from the options below. \[Multiple choice: Strongly agree - Strongly disagree\] <span class="cite-ref" data-cite-id="stagnaro2024" data-cite-quote="" data-cite-page="">(Stagnaro et al., 2024)</span>
 
-5.  Please ignore this question and do not answer. \[choose all that apply: Strongly agree Strongly disagree\] (Stagnaro et al., 2024)
+5.  Please ignore this question and do not answer. \[choose all that apply: Strongly agree Strongly disagree\] <span class="cite-ref" data-cite-id="stagnaro2024" data-cite-quote="" data-cite-page="">(Stagnaro et al., 2024)</span>
 
 ##### Text-based
 
@@ -55,9 +55,9 @@ IMCs can be used in different formats (e.g., multiple-choice, text-based). Each 
 
 2.  Please enter the number ‘5’ in the box below.
 
-3.  The following is to verify that you are a real person. Please enter the word “purple” in the box below. (Geisen, 2022)
+3.  The following is to verify that you are a real person. Please enter the word “purple” in the box below. <span class="cite-ref" data-cite-id="geisen2022" data-cite-quote="" data-cite-page="">(Geisen, 2022)</span>
 
-4.  Please write “twenty-five” using numbers. (Stagnaro et al., 2024)
+4.  Please write “twenty-five” using numbers. <span class="cite-ref" data-cite-id="stagnaro2024" data-cite-quote="" data-cite-page="">(Stagnaro et al., 2024)</span>
 
 ##### Slider
 
@@ -69,19 +69,19 @@ Nonsensical item checks embed a nonsensical item within a survey, to which only 
 
 #### Examples
 
-1.  I swim across the Atlanic Ocean to get to work every day. \[Strongly disagree, Disagree, Agree, Strongly agree\] (*Prolific’s Attention and Comprehension Check Policy*, 2024)
+1.  I swim across the Atlanic Ocean to get to work every day. \[Strongly disagree, Disagree, Agree, Strongly agree\] <span class="cite-ref" data-cite-id="prolific2024" data-cite-quote="" data-cite-page="">(*Prolific’s Attention and Comprehension Check Policy*, 2024)</span>
 
 2.  I work fourteen months in a year. \[Yes, this is true of me; No, this is not true of me\]
 
 3.  I have never used a computer. \[Yes, this is true of me; No, this is not true of me\]
 
-4.  What type of social media accounts do you use (if any)? Please answer honestly. \[do they select the option “TisFask” which does not exist nor sound like any social media option\] (Stagnaro et al., 2024)
+4.  What type of social media accounts do you use (if any)? Please answer honestly. \[do they select the option “TisFask” which does not exist nor sound like any social media option\] <span class="cite-ref" data-cite-id="stagnaro2024" data-cite-quote="" data-cite-page="">(Stagnaro et al., 2024)</span>
 
-5.  While watching the television, have you ever had a fatal heart attack? \[6-point Likert ranging from “Never” to “Often”\] (Paolacci et al., 2010)
+5.  While watching the television, have you ever had a fatal heart attack? \[6-point Likert ranging from “Never” to “Often”\] <span class="cite-ref" data-cite-id="paolacci2010" data-cite-quote="" data-cite-page="">(Paolacci et al., 2010)</span>
 
-6.  Are you licensed to operate a class SSGN submarine? \[Yes/No\] (Kennedy, 2022)
+6.  Are you licensed to operate a class SSGN submarine? \[Yes/No\] <span class="cite-ref" data-cite-id="kennedy2022" data-cite-quote="" data-cite-page="">(Kennedy, 2022)</span>
 
-7.  Which of the following did you do in the past week? Check all that apply. \[Purchased a private jet; Climbed a peak in the Karakoram Mountains; Watched TV; Learned to cook halusky; Played jai alai; Read a book; None of the above\] (Kennedy, 2022)
+7.  Which of the following did you do in the past week? Check all that apply. \[Purchased a private jet; Climbed a peak in the Karakoram Mountains; Watched TV; Learned to cook halusky; Played jai alai; Read a book; None of the above\] <span class="cite-ref" data-cite-id="kennedy2022" data-cite-quote="" data-cite-page="">(Kennedy, 2022)</span>
 
 ### Factual or logical questions
 
@@ -95,7 +95,7 @@ Factual or logical questions consist of asking a question with a correct answer 
 
 3.  If yesterday was Monday, what is today? \[Text box\]
 
-4.  Which of these is a vegetable? \[Egg, Salmon, Broccoli, Cheeseburger, Pizza, Milk\] (Geisen, 2022)
+4.  Which of these is a vegetable? \[Egg, Salmon, Broccoli, Cheeseburger, Pizza, Milk\] <span class="cite-ref" data-cite-id="geisen2022" data-cite-quote="" data-cite-page="">(Geisen, 2022)</span>
 
 5.  Which of the following is a fruit? \[Cow, Elephant, Chair, Banana\].
 
@@ -119,7 +119,7 @@ Commitment checks can be used to measure whether participants are motivated to a
 
 ### Examples
 
-1.  We care about the quality of our survey data. For us to get the most accurate measures of your opinions, it is important that you provide thoughtful answers to each question in this survey. Do you commit to providing thoughtful answers to the questions in this survey? \[I can’t promise either way; Yes, I will; No, I will not\] (Geisen, 2022)
+1.  We care about the quality of our survey data. For us to get the most accurate measures of your opinions, it is important that you provide thoughtful answers to each question in this survey. Do you commit to providing thoughtful answers to the questions in this survey? \[I can’t promise either way; Yes, I will; No, I will not\] <span class="cite-ref" data-cite-id="geisen2022" data-cite-quote="" data-cite-page="">(Geisen, 2022)</span>
 
 <div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0" line-spacing="2">
 

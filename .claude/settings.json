@@ -4,7 +4,9 @@
       "Bash(curl -s http://localhost:23119/api/users/0/items*)",
       "Bash(curl -s \"http://localhost:23119/api/users/0/items?format=keys&limit=50&tag=*\")",
       "Bash(pdftotext * assets/papers/fulltext/*)",
-      "WebSearch"
+      "WebSearch",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
     ]
   }
 }
