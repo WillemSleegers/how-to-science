@@ -79,6 +79,11 @@ const components: Components = {
     <h3 id={slugify(nodeText(children))} {...props}>{children}</h3>
   ),
   pre: ({ children }) => <CodeBlock>{children}</CodeBlock>,
+  table: ({ node: _node, children, ...props }) => (
+    <div className="overflow-x-auto">
+      <table {...props}>{children}</table>
+    </div>
+  ),
 }
 
 export function MarkdownContent({ content }: MarkdownContentProps) {

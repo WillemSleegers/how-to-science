@@ -54,6 +54,16 @@ type: reference
 ... (repeat for each key claim)
 ```
 
+### Quote verification (mandatory)
+
+Every **Quote** field must be a verbatim excerpt from the fulltext file. Never paraphrase or reconstruct from memory.
+
+Before including a quote, verify it exists in the fulltext using the Grep tool. Because pdftotext sometimes inserts line breaks mid-sentence, search for a distinctive substring of ~5–8 words rather than the full sentence:
+
+- Search for a short, distinctive phrase from the intended quote
+- If found, read the surrounding lines to get the exact verbatim text including any line breaks, then reconstruct the full continuous quote
+- If not found after trying alternative substrings, **omit the quote entirely** — do not include a Quote field for that claim
+
 ### Notes
 
 - Citation keys are used as filenames throughout (both `.txt` and `.md`)

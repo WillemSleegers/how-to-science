@@ -16,6 +16,7 @@
       items:
         - path: methodology/survey-design/overview
         - path: methodology/survey-design/response-options
+        - path: methodology/survey-design/response-order
         - path: methodology/survey-design/clarification-features
         - path: methodology/survey-design/data-quality-checks
     - title: Scale Development

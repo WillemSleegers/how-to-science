@@ -251,7 +251,7 @@
 .prose h2,
 .prose h3,
 .prose h4 {
-  scroll-margin-top: calc(2rem);
+  scroll-margin-top: calc(3.5rem + 1rem);
 }
 
 /* Inset right sidebar to match content card spacing */

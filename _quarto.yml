@@ -6,6 +6,7 @@ csl: assets/bib/apa.csl
 
 filters:
   - cite-quote
+  - assets/filters/cite-wrap.lua
 
 format:
   gfm:

@@ -1,0 +1,53 @@
+---
+title: "Response Order"
+order: 2
+toc: true
+---
+
+When presenting a Likert-type scale, you must choose which end of the scale to present first. On a horizontal scale, should "Strongly agree" appear on the left or "Strongly disagree"? On a vertical scale, which appears at the top?
+
+## Mechanisms
+
+Two mechanisms have been proposed to explain why response order can affect answers.
+
+**Satisficing** {{< cite krosnick1991 "When response alternatives are presented to respondents visually, either on a showcard or in a self-administered questionnaire, weak satisficing is likely to bias respondents toward selecting response alternatives presented early in a list." 216 >}} — when questions are difficult or motivation is low, respondents may select the first acceptable option without fully evaluating the rest. In visual surveys this biases responses toward earlier options; in telephone surveys toward later ones, since the last option heard remains most accessible in memory.
+
+**Anchoring-and-adjustment** {{< cite yan2015 "Thus, we conclude that in our study, the observed scale-direction effects are largely attributable to respondents' use of the anchoring-and-adjustment heuristic." 162 >}} — respondents anchor on the first option and adjust insufficiently as they work through the remaining alternatives, biasing responses toward the starting point of the scale.
+
+## Studies
+
+| Source | Topic | Scale | Mode | N | Sample | Main finding |
+|---|---|---|---|---|---|---|
+| @friedman1994 | Student attitudes toward college | 5-pt agree–disagree, fully labeled, horizontal | PAPI | 208 | US undergrads | Primacy effect: strongly-agree-first yields more agreement on favorably worded items |
+| @weng2000 | Personal distress | 5-pt fully labeled, within-subjects | PAPI | 858 | Taiwanese students | No substantial response order effects on means or psychometric properties |
+| @rammstedt2007 | Personality (BFI-10) | 7-pt endpoint-labeled | PAPI | 315 | German students | Scale direction alone has no effect; number–label directional mismatch does affect responses |
+| @yan2015 | Country development ratings | 11-pt endpoint-labeled unipolar | CATI | 498 | US adults (RDD) | Primacy effect for high-rated countries; consistent with anchoring-and-adjustment |
+| @malhotra2008 | Various attitudes | Multi-item, horizontal | CAWI | 397 | US adults (KnowledgePanel) | Primacy effect strongest for fast, low-education respondents |
+| @christian2009 | Various | Various, horizontal and vertical | CAWI | ~3,156 | US undergrads | Response order effects mainly for vertical scales; nonlinear layout creates position bias |
+| @hohne2015 | Various attitudes | 5-pt agree–disagree, horizontal and vertical | PAPI (+ eye-tracking) | 84 | German participants (GESIS) | Response order effects larger for vertical than horizontal; eye-tracking confirms skipping of terminal categories |
+| @krebs2010 | Job importance | 8-pt endpoint-labeled | PAPI | 436 | German students | Primacy effect: positive-first yields higher importance ratings; factor structure unaffected |
+| @krebs2018 | Job characteristics | 7-pt endpoint-labeled unipolar | PAPI | — | German and Israeli students | Primacy effect present in both left-to-right and right-to-left reading-direction groups |
+| @garbarski2015 | Self-rated health | 5-pt fully labeled (excellent–poor) | CAWI | 2,696 | US adults (KnowledgePanel) | Primacy effect: excellent-first order yields better self-rated health |
+| @garbarski2016 (Study 1) | Self-rated health | 5-pt fully labeled (excellent–poor) | CAWI | 1,347 | US adults (KnowledgePanel, TESS) | Primacy effect: excellent-first yields better SRH |
+| @garbarski2016 (Study 2) | Self-rated health | 5-pt fully labeled (excellent–poor) | CAWI | 499 | US adults (KnowledgePanel, RTI) | Primacy effect replicated |
+| @keusch2018 | Brand attribute ratings | 6-pt endpoint-labeled unipolar | CAWI | 502 | Austrian non-probability panel | Primacy effect for all respondents; stronger for speeders; consistent with satisficing and anchoring-and-adjustment |
+| @hohne2018 | Various attitudes | 5-pt agree–disagree and item-specific | PAPI | 930 | German students | Scale direction effects found for agree–disagree but not item-specific question formats |
+| @liu2017 | Various attitudes (ANES) | Multi-item attitude scale | CAWI, CAPI | — | US adults (ANES 2012) | Scale direction increases acquiescence in web mode but not face-to-face |
+| @yan2018 (ANES 2008) | Various political attitudes | Multi-item, various formats | CAPI | 2,322 | US adults (ANES 2008) | Scale direction effects stronger for non-attitudinal items and longer scales |
+| @yan2018 (ANES 2012) | Various political attitudes | Multi-item, various formats | CAWI, CAPI | 5,914 | US adults (ANES 2012) | Effects stronger for earlier items in battery; self-administered shows more effects than CAPI |
+| @terentev2019 | Course satisfaction and learning | 5-pt vertical | CAWI | ~22,910 | MOOC learners | Primacy effect in vertical item-by-item format (especially low-education); no effect in grid format |
+| @smyth2019 | Satisfaction | 4-pt fully labeled, horizontal | CAWI, Mail | — | US adults, multiple surveys | Positive-first ordering yields consistently higher satisfaction ratings |
+| @garbarski2019 | Self-rated health | 5-pt fully labeled (excellent–poor) | CAWI | 2,945 | US adults (MTurk) | Primacy effect robust across vertical, horizontal, and banked scale orientations |
+| @krebs2021 | Various | Endpoint-labeled, vertical | CAWI | 3,401 | German non-probability access panel | Minimal scale direction effects; device type (PC vs. smartphone) does not moderate effects |
+| @stefkovics2022 | Political attitudes, life satisfaction | 5-pt agree–disagree, 11-pt numeric, 6-pt semantic differential | CAPI, CATI, CAWI | — | Hungarian adults | Few effects in interviewer-administered modes; scale direction effects emerge for numeric scale in online mode |
+| @wohner2024 | Life satisfaction | 11-pt numeric (0–10) | CAWI | 3,138 | Swiss adults | Descending scale yields ~0.7 pts lower satisfaction; ascending scale shows higher construct validity |
+| @robie2022 | Personality (HEXACO) | 5-pt fully labeled | PAPI | 1,198 | Canadian students | No meaningful response order effects for incremental or decremental orderings |
+
+: Overview of empirical studies on response order effects. {#tbl-response-order}
+
+For theoretical accounts of the mechanisms underlying these effects, see @krosnick1991 (satisficing) and @schwarz1992 (cognitive elaboration model). @knauper1999 is a meta-analysis of 14 Schuman & Presser telephone experiments showing that respondents aged 65+ are approximately twice as susceptible to response order effects as younger respondents, independent of education.
+
+## Summary
+In self-administered surveys—whether CAWI or PAPI—a primacy effect is reliably observed: the first response option in a sequence attracts disproportionate endorsement. For agree–disagree scales, placing "Strongly agree" first inflates agreement relative to placing "Strongly disagree" first. In telephone (CATI) surveys, recency effects are more common. The effect is amplified for speeders and less motivated respondents [@keusch2018; @malhotra2008], older respondents (65+) [@knauper1999], non-attitudinal items, and longer scales [@yan2018]. Switching to **item-specific response options** substantially reduces susceptibility to scale direction effects [@hohne2018] and also improves reliability and validity [@saris2010a; @dykema2022]. When agree–disagree scales are unavoidable, a negative-to-positive ordering (Disagree→Agree) is recommended for self-administered surveys to reduce the risk of inflated agreement [@yonniechyung2018; @wohner2024].
+
+## References
