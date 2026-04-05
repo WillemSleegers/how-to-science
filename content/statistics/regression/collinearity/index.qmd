@@ -3,4 +3,16 @@ title: "Collinearity"
 toc: true
 ---
 
-Collinearity isn't a problem. If anything, it's likely to be [misunderstood](https://janhove.github.io/posts/2019-09-11-collinearity/ "Collinearity isn’t a disease that needs curing").
+Collinearity refers to the situation where two or more predictors in a regression model are correlated with each other. It becomes a topic of concern when predictors are substantially correlated, because it can be difficult to separate their individual contributions to the outcome.
+
+## Why people think it's a problem
+
+When predictors are correlated, their individual coefficient estimates tend to have wide standard errors and may not be statistically significant, even when the model as a whole fits well. This can produce a seemingly paradoxical result: the overall F-test is significant, but none of the individual predictors are. This isn't actually a paradox — the overall test asks whether the predictors jointly explain variance, while the individual tests ask whether each predictor explains variance *conditional on the others*. When predictors are correlated, the conditional question is harder to answer, and the model reflects that with wider standard errors.
+
+The common reaction to this situation is to try to "fix" the collinearity — by dropping one of the correlated predictors, combining them, or applying techniques like ridge regression. The goal is usually to recover significant individual estimates.
+
+## Model building is the real issue
+
+The problem with these fixes is that they address a symptom rather than a question. Dropping a predictor doesn't give you a better estimate of its effect — it gives you a different estimate of a different quantity. The underlying issue is [not statistical but conceptual](https://janhove.github.io/posts/2019-09-11-collinearity/ "Collinearity isn't a disease that needs curing"): what is the model actually supposed to answer?
+
+For hypothesis testing, the goal should be to build a model that correctly represents the process you're studying, based on theory and prior knowledge. That means deciding what to include based on what you believe matters, not on what makes coefficients significant or on running a single model with every available variable and seeing what sticks. If two predictors are correlated and you include both because theory says both matter, that's the right model — even if their individual estimates are imprecise. If theory says only one of them is the relevant predictor, include that one. The answer to collinearity is clearer thinking about the research question, not post-hoc adjustments to the model.
