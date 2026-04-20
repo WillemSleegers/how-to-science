@@ -1,5 +1,6 @@
 ---
 title: The Optimism–Pessimism Short Scale–2
+description: Brief 8-item measure of dispositional optimism and pessimism
 execute:
   echo: false
 knitr:

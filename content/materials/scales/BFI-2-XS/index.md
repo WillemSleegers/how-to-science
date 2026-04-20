@@ -1,5 +1,6 @@
 ---
 title: BFI-2-XS
+description: Ultra-brief 15-item measure of the Big Five personality traits
 execute:
   echo: false
 knitr:

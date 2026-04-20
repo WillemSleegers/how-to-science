@@ -14,47 +14,40 @@
   items:
     - title: Survey Design
       items:
-        - path: methodology/survey-design/overview
         - path: methodology/survey-design/response-options
         - path: methodology/survey-design/response-order
         - path: methodology/survey-design/clarification-features
         - path: methodology/survey-design/data-quality-checks
     - title: Scale Development
       items:
-        - path: methodology/scale-development/overview
         - path: methodology/scale-development/item-development
         - path: methodology/scale-development/reliability-validity
     - title: Contingent Valuation
       items:
-        - path: methodology/contingent-valuation/overview
         - path: methodology/contingent-valuation/wtp
     - title: AI in Research
       items:
-        - path: methodology/ai/overview
         - path: methodology/ai/synthetic-respondents
 
 - group: Data Analysis
   items:
     - title: Regression
       items:
-        - path: statistics/regression/overview
         - path: statistics/regression/collinearity
         - path: statistics/regression/adjusted-means
     - title: Factor Analysis
       items:
-        - path: statistics/factor-analysis/overview
         - path: statistics/factor-analysis/efa
         - path: statistics/factor-analysis/cfa
     - title: Representativeness
       items:
-        - path: statistics/representativeness/overview
         - path: statistics/representativeness/non-probability-sampling
+        - path: statistics/representativeness/survey-estimation
 
 - group: Materials
   items:
     - title: Scales
       items:
-        - path: materials/scales/overview
         - path: materials/scales/AAS
         - path: materials/scales/BFI-2-XS
         - path: materials/scales/DOSPERT

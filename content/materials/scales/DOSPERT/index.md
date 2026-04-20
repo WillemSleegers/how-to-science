@@ -1,5 +1,6 @@
 ---
 title: Domain-Specific Risk-Taking (DOSPERT) Scale
+description: Risk-taking tendencies across financial, health, social, and other domains
 execute:
   echo: false
 knitr:

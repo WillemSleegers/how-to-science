@@ -1,5 +1,6 @@
 ---
 title: WTP
+description: "Methods and pitfalls for eliciting willingness-to-pay using contingent valuation surveys"
 order: 2
 toc: true
 ---

@@ -1,5 +1,6 @@
 ---
 title: Animal Attitude Scale
+description: Measures attitudes toward the use and treatment of animals
 execute:
   echo: false
 knitr:

@@ -10,6 +10,7 @@ const NAV_FILE = resolve(process.cwd(), "_nav.yml")
 export interface NavNode {
   title: string
   slug?: string // present → clickable page link
+  description?: string
   children: NavNode[]
 }
 
@@ -85,7 +86,11 @@ function buildNode(item: ConfigItem): NavNode | null {
     const title = item.text ?? item.title ?? titleFromPath(item.path)
     // Normalise to lowercase so slugs match Astro's content entry IDs
     const slug = item.path.toLowerCase()
-    return { title, slug, children }
+    const file = resolveFile(item.path)
+    const description = file
+      ? (() => { const fm = readFrontmatter(file); return typeof fm.description === "string" ? fm.description : undefined })()
+      : undefined
+    return { title, slug, description, children }
   }
 
   if (item.title) {

@@ -1,5 +1,6 @@
 ---
 title: New Ecological Paradigm Scale
+description: Environmental attitudes about humanity's relationship with nature
 execute:
   echo: false
 knitr:

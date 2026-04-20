@@ -1,5 +1,6 @@
 ---
 title: Response Options
+description: "How to choose the number, polarity, and labeling of scale response options"
 order: 1
 toc: true
 ---

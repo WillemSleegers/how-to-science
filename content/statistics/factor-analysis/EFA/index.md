@@ -1,5 +1,6 @@
 ---
 title: EFA
+description: "Step-by-step guide to exploratory factor analysis: sample requirements, extraction, and rotation"
 order: 1
 toc: true
 prefer-html: true

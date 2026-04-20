@@ -1,5 +1,6 @@
 ---
 title: Data quality checks
+description: "Techniques for detecting inattentive respondents using attention, comprehension, and commitment checks"
 order: 3
 toc: true
 ---

@@ -20,6 +20,7 @@ const highlighterPromise = g.__shikiHighlighter
 
 interface MarkdownContentProps {
   content: string
+  slug: string
 }
 
 function nodeText(children: React.ReactNode): string {
@@ -92,10 +93,20 @@ const components: Components = {
   ),
 }
 
-export function MarkdownContent({ content }: MarkdownContentProps) {
+export function MarkdownContent({ content, slug }: MarkdownContentProps) {
+  const base = import.meta.env.BASE_URL.replace(/\/$/, "")
+  const pageComponents: Components = {
+    ...components,
+    img: ({ src, alt }) => {
+      const resolved = src && !src.startsWith("http") && !src.startsWith("/")
+        ? `${base}/${slug}/${src}`
+        : src
+      return <img src={resolved} alt={alt ?? ""} />
+    },
+  }
   return (
     <>
-      <ReactMarkdown components={components} remarkPlugins={[remarkGfm, remarkMath]} rehypePlugins={[rehypeRaw, rehypeKatex]}>
+      <ReactMarkdown components={pageComponents} remarkPlugins={[remarkGfm, remarkMath]} rehypePlugins={[rehypeRaw, rehypeKatex]}>
         {preprocessCallouts(content)}
       </ReactMarkdown>
       <CitationDialog />

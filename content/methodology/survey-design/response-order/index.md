@@ -1,5 +1,6 @@
 ---
 title: Response Order
+description: "How the left-to-right or top-to-bottom ordering of scale options affects survey responses"
 order: 2
 toc: true
 ---

@@ -1,5 +1,6 @@
 ---
 title: Oxford Utilitarianism Scale
+description: Measures impartial beneficence and instrumental harm utilitarian tendencies
 execute:
   echo: false
 knitr:

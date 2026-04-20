@@ -2,6 +2,8 @@
 
 ## General
 
+**Debugging:** Ask targeted questions to narrow down the source of the problem before inspecting code. Don't treat all possible causes as equally likely — reason about what's most probable first.
+
 Work within the permissions already granted in `.claude/settings.json`. If a command doesn't match an allowed pattern, first try to restructure the approach to fit — e.g. make individual parallel tool calls instead of shell loops. Only ask for additional permissions if the task genuinely cannot be accomplished within existing ones.
 
 ## Project Overview
@@ -11,7 +13,7 @@ This is a documentation/teaching site built on **Astro 6** with **Quarto** for c
 **Key directories:**
 - `content/` — all page content, organized by topic (e.g. `content/statistics/regression/`)
 - `src/` — Astro app code (components, layouts, routing)
-- `assets/` — bibliography, paper fulltexts, paper summary files
+- `assets/` — bibliography, paper summary files
 - `public/` — static files and Quarto-generated figures
 - `scripts/render.mjs` — renders `.qmd` → `.md`
 
@@ -141,9 +143,9 @@ curl -s "http://localhost:23119/api/users/0/items?format=keys&limit=50&tag=<tag>
    curl -s http://localhost:23119/api/users/0/items/<attachment-key>
    ```
 
-4. **Convert PDF to text** using `pdftotext`, save to `assets/papers/fulltext/<citationkey>.txt`
+4. **Read the PDF** using the Read tool on `data.path`, then write the summary file
 
-5. **Write summary file** — Create `assets/papers/<citationkey>.md` with frontmatter, a summary, and key claims/quotes pulled from the fulltext
+5. **Write summary file** — Create `assets/papers/<citationkey>.md` with frontmatter, a summary, and key claims/quotes pulled from the PDF
 
 ### Summary file format (`assets/papers/<citationkey>.md`)
 
@@ -165,15 +167,11 @@ type: reference
 
 ### Quote verification (mandatory)
 
-Every **Quote** field must be a verbatim excerpt from the fulltext file. Never paraphrase or reconstruct from memory.
+Every **Quote** field must be a verbatim excerpt from the PDF as read by the Read tool. Never paraphrase or reconstruct from memory.
 
-Before including a quote, verify it exists in the fulltext using the Grep tool. Because pdftotext sometimes inserts line breaks mid-sentence, search for a distinctive substring of ~5–8 words rather than the full sentence:
-
-- Search for a short, distinctive phrase from the intended quote
-- If found, read the surrounding lines to get the exact verbatim text including any line breaks, then reconstruct the full continuous quote
-- If not found after trying alternative substrings, **omit the quote entirely** — do not include a Quote field for that claim
+Verify each quote against the PDF content read in step 4 before including it. If a quote cannot be confirmed as verbatim, **omit it entirely**.
 
 ### Notes
 
-- Citation keys are used as filenames throughout (both `.txt` and `.md`)
-- Fulltext files go in `assets/papers/fulltext/`, summary files in `assets/papers/`
+- Citation keys are used as filenames for summary files
+- Summary files go in `assets/papers/`

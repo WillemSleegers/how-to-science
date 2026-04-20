@@ -1,5 +1,6 @@
 ---
 title: Synthetic survey respondents
+description: "Whether LLMs can substitute for human survey respondents via silicon sampling"
 order: 2
 toc: true
 ---

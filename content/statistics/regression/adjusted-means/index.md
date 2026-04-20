@@ -1,5 +1,6 @@
 ---
 title: Controlling for covariates
+description: "How to compute covariate-adjusted marginal means using emmeans and marginaleffects in R"
 toc: true
 code-fold: show
 ---

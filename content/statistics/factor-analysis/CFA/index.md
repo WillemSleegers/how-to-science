@@ -1,5 +1,6 @@
 ---
 title: CFA
+description: "How to specify, estimate, and evaluate confirmatory factor analysis models in R"
 order: 2
 toc: true
 ---

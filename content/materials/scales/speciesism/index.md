@@ -1,5 +1,6 @@
 ---
 title: Speciesism Scale
+description: Measures attitudes toward different species and species-based discrimination
 execute:
   echo: false
 knitr:

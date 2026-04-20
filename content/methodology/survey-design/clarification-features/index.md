@@ -1,5 +1,6 @@
 ---
 title: Clarification Features
+description: "Whether tooltips and inline definitions help respondents interpret survey questions correctly"
 order: 2
 toc: true
 ---

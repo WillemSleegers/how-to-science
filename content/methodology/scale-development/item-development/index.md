@@ -1,5 +1,6 @@
 ---
 title: Item Development
+description: "Guidelines for writing and pilot-testing items that validly cover a construct's full range"
 toc: true
 ---
 

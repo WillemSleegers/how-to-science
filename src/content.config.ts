@@ -10,6 +10,7 @@ const docs = defineCollection({
     "code-fold": z.union([z.boolean(), z.string()]).optional(),
     "code-tools": z.boolean().optional(),
     order: z.number().optional(),
+    description: z.string().optional(),
   }),
 })
 

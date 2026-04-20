@@ -37,9 +37,6 @@ vignettes/*.pdf
 
 /.luarc.json
 
-# Paper full texts (copyright — not for public distribution)
-assets/papers/fulltext/
-
 # Astro
 .astro/
 node_modules/

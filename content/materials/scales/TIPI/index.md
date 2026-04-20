@@ -1,5 +1,6 @@
 ---
 title: TIPI
+description: Ten-item personality inventory for the Big Five traits
 execute:
   echo: false
 knitr:
