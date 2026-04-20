@@ -311,7 +311,7 @@ export function AppShell({ content, title, slug, headings, tocDepth, nav }: AppS
       onTocToggle={() => setTocOpen(!tocOpen)}
     >
       <div className="flex flex-1">
-        <div className="flex-1 min-w-0 px-4 md:px-8 py-8 pb-[50vh]">
+        <div className="flex-1 min-w-0 px-4 md:px-8 py-8 pb-[15vh]">
           <div className="prose prose-neutral w-full max-w-none lg:max-w-3xl mx-auto dark:prose-invert">
             <h1>{title}</h1>
             {tocHeadings.length > 0 && <InlineToc headings={tocHeadings} />}
