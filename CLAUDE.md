@@ -114,6 +114,7 @@ Standard chunk options used in this project: `label`, `message: false`, `fig-cap
 - Write claims directly; don't make authors or studies the grammatical subject. Say "X is true" not "Smith et al. found that X is true."
 - Prefer concrete simulated examples to abstract description.
 - Pages tend to be practical and code-forward; show working R code with explanations.
+- Don't overuse em dashed.
 
 ## Zotero Workflow
 
