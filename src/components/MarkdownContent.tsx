@@ -5,6 +5,55 @@ import remarkMath from "remark-math"
 import rehypeRaw from "rehype-raw"
 import rehypeKatex from "rehype-katex"
 import { CitationDialog } from "./CitationDialog"
+
+function splitMultiCitations(content: string): string {
+  return content.replace(
+    /<span([^>]+)>\(([^<]*)\)<\/span>/g,
+    (match, attrs: string, innerText: string) => {
+      if (!attrs.includes('class="cite-ref"')) return match
+
+      const idsMatch = attrs.match(/data-cite-ids="([^"]*)"/)
+      if (!idsMatch) return match
+
+      let ids: string[]
+      try {
+        ids = JSON.parse(idsMatch[1].replace(/&quot;/g, '"'))
+      } catch {
+        return match
+      }
+
+      if (ids.length <= 1) return match
+
+      const segments = innerText.split('; ')
+      if (segments.length !== ids.length) return match
+
+      // Parse per-key quote map from {{< cites >}} shortcode
+      let quoteMap: Record<string, string> = {}
+      const quotesMatch = attrs.match(/data-cite-quotes="([^"]*)"/)
+      if (quotesMatch) {
+        try {
+          quoteMap = JSON.parse(quotesMatch[1].replace(/&quot;/g, '"'))
+        } catch { /* ignore */ }
+      }
+
+      // Sort keys by name prefix to match citeproc's alphabetical order
+      const sortedIds = [...ids].sort((a, b) =>
+        a.replace(/\d+.*$/, '').localeCompare(b.replace(/\d+.*$/, ''))
+      )
+
+      const spans = segments.map((seg, i) => {
+        const id = sortedIds[i]
+        const quote = quoteMap[id] ?? ''
+        const quoteAttr = quote
+          ? `[&quot;${quote.replace(/&/g, '&amp;').replace(/"/g, '&quot;')}&quot;]`
+          : '[]'
+        return `<span class="cite-ref" data-cite-id="${id}" data-cite-ids="[&quot;${id}&quot;]" data-cite-quote="${quoteAttr}" data-cite-page="">${seg}</span>`
+      })
+
+      return '(' + spans.join('; ') + ')'
+    }
+  )
+}
 import { slugify } from "@/lib/headings"
 import { preprocessCallouts } from "@/lib/callouts"
 import { createHighlighter } from "shiki"
@@ -107,7 +156,7 @@ export function MarkdownContent({ content, slug }: MarkdownContentProps) {
   return (
     <>
       <ReactMarkdown components={pageComponents} remarkPlugins={[remarkGfm, remarkMath]} rehypePlugins={[rehypeRaw, rehypeKatex]}>
-        {preprocessCallouts(content)}
+        {splitMultiCitations(preprocessCallouts(content))}
       </ReactMarkdown>
       <CitationDialog />
     </>

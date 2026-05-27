@@ -28,6 +28,9 @@
     - title: AI in Research
       items:
         - path: methodology/ai/synthetic-respondents
+    - title: Translation
+      items:
+        - path: methodology/translation/machine-translation
 
 - group: Data Analysis
   items:
@@ -43,6 +46,13 @@
       items:
         - path: statistics/representativeness/non-probability-sampling
         - path: statistics/representativeness/survey-estimation
+    - title: Qualitative Data Analysis
+      items:
+        - path: statistics/qualitative/classification
+        - path: statistics/qualitative/agreement
+    - title: String Similarity
+      items:
+        - path: statistics/string-similarity/overview
 
 - group: Materials
   items:

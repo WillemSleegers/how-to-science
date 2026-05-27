@@ -7,11 +7,10 @@ import {
 } from "@/components/ui/sheet"
 
 interface CitationData {
-  id: string
-  quote: string
+  quotes: string[]
   page: string
   label: string
-  refHtml: string
+  refHtmls: string[]
 }
 
 export function CitationDialog() {
@@ -23,16 +22,34 @@ export function CitationDialog() {
       if (!el) return
       e.preventDefault()
 
-      const id = el.dataset.citeId ?? ""
-      const quote = el.dataset.citeQuote ?? ""
-      const refEl = document.getElementById("ref-" + id)
+      const raw = el.dataset.citeQuote ?? ""
+      const rawIds = el.dataset.citeIds ?? ""
+
+      let quotes: string[] = []
+      try {
+        const parsed = JSON.parse(raw)
+        quotes = Array.isArray(parsed) ? parsed : parsed ? [String(parsed)] : []
+      } catch {
+        quotes = raw ? [raw] : []
+      }
+
+      let ids: string[] = []
+      try {
+        ids = JSON.parse(rawIds)
+      } catch {
+        ids = [el.dataset.citeId ?? ""]
+      }
+      if (ids.length === 0) ids = [el.dataset.citeId ?? ""]
+
+      const refHtmls = ids
+        .map(id => document.getElementById("ref-" + id)?.innerHTML ?? "")
+        .filter(Boolean)
 
       setActive({
-        id,
-        quote,
+        quotes,
         page: el.dataset.citePage ?? "",
         label: el.textContent ?? "",
-        refHtml: refEl?.innerHTML ?? "",
+        refHtmls,
       })
     }
     document.addEventListener("click", handleClick)
@@ -48,25 +65,28 @@ export function CitationDialog() {
       <SheetContent side="right" className="w-96 max-w-full">
         <SheetHeader>
           <SheetTitle className="text-sm font-medium text-muted-foreground">
-            {active?.quote ? "Supporting quote" : "Reference"}
+            {active?.quotes.length ? "Supporting quote" : "Reference"}
           </SheetTitle>
         </SheetHeader>
-        {active && active.quote && (
-          <div className="space-y-2 px-4">
-            <blockquote className="border-l-2 pl-4 italic text-foreground">
-              "{active.quote}"
-            </blockquote>
+        {active && active.quotes.length > 0 && (
+          <div className="space-y-4 px-4">
+            {active.quotes.map((q, i) => (
+              <blockquote key={i} className="border-l-2 pl-4 italic text-foreground">
+                "{q}"
+              </blockquote>
+            ))}
             {active.page && (
               <p className="text-sm text-muted-foreground">p.&nbsp;{active.page}</p>
             )}
           </div>
         )}
-        {active && active.refHtml && (
+        {active && active.refHtmls.map((html, i) => (
           <p
+            key={i}
             className="px-4 text-sm text-foreground"
-            dangerouslySetInnerHTML={{ __html: active.refHtml }}
+            dangerouslySetInnerHTML={{ __html: html }}
           />
-        )}
+        ))}
       </SheetContent>
     </Sheet>
   )

@@ -240,6 +240,11 @@
   }
 }
 
+/* Space between code chunk and its output (consecutive pre blocks) */
+.prose pre + pre {
+  margin-top: 0.75rem;
+}
+
 /* Remove Tailwind Typography's default backtick wrapping on inline code */
 .prose code::before,
 .prose code::after {
