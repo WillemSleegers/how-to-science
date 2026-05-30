@@ -39,6 +39,8 @@ vignettes/*.pdf
 
 # Astro
 .astro/
+/dist/
+/docs/
 node_modules/
 npm-debug.log*
 .env

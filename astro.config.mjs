@@ -8,7 +8,6 @@ import react from "@astrojs/react"
 export default defineConfig({
   site: "https://willemsleegers.github.io",
   base: "/how-to-science",
-  outDir: "docs",
   vite: {
     plugins: [tailwindcss()],
   },

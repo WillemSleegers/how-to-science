@@ -1,0 +1,10 @@
+#!/bin/sh
+# Re-render stale .qmd → .md, then refuse the push if that changed anything.
+# Keeps the committed .md (what CI deploys) in sync with the .qmd source.
+npm run render || exit 1
+if ! git diff --quiet -- content public; then
+  echo "✗ Stale Quarto output — these were just re-rendered:"
+  git diff --name-only -- content public
+  echo "  Commit them, then push again."
+  exit 1
+fi
