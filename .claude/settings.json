@@ -7,7 +7,8 @@
       "WebSearch",
       "Bash(git add:*)",
       "Bash(git commit:*)",
-      "Read(/Users/willem/Documents/Papers/Zotero/*)"
+      "Read(/Users/willem/Documents/Papers/Zotero/*)",
+      "Bash(grep -c \"\\\\.md$\")"
     ]
   }
 }
