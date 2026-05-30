@@ -25,7 +25,7 @@ export function CitationDialog() {
       const raw = el.dataset.citeQuote ?? ""
       const rawIds = el.dataset.citeIds ?? ""
 
-      let quotes: string[] = []
+      let quotes: string[]
       try {
         const parsed = JSON.parse(raw)
         quotes = Array.isArray(parsed) ? parsed : parsed ? [String(parsed)] : []
@@ -33,7 +33,7 @@ export function CitationDialog() {
         quotes = raw ? [raw] : []
       }
 
-      let ids: string[] = []
+      let ids: string[]
       try {
         ids = JSON.parse(rawIds)
       } catch {
