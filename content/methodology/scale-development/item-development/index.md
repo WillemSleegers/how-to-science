@@ -1,6 +1,8 @@
 ---
 title: Item Development
-description: "Guidelines for writing and pilot-testing items that validly cover a construct's full range"
+description: >-
+  Guidelines for writing and pilot-testing items that validly cover a
+  construct's full range
 toc: true
 ---
 
@@ -13,7 +15,7 @@ items should be written that are (i) relevant to the constructs to be measured, 
 
 Besides including items to cover all the different facets of a particular construct, it’s also important that the item pool includes items reflecting all levels of the construct.
 
-Item writing guidelines <span class="cite-ref" data-cite-id="simms2008" data-cite-quote="" data-cite-page="">(Simms, 2008)</span>:
+Item writing guidelines <span class="cite-ref" data-cite-id="simms2008" data-cite-ids="[&quot;simms2008&quot;]" data-cite-quote="[]" data-cite-page="">(Simms, 2008)</span>:
 
 1.  Write items using simple and straightforward language that is appropriate for the reading level of the measure’s target population.
 
@@ -35,7 +37,7 @@ Factor loadings can be improved by using multiple response (Likert-type) items, 
 
 Reverse-scored items
 
-Reverse-scored or reverse worded items can be included to determine whether participants are paying attention and don’t just select the same response on each item. However, there is some evidence that reverse-scored items reduce the reliability of the scale or produce an unexpected factor structure <span class="cite-ref" data-cite-id="swain2008" data-cite-quote="" data-cite-page="">(**swain2008?**)</span>.
+Reverse-scored or reverse worded items can be included to determine whether participants are paying attention and don’t just select the same response on each item. However, there is some evidence that reverse-scored items reduce the reliability of the scale or produce an unexpected factor structure <span class="cite-ref" data-cite-id="swain2008" data-cite-ids="[&quot;swain2008&quot;]" data-cite-quote="[]" data-cite-page="">(**swain2008?**)</span>.
 
 Another important consideration is that reverse-worded items can affect the model fit. Factor analyses of scales with some RW items frequently indicate the presence of method covariance obscuring or confounding substantive covariance (e.g., Brown, 2003; Roszkowski & Soven, 2010).
 

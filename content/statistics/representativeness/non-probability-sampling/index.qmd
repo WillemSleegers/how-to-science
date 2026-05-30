@@ -1,5 +1,6 @@
 ---
 title: NPS
+description: "How non-probability samples behave and when they can approximate population estimates"
 order: 2
 ---
 

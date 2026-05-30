@@ -1,5 +1,6 @@
 ---
 title: "Synthetic survey respondents"
+description: "Using LLMs as synthetic survey respondents (silicon sampling), and when it holds up"
 order: 2
 toc: true
 ---

@@ -1,6 +1,8 @@
 ---
 title: Collinearity
-description: "Why correlated predictors widen standard errors and why model-building thinking matters more than fixes"
+description: >-
+  Why correlated predictors widen standard errors and why model-building
+  thinking matters more than fixes
 toc: true
 ---
 

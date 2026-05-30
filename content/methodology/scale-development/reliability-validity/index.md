@@ -1,6 +1,8 @@
 ---
 title: Reliability and validity
-description: "How to assess whether a scale measures consistently and captures what it claims to measure"
+description: >-
+  How to assess whether a scale measures consistently and captures what it
+  claims to measure
 toc: true
 ---
 

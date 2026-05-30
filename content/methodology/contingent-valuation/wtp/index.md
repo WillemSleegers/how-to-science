@@ -1,6 +1,8 @@
 ---
 title: WTP
-description: "Methods and pitfalls for eliciting willingness-to-pay using contingent valuation surveys"
+description: >-
+  Methods and pitfalls for eliciting willingness-to-pay using contingent
+  valuation surveys
 order: 2
 toc: true
 ---
@@ -20,7 +22,7 @@ toc: true
 
 The contingent valuation method (CVM) is a stated preference method to obtain individuals’ valuation of a particular good.
 
-The summary below is mainly taken from <span class="cite-ref" data-cite-id="boardman2018" data-cite-quote="" data-cite-page="">Boardman et al. (2018)</span>.
+The summary below is mainly taken from <span class="cite-ref" data-cite-id="boardman2018" data-cite-ids="[&quot;boardman2018&quot;]" data-cite-quote="[]" data-cite-page="">Boardman et al. (2018)</span>.
 
 ## Different methods
 

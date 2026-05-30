@@ -1,5 +1,6 @@
 ---
 title: "Comparing string similarity"
+description: "Comparing strings with edit-distance, n-gram, and embedding-based similarity metrics"
 toc: true
 ---
 

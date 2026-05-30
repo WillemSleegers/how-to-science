@@ -1,5 +1,6 @@
 ---
 title: Pairwise comparisons
+description: "Estimating and testing pairwise differences between group means with emmeans"
 ---
 
 

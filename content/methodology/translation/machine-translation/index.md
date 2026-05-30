@@ -1,5 +1,8 @@
 ---
 title: Machine translation
+description: >-
+  When machine translation can stand in for human survey-translation protocols,
+  used with care
 toc: true
 ---
 
