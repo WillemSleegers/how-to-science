@@ -5,6 +5,19 @@
 -- "!cite-shortcode!" placeholder content).
 -- Stores all keys for multi-citation groups, e.g. [@a; @b; @c].
 
+-- Quarto cross-reference prefixes (@fig-, @tbl-, @sec-, …). These parse as
+-- Cite nodes but are resolved into xref links by Quarto, so they must not be
+-- wrapped as citations (doing so hijacks their click navigation).
+local XREF_PREFIXES = {
+  fig = true, tbl = true, eq = true, sec = true, lst = true,
+  thm = true, lem = true, cor = true, prp = true, def = true,
+  exm = true, exr = true, sol = true, rem = true,
+}
+local function is_xref(id)
+  local prefix = id:match("^(%a+)%-")
+  return prefix ~= nil and XREF_PREFIXES[prefix] == true
+end
+
 function Cite(el)
   local content = el.content
   if #content == 1 and content[1].t == "Str" and content[1].text == "!cite-shortcode!" then
@@ -13,6 +26,7 @@ function Cite(el)
 
   local primary_key = el.citations[1] and el.citations[1].id or ""
   if primary_key == "" then return el end
+  if is_xref(primary_key) then return el end
 
   -- Collect all keys for multi-citation spans
   local key_parts = {}

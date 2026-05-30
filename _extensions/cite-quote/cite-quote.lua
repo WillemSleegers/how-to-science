@@ -21,6 +21,19 @@ local function is_key(s)
   return s:match("^%a%w*%d%d%d%d%a?$") ~= nil
 end
 
+-- Quarto cross-reference prefixes (@fig-, @tbl-, @sec-, …). These parse as
+-- Cite nodes but are resolved into xref links by Quarto, so they must not be
+-- wrapped as citations (doing so hijacks their click navigation).
+local XREF_PREFIXES = {
+  fig = true, tbl = true, eq = true, sec = true, lst = true,
+  thm = true, lem = true, cor = true, prp = true, def = true,
+  exm = true, exr = true, sol = true, rem = true,
+}
+local function is_xref(id)
+  local prefix = id:match("^(%a+)%-")
+  return prefix ~= nil and XREF_PREFIXES[prefix] == true
+end
+
 local function json_object(t)
   local parts = {}
   for k, v in pairs(t) do
@@ -128,6 +141,7 @@ return {
 
     local primary_key = el.citations[1] and el.citations[1].id or ""
     if primary_key == "" then return el end
+    if is_xref(primary_key) then return el end
 
     -- Collect all keys for multi-citation spans, e.g. [@a; @b; @c]
     local key_parts = {}

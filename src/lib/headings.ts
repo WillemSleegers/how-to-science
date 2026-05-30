@@ -24,7 +24,7 @@ export function extractHeadings(markdown: string): Heading[] {
   for (const line of markdown.split("\n")) {
     if (line.startsWith("```")) { inCodeBlock = !inCodeBlock; continue }
     if (inCodeBlock) continue
-    const match = line.match(/^(#{2,3})\s+(.+)/)
+    const match = line.match(/^(#{2,6})\s+(.+)/)
     if (!match) continue
     const text = match[2].trim()
     headings.push({ id: slugify(text), text, level: match[1].length })

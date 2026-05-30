@@ -36,7 +36,14 @@ function splitMultiCitations(content: string): string {
         } catch { /* ignore */ }
       }
 
-      // Sort keys by name prefix to match citeproc's alphabetical order
+      // citeproc renders a citation group sorted alphabetically by author,
+      // but data-cite-ids is in source order. To map each visible segment to
+      // its key (and thus its quote), we re-sort the ids by their name prefix
+      // (the part before the year) to approximate citeproc's order.
+      // Assumption: citation keys follow the `surnameYEAR` convention, so the
+      // key prefix sorts the same as the rendered author surname. If a key's
+      // prefix does not match its first author's surname, a per-citation quote
+      // in a {{< cites >}} group could be attached to the wrong citation.
       const sortedIds = [...ids].sort((a, b) =>
         a.replace(/\d+.*$/, '').localeCompare(b.replace(/\d+.*$/, ''))
       )
@@ -133,6 +140,15 @@ const components: Components = {
   ),
   h3: ({ node: _node, children, ...props }) => (
     <h3 id={slugify(nodeText(children))} {...props}>{children}</h3>
+  ),
+  h4: ({ node: _node, children, ...props }) => (
+    <h4 id={slugify(nodeText(children))} {...props}>{children}</h4>
+  ),
+  h5: ({ node: _node, children, ...props }) => (
+    <h5 id={slugify(nodeText(children))} {...props}>{children}</h5>
+  ),
+  h6: ({ node: _node, children, ...props }) => (
+    <h6 id={slugify(nodeText(children))} {...props}>{children}</h6>
   ),
   pre: ({ children }) => <CodeBlock>{children}</CodeBlock>,
   table: ({ node: _node, children, ...props }) => (

@@ -1,15 +1,10 @@
 # TODO
 
-## Quarto parity
+## Known limitations (accepted)
 
-- [ ] Math rendering (KaTeX or MathJax)
-- [ ] Cross-references (`@fig-`, `@sec-`)
-
-## Low priority / noted
-
-- [ ] **Fragile citation-quote alignment** — `splitMultiCitations` in `src/components/MarkdownContent.tsx` re-aligns per-key quotes by sorting keys to mimic citeproc's alphabetical order (`a.replace(/\d+.*$/, '')`). Can silently mis-assign quotes when citation-key prefixes don't match author-name alpha order (e.g. key `smith2020` for a paper by "Aaronson").
-- [ ] **`dangerouslySetInnerHTML`** used for reference HTML (`CitationDialog.tsx:87`) and highlighted code (`MarkdownContent.tsx:125`) — fine while all content is self-authored; main XSS surface if that changes.
-- [ ] **TOC depth ceiling** — `extractHeadings` (`src/lib/headings.ts:27`) and the `id` assignment in `MarkdownContent.tsx:131-136` only handle `h2`/`h3`, so `toc-depth` above 3 has no effect and `h4+` get no anchor ids.
+- **Section cross-references (`@sec-`) don't navigate.** Figure/table/equation refs work (Quarto numbers them and the anchors survive gfm). Section refs render as links but their target id is stripped by gfm while `MarkdownContent` generates ids from heading text, so the anchor dangles. Supporting them needs heading-id preservation through gfm + honoring explicit ids in the React renderer — deferred as not worth the pipeline change for now.
+- **`dangerouslySetInnerHTML`** is used for reference HTML (`CitationDialog.tsx`) and highlighted code (`MarkdownContent.tsx`). Safe while all content is self-authored; would be the main XSS surface if that ever changes.
+- **Citation-quote alignment assumes `surnameYEAR` keys.** Grouped `{{< cites >}}` quotes are matched to citations by re-sorting keys to mimic citeproc's author-alpha order (documented in `splitMultiCitations`). Correct for the current key convention; a key whose prefix isn't the first author's surname could mis-attach a quote within a group.
 
 ## Done
 
@@ -21,3 +16,6 @@
 - [x] Remove obsolete `.nojekyll` (not needed with Actions-based Pages deploy)
 - [x] Delete 8 stub "overview" landing pages (placeholder content, not in nav)
 - [x] Link real content directly: move string-similarity to `/string-similarity`; add Group Differences nav group (pairwise-comparisons, sequential-analyses) with refreshed figures
+- [x] Verify math rendering works (remark-math + rehype-katex; KaTeX HTML confirmed)
+- [x] Cross-references (Part A): stop citation-wrapping `@fig-`/`@tbl-`/`@sec-` so figure/table xref links navigate correctly
+- [x] TOC depth: extract and assign ids for `h2`–`h6` (was `h2`/`h3` only), so `toc-depth` works beyond 3 and deeper headings get anchors
