@@ -4,6 +4,7 @@ import { load } from "js-yaml"
 
 const CONTENT_DIR = resolve(process.cwd(), "content")
 const NAV_FILE = resolve(process.cwd(), "_nav.yml")
+const BASE = (import.meta.env.BASE_URL ?? "/").replace(/\/$/, "")
 
 // ── Public types (used by sidebar rendering) ─────────────────────────────────
 
@@ -135,4 +136,31 @@ export function treeContainsSlug(nodes: NavNode[], slug: string): boolean {
   return nodes.some(
     (n) => n.slug === slug || treeContainsSlug(n.children, slug)
   )
+}
+
+// ── Breadcrumbs ─────────────────────────────────────────────────────────────
+
+export interface Crumb {
+  title: string
+  href?: string // only the Home crumb links; sections/groups have no page
+}
+
+/**
+ * Build the breadcrumb trail for a page: Home → Section → [Group] → Page.
+ * Only Home is a link (sections and groups have no landing page).
+ */
+export function findTrail(sections: NavSection[], slug: string): Crumb[] {
+  const home: Crumb = { title: "How to Science", href: `${BASE}/` }
+  for (const section of sections) {
+    for (const node of section.nodes) {
+      if (node.slug === slug) {
+        return [home, { title: section.title }, { title: node.title }]
+      }
+      const child = node.children.find((c) => c.slug === slug)
+      if (child) {
+        return [home, { title: section.title }, { title: node.title }, { title: child.title }]
+      }
+    }
+  }
+  return [home]
 }

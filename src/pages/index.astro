@@ -1,37 +1,78 @@
 ---
 import Layout from "@/layouts/main.astro"
-import { Shell } from "@/components/AppShell"
+import { ThemeToggle } from "@/components/ThemeToggle"
 import { loadNav } from "@/lib/nav"
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, "")
 const nav = loadNav()
 
+// Group each section's pages into labelled blocks (sub-group label + its pages),
+// with any direct top-level pages collected into a final unlabelled block.
+const sections = nav.map((section) => {
+  const groups = section.nodes
+    .filter((n) => !n.slug)
+    .map((n) => ({ label: n.title, pages: n.children.filter((c) => c.slug) }))
+    .filter((g) => g.pages.length > 0)
+  const directs = section.nodes.filter((n) => n.slug)
+  const blocks = [...groups, ...(directs.length ? [{ label: null, pages: directs }] : [])]
+  return { title: section.title, blocks }
+})
 ---
 
 <Layout title="How to Science">
-  <Shell client:load nav={nav} currentSlug="">
-    <div class="flex flex-1">
-      <div class="flex-1 px-8 py-8 pb-[50vh]">
-      <div class="prose prose-neutral max-w-3xl mx-auto dark:prose-invert">
-        <h1>How to Science</h1>
+  <div class="mx-auto max-w-5xl px-6 py-12 lg:px-8 lg:py-16">
+    <section class="mb-14 max-w-2xl">
+      <h1 class="text-3xl font-bold tracking-tight sm:text-4xl">How to Science</h1>
+      <p class="mt-4 text-lg text-muted-foreground">
+        Working through the methodology and statistics literature to distill clear,
+        practical guidance — with the reasoning and R code behind it.
+      </p>
+      <p class="mt-3 text-sm text-muted-foreground">
+        A work in progress: some pages are unfinished, and best practices evolve.
+        Spotted a mistake? <a
+          href="https://github.com/WillemSleegers/how-to-science/issues"
+          class="font-medium text-primary underline-offset-4 hover:underline">open an issue</a
+        > or <a
+          href="https://www.willemsleegers.com"
+          class="font-medium text-primary underline-offset-4 hover:underline">get in touch</a
+        >.
+      </p>
+    </section>
 
-        <h2>About</h2>
-        <p>
-          The scientific literature is vast, inconsistent, and hard to navigate. It can be genuinely difficult to assess a body of research and figure out what is true, what is contested, and what the current best practices actually are.
-        </p>
-        <p>
-          This website is my attempt to get to the bottom of various topics in methodology and statistics. For each topic, I try to work through the literature and distill what it says — or doesn't say — into clear, practical guidance. It also contains materials such as scales and other resources for use in research.
-        </p>
+    {
+      sections.map((section) => (
+        <section class="mb-14">
+          <h2 class="mb-5 text-lg font-semibold tracking-tight">{section.title}</h2>
+          {section.blocks.map((block) => (
+            <div class="mb-6">
+              {block.label && (
+                <h3 class="mb-2.5 text-xs font-medium tracking-wide text-muted-foreground uppercase">
+                  {block.label}
+                </h3>
+              )}
+              <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                {block.pages.map((page) => (
+                  <a
+                    href={`${base}/${page.slug}`}
+                    class="group flex flex-col rounded-xl border bg-card p-4 transition-colors hover:border-foreground/20 hover:bg-accent/50"
+                  >
+                    <span class="leading-tight font-medium">{page.title}</span>
+                    {page.description && (
+                      <span class="mt-1.5 line-clamp-2 text-sm text-muted-foreground">
+                        {page.description}
+                      </span>
+                    )}
+                  </a>
+                ))}
+              </div>
+            </div>
+          ))}
+        </section>
+      ))
+    }
 
-        <h2>Work in progress</h2>
-        <p>
-          Some sections are unfinished. Pages I consider not yet polished carry a warning at the top. That said, this site will always be a work in progress: best practices evolve, and the content will evolve with them. There are likely mistakes too, ranging from errors of substance to simple typos — if you spot one, please contact me or open an issue on GitHub.
-        </p>
-
-        <h2>Author</h2>
-        <p>
-          <a href="https://www.willemsleegers.com">Willem Sleegers</a>.
-        </p>
-      </div>
-      </div>
+    <div class="mt-4 flex justify-center border-t pt-8">
+      <ThemeToggle client:load />
     </div>
-  </Shell>
+  </div>
 </Layout>

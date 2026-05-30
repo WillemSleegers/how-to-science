@@ -3,18 +3,18 @@ import { getEntry } from "astro:content"
 import Layout from "@/layouts/main.astro"
 import { AppShell } from "@/components/AppShell"
 import { extractHeadings, stripQuartoToc } from "@/lib/headings"
-import { loadNav, collectAllSlugs } from "@/lib/nav"
-import type { NavSection } from "@/lib/nav"
+import { loadNav, collectAllSlugs, findTrail } from "@/lib/nav"
+import type { Crumb } from "@/lib/nav"
 import { getGlobalTocDepth } from "@/lib/config"
 
 export async function getStaticPaths() {
   const nav = loadNav()
   const slugs = collectAllSlugs(nav)
-  return slugs.map((slug) => ({ params: { slug }, props: { nav } }))
+  return slugs.map((slug) => ({ params: { slug }, props: { trail: findTrail(nav, slug) } }))
 }
 
 const { slug } = Astro.params
-const { nav } = Astro.props as { nav: NavSection[] }
+const { trail } = Astro.props as { trail: Crumb[] }
 
 const entry = await getEntry("docs", slug)
 if (!entry) {
@@ -34,6 +34,6 @@ const tocDepth: number = entry.data["toc-depth"] ?? getGlobalTocDepth()
     slug={slug}
     headings={headings}
     tocDepth={tocDepth}
-    nav={nav}
+    trail={trail}
   />
 </Layout>

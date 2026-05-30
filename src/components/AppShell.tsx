@@ -1,202 +1,39 @@
 "use client"
 
-import React, { useState, useEffect, Suspense } from "react"
-import { ChevronDownIcon, ListIcon, MenuIcon } from "lucide-react"
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-} from "@/components/ui/navigation-menu"
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet"
-import {
-  Collapsible,
-  CollapsibleTrigger,
-  CollapsibleContent,
-} from "@/components/ui/collapsible"
-import type { NavSection, NavNode } from "@/lib/nav"
+import { useState, useEffect, Suspense } from "react"
+import { ChevronRightIcon } from "lucide-react"
 import { MarkdownContent } from "@/components/MarkdownContent"
 import type { Heading } from "@/lib/headings"
 
-const base = import.meta.env.BASE_URL.replace(/\/$/, "")
-
-// ── Navigation dropdown content ───────────────────────────────────────────────
-
-// Shared link + group-label styling, used by both the desktop dropdown and the
-// mobile sheet so the two stay visually consistent.
-const navLinkClass =
-  "block rounded-md px-2 py-1.5 text-sm transition-colors hover:bg-accent hover:text-accent-foreground data-active:bg-accent/50"
-const groupLabelClass =
-  "px-2 pt-2 pb-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground"
-
-function NavAnchor({
-  slug,
-  title,
-  currentSlug,
-  menuLink,
-}: {
-  slug: string
+interface Crumb {
   title: string
-  currentSlug: string
-  menuLink?: boolean
-}) {
-  const anchor = (
-    <a
-      href={`${base}/${slug}`}
-      data-active={slug === currentSlug ? true : undefined}
-      className={navLinkClass}
+  href?: string
+}
+
+// ── Breadcrumb ────────────────────────────────────────────────────────────────
+
+function Breadcrumb({ trail }: { trail: Crumb[] }) {
+  if (trail.length <= 1) return null
+  return (
+    <nav
+      aria-label="Breadcrumb"
+      className="mb-8 flex flex-wrap items-center gap-1.5 text-sm text-muted-foreground"
     >
-      {title}
-    </a>
-  )
-  // Desktop links live inside a radix NavigationMenu and must be wrapped so the
-  // menu manages focus/close; mobile links are plain anchors inside the Sheet.
-  return menuLink ? <NavigationMenuLink asChild>{anchor}</NavigationMenuLink> : anchor
-}
-
-// Renders a section's nodes as a grouped list of links. Shared by both screen
-// sizes; `menuLink` toggles the desktop NavigationMenuLink wrapper.
-function NavNodeList({
-  nodes,
-  currentSlug,
-  menuLink,
-}: {
-  nodes: NavNode[]
-  currentSlug: string
-  menuLink?: boolean
-}) {
-  return (
-    <>
-      {nodes.map((node) => {
-        // Direct page link (no children) — render as a single item.
-        if (node.slug) {
-          return (
-            <li key={node.slug}>
-              <NavAnchor slug={node.slug} title={node.title} currentSlug={currentSlug} menuLink={menuLink} />
-            </li>
-          )
-        }
-        // Group label with its pages listed beneath.
-        const pages = node.children.filter((c) => c.slug)
-        if (pages.length === 0) return null
-        return (
-          <li key={node.title}>
-            <p className={groupLabelClass}>{node.title}</p>
-            <ul>
-              {pages.map((page) => (
-                <li key={page.slug}>
-                  <NavAnchor slug={page.slug!} title={page.title} currentSlug={currentSlug} menuLink={menuLink} />
-                </li>
-              ))}
-            </ul>
-          </li>
-        )
-      })}
-    </>
-  )
-}
-
-function GroupedContent({ nodes, currentSlug }: { nodes: NavNode[]; currentSlug: string }) {
-  return (
-    <ul className="max-h-[70vh] w-64 overflow-y-auto p-2">
-      <NavNodeList nodes={nodes} currentSlug={currentSlug} menuLink />
-    </ul>
-  )
-}
-
-// ── Mobile nav ────────────────────────────────────────────────────────────────
-
-function MobileNav({ nav, currentSlug }: { nav: NavSection[]; currentSlug: string }) {
-  return (
-    <Sheet>
-      <SheetTrigger className="md:hidden p-2 text-muted-foreground hover:text-foreground transition-colors">
-        <MenuIcon className="h-5 w-5" />
-        <span className="sr-only">Open menu</span>
-      </SheetTrigger>
-      <SheetContent side="left" className="w-full overflow-y-auto">
-        <SheetHeader>
-          <SheetTitle>
-            <a href={base || "/"} className="font-semibold text-sm">How to Science</a>
-          </SheetTitle>
-        </SheetHeader>
-        <nav className="mt-4 space-y-1">
-          {nav.map((section) => (
-            <Collapsible key={section.title} defaultOpen>
-              <CollapsibleTrigger className="flex w-full items-center justify-between rounded-md px-2 py-1.5 text-xs font-semibold uppercase tracking-wide text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors [&[data-state=open]>svg]:rotate-180">
-                {section.title}
-                <ChevronDownIcon className="h-3 w-3 transition-transform duration-200" />
-              </CollapsibleTrigger>
-              <CollapsibleContent>
-                <ul className="mt-1 mb-2">
-                  <NavNodeList nodes={section.nodes} currentSlug={currentSlug} />
-                </ul>
-              </CollapsibleContent>
-            </Collapsible>
-          ))}
-        </nav>
-      </SheetContent>
-    </Sheet>
-  )
-}
-
-// ── Shell (header + page wrapper) ─────────────────────────────────────────────
-
-export function Shell({
-  nav,
-  currentSlug,
-  children,
-  showTocToggle,
-  tocOpen,
-  onTocToggle,
-}: {
-  nav: NavSection[]
-  currentSlug: string
-  children: React.ReactNode
-  showTocToggle?: boolean
-  tocOpen?: boolean
-  onTocToggle?: () => void
-}) {
-  return (
-    <div className="min-h-screen flex flex-col">
-      <header className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="flex h-14 items-center px-6 gap-4">
-          <MobileNav nav={nav} currentSlug={currentSlug} />
-          <a href={base || "/"} className="font-semibold text-sm">
-            How to Science
-          </a>
-          <NavigationMenu className="hidden md:flex">
-            <NavigationMenuList>
-              {nav.map((section) => (
-                <NavigationMenuItem key={section.title}>
-                  <NavigationMenuTrigger>{section.title}</NavigationMenuTrigger>
-                  <NavigationMenuContent>
-                    <GroupedContent nodes={section.nodes} currentSlug={currentSlug} />
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
-              ))}
-            </NavigationMenuList>
-          </NavigationMenu>
-          {showTocToggle && (
-            <button
-              onClick={onTocToggle}
-              className="ml-auto hidden lg:block text-muted-foreground hover:text-foreground transition-colors"
-              title={tocOpen ? "Hide table of contents" : "Show table of contents"}
-            >
-              <ListIcon className="h-4 w-4" />
-            </button>
+      {trail.map((crumb, i) => (
+        <span key={i} className="flex items-center gap-1.5">
+          {i > 0 && <ChevronRightIcon className="size-3.5 opacity-60" />}
+          {crumb.href ? (
+            <a href={crumb.href} className="transition-colors hover:text-foreground">
+              {crumb.title}
+            </a>
+          ) : (
+            <span className={i === trail.length - 1 ? "text-foreground" : undefined}>
+              {crumb.title}
+            </span>
           )}
-        </div>
-      </header>
-      <main className="flex-1">{children}</main>
-    </div>
+        </span>
+      ))}
+    </nav>
   )
 }
 
@@ -217,7 +54,7 @@ function TocLinks({ headings, activeId }: { headings: Heading[]; activeId: strin
               h.level === 2 ? "text-sm" : "text-xs"
             } ${
               activeId === h.id
-                ? "text-foreground"
+                ? "font-medium text-primary"
                 : "text-muted-foreground hover:text-foreground"
             }`}
           >
@@ -229,7 +66,7 @@ function TocLinks({ headings, activeId }: { headings: Heading[]; activeId: strin
   )
 }
 
-function TocPanel({ headings, open }: { headings: Heading[]; open: boolean }) {
+function TocPanel({ headings }: { headings: Heading[] }) {
   const [activeId, setActiveId] = useState("")
 
   useEffect(() => {
@@ -250,13 +87,11 @@ function TocPanel({ headings, open }: { headings: Heading[]; open: boolean }) {
   }, [headings])
 
   return (
-    <div className={`hidden lg:block sticky top-14 self-start shrink-0 overflow-hidden transition-[width] duration-300 ease-in-out max-h-[calc(100vh-3.5rem)] ${open ? "w-56" : "w-0"}`}>
-      <div className="w-56 py-8 pr-6 overflow-y-auto max-h-[calc(100vh-3.5rem)]">
-        <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-          On this page
-        </p>
-        <TocLinks headings={headings} activeId={activeId} />
-      </div>
+    <div className="sticky top-0 hidden max-h-screen w-56 shrink-0 self-start overflow-y-auto py-8 pr-6 lg:block">
+      <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+        On this page
+      </p>
+      <TocLinks headings={headings} activeId={activeId} />
     </div>
   )
 }
@@ -280,24 +115,18 @@ interface AppShellProps {
   slug: string
   headings: Heading[]
   tocDepth: number
-  nav: NavSection[]
+  trail: Crumb[]
 }
 
-export function AppShell({ content, title, slug, headings, tocDepth, nav }: AppShellProps) {
+export function AppShell({ content, title, slug, headings, tocDepth, trail }: AppShellProps) {
   const tocHeadings = headings.filter((h) => h.level <= tocDepth)
-  const [tocOpen, setTocOpen] = useState(true)
 
   return (
-    <Shell
-      nav={nav}
-      currentSlug={slug}
-      showTocToggle={tocHeadings.length > 0}
-      tocOpen={tocOpen}
-      onTocToggle={() => setTocOpen(!tocOpen)}
-    >
-      <div className="flex flex-1">
-        <div className="flex-1 min-w-0 px-4 md:px-8 py-8 pb-[15vh]">
-          <div className="prose prose-neutral w-full max-w-none lg:max-w-3xl mx-auto dark:prose-invert">
+    <div className="flex min-h-screen">
+      <div className="min-w-0 flex-1 px-6 py-8 pb-24 lg:px-8">
+        <div className="mx-auto w-full max-w-none lg:max-w-3xl">
+          <Breadcrumb trail={trail} />
+          <div className="prose prose-neutral max-w-none dark:prose-invert">
             <h1>{title}</h1>
             {tocHeadings.length > 0 && <InlineToc headings={tocHeadings} />}
             <Suspense>
@@ -305,8 +134,8 @@ export function AppShell({ content, title, slug, headings, tocDepth, nav }: AppS
             </Suspense>
           </div>
         </div>
-        {tocHeadings.length > 0 && <TocPanel headings={tocHeadings} open={tocOpen} />}
       </div>
-    </Shell>
+      {tocHeadings.length > 0 && <TocPanel headings={tocHeadings} />}
+    </div>
   )
 }
