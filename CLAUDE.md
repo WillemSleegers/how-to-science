@@ -25,6 +25,8 @@ This is a documentation/teaching site built on **Astro 6** with **Quarto** for c
 
 **When to use `.qmd` vs `.md`:** If the page contains R code blocks that need to be executed (simulations, model output, plots), use `.qmd`. For prose-only pages, `.md` is fine.
 
+**If a page has a `.qmd`, edit the `.qmd`, never its generated `.md`** — direct `.md` edits (frontmatter included) are overwritten on re-render.
+
 ## Adding a New Content Page
 
 ### Step 1: Create the content file
