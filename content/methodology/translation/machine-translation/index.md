@@ -1,0 +1,174 @@
+---
+title: Machine translation
+toc: true
+---
+
+
+- [Context](#context)
+- [MT systems](#mt-systems)
+  - [DeepL](#deepl)
+  - [Google Translate](#google-translate)
+  - [LLMs](#llms)
+- [Practical recommendation](#practical-recommendation)
+
+``` r
+library(tidyverse)
+library(deeplr)
+library(googleLanguageR)
+library(rollama)
+```
+
+Survey translation has traditionally required human translators working through structured protocols like TRAPD (Translation, Review, Adjudication, Pretesting, Documentation). MT systems have become accurate enough to serve as a first pass or, in some contexts, a full replacement — but they require some care when applied to survey text.
+
+Survey items present specific challenges for MT. They are short, often grammatically incomplete, and highly decontextualised: a response option like “Agree strongly” or an interviewer instruction like “Read out” means nothing without knowing what question it belongs to. Terminology also needs to be consistent across items — the same concept should always be translated the same way throughout a questionnaire. Both of these problems are addressed by providing context to the MT system.
+
+## Context
+
+MT systems trained on sentence pairs translate each sentence independently by default. For general text this is usually fine, but for surveys it causes two problems:
+
+- **Ambiguity**: short items are more ambiguous than full sentences, and the correct translation often depends on the surrounding questionnaire. “How often?” could translate differently depending on whether the preceding item asked about behaviour, attitudes, or frequency of contact.
+- **Inconsistency**: without seeing the full questionnaire, an MT system may translate the same term differently across items — using two different words for the same concept in the same questionnaire.
+
+Providing the surrounding questionnaire as context mitigates both. How you do this depends on the MT system.
+
+## MT systems
+
+### DeepL
+
+DeepL is among the most widely used MT systems in translation research and produces high-quality output for European languages. It offers three ways to incorporate context.
+
+**Automatic document context** is the default when you pass multiple sentences at once. DeepL processes surrounding sentences when translating each one, so simply passing several items together improves coherence compared to passing them one at a time.
+
+**The `context` parameter** is the cleanest approach for item-by-item translation. You pass the text you want translated as `text` and the surrounding questionnaire as `context`. DeepL uses the context to inform the translation but only returns the translation of `text` — there is no extraction problem.
+
+``` r
+translate2(
+  text        = "Generally speaking, would you say that most people can be trusted?",
+  target_lang = "NL",
+  context     = "This item is part of a social attitudes survey.
+                 The response options are: Most people can be trusted;
+                 Can't be too careful; Don't know.",
+  auth_key    = Sys.getenv("DEEPL_API_KEY")
+)
+```
+
+To translate all items in a questionnaire with their surrounding context:
+
+``` r
+questionnaire <- tribble(
+  ~item_id, ~text,
+  1, "How satisfied are you with your life as a whole?",
+  2, "Generally speaking, would you say that most people can be trusted?",
+  3, "How interested would you say you are in politics?"
+)
+
+full_context <- paste(questionnaire$text, collapse = "\n")
+
+questionnaire |>
+  mutate(
+    translation = map_chr(text, \(item) {
+      translate2(
+        text        = item,
+        target_lang = "NL",
+        context     = full_context,
+        auth_key    = Sys.getenv("DEEPL_API_KEY")
+      )
+    })
+  )
+```
+
+**The document endpoint** accepts a full `.docx` or `.txt` file and translates it as a whole, using the entire document as its own context. This is convenient for full questionnaires, but you receive the full translated document back and need to parse individual items out afterwards. The `context` parameter approach avoids this and is generally preferable for structured questionnaire data.
+
+### Google Translate
+
+Google Translate has no equivalent to DeepL’s `context` parameter — you cannot explicitly pass surrounding text to inform the translation of a single item. It translates each piece of text you give it without awareness of other items in the questionnaire unless you pass them together.
+
+What it does offer, via the v3 (Advanced) API, is **glossary support**: you define a set of source→target term pairs and the API enforces those translations consistently across all requests. This addresses the terminology consistency problem directly, even without sentence-level context.
+
+``` r
+library(googleLanguageR)
+
+# Glossaries are created once via the Cloud Translation API and referenced by ID.
+# Here we use an existing glossary and translate a batch of items.
+gl_translate(
+  string      = questionnaire$text,
+  target      = "nl",
+  source      = "en",
+  glossaryId  = "my-survey-glossary",
+  key         = Sys.getenv("GOOGLE_API_KEY")
+)
+```
+
+One limitation: glossary support requires the Cloud Translation v3 API, which is billed differently from the basic v2 API. The `googleLanguageR` package supports both.
+
+### LLMs
+
+LLM-based translation gives you full control over context via the prompt. Beyond just surrounding items, you can include:
+
+- A glossary of key terms and their required translations, ensuring consistency across the questionnaire
+- Examples of how specific items were translated in previous rounds of the same survey
+- Instructions about register, target population, and cultural adaptation
+
+This approach is closest to the TRAPD methodology: the Sorato & Zavala-Rojas (2025) paper demonstrates it using GPT-4o mini with prompts that include 477 survey-specific biterms extracted from the Multilingual Corpus of Survey Questionnaires (MCSQ).
+
+The practical challenge with LLMs is extracting the translation cleanly. Without constraints, a model may return commentary, explanations, or reformatted text alongside the translation. Three approaches keep output clean:
+
+**Constrained prompt**: instruct the model explicitly to return only the translated text.
+
+``` r
+translate_item <- function(text, target_lang, glossary = NULL) {
+  glossary_text <- if (!is.null(glossary)) {
+    paste0(
+      "\nUse the following terminology:\n",
+      paste(paste0(glossary$source, " → ", glossary$target), collapse = "\n")
+    )
+  } else ""
+
+  prompt <- paste0(
+    "Translate the following survey item to ", target_lang, ". ",
+    "Output only the translated text, nothing else.",
+    glossary_text,
+    "\n\nItem: ", text
+  )
+
+  query(
+    model  = "gemma4:e4b",
+    prompt = prompt,
+    screen = FALSE
+  )$message$content
+}
+```
+
+**Structured output**: ask the model to return JSON and parse it.
+
+``` r
+prompt <- paste0(
+  'Translate the following survey item to Dutch. ',
+  'Return a JSON object with a single key "translation". ',
+  'Item: "How satisfied are you with your life as a whole?"'
+)
+
+response <- query(model = "gemma4:e4b", prompt = prompt, screen = FALSE)
+jsonlite::fromJSON(response$message$content)$translation
+```
+
+**Delimiter tags**: ask the model to wrap the translation in tags and extract with a regex.
+
+``` r
+prompt <- paste0(
+  'Translate the following survey item to Dutch. ',
+  'Wrap the translation in <translation> tags. ',
+  'Item: "How satisfied are you with your life as a whole?"'
+)
+
+response <- query(model = "gemma4:e4b", prompt = prompt, screen = FALSE)
+str_extract(response$message$content, "(?<=<translation>).*(?=</translation>)")
+```
+
+Of the three, structured output is most robust for batch processing: JSON parsing fails loudly when the format is wrong, making errors easy to detect.
+
+## Practical recommendation
+
+DeepL’s `context` parameter is the most direct way to pass surrounding questionnaire text when translating item by item. Google Translate’s glossary support is the most direct way to enforce consistent terminology across all items. LLMs combine both capabilities in a single prompt, and also allow instructions about register, cultural adaptation, and formatting — at the cost of more setup and less predictable output format.
+
+For workflows where terminology consistency across rounds matters — for example, translating a new round of the ESS to match previous rounds — including reference translations from the MCSQ in the prompt encodes that requirement directly.
