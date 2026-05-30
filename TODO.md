@@ -5,12 +5,6 @@
 - [ ] Math rendering (KaTeX or MathJax)
 - [ ] Cross-references (`@fig-`, `@sec-`)
 
-## Medium priority
-
-- [ ] **Decide on 10 orphan content pages** — rendered `.md` exists but no `_nav.yml` entry, so they're unreachable. Either add to nav or remove:
-  - [ ] `*/overview` pages: factor-analysis, regression, representativeness, scales, contingent-valuation, survey-design, scale-development, ai
-  - [ ] entire `statistics/group-differences/` section (`pairwise-comparisons`, `sequential-analyses`) — not in nav at all
-
 ## Low priority / noted
 
 - [ ] **Fragile citation-quote alignment** — `splitMultiCitations` in `src/components/MarkdownContent.tsx` re-aligns per-key quotes by sorting keys to mimic citeproc's alphabetical order (`a.replace(/\d+.*$/, '')`). Can silently mis-assign quotes when citation-key prefixes don't match author-name alpha order (e.g. key `smith2020` for a paper by "Aaronson").
@@ -25,3 +19,5 @@
 - [x] Fix `astro check` heap crash by excluding generated dirs (`_freeze`, `public`, `content`, …) from `tsconfig.json`
 - [x] Remove 8 unused shadcn UI components (only `button`, `collapsible`, `navigation-menu`, `sheet` are used)
 - [x] Remove obsolete `.nojekyll` (not needed with Actions-based Pages deploy)
+- [x] Delete 8 stub "overview" landing pages (placeholder content, not in nav)
+- [x] Link real content directly: move string-similarity to `/string-similarity`; add Group Differences nav group (pairwise-comparisons, sequential-analyses) with refreshed figures

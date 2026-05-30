@@ -42,6 +42,10 @@
       items:
         - path: statistics/factor-analysis/efa
         - path: statistics/factor-analysis/cfa
+    - title: Group Differences
+      items:
+        - path: statistics/group-differences/pairwise-comparisons
+        - path: statistics/group-differences/sequential-analyses
     - title: Representativeness
       items:
         - path: statistics/representativeness/non-probability-sampling
@@ -50,9 +54,8 @@
       items:
         - path: statistics/qualitative/classification
         - path: statistics/qualitative/agreement
-    - title: String Similarity
-      items:
-        - path: statistics/string-similarity/overview
+    - path: statistics/string-similarity
+      text: String Similarity
 
 - group: Materials
   items:

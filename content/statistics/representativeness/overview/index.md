@@ -1,7 +1,0 @@
----
-title: Overview
-order: 1
----
-
-
-This section covers statistical methods use to obtain representative estimates, relying on methods such as probability and non-probability sampling.
