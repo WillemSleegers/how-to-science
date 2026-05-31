@@ -9,7 +9,9 @@
       "Bash(git commit:*)",
       "Read(/Users/willem/Documents/Papers/Zotero/*)",
       "Bash(grep -c \"\\\\.md$\")",
-      "Bash(npx astro *)"
+      "Bash(npx astro *)",
+      "Bash(npm audit *)",
+      "Bash(npm list *)"
     ]
   }
 }
