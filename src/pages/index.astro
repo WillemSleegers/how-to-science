@@ -21,15 +21,12 @@ const sections = nav.map((section) => {
 
 <Layout title="How to Science">
   <div class="mx-auto max-w-5xl px-6 py-12 lg:px-8 lg:py-16">
-    <section class="mb-14 max-w-2xl">
+    <section class="mb-14">
       <h1 class="text-3xl font-bold tracking-tight sm:text-4xl">How to Science</h1>
-      <p class="mt-4 text-lg text-muted-foreground">
-        Notes on various methodology and statistics topics, including literature reviews and R code.
-      </p>
-      <p class="mt-3 text-sm text-muted-foreground">
-        This site is a work in progress. Some pages are stubs or drafts, and my thinking evolves as I read more. Best practices in the field shift too. Spotted a mistake or disagree with something? <a
+      <p class="mt-4 text-base text-muted-foreground">
+        Notes on methodology and statistics, including literature reviews and R code. A work in progress — spotted a mistake or disagree with something? <a
           href="https://github.com/WillemSleegers/how-to-science/issues"
-          class="font-medium text-primary underline-offset-4 hover:underline">open an issue</a
+          class="font-medium text-primary underline-offset-4 hover:underline">Open an issue</a
         > or <a
           href="https://www.willemsleegers.com"
           class="font-medium text-primary underline-offset-4 hover:underline">get in touch</a
@@ -40,11 +37,12 @@ const sections = nav.map((section) => {
     {
       sections.map((section) => (
         <section id={slugify(section.title)} class="mb-14 scroll-mt-4">
-          <h2 class="mb-5 text-lg font-semibold tracking-tight">{section.title}</h2>
+          <h2 class="mb-3 text-lg font-semibold tracking-tight">{section.title}</h2>
+          <div class="space-y-6">
           {section.blocks.map((block) => (
-            <div id={block.label ? slugify(block.label) : undefined} class={`mb-6${block.label ? " scroll-mt-4" : ""}`}>
+            <div id={block.label ? slugify(block.label) : undefined} class={block.label ? "scroll-mt-4" : undefined}>
               {block.label && (
-                <h3 class="mb-2.5 text-xs font-medium tracking-wide text-muted-foreground uppercase">
+                <h3 class="mb-2.5 text-sm font-medium text-muted-foreground">
                   {block.label}
                 </h3>
               )}
@@ -52,9 +50,9 @@ const sections = nav.map((section) => {
                 {block.pages.map((page) => (
                   <a
                     href={`${base}/${page.slug}`}
-                    class="group flex flex-col rounded-xl border bg-card p-4 transition-colors hover:border-foreground/20 hover:bg-accent/50"
+                    class="group flex flex-col rounded-lg border bg-card p-4 transition-colors hover:bg-muted/50"
                   >
-                    <span class="leading-tight font-medium">{page.title}</span>
+                    <span class="text-sm font-medium">{page.title}</span>
                     {page.description && (
                       <span class="mt-1.5 line-clamp-2 text-sm text-muted-foreground">
                         {page.description}
@@ -65,11 +63,12 @@ const sections = nav.map((section) => {
               </div>
             </div>
           ))}
+          </div>
         </section>
       ))
     }
 
-    <div class="mt-4 flex justify-center border-t pt-8">
+    <div class="mt-4 flex justify-center pt-8">
       <ThemeToggle client:load />
     </div>
   </div>
