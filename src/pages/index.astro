@@ -1,7 +1,7 @@
 ---
 import Layout from "@/layouts/main.astro"
 import { ThemeToggle } from "@/components/ThemeToggle"
-import { loadNav } from "@/lib/nav"
+import { loadNav, slugify } from "@/lib/nav"
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, "")
 const nav = loadNav()
@@ -41,10 +41,10 @@ const sections = nav.map((section) => {
 
     {
       sections.map((section) => (
-        <section class="mb-14">
+        <section id={slugify(section.title)} class="mb-14 scroll-mt-4">
           <h2 class="mb-5 text-lg font-semibold tracking-tight">{section.title}</h2>
           {section.blocks.map((block) => (
-            <div class="mb-6">
+            <div id={block.label ? slugify(block.label) : undefined} class={`mb-6${block.label ? " scroll-mt-4" : ""}`}>
               {block.label && (
                 <h3 class="mb-2.5 text-xs font-medium tracking-wide text-muted-foreground uppercase">
                   {block.label}

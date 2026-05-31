@@ -142,23 +142,33 @@ export function treeContainsSlug(nodes: NavNode[], slug: string): boolean {
 
 export interface Crumb {
   title: string
-  href?: string // only the Home crumb links; sections/groups have no page
+  href?: string
+}
+
+export function slugify(title: string): string {
+  return title.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "")
 }
 
 /**
  * Build the breadcrumb trail for a page: Home → Section → [Group] → Page.
- * Only Home is a link (sections and groups have no landing page).
+ * Section and group crumbs link to their anchor on the home page.
  */
 export function findTrail(sections: NavSection[], slug: string): Crumb[] {
   const home: Crumb = { title: "How to Science", href: `${BASE}/` }
   for (const section of sections) {
+    const sectionHref = `${BASE}/#${slugify(section.title)}`
     for (const node of section.nodes) {
       if (node.slug === slug) {
-        return [home, { title: section.title }, { title: node.title }]
+        return [home, { title: section.title, href: sectionHref }, { title: node.title }]
       }
       const child = node.children.find((c) => c.slug === slug)
       if (child) {
-        return [home, { title: section.title }, { title: node.title }, { title: child.title }]
+        return [
+          home,
+          { title: section.title, href: sectionHref },
+          { title: node.title, href: `${BASE}/#${slugify(node.title)}` },
+          { title: child.title },
+        ]
       }
     }
   }
