@@ -1,6 +1,8 @@
 ---
 title: Comparing string similarity
-description: "Comparing strings with edit-distance, n-gram, and embedding-based similarity metrics"
+description: >-
+  Comparing strings with edit-distance, n-gram, and embedding-based similarity
+  metrics
 toc: true
 ---
 
@@ -12,53 +14,55 @@ toc: true
 - [Cosine similarity](#cosine-similarity)
 - [Comparing metrics](#comparing-metrics)
 - [BLEU score](#bleu-score)
-  - [The core idea: n-gram precision](#the-core-idea-n-gram-precision)
-  - [Clipped precision](#clipped-precision)
-  - [Brevity penalty](#brevity-penalty)
-  - [Implementation](#implementation)
-  - [Applied to the translations](#applied-to-the-translations)
   - [Limitations](#limitations)
 - [Semantic similarity](#semantic-similarity)
   - [The concept](#the-concept)
-  - [Applied to the translations](#applied-to-the-translations-1)
+  - [Applied to the variants](#applied-to-the-variants)
   - [When to use this](#when-to-use-this)
 - [Language considerations](#language-considerations)
   - [Space-delimited languages](#space-delimited-languages)
   - [Morphologically rich languages](#morphologically-rich-languages)
   - [Arabic diacritics](#arabic-diacritics)
   - [Embeddings across languages](#embeddings-across-languages)
-- [Sentence-level vs. document-level](#sentence-level-vs-document-level)
+- [Item-level vs. document-level](#item-level-vs-document-level)
+
+<details class="code-fold">
+<summary>Code</summary>
 
 ``` r
 library(tidyverse)
 library(stringdist)
+
+clean <- function(x) {
+  x |> str_to_lower() |> str_remove_all("[[:punct:]]") |> str_squish()
+}
 ```
 
-String similarity metrics reduce the comparison between two pieces of text to a single number, making it possible to rank, filter, or aggregate comparisons at scale. Common use cases include comparing survey responses across time points, detecting duplicate records, and evaluating translations. This page focuses on the translation use case — we have a reference text and want to measure how closely several translations match it — but the methods apply wherever you need to compare strings.
+</details>
 
-This page covers three general-purpose surface-level metrics from the `stringdist` package — Levenshtein, Jaccard, and cosine — BLEU, a metric designed specifically for translation evaluation, and semantic similarity using embeddings, which captures meaning rather than surface overlap. Each section shows how the metric works on simple examples before applying it to translations.
+String similarity metrics reduce the comparison between two pieces of text to a single number, making it possible to rank, filter, or aggregate comparisons at scale. Common use cases include comparing survey responses across time points, detecting duplicate records, and evaluating translations.
+
+This page covers three general-purpose surface-level metrics from the `stringdist` package — Levenshtein, Jaccard, and cosine — BLEU, a metric designed specifically for translation evaluation, and semantic similarity using embeddings, which captures meaning rather than surface overlap.
 
 ## Distance vs. similarity
 
 Most string comparison algorithms compute a *distance* — how different two strings are. Raw distances are hard to interpret because they scale with string length: one changed character in a 4-character string is a much bigger deal than one changed character in a 100-character string.
 
-*Similarity* normalizes distance into a 0–1 scale where 1 means identical and 0 means completely different. The `stringdist` package provides both `stringdist()` for raw distances and `stringsim()` for normalized similarities. This page uses `stringsim()` throughout.
+*Similarity* normalizes distance into a 0–1 scale where 1 means identical and 0 means completely different. The `stringdist` package provides both `stringdist()` for raw distances and `stringsim()` for normalized similarities.
 
 ## Example data
 
-We use a single source sentence and four translations that vary in how closely they match. Before computing any similarity, it is usually worth cleaning the strings — lowercasing, stripping punctuation — so that differences in capitalization or punctuation do not distort the scores.
+We use a single reference question and four variants that differ in how closely they match. Before computing any similarity, it is usually worth cleaning the strings — lowercasing, stripping punctuation — so that differences in capitalization or punctuation do not distort the scores.
 
 ``` r
-clean <- function(x) x |> str_to_lower() |> str_remove_all("[[:punct:]]") |> str_squish()
+reference <- clean("To what extent do you agree with the following statements?")
 
-source <- clean("The cat sat on the mat near the window.")
-
-translations <- tribble(
-  ~label,          ~text,
-  "Near-identical","The cat sat on the mat near the window!",
-  "Paraphrase",    "The cat was resting on the mat beside the window.",
-  "Different",     "A dog lay on the floor next to the door.",
-  "Unrelated",     "The economy grew faster than expected last quarter."
+variants <- tribble(
+  ~label           , ~text                                                       ,
+  "Near-identical" , "To what extent do you agree with the following statement?" ,
+  "Paraphrase"     , "How much do you agree with each of the statements below?"  ,
+  "Different"      , "How satisfied are you with the service you received?"      ,
+  "Unrelated"      , "What is your highest level of education completed?"
 ) |>
   mutate(text = clean(text))
 ```
@@ -67,79 +71,100 @@ translations <- tribble(
 
 The Levenshtein distance asks: what is the smallest number of single-character edits — insertions, deletions, or substitutions — needed to turn one string into the other? `stringsim()` then normalizes this by dividing by the length of the longer string, so the result is always between 0 and 1.
 
+Take `"agree"` and `"agreed"` as a worked example. One edit is needed — insert `'d'` at the end — so the raw distance is 1. The longer string, `"agreed"`, has 6 characters. Similarity = 1 − 1/6 ≈ **0.83**.
+
+<details class="code-fold">
+<summary>Code</summary>
+
 ``` r
-stringsim("cat", "car", method = "lv")   # one substitution (t → r); longer string is 3 chars; sim = 1 - 1/3
+tribble(
+  ~a                 , ~b                 , ~note                      ,
+  "agree"            , "agree"            , "identical"                ,
+  "next"             , "text"             , "one substitution (n → t)" ,
+  "agree"            , "agreed"           , "one insertion (add d)"    ,
+  "agree"            , "disagree"         , "prefix insertion (dis–)"  ,
+  "completely agree" , "completely agrre" , "typo (missing e)"         ,
+  "agree"            , "skip"             , "no characters in common"
+) |>
+  mutate(similarity = stringsim(a, b, method = "lv")) |>
+  knitr::kable(digits = 2)
 ```
 
-    [1] 0.6666667
+</details>
+
+| a                | b                | note                     | similarity |
+|:-----------------|:-----------------|:-------------------------|-----------:|
+| agree            | agree            | identical                |       1.00 |
+| next             | text             | one substitution (n → t) |       0.75 |
+| agree            | agreed           | one insertion (add d)    |       0.83 |
+| agree            | disagree         | prefix insertion (dis–)  |       0.62 |
+| completely agree | completely agrre | typo (missing e)         |       0.94 |
+| agree            | skip             | no characters in common  |       0.00 |
+
+The substitution case (`"next"` vs `"text"`) and the insertion case (`"agree"` vs `"agreed"`) both require exactly one edit, but score differently. The reason is normalization: `"agreed"` has 6 characters, so the penalty is 1/6 ≈ 0.17. With `"text"`, the longest string has only 4 characters, so the same edit costs 1/4 = 0.25. The same number of edits looks smaller when the strings are longer.
+
+Applied to the variants:
+
+<details class="code-fold">
+<summary>Code</summary>
 
 ``` r
-stringsim("cat", "cart", method = "lv")  # one insertion (add t);    longer string is 4 chars; sim = 1 - 1/4
-```
-
-    [1] 0.75
-
-``` r
-stringsim("cat", "dog", method = "lv")   # three substitutions;      longer string is 3 chars; sim = 1 - 3/3
-```
-
-    [1] 0
-
-``` r
-stringsim("cat", "cat", method = "lv")   # identical; distance = 0;  sim = 1
-```
-
-    [1] 1
-
-The insertion case (`"cat"` vs `"cart"`) scores higher than the substitution case (`"cat"` vs `"car"`) even though both require exactly one edit. The reason is normalization: the longer string `"cart"` has 4 characters, so the penalty is 1/4. With `"car"`, the longest string has only 3 characters, so the same edit costs 1/3. The same number of edits looks smaller when the strings are longer.
-
-Applied to the translations:
-
-``` r
-translations |>
-  mutate(similarity = stringsim(text, source, method = "lv")) |>
+variants |>
+  mutate(similarity = stringsim(text, reference, method = "lv")) |>
   select(label, similarity)
 ```
+
+</details>
 
     # A tibble: 4 × 2
       label          similarity
       <chr>               <dbl>
-    1 Near-identical      1    
-    2 Paraphrase          0.708
-    3 Different           0.410
-    4 Unrelated           0.28 
+    1 Near-identical      0.982
+    2 Paraphrase          0.491
+    3 Different           0.351
+    4 Unrelated           0.246
 
 ## Jaccard similarity
 
-Levenshtein cares about the exact sequence of characters. Jaccard takes a different approach: it ignores order entirely and just asks what words the two strings have in common.
+Levenshtein cares about the exact sequence of characters. Jaccard takes a different approach: it ignores order and frequency entirely and just asks which characters the two strings have in common.
 
-Each string is treated as a bag of words. Jaccard similarity is the number of words that appear in both strings, divided by the total number of distinct words across both strings. If two strings share all their words, the score is 1. If they share none, it is 0.
+Each string is reduced to a set of unique characters. Jaccard similarity is the size of the intersection divided by the size of the union — the characters present in both strings divided by all distinct characters across both strings. If two strings have the same character set, the score is 1. If they share no characters, it is 0.
+
+Take `"completely agree"` and `"strongly agree"` as a worked example. Their character sets are {a, c, e, g, l, m, o, p, r, t, y, space} and {a, e, g, l, n, o, r, s, t, y, space} — 12 and 11 distinct characters respectively. The intersection (characters in both) is {a, e, g, l, o, r, t, y, space} — 9 characters. The union is all 14 distinct characters across both strings. Similarity = 9/14 ≈ **0.64**.
+
+<details class="code-fold">
+<summary>Code</summary>
 
 ``` r
-stringsim("the cat sat", "the cat ran", method = "jaccard")  # "the" and "cat" shared; "sat" and "ran" not
+tribble(
+  ~a                           , ~b                           , ~note                              ,
+  "completely agree"           , "completely agree"           , "identical"                        ,
+  "completely agree"           , "strongly agree"             , "one word differs"                 ,
+  "completely agree"           , "not applicable"             , "no words shared"                  ,
+  "neither agree nor disagree" , "disagree nor agree neither" , "same characters, different order" ,
+  "strongly strongly agree"    , "strongly agree"             , "repetition ignored"
+) |>
+  mutate(similarity = stringsim(a, b, method = "jaccard")) |>
+  knitr::kable(digits = 2)
 ```
 
-    [1] 0.6666667
+</details>
+
+| a | b | note | similarity |
+|:---|:---|:---|---:|
+| completely agree | completely agree | identical | 1.00 |
+| completely agree | strongly agree | one word differs | 0.64 |
+| completely agree | not applicable | no words shared | 0.53 |
+| neither agree nor disagree | disagree nor agree neither | same characters, different order | 1.00 |
+| strongly strongly agree | strongly agree | repetition ignored | 1.00 |
+
+Because only the character set matters, `"neither agree nor disagree"` and `"disagree nor agree neither"` are treated as identical — they contain exactly the same characters. Jaccard is also blind to repetition: “strongly” appearing twice contributes the same as once, since it is still just one element in the set.
+
+Applied to the variants:
 
 ``` r
-stringsim("the cat sat", "the cat sat", method = "jaccard")  # all words shared
-```
-
-    [1] 1
-
-``` r
-stringsim("the cat sat", "a dog ran",   method = "jaccard")  # no words shared
-```
-
-    [1] 0.1666667
-
-Because word order does not matter, `"cat sat mat"` and `"mat cat sat"` are treated as identical. This makes Jaccard useful when a translation reorders or restructures a sentence while keeping the same vocabulary. It also means Jaccard is blind to repetition: a word that appears three times counts the same as one that appears once.
-
-Applied to the translations:
-
-``` r
-translations |>
-  mutate(similarity = stringsim(text, source, method = "jaccard")) |>
+variants |>
+  mutate(similarity = stringsim(text, reference, method = "jaccard")) |>
   select(label, similarity)
 ```
 
@@ -147,72 +172,101 @@ translations |>
       label          similarity
       <chr>               <dbl>
     1 Near-identical      1    
-    2 Paraphrase          0.875
-    3 Different           0.474
-    4 Unrelated           0.591
+    2 Paraphrase          0.857
+    3 Different           0.667
+    4 Unrelated           0.818
 
 ## Cosine similarity
 
-Cosine similarity counts how often each short character sequence appears in each string, then asks whether the two strings have similar distributions of those sequences. These sequences are called *character n-grams*: an n-gram is a sequence of n consecutive units, and here the units are characters. If the same character patterns show up with similar frequency in both strings, the score is high. If the patterns are very different, the score is low.
+Cosine similarity counts how often each character appears in each string, then asks whether the two strings have similar distributions. If the same characters show up with similar frequency in both strings, the score is high. If the distributions are very different, the score is low.
+
+Take `"agree"` and `"disagree"` as a worked example. Their character frequencies are {a:1, e:2, g:1, r:1} and {a:1, d:1, e:2, g:1, i:1, r:1, s:1}. The dot product — multiply the count of each shared character and sum — is (1×1) + (2×2) + (1×1) + (1×1) = 7. The magnitude of each frequency vector is √(1²+2²+1²+1²) = √7 ≈ 2.65 and √(1²+2²+1²+1²+1²+1²+1²) = 3. Similarity = 7 / (2.65 × 3) ≈ **0.88**. The score is high because all of `"agree"`’s characters appear in `"disagree"` with the same frequency.
+
+<details class="code-fold">
+<summary>Code</summary>
 
 ``` r
-stringsim("hello world", "hello there", method = "cosine")   # "hel", "ell", "llo" etc. shared
+tribble(
+  ~a                 , ~b                    , ~note                                               ,
+  "completely agree" , "completely agree"    , "identical"                                         ,
+  "completely agree" , "completely disagree" , "share almost all characters; 'd', 'i', 's' differ" ,
+  "agree"            , "disagree"            , "'agree' characters are a subset of 'disagree'"     ,
+  "agree"            , "next"                , "share only the letter 'e'"                         ,
+  "yes"              , "yesterday"           , "all characters of 'yes' appear in 'yesterday'"
+) |>
+  mutate(similarity = stringsim(a, b, method = "cosine")) |>
+  knitr::kable(digits = 2)
 ```
 
-    [1] 0.7509393
+</details>
 
-``` r
-stringsim("hello world", "goodbye world", method = "cosine") # "wor", "orl", "rld" shared
-```
-
-    [1] 0.7509393
-
-``` r
-stringsim("hello world", "hello world", method = "cosine")   # identical
-```
-
-    [1] 1
-
-``` r
-stringsim("hello world", "xyz abc", method = "cosine")       # no character patterns in common
-```
-
-    [1] 0.086711
+| a | b | note | similarity |
+|:---|:---|:---|---:|
+| completely agree | completely agree | identical | 1.00 |
+| completely agree | completely disagree | share almost all characters; ‘d’, ‘i’, ‘s’ differ | 0.95 |
+| agree | disagree | ‘agree’ characters are a subset of ‘disagree’ | 0.84 |
+| agree | next | share only the letter ‘e’ | 0.38 |
+| yes | yesterday | all characters of ‘yes’ appear in ‘yesterday’ | 0.80 |
 
 The main advantage of cosine over Levenshtein is that it is not thrown off by length differences. A long paraphrase and a short original can still score high if they share the same character-level patterns, whereas Levenshtein would penalize the extra characters.
 
-Applied to the translations:
+``` r
+source <- "how satisfied are you"
+
+tribble(
+  ~label           , ~b                                                           ,
+  "Identical"      , "how satisfied are you"                                      ,
+  "Longer version" , "to what degree are you satisfied with the service provided" ,
+  "Unrelated"      , "what is your date of birth"
+) |>
+  mutate(
+    levenshtein = stringsim(b, source, method = "lv"),
+    cosine = stringsim(b, source, method = "cosine")
+  ) |>
+  select(label, levenshtein, cosine) |>
+  knitr::kable(digits = 2)
+```
+
+| label          | levenshtein | cosine |
+|:---------------|------------:|-------:|
+| Identical      |        1.00 |    1.0 |
+| Longer version |        0.29 |    0.9 |
+| Unrelated      |        0.23 |    0.9 |
+
+The longer paraphrase scores much lower on Levenshtein than on cosine — Levenshtein penalizes the extra characters, cosine recognises that the same character patterns are present.
+
+Applied to the variants:
 
 ``` r
-translations |>
-  mutate(similarity = stringsim(text, source, method = "cosine")) |>
+variants |>
+  mutate(similarity = stringsim(text, reference, method = "cosine")) |>
   select(label, similarity)
 ```
 
     # A tibble: 4 × 2
       label          similarity
       <chr>               <dbl>
-    1 Near-identical      1    
-    2 Paraphrase          0.963
-    3 Different           0.843
-    4 Unrelated           0.901
+    1 Near-identical      0.998
+    2 Paraphrase          0.937
+    3 Different           0.839
+    4 Unrelated           0.921
 
 ## Comparing metrics
 
 The three metrics often agree but can diverge:
 
 - Levenshtein is sensitive to exact character-level edits, including small differences in spelling or word endings.
-- Jaccard cares only about which words appear, not how many times or in what order.
+- Jaccard cares only about which characters appear, not how many times or in what order.
 - Cosine looks at the distribution of character patterns and is least sensitive to length differences.
 
 Computing all three gives a fuller picture:
 
 ``` r
-translations |>
+variants |>
   mutate(
-    levenshtein = stringsim(text, source, method = "lv"),
-    jaccard     = stringsim(text, source, method = "jaccard"),
-    cosine      = stringsim(text, source, method = "cosine")
+    levenshtein = stringsim(text, reference, method = "lv"),
+    jaccard = stringsim(text, reference, method = "jaccard"),
+    cosine = stringsim(text, reference, method = "cosine")
   ) |>
   select(label, levenshtein, jaccard, cosine)
 ```
@@ -220,66 +274,16 @@ translations |>
     # A tibble: 4 × 4
       label          levenshtein jaccard cosine
       <chr>                <dbl>   <dbl>  <dbl>
-    1 Near-identical       1       1      1    
-    2 Paraphrase           0.708   0.875  0.963
-    3 Different            0.410   0.474  0.843
-    4 Unrelated            0.28    0.591  0.901
+    1 Near-identical       0.982   1      0.998
+    2 Paraphrase           0.491   0.857  0.937
+    3 Different            0.351   0.667  0.839
+    4 Unrelated            0.246   0.818  0.921
 
 ## BLEU score
 
-The three metrics above are general-purpose string comparison tools. BLEU (Bilingual Evaluation Understudy) was designed specifically for evaluating translations and remains the standard metric in translation research. Its core question is different: rather than asking how similar two strings are character-by-character or word-by-word, it asks how much of the candidate translation’s phrasing actually appears in the reference.
+The three metrics above are general-purpose string comparison tools. BLEU (Bilingual Evaluation Understudy) was designed specifically for evaluating translations and remains the standard metric in translation research. Rather than comparing strings character-by-character, it asks how much of the candidate’s word sequences actually appear in the reference.
 
-### The core idea: n-gram precision
-
-The starting point is word-level precision: what fraction of the words in the candidate also appear in the reference?
-
-``` r
-ref  <- "the cat sat on the mat"
-cand <- "the cat sat on the floor"
-```
-
-The candidate has 6 words. Five of them — “the”, “cat”, “sat”, “on”, “the” — appear in the reference. Only “floor” does not. Naïve precision would be 5/6 ≈ 0.83.
-
-But precision alone misses something important: it only checks whether each word appears somewhere in the reference, not whether adjacent words appear *together*. A translation that gets every individual word right but scrambles them completely would score the same as one that is perfectly fluent. BLEU addresses this by checking not just individual words but consecutive sequences of words. These are also called n-grams — the same term used in the cosine section above, but there applied to characters rather than words. An n-gram is just a sequence of n consecutive units; what those units are (characters, words, something else) depends on the method.
-
-It computes precision separately for unigrams (single words), bigrams (pairs), trigrams (triples), and 4-grams, then combines them. Getting a 4-gram right is a much stronger signal than getting a single word right: the candidate would have had to produce four words in exactly the right order. High n-gram precision at longer lengths means the translation is fluent, not just using the right vocabulary.
-
-### Clipped precision
-
-Naïve precision has a flaw. Consider a candidate that just repeats the most common word in the reference:
-
-``` r
-ref_words  <- str_split("the cat sat on the mat", " ")[[1]]
-cand_words <- str_split("the the the the the the", " ")[[1]]
-
-mean(cand_words %in% ref_words)  # every "the" matches; precision = 1.0
-```
-
-    [1] 1
-
-Every word in the candidate appears in the reference, so naïve precision is 1.0, even though the candidate is nonsense.
-
-BLEU fixes this with *clipped precision*: each reference word can only be credited once. If “the” appears twice in the reference, it can match at most two “the”s in the candidate, no matter how many times the candidate repeats it.
-
-``` r
-ref_counts  <- table(ref_words)   # "the" appears 2 times in reference
-cand_counts <- table(cand_words)  # "the" appears 6 times in candidate
-
-# Clipped: each word can only be matched up to its count in the reference
-clipped <- sum(map_dbl(names(cand_counts), \(w) {
-  min(cand_counts[w], ref_counts[w] %||% 0)
-}))
-
-clipped / length(cand_words)  # 2 / 6 ≈ 0.33; much more honest
-```
-
-    [1] 0.3333333
-
-### Brevity penalty
-
-Precision has a second weakness: shorter candidates tend to score higher because there are fewer n-grams to get wrong. An extreme case is a one-word candidate: if that word appears in the reference, unigram precision is 1.0.
-
-BLEU applies a brevity penalty when the candidate is shorter than the reference. The penalty grows as the length gap grows. If the candidate is at least as long as the reference, no penalty applies.
+BLEU combines three ideas. First, *n-gram precision*: it checks not just whether individual words match, but whether consecutive word sequences match — pairs (bigrams), triples (trigrams), and 4-word sequences. Matching longer sequences is a stronger signal than matching single words, because the candidate would have to produce multiple words in exactly the right order. The standard implementation uses up to 4-grams. Second, *clipping*: each reference word can only be credited once, preventing a candidate that repeats a single word from scoring artificially high. Third, a *brevity penalty*: candidates shorter than the reference are penalized, since short strings have fewer n-grams to get wrong. One adjustment for short strings: `max_n` is capped at the length of the shorter string, so a two-word label like “completely agree” is evaluated on unigrams and bigrams rather than forced to score 0 because 4-grams are impossible.
 
 ``` r
 brevity_penalty <- function(cand_tokens, ref_tokens) {
@@ -289,60 +293,86 @@ brevity_penalty <- function(cand_tokens, ref_tokens) {
     exp(1 - length(ref_tokens) / length(cand_tokens))
   }
 }
-```
 
-### Implementation
-
-There is no widely used R package for BLEU that fits naturally into a tidyverse workflow, so we implement it directly. The three components — n-gram extraction, clipped precision, and the brevity penalty — map cleanly to three small functions.
-
-``` r
 get_ngrams <- function(tokens, n) {
-  if (length(tokens) < n) return(character(0))
-  map_chr(seq_len(length(tokens) - n + 1), \(i) paste(tokens[i:(i + n - 1)], collapse = " "))
+  if (length(tokens) < n) {
+    return(character(0))
+  }
+  map_chr(seq_len(length(tokens) - n + 1), \(i) {
+    paste(tokens[i:(i + n - 1)], collapse = " ")
+  })
 }
 
 clipped_precision <- function(cand_tokens, ref_tokens, n) {
   cand_ngrams <- get_ngrams(cand_tokens, n)
-  ref_ngrams  <- get_ngrams(ref_tokens, n)
-  if (length(cand_ngrams) == 0) return(0)
+  ref_ngrams <- get_ngrams(ref_tokens, n)
+  if (length(cand_ngrams) == 0) {
+    return(0)
+  }
   sum(map_dbl(unique(cand_ngrams), \(ng) {
     min(sum(cand_ngrams == ng), sum(ref_ngrams == ng))
-  })) / length(cand_ngrams)
+  })) /
+    length(cand_ngrams)
 }
 
 bleu <- function(candidate, reference, max_n = 4) {
   cand_tokens <- str_split(candidate, "\\s+")[[1]]
-  ref_tokens  <- str_split(reference, "\\s+")[[1]]
-  precisions  <- map_dbl(seq_len(max_n), \(n) clipped_precision(cand_tokens, ref_tokens, n))
-  if (any(precisions == 0)) return(0)
+  ref_tokens <- str_split(reference, "\\s+")[[1]]
+  max_n <- min(max_n, length(cand_tokens), length(ref_tokens))
+  precisions <- map_dbl(seq_len(max_n), \(n) {
+    clipped_precision(cand_tokens, ref_tokens, n)
+  })
+  if (any(precisions == 0)) {
+    return(0)
+  }
   bp <- brevity_penalty(cand_tokens, ref_tokens)
   bp * exp(mean(log(precisions)))
 }
 ```
 
-The final score is the geometric mean of the four clipped precisions, multiplied by the brevity penalty. The geometric mean is used rather than the arithmetic mean because it returns 0 the moment any precision is 0 — a translation that completely fails on 4-grams should not score well just because its individual words are right.
+``` r
+ref_bleu <- "to what extent do you agree with the statement"
 
-### Applied to the translations
+tribble(
+  ~candidate                                        , ~note              ,
+  "to what extent do you agree with the statement"  , "identical"        ,
+  "to what extent do you agree with this statement" , "one word differs" ,
+  "how much do you agree with the statement"        , "paraphrase"       ,
+  "what is your date of birth"                      , "unrelated"
+) |>
+  mutate(bleu = map_dbl(candidate, bleu, reference = ref_bleu)) |>
+  select(candidate, note, bleu) |>
+  knitr::kable(digits = 2)
+```
+
+| candidate                                       | note             | bleu |
+|:------------------------------------------------|:-----------------|-----:|
+| to what extent do you agree with the statement  | identical        | 1.00 |
+| to what extent do you agree with this statement | one word differs | 0.75 |
+| how much do you agree with the statement        | paraphrase       | 0.60 |
+| what is your date of birth                      | unrelated        | 0.00 |
+
+Applied to the variants:
 
 ``` r
-translations |>
-  mutate(bleu = map_dbl(text, bleu, reference = source)) |>
+variants |>
+  mutate(bleu = map_dbl(text, bleu, reference = reference)) |>
   select(label, bleu)
 ```
 
     # A tibble: 4 × 2
       label           bleu
       <chr>          <dbl>
-    1 Near-identical     1
-    2 Paraphrase         0
-    3 Different          0
-    4 Unrelated          0
+    1 Near-identical 0.880
+    2 Paraphrase     0.260
+    3 Different      0    
+    4 Unrelated      0    
 
-A few things to notice in the output. The near-identical translation scores very high because its word sequences almost perfectly match the reference. The paraphrase scores lower even though it conveys a similar meaning — BLEU does not know that “resting” is similar to “sat” or that “beside” is similar to “near”. The unrelated translation scores 0 because it shares no 4-grams with the reference, and a single zero precision collapses the entire score to 0.
+The near-identical variant scores very high because its word sequences almost perfectly match the reference. The paraphrase scores lower even though it asks essentially the same thing — BLEU does not know that “how much” is similar to “to what extent”. The unrelated variant scores 0 because it shares no 4-grams with the reference, and a single zero precision collapses the entire score to 0.
 
 ### Limitations
 
-BLEU measures surface overlap, not meaning. Two sentences that say the same thing in different words — “the cat sat on the mat” and “the feline rested upon the rug” — score near zero against each other, because they share almost no n-grams. This is the fundamental limitation of all the metrics on this page. For use cases where meaning matters more than exact wording, embedding-based metrics like BERTScore are more appropriate; they compare translations in a semantic space where “cat” and “feline” are close together.
+BLEU measures surface overlap, not meaning. Two questions that ask the same thing in different words — “To what extent do you agree?” and “How much do you agree?” — score low against each other, because they share only the word “agree”. This is the fundamental limitation of all the metrics on this page. For use cases where meaning matters more than exact wording, embedding-based metrics are more appropriate; they compare strings in a semantic space where “to what extent” and “how much” are close together.
 
 BLEU also has a known sensitivity to short texts. On sentence-level comparisons, scores are noisier and harder to interpret than on full documents, because there are fewer n-grams to aggregate over. When comparing individual sentences, the `stringsim()` metrics are often more stable and easier to reason about; BLEU becomes more reliable when aggregated over many sentences or paragraphs.
 
@@ -360,43 +390,51 @@ library(rollama)
 
 ### The concept
 
-To see what embeddings do differently, consider two sentences that say the same thing in completely different words:
+To see what embeddings do differently, consider two questions that ask the same thing in completely different words:
 
 ``` r
 cosine_sim <- function(a, b) sum(a * b) / (sqrt(sum(a^2)) * sqrt(sum(b^2)))
 
 as_vec <- function(embedding) embedding |> unlist() |> as.numeric()
 
-a <- as_vec(embed_text("the cat sat on the mat",     model = "nomic-embed-text"))
-b <- as_vec(embed_text("a feline rested on the rug", model = "nomic-embed-text"))
-c <- as_vec(embed_text("the economy grew last quarter", model = "nomic-embed-text"))
+a <- as_vec(embed_text(
+  "to what extent do you agree",
+  model = "nomic-embed-text"
+))
+b <- as_vec(embed_text("how much do you agree", model = "nomic-embed-text"))
+c <- as_vec(embed_text(
+  "what is your date of birth",
+  model = "nomic-embed-text"
+))
 
-cosine_sim(a, b)  # paraphrase: should be high
-cosine_sim(a, c)  # unrelated: should be low
+cosine_sim(a, b) # paraphrase: should be high
+cosine_sim(a, c) # unrelated: should be low
 ```
 
-The paraphrase scores high because the model has learned that “cat” and “feline” refer to the same thing, and that “sat” and “rested” describe the same kind of action. The surface metrics earlier on this page would give both pairs a similarly low score, because they share almost no words.
+The paraphrase scores high because the model has learned that “to what extent” and “how much” serve the same communicative purpose. The surface metrics earlier on this page would give this pair a relatively low score, because they share very few words.
 
-### Applied to the translations
+### Applied to the variants
 
 ``` r
-source_vec <- as_vec(embed_text(source, model = "nomic-embed-text"))
+reference_vec <- as_vec(embed_text(reference, model = "nomic-embed-text"))
 
-translations |>
+variants |>
   mutate(
-    embedding  = map(text, \(t) as_vec(embed_text(t, model = "nomic-embed-text"))),
-    similarity = map_dbl(embedding, cosine_sim, b = source_vec)
+    embedding = map(text, \(t) {
+      as_vec(embed_text(t, model = "nomic-embed-text"))
+    }),
+    similarity = map_dbl(embedding, cosine_sim, b = reference_vec)
   ) |>
   select(label, similarity)
 ```
 
-Unlike BLEU and the `stringsim()` metrics, semantic similarity can recognise that the paraphrase translation is closer to the source than the score from surface overlap suggests. The unrelated and different translations should still score low, because their meaning genuinely differs.
+Unlike BLEU and the `stringsim()` metrics, semantic similarity can recognise that the paraphrase variant is closer to the reference than the surface overlap suggests. The unrelated and different variants should still score low, because their meaning genuinely differs.
 
 ### When to use this
 
-Surface metrics are the right default when you expect translations to be close to the reference — same words, maybe slightly reordered or with small substitutions. They are fast, require no external model, and are easy to reason about.
+Surface metrics are the right default when you expect responses to be close to the reference — same words, maybe slightly reordered or with small substitutions. They are fast, require no external model, and are easy to reason about.
 
-Semantic similarity is worth reaching for when paraphrasing is expected — valid translations that choose different vocabulary or restructure sentences while preserving meaning. In that case, surface metrics will penalise good translations, and embedding-based similarity gives a more accurate picture.
+Semantic similarity is worth reaching for when paraphrasing is expected — valid responses that choose different vocabulary or restructure sentences while preserving meaning. In that case, surface metrics will penalise good matches, and embedding-based similarity gives a more accurate picture.
 
 ## Language considerations
 
@@ -418,7 +456,7 @@ All five languages use spaces to separate words, so Jaccard and BLEU tokenisatio
 
 Turkish and Arabic are both highly agglutinative or inflected: a single root word can produce dozens of forms depending on tense, case, possession, and other markers. In Turkish, *evlerinden* (“from their houses”) is one token derived from *ev* (“house”). In Arabic, the definite article *ال* (al-) is attached directly to the following noun with no space.
 
-This matters most for Jaccard and BLEU, which match exact word tokens. Two sentences that express the same idea in Turkish or Arabic may share very few word-form tokens, producing low scores not because the translations differ but because the same meaning takes different surface forms. Character-level metrics — Levenshtein and cosine — are less affected, because they still pick up shared character sequences within and across word boundaries.
+This matters most for Jaccard and BLEU, which match exact word tokens. Two questions that express the same idea in Turkish or Arabic may share very few word-form tokens, producing low scores not because the phrasings differ but because the same meaning takes different surface forms. Character-level metrics — Levenshtein and cosine — are less affected, because they still pick up shared character sequences within and across word boundaries.
 
 Semantic similarity handles morphological variation best of all, because the embedding model has been trained to map different surface forms of the same concept to similar vectors.
 
@@ -428,7 +466,7 @@ Arabic text may or may not include diacritical marks (harakat), which indicate v
 
 ``` r
 strip_arabic_diacritics <- function(x) {
-  str_remove_all(x, "[ً-ٰٟ]")
+  str_remove_all(x, "[ً-ٰٟ]")
 }
 ```
 
@@ -441,39 +479,39 @@ strip_arabic_diacritics <- function(x) {
 
 Pull whichever you prefer with `ollama pull <model>` and replace `"nomic-embed-text"` with the model name in the code above. No Python required.
 
-## Sentence-level vs. document-level
+## Item-level vs. document-level
 
-The examples above compare single sentences. When working with full documents, you have two options:
+The examples above compare single strings. When working with full questionnaires or multi-item instruments, you have two options:
 
-**Document-level:** concatenate each translation into one long string and compute similarity once. This is fast but hides variation within a document — a translation that is excellent in one section and poor in another looks the same as one that is mediocre throughout.
+**Document-level:** concatenate all items into one long string and compute similarity once. This is fast but hides variation within the instrument — a questionnaire that is nearly identical on most items but differs on one key question looks the same as one that is slightly different throughout.
 
-**Sentence-level:** align the source and translation sentence by sentence, compute similarity for each pair, then summarize across sentences. This requires aligned data but reveals where translations diverge.
+**Item-level:** align the source and variant item by item, compute similarity for each pair, then summarize across items. This requires aligned data but reveals where the variants diverge.
 
 ``` r
-sentences <- tribble(
-  ~sentence, ~source,                             ~translation_a,                        ~translation_b,
-  1,         "The cat sat on the mat.",            "The cat sat on the mat.",             "A feline rested upon the rug.",
-  2,         "It looked out the window.",          "It looked out the window.",            "The animal gazed outside.",
-  3,         "The sun was bright that afternoon.", "The sun was bright that afternoon.",   "It was a sunny day in the evening."
+items <- tribble(
+  ~item , ~source                                                     , ~version_a                                                  , ~version_b                                        ,
+      1 , "To what extent do you agree with this statement?"          , "To what extent do you agree with this statement?"          , "How much do you agree with the statement below?" ,
+      2 , "How satisfied are you with the service?"                   , "How satisfied are you with the service?"                   , "How happy were you with the service provided?"   ,
+      3 , "How likely are you to recommend us to a friend or family?" , "How likely are you to recommend us to a friend or family?" , "Would you recommend us to people you know?"
 ) |>
-  mutate(across(source:translation_b, clean))
+  mutate(across(source:version_b, clean))
 
-sentences |>
+items |>
   mutate(
-    sim_a = stringsim(translation_a, source, method = "lv"),
-    sim_b = stringsim(translation_b, source, method = "lv")
+    sim_a = stringsim(version_a, source, method = "lv"),
+    sim_b = stringsim(version_b, source, method = "lv")
   ) |>
   summarise(
     mean_a = mean(sim_a),
     mean_b = mean(sim_b),
-    min_a  = min(sim_a),
-    min_b  = min(sim_b)
+    min_a = min(sim_a),
+    min_b = min(sim_b)
   )
 ```
 
     # A tibble: 1 × 4
       mean_a mean_b min_a min_b
        <dbl>  <dbl> <dbl> <dbl>
-    1      1  0.253     1 0.125
+    1      1  0.550     1 0.464
 
-The sentence-level summary shows not just the average similarity but also where a translation is weakest.
+The item-level summary shows not just the average similarity but also where a version diverges most from the original.
