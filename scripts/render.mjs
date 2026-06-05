@@ -59,6 +59,7 @@ if (arg === "--watch") {
   const stale = files.filter(isStale)
   console.log(`Found ${files.length} .qmd files, ${stale.length} need rendering`)
   for (const f of stale) renderFile(f)
+  for (const f of files) copyFigures(f)
   console.log("\nWatching for .qmd changes...")
   watch(CONTENT_DIR, { recursive: true }, (_, filename) => {
     if (filename?.endsWith(".qmd")) {
@@ -74,5 +75,6 @@ if (arg === "--watch") {
   const stale = files.filter(isStale)
   console.log(`Found ${files.length} .qmd files, ${stale.length} need rendering`)
   for (const f of stale) renderFile(f)
+  for (const f of files) copyFigures(f)
   console.log("\nDone.")
 }
