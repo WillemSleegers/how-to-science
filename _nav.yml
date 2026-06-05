@@ -34,6 +34,8 @@
 
 - group: Data Analysis
   items:
+    - path: statistics/simulation
+      text: Data Simulation
     - title: Regression
       items:
         - path: statistics/regression/collinearity
@@ -50,6 +52,11 @@
       items:
         - path: statistics/representativeness/non-probability-sampling
         - path: statistics/representativeness/survey-estimation
+    - title: Meta-Analysis
+      items:
+        - path: statistics/meta-analysis/basics
+        - path: statistics/meta-analysis/dependent-effect-sizes
+        - path: statistics/meta-analysis/multilevel
     - title: Qualitative Data Analysis
       items:
         - path: statistics/qualitative/classification

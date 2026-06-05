@@ -1,0 +1,175 @@
+---
+title: "Data Simulation"
+toc: true
+---
+
+```{r}
+#| label: setup
+#| message: false
+library(tidyverse)
+
+theme_set(theme_minimal())
+
+set.seed(42)
+```
+
+Simulating data means generating it yourself from a process you fully control. Because you choose the parameters, you know the truth, and you can check whether a method recovers it. That makes simulation useful for power analysis, for sanity-checking an analysis before running it on real data, and for building intuition about how a statistical model behaves.
+
+The recurring question is which parameters to set. You can start from concrete descriptives like means and standard deviations, or from a standardized effect size like Cohen's *d*. These feel like different techniques, but they describe the same underlying process from two angles. This page works through both for the simplest case, two groups compared with a *t*-test, and then shows that a regression equation and a correlation matrix are the same idea generalized.
+
+## One group from descriptives
+
+The most direct way to simulate is to name the descriptives you want and draw a sample with them. `rnorm()` draws from a normal distribution given a mean and standard deviation. To simulate 50 IQ scores, where the population mean is 100 and the standard deviation is 15:
+
+```{r}
+#| label: one-group
+scores <- rnorm(n = 50, mean = 100, sd = 15)
+
+mean(scores)
+sd(scores)
+```
+
+The sample mean and standard deviation are close to 100 and 15 but not exactly equal to them. The values you pass to `rnorm()` describe the population the sample is drawn from, not the sample itself. Each draw lands somewhere near those targets, with the gap shrinking as the sample grows. This sampling variability is usually what you want, because real samples behave the same way.
+
+If you need a sample whose descriptives match the targets exactly, standardize the draw and rescale it. `scale()` centers the values to a mean of 0 and a standard deviation of 1, and multiplying by 15 and adding 100 sets the descriptives precisely:
+
+```{r}
+#| label: one-group-exact
+scores <- as.numeric(scale(rnorm(50))) * 15 + 100
+
+mean(scores)
+sd(scores)
+```
+
+This removes the sampling variability in the descriptives, which is occasionally useful but usually not what you want, since it makes the sample less like real data.
+
+## Two groups from descriptives
+
+Comparing two groups extends the same idea: pick a mean and standard deviation for each group and draw both. Suppose a control group averages 100 and a treatment group averages 106, both with a standard deviation of 15. Stacking the two draws into a data frame gives a dataset ready to analyze:
+
+```{r}
+#| label: two-groups-descriptives
+n <- 50
+
+data <- tibble(
+  group = rep(c("control", "treatment"), each = n),
+  score = c(
+    rnorm(n, mean = 100, sd = 15),
+    rnorm(n, mean = 106, sd = 15)
+  )
+)
+
+t.test(score ~ group, data = data)
+```
+
+The *t*-test recovers a difference near the 6-point gap built into the means. Nothing here mentions an effect size. The size of the effect is implied by the numbers chosen: a 6-point difference against a standard deviation of 15. Whether that is a large effect or a small one depends entirely on the standard deviation it is measured against.
+
+## Two groups from an effect size
+
+The implied effect size in the previous example is Cohen's *d*, the difference in means divided by the standard deviation. Here that is 6 / 15 = 0.4. Often it is more natural to start from the effect size directly, especially when planning for power, where the question is framed in terms of *d* rather than raw units.
+
+To set *d* directly, work in standardized units. Fix the standard deviation at 1, place the control mean at 0, and place the treatment mean at *d*. The difference in means is then *d* by construction:
+
+```{r}
+#| label: two-groups-d
+d <- 0.4
+n <- 50
+
+data <- tibble(
+  group = rep(c("control", "treatment"), each = n),
+  score = c(
+    rnorm(n, mean = 0, sd = 1),
+    rnorm(n, mean = d, sd = 1)
+  )
+)
+```
+
+Estimating the standardized difference from the simulated data recovers a value near the *d* of 0.4 that was set:
+
+```{r}
+#| label: estimate-d
+means <- tapply(data$score, data$group, mean)
+(means["treatment"] - means["control"]) / sd(data$score)
+```
+
+The two approaches are the same process in different units. Setting descriptives fixes the means and standard deviations and lets *d* fall out; setting *d* fixes the standardized difference and lets the descriptives fall out. They convert directly into each other through the definition of *d*:
+
+$$
+d = \frac{m_\text{treatment} - m_\text{control}}{sd}
+$$
+
+Any pair of descriptives implies a *d*, and any *d* paired with a standard deviation implies a pair of means. The descriptives example used means of 100 and 106 with a standard deviation of 15, giving *d* = 0.4. Going the other way, *d* = 0.4 with a standard deviation of 15 implies a 6-point gap, so the treatment mean is 100 + 0.4 × 15 = 106. The two simulations describe the same effect.
+
+## Choosing the units
+
+Because the descriptives and the effect size carry the same information, the choice between them is a choice of units. Standardized units, with a standard deviation of 1 and means at 0 and *d*, keep the simulation tied directly to the effect size. Natural units, with a standard deviation of 15 and means at 100 and 106, keep it tied to the measure's real scale.
+
+The natural-units version is just the standardized version rescaled, exactly as in the one-group example. Setting *d* and then mapping it onto a chosen mean and standard deviation produces data on the original scale while still controlling the effect size:
+
+```{r}
+#| label: natural-units
+d <- 0.4
+mean_control <- 100
+sd_pooled <- 15
+
+data <- tibble(
+  group = rep(c("control", "treatment"), each = n),
+  score = c(
+    rnorm(n, mean = mean_control, sd = sd_pooled),
+    rnorm(n, mean = mean_control + d * sd_pooled, sd = sd_pooled)
+  )
+)
+```
+
+The effect is identical to the standardized version; only the surface numbers differ. Use whichever units match how you are thinking about the problem. Reach for the effect size when reasoning about power or comparing across measures, and for natural units when the raw scale carries meaning you want to preserve, such as plausible IQ scores or reaction times in milliseconds.
+
+## From a regression equation
+
+Both group simulations are special cases of a linear model. A regression equation builds the outcome from an intercept, one or more slopes, and random error:
+
+$$
+y = b_0 + b_1 x + \varepsilon, \qquad \varepsilon \sim \text{Normal}(0, \sigma)
+$$
+
+Coding the group as 0 for control and 1 for treatment makes the intercept the control mean, the slope the difference between groups, and the error standard deviation the within-group spread. The earlier two-group simulation is exactly this equation with `b0 = 100`, `b1 = 6`, and `sigma = 15`:
+
+```{r}
+#| label: regression
+b0 <- 100
+b1 <- 6
+sigma <- 15
+
+data <- tibble(
+  group = rep(0:1, each = n),
+  score = b0 + b1 * group + rnorm(2 * n, mean = 0, sd = sigma)
+)
+
+coef(lm(score ~ group, data = data))
+```
+
+The fitted intercept lands near 100 and the slope near 6, the values built into the equation. The standardized effect size is still recoverable as the slope divided by the error standard deviation, 6 / 15 = 0.4, the same *d* as before.
+
+Writing the simulation this way shows why the descriptive and effect-size approaches agree: both are descriptions of this one generative equation. It also generalizes immediately. Replacing the 0/1 group indicator with a continuous predictor simulates a regression with a numeric *x*, and adding more terms simulates models with more predictors, all from the same template of intercept, slopes, and error.
+
+## Correlated variables from a covariance matrix
+
+Setting an effect size directly has a multivariate analogue. When two variables are correlated, such as a pretest and a posttest on the same people, the parameter to set is the correlation between them. `MASS::mvrnorm()` draws from a multivariate normal distribution given a vector of means and a covariance matrix. With both variables standardized, the covariance matrix is a correlation matrix, and its off-diagonal entry is the correlation to simulate:
+
+```{r}
+#| label: mvrnorm
+r <- 0.5
+
+Sigma <- matrix(c(1, r, r, 1), nrow = 2)
+
+draws <- MASS::mvrnorm(n = 200, mu = c(0, 0), Sigma = Sigma)
+
+cor(draws)
+```
+
+The estimated correlation is close to the 0.5 that was set. This is the same move as setting *d* in the two-group case, raised to two dimensions: name the standardized effect, here a correlation, and let the data follow from it. Natural units work the same way too. Building the covariance matrix from chosen standard deviations rather than fixing them at 1 rescales the variables while preserving the correlation.
+
+## Reproducibility
+
+Every simulation here depends on random draws, so each run produces different numbers. Calling `set.seed()` before the draws fixes the random number generator so the same code always yields the same data, which is what makes a simulation reproducible. This page sets the seed once at the top; in a script, set it before any code whose output you want to be stable.
+
+Whichever starting point you choose, the underlying process is the same. Descriptives, effect sizes, regression coefficients, and correlation matrices are different parameterizations of one generative model. Pick the one that matches how you think about the problem, and rely on the fact that the others can always be derived from it.
