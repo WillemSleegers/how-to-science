@@ -27,6 +27,8 @@ This is a documentation/teaching site built on **Astro 6** with **Quarto** for c
 
 **If a page has a `.qmd`, edit the `.qmd`, never its generated `.md`** — direct `.md` edits (frontmatter included) are overwritten on re-render.
 
+**Pages with figures must be `index.qmd` inside a subdirectory** (e.g. `content/statistics/topic/index.qmd`), never a flat file like `topic.qmd`. Astro serves pages at a URL ending in `/topic/`, so a flat file's figure paths resolve one level too deep and 404. The `index.qmd` pattern keeps the page URL and the figure paths in sync.
+
 ## Adding a New Content Page
 
 ### Step 1: Create the content file
@@ -115,12 +117,17 @@ set.seed(42)
 
 Standard chunk options used in this project: `label`, `message: false`, `fig-cap`, `echo: false`.
 
+### Writing process
+
+Before writing any prose for a page or section, outline the logical flow to the user first. Do not write until the outline is approved.
+
 ### Writing style
 
 - Write claims directly; don't make authors or studies the grammatical subject. Say "X is true" not "Smith et al. found that X is true."
 - Prefer concrete simulated examples to abstract description.
 - Pages tend to be practical and code-forward; show working R code with explanations.
-- Don't overuse em dashed.
+- Always set up before introducing detail. Never drop a code chunk, result, or new concept on the reader without first explaining what it is and why it matters.
+- Use em dashes only when a pause or aside genuinely cannot be expressed as cleanly another way. Default to plain sentence structure with commas and periods.
 
 ## Citation Shortcodes
 
