@@ -199,10 +199,25 @@
   margin-top: 0.75rem;
 }
 
+/* Reduce default Tailwind Typography margin below tables */
+.prose table {
+  margin-bottom: 0;
+}
+
 /* Remove Tailwind Typography's default backtick wrapping on inline code */
 .prose code::before,
 .prose code::after {
   content: none;
+}
+
+/* Apply Shiki dark theme via .dark class (overrides Astro's media-query default) */
+.dark pre.astro-code,
+.dark pre.astro-code span {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg) !important;
+  font-style: var(--shiki-dark-font-style) !important;
+  font-weight: var(--shiki-dark-font-weight) !important;
+  text-decoration: var(--shiki-dark-text-decoration) !important;
 }
 
 /* Inline code styling */
