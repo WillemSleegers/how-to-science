@@ -50,9 +50,7 @@ function TocLinks({ headings, activeId }: { headings: Heading[]; activeId: strin
               e.preventDefault()
               document.getElementById(h.id)?.scrollIntoView({ behavior: "smooth" })
             }}
-            className={`block transition-colors ${
-              h.level === 2 ? "text-sm" : "text-xs"
-            } ${
+            className={`block text-sm transition-colors ${
               activeId === h.id
                 ? "font-medium text-primary"
                 : "text-muted-foreground hover:text-foreground"
@@ -74,7 +72,7 @@ function TocPanel({ headings }: { headings: Heading[] }) {
       const atBottom = window.innerHeight + window.scrollY >= document.body.scrollHeight - 4
       if (atBottom) { setActiveId(headings[headings.length - 1]?.id ?? ""); return }
       const threshold = window.innerHeight * 0.5
-      let active = headings[0]?.id ?? ""
+      let active = ""
       for (const h of headings) {
         const el = document.getElementById(h.id)
         if (el && el.getBoundingClientRect().top <= threshold) active = h.id
