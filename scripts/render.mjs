@@ -77,13 +77,17 @@ function walk(dir) {
   return files
 }
 
-const arg = process.argv[2]
-if (arg === "--watch") {
+function renderAll() {
   const files = walk(CONTENT_DIR)
   const stale = files.filter(isStale)
   console.log(`Found ${files.length} .qmd files, ${stale.length} need rendering`)
   for (const f of stale) renderFile(f)
   for (const f of files) if (figuresNeedSync(f)) copyFigures(f)
+}
+
+const arg = process.argv[2]
+if (arg === "--watch") {
+  renderAll()
   console.log("\nWatching for .qmd changes...")
   watch(CONTENT_DIR, { recursive: true }, (_, filename) => {
     if (filename?.endsWith(".qmd")) {
@@ -95,10 +99,6 @@ if (arg === "--watch") {
   renderFile(arg)
   console.log("\nDone.")
 } else {
-  const files = walk(CONTENT_DIR)
-  const stale = files.filter(isStale)
-  console.log(`Found ${files.length} .qmd files, ${stale.length} need rendering`)
-  for (const f of stale) renderFile(f)
-  for (const f of files) if (figuresNeedSync(f)) copyFigures(f)
+  renderAll()
   console.log("\nDone.")
 }

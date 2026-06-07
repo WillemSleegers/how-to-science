@@ -83,14 +83,11 @@ function buildNode(item: ConfigItem): NavNode | null {
   })
 
   if (item.path) {
-    // text: overrides title; falls back to frontmatter title
-    const title = item.text ?? item.title ?? titleFromPath(item.path)
-    // Normalise to lowercase so slugs match Astro's content entry IDs
     const slug = item.path.toLowerCase()
     const file = resolveFile(item.path)
-    const description = file
-      ? (() => { const fm = readFrontmatter(file); return typeof fm.description === "string" ? fm.description : undefined })()
-      : undefined
+    const fm = file ? readFrontmatter(file) : {}
+    const title = item.text ?? item.title ?? (typeof fm.title === "string" ? fm.title : titleFromPath(item.path))
+    const description = typeof fm.description === "string" ? fm.description : undefined
     return { title, slug, description, children }
   }
 

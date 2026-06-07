@@ -13,6 +13,24 @@ interface CitationData {
   refHtmls: string[]
 }
 
+function parseQuotes(raw: string): string[] {
+  try {
+    const parsed = JSON.parse(raw)
+    return Array.isArray(parsed) ? parsed : parsed ? [String(parsed)] : []
+  } catch {
+    return raw ? [raw] : []
+  }
+}
+
+function parseIds(raw: string, fallback: string): string[] {
+  try {
+    const ids = JSON.parse(raw)
+    return ids.length > 0 ? ids : [fallback]
+  } catch {
+    return [fallback]
+  }
+}
+
 export function CitationDialog() {
   const [active, setActive] = useState<CitationData | null>(null)
 
@@ -22,24 +40,8 @@ export function CitationDialog() {
       if (!el) return
       e.preventDefault()
 
-      const raw = el.dataset.citeQuote ?? ""
-      const rawIds = el.dataset.citeIds ?? ""
-
-      let quotes: string[]
-      try {
-        const parsed = JSON.parse(raw)
-        quotes = Array.isArray(parsed) ? parsed : parsed ? [String(parsed)] : []
-      } catch {
-        quotes = raw ? [raw] : []
-      }
-
-      let ids: string[]
-      try {
-        ids = JSON.parse(rawIds)
-      } catch {
-        ids = [el.dataset.citeId ?? ""]
-      }
-      if (ids.length === 0) ids = [el.dataset.citeId ?? ""]
+      const quotes = parseQuotes(el.dataset.citeQuote ?? "")
+      const ids = parseIds(el.dataset.citeIds ?? "", el.dataset.citeId ?? "")
 
       const refHtmls = ids
         .map(id => document.getElementById("ref-" + id)?.innerHTML ?? "")

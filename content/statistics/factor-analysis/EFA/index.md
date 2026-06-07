@@ -9,12 +9,6 @@ prefer-html: true
 ---
 
 
-<link href="index_files/libs/htmltools-fill-0.5.9/fill.css" rel="stylesheet" />
-<script src="index_files/libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
-<script src="index_files/libs/viz-1.8.2/viz.js"></script>
-<link href="index_files/libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
-<script src="index_files/libs/grViz-binding-1.0.12/grViz.js"></script>
-
 - [Preparation](#preparation)
   - [Sample](#sample)
   - [Sample size](#sample-size)
@@ -110,44 +104,6 @@ Bartlett’s test of sphericity is a notoriously sensitive test of the hypothesi
 ### Principal Components vs. Factor Analysis
 
 An important consideration is whether to use a principal components analysis (PCA) or a factor analysis. PCA is a data reduction technique and while a factor analysis is also a type of data reduction technique, the focus with PCA is more on simply reducing the data, without regard for a theoretical interpretation. With PCA, the variables themselves are of interest, rather than a hypothetical latent construct. Constructs are conceptualized as being causally determined by the observations; that is, CFA reflects a formative model rather than a reflective one <span class="cite-ref" data-cite-id="edwards2000" data-cite-ids="[&quot;edwards2000&quot;]" data-cite-quote="[]" data-cite-page="">(Edwards & Bagozzi, 2000)</span>. If you are a psychologist trying to create a measure of a psychological construct, this is probably not what you want as principal component scores are “caused” by their indicators in much the same way that sum scores are “caused” by item scores.” <span class="cite-ref" data-cite-id="borsboom2006" data-cite-ids="[&quot;borsboom2006&quot;]" data-cite-quote="[]" data-cite-page="">(Borsboom, 2006, p. 426)</span>. Instead, you likely want the opposite causal relationship in which a latent factor causes the indicator scores.
-
-``` r
-DiagrammeR::grViz("
-  digraph dot {
-    graph [
-      layout = dot, 
-      rankdir = LR, 
-      fontname = 'Source Sans Pro', 
-      label = 'Illustration of a PCA model (left) and a factor analysis model (right).'
-    ]
-    
-    node [fontname = 'Source Sans Pro']
-    node [shape = square]
-    var1 [label = 'item 1']
-    var2 [label = 'item 2']
-    var3 [label = 'item 3']
-    var4 [label = 'item 4']
-    var5 [label = 'item 1']
-    var6 [label = 'item 2']  
-    var7 [label = 'item 3']  
-    var8 [label = 'item 4']
-  
-    node [shape = circle]
-    construct_a [label = 'construct A']
-    construct_b [label = 'construct B']
-  
-    edge [color = black, minlen = 3]
-    {var1 var2 var3 var4} -> construct_a
-    construct_b -> {var5 var6 var7 var8}
-  
-    edge[style = invis, minlen = 1];
-    construct_a -> construct_b
-  }"
-)
-```
-
-<div class="grViz html-widget html-fill-item" id="htmlwidget-0c377a887b7d62fa4598" style="width:672px;height:480px;"></div>
-<script type="application/json" data-for="htmlwidget-0c377a887b7d62fa4598">{"x":{"diagram":"\n  digraph dot {\n    graph [\n      layout = dot, \n      rankdir = LR, \n      fontname = \"Source Sans Pro\", \n      label = \"Illustration of a PCA model (left) and a factor analysis model (right).\"\n    ]\n    \n    node [fontname = \"Source Sans Pro\"]\n    node [shape = square]\n    var1 [label = \"item 1\"]\n    var2 [label = \"item 2\"]\n    var3 [label = \"item 3\"]\n    var4 [label = \"item 4\"]\n    var5 [label = \"item 1\"]\n    var6 [label = \"item 2\"]  \n    var7 [label = \"item 3\"]  \n    var8 [label = \"item 4\"]\n  \n    node [shape = circle]\n    construct_a [label = \"construct A\"]\n    construct_b [label = \"construct B\"]\n  \n    edge [color = black, minlen = 3]\n    {var1 var2 var3 var4} -> construct_a\n    construct_b -> {var5 var6 var7 var8}\n  \n    edge[style = invis, minlen = 1];\n    construct_a -> construct_b\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 
 A related issue is that factor analysis assumes that the total variance can be partitioned into common and unique variance and PCA assumes that the common variances takes up all of total variance. This means that PCA assumes that all variables are measured without error. It is usually more reasonable to assume that you have not measured your set of items perfectly.
 

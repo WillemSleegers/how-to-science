@@ -84,41 +84,6 @@ Bartlett's test of sphericity is a notoriously sensitive test of the hypothesis 
 
 An important consideration is whether to use a principal components analysis (PCA) or a factor analysis. PCA is a data reduction technique and while a factor analysis is also a type of data reduction technique, the focus with PCA is more on simply reducing the data, without regard for a theoretical interpretation. With PCA, the variables themselves are of interest, rather than a hypothetical latent construct. Constructs are conceptualized as being causally determined by the observations; that is, CFA reflects a formative model rather than a reflective one [@edwards2000]. If you are a psychologist trying to create a measure of a psychological construct, this is probably not what you want as principal component scores are "caused" by their indicators in much the same way that sum scores are "caused" by item scores." [@borsboom2006, p. 426]. Instead, you likely want the opposite causal relationship in which a latent factor causes the indicator scores.
 
-```{r, PCA-FA-figure}
-DiagrammeR::grViz("
-  digraph dot {
-    graph [
-      layout = dot, 
-      rankdir = LR, 
-      fontname = 'Source Sans Pro', 
-      label = 'Illustration of a PCA model (left) and a factor analysis model (right).'
-    ]
-    
-    node [fontname = 'Source Sans Pro']
-    node [shape = square]
-    var1 [label = 'item 1']
-    var2 [label = 'item 2']
-    var3 [label = 'item 3']
-    var4 [label = 'item 4']
-    var5 [label = 'item 1']
-    var6 [label = 'item 2']  
-    var7 [label = 'item 3']  
-    var8 [label = 'item 4']
-  
-    node [shape = circle]
-    construct_a [label = 'construct A']
-    construct_b [label = 'construct B']
-  
-    edge [color = black, minlen = 3]
-    {var1 var2 var3 var4} -> construct_a
-    construct_b -> {var5 var6 var7 var8}
-  
-    edge[style = invis, minlen = 1];
-    construct_a -> construct_b
-  }"
-)
-```
-
 A related issue is that factor analysis assumes that the total variance can be partitioned into common and unique variance and PCA assumes that the common variances takes up all of total variance. This means that PCA assumes that all variables are measured without error. It is usually more reasonable to assume that you have not measured your set of items perfectly.
 
 Although some argue that the two methods have the same results [@velicer1990], there is evidence that those similarities are mistaken and that factor analysis has better results than PCA [@widaman1993].
