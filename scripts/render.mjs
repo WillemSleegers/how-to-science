@@ -29,6 +29,30 @@ function copyFigures(qmdPath) {
   console.log(`  → copied figures to public/${relDir}/${stem}_files/`)
 }
 
+function figuresNeedSync(qmdPath) {
+  const stem = basename(qmdPath, ".qmd")
+  const dir = dirname(qmdPath)
+  const figDir = join(dir, `${stem}_files`)
+  if (!existsSync(figDir)) return false
+
+  const relDir = relative(CONTENT_DIR, dir)
+  const destDir = join(PUBLIC_DIR, relDir, `${stem}_files`)
+
+  function hasMissing(srcDir, dstDir) {
+    for (const e of readdirSync(srcDir, { withFileTypes: true })) {
+      const dst = join(dstDir, e.name)
+      if (e.isDirectory()) {
+        if (hasMissing(join(srcDir, e.name), dst)) return true
+      } else if (!existsSync(dst)) {
+        return true
+      }
+    }
+    return false
+  }
+
+  return hasMissing(figDir, destDir)
+}
+
 function isStale(qmdPath) {
   const mdPath = qmdPath.replace(/\.qmd$/, ".md")
   if (!existsSync(mdPath)) return true
@@ -59,7 +83,7 @@ if (arg === "--watch") {
   const stale = files.filter(isStale)
   console.log(`Found ${files.length} .qmd files, ${stale.length} need rendering`)
   for (const f of stale) renderFile(f)
-  for (const f of files) copyFigures(f)
+  for (const f of files) if (figuresNeedSync(f)) copyFigures(f)
   console.log("\nWatching for .qmd changes...")
   watch(CONTENT_DIR, { recursive: true }, (_, filename) => {
     if (filename?.endsWith(".qmd")) {
@@ -75,6 +99,6 @@ if (arg === "--watch") {
   const stale = files.filter(isStale)
   console.log(`Found ${files.length} .qmd files, ${stale.length} need rendering`)
   for (const f of stale) renderFile(f)
-  for (const f of files) copyFigures(f)
+  for (const f of files) if (figuresNeedSync(f)) copyFigures(f)
   console.log("\nDone.")
 }
