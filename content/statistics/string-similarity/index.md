@@ -7,22 +7,16 @@ toc: true
 ---
 
 
-- [Distance vs. similarity](#distance-vs-similarity)
-- [Example data](#example-data)
 - [Levenshtein similarity](#levenshtein-similarity)
 - [Jaccard similarity](#jaccard-similarity)
 - [Cosine similarity](#cosine-similarity)
-- [Comparing metrics](#comparing-metrics)
 - [BLEU score](#bleu-score)
-  - [Limitations](#limitations)
 - [Semantic similarity](#semantic-similarity)
-  - [The concept](#the-concept)
-  - [Applied to the variants](#applied-to-the-variants)
-  - [When to use this](#when-to-use-this)
+- [Case study: survey question](#case-study-survey-question)
+  - [Choosing a metric](#choosing-a-metric)
 - [Language considerations](#language-considerations)
-  - [Space-delimited languages](#space-delimited-languages)
-  - [Morphologically rich languages](#morphologically-rich-languages)
-  - [Arabic diacritics](#arabic-diacritics)
+  - [Morphological richness](#morphological-richness)
+  - [Diacritics](#diacritics)
   - [Embeddings across languages](#embeddings-across-languages)
 - [Item-level vs. document-level](#item-level-vs-document-level)
 
@@ -32,46 +26,29 @@ toc: true
 ``` r
 library(tidyverse)
 library(stringdist)
+library(rollama)
 
 clean <- function(x) {
   x |> str_to_lower() |> str_remove_all("[[:punct:]]") |> str_squish()
 }
+
+cosine_sim <- function(a, b) sum(a * b) / (sqrt(sum(a^2)) * sqrt(sum(b^2)))
+as_vec <- function(embedding) embedding |> unlist() |> as.numeric()
 ```
 
 </details>
 
 String similarity metrics reduce the comparison between two pieces of text to a single number, making it possible to rank, filter, or aggregate comparisons at scale. Common use cases include comparing survey responses across time points, detecting duplicate records, and evaluating translations.
 
-This page covers three general-purpose surface-level metrics from the `stringdist` package — Levenshtein, Jaccard, and cosine — BLEU, a metric designed specifically for translation evaluation, and semantic similarity using embeddings, which captures meaning rather than surface overlap.
-
-## Distance vs. similarity
-
-Most string comparison algorithms compute a *distance* — how different two strings are. Raw distances are hard to interpret because they scale with string length: one changed character in a 4-character string is a much bigger deal than one changed character in a 100-character string.
-
-*Similarity* normalizes distance into a 0–1 scale where 1 means identical and 0 means completely different. The `stringdist` package provides both `stringdist()` for raw distances and `stringsim()` for normalized similarities.
-
-## Example data
-
-We use a single reference question and four variants that differ in how closely they match. Before computing any similarity, it is usually worth cleaning the strings — lowercasing, stripping punctuation — so that differences in capitalization or punctuation do not distort the scores.
-
-``` r
-reference <- clean("To what extent do you agree with the following statements?")
-
-variants <- tribble(
-  ~label           , ~text                                                       ,
-  "Near-identical" , "To what extent do you agree with the following statement?" ,
-  "Paraphrase"     , "How much do you agree with each of the statements below?"  ,
-  "Different"      , "How satisfied are you with the service you received?"      ,
-  "Unrelated"      , "What is your highest level of education completed?"
-) |>
-  mutate(text = clean(text))
-```
+This page covers three general-purpose surface-level metrics from the `stringdist` package (Levenshtein, Jaccard, and cosine), BLEU — a metric designed specifically for translation evaluation — and semantic similarity using embeddings, which captures meaning rather than surface overlap.
 
 ## Levenshtein similarity
 
-The Levenshtein distance asks: what is the smallest number of single-character edits — insertions, deletions, or substitutions — needed to turn one string into the other? `stringsim()` then normalizes this by dividing by the length of the longer string, so the result is always between 0 and 1.
+The Levenshtein distance counts the smallest number of single-character edits (insertions, deletions, or substitutions) needed to turn one string into the other. Turning `"next"` into `"text"` requires one substitution, replacing `'n'` with `'t'`, so the distance is 1.
 
-Take `"agree"` and `"agreed"` as a worked example. One edit is needed — insert `'d'` at the end — so the raw distance is 1. The longer string, `"agreed"`, has 6 characters. Similarity = 1 − 1/6 ≈ **0.83**.
+Raw counts are hard to compare across strings of different lengths. One edit in a 4-character string is a larger change than one edit in a 40-character string. `stringsim()` normalizes the distance by dividing by the length of the longer string, producing a 0–1 score where 1 means identical and 0 means completely different.
+
+Both `"next"` and `"text"` have 4 characters, so the normalized similarity is 1 − 1/4 = **0.75**. The table below shows more examples.
 
 <details class="code-fold">
 <summary>Code</summary>
@@ -101,36 +78,13 @@ tribble(
 | completely agree | completely agrre | typo (missing e)         |       0.94 |
 | agree            | skip             | no characters in common  |       0.00 |
 
-The substitution case (`"next"` vs `"text"`) and the insertion case (`"agree"` vs `"agreed"`) both require exactly one edit, but score differently. The reason is normalization: `"agreed"` has 6 characters, so the penalty is 1/6 ≈ 0.17. With `"text"`, the longest string has only 4 characters, so the same edit costs 1/4 = 0.25. The same number of edits looks smaller when the strings are longer.
-
-Applied to the variants:
-
-<details class="code-fold">
-<summary>Code</summary>
-
-``` r
-variants |>
-  mutate(similarity = stringsim(text, reference, method = "lv")) |>
-  select(label, similarity)
-```
-
-</details>
-
-    # A tibble: 4 × 2
-      label          similarity
-      <chr>               <dbl>
-    1 Near-identical      0.982
-    2 Paraphrase          0.491
-    3 Different           0.351
-    4 Unrelated           0.246
-
 ## Jaccard similarity
 
-Levenshtein cares about the exact sequence of characters. Jaccard takes a different approach: it ignores order and frequency entirely and just asks which characters the two strings have in common.
+Levenshtein is sensitive to the exact sequence of characters. Jaccard takes a different approach: it ignores order and frequency entirely and compares only which characters the two strings have in common.
 
 Each string is reduced to a set of unique characters. Jaccard similarity is the size of the intersection divided by the size of the union — the characters present in both strings divided by all distinct characters across both strings. If two strings have the same character set, the score is 1. If they share no characters, it is 0.
 
-Take `"completely agree"` and `"strongly agree"` as a worked example. Their character sets are {a, c, e, g, l, m, o, p, r, t, y, space} and {a, e, g, l, n, o, r, s, t, y, space} — 12 and 11 distinct characters respectively. The intersection (characters in both) is {a, e, g, l, o, r, t, y, space} — 9 characters. The union is all 14 distinct characters across both strings. Similarity = 9/14 ≈ **0.64**.
+Take `"yes"` and `"yet"` as a worked example. Their character sets are {y, e, s} and {y, e, t} — 3 distinct characters each. The intersection is {y, e} — 2 characters. The union is all 4 distinct characters across both: {y, e, s, t}. Similarity = 2/4 = **0.5**. See below for more examples.
 
 <details class="code-fold">
 <summary>Code</summary>
@@ -158,29 +112,13 @@ tribble(
 | neither agree nor disagree | disagree nor agree neither | same characters, different order | 1.00 |
 | strongly strongly agree | strongly agree | repetition ignored | 1.00 |
 
-Because only the character set matters, `"neither agree nor disagree"` and `"disagree nor agree neither"` are treated as identical — they contain exactly the same characters. Jaccard is also blind to repetition: “strongly” appearing twice contributes the same as once, since it is still just one element in the set.
-
-Applied to the variants:
-
-``` r
-variants |>
-  mutate(similarity = stringsim(text, reference, method = "jaccard")) |>
-  select(label, similarity)
-```
-
-    # A tibble: 4 × 2
-      label          similarity
-      <chr>               <dbl>
-    1 Near-identical      1    
-    2 Paraphrase          0.857
-    3 Different           0.667
-    4 Unrelated           0.818
+Because only the character set matters, `"neither agree nor disagree"` and `"disagree nor agree neither"` are treated as identical — they contain exactly the same characters. Jaccard is also blind to repetition: “strongly” appearing twice contributes the same as once.
 
 ## Cosine similarity
 
 Cosine similarity counts how often each character appears in each string, then asks whether the two strings have similar distributions. If the same characters show up with similar frequency in both strings, the score is high. If the distributions are very different, the score is low.
 
-Take `"agree"` and `"disagree"` as a worked example. Their character frequencies are {a:1, e:2, g:1, r:1} and {a:1, d:1, e:2, g:1, i:1, r:1, s:1}. The dot product — multiply the count of each shared character and sum — is (1×1) + (2×2) + (1×1) + (1×1) = 7. The magnitude of each frequency vector is √(1²+2²+1²+1²) = √7 ≈ 2.65 and √(1²+2²+1²+1²+1²+1²+1²) = 3. Similarity = 7 / (2.65 × 3) ≈ **0.88**. The score is high because all of `"agree"`’s characters appear in `"disagree"` with the same frequency.
+Take `"agree"` and `"disagree"`. Their character frequencies are {a:1, e:2, g:1, r:1} and {a:1, d:1, e:2, g:1, i:1, r:1, s:1}. The dot product — multiply the count of each shared character and sum — is (1×1) + (2×2) + (1×1) + (1×1) = 7. The magnitude of each frequency vector is √(1²+2²+1²+1²) = √7 ≈ 2.65 and √(1²+2²+1²+1²+1²+1²+1²) = 3. Similarity = 7 / (2.65 × 3) ≈ **0.88**. The score is high because all of `"agree"`’s characters appear in `"disagree"` with the same frequency.
 
 <details class="code-fold">
 <summary>Code</summary>
@@ -208,82 +146,13 @@ tribble(
 | agree | next | share only the letter ‘e’ | 0.38 |
 | yes | yesterday | all characters of ‘yes’ appear in ‘yesterday’ | 0.80 |
 
-The main advantage of cosine over Levenshtein is that it is not thrown off by length differences. A long paraphrase and a short original can still score high if they share the same character-level patterns, whereas Levenshtein would penalize the extra characters.
-
-``` r
-source <- "how satisfied are you"
-
-tribble(
-  ~label           , ~b                                                           ,
-  "Identical"      , "how satisfied are you"                                      ,
-  "Longer version" , "to what degree are you satisfied with the service provided" ,
-  "Unrelated"      , "what is your date of birth"
-) |>
-  mutate(
-    levenshtein = stringsim(b, source, method = "lv"),
-    cosine = stringsim(b, source, method = "cosine")
-  ) |>
-  select(label, levenshtein, cosine) |>
-  knitr::kable(digits = 2)
-```
-
-| label          | levenshtein | cosine |
-|:---------------|------------:|-------:|
-| Identical      |        1.00 |    1.0 |
-| Longer version |        0.29 |    0.9 |
-| Unrelated      |        0.23 |    0.9 |
-
-The longer paraphrase scores much lower on Levenshtein than on cosine — Levenshtein penalizes the extra characters, cosine recognises that the same character patterns are present.
-
-Applied to the variants:
-
-``` r
-variants |>
-  mutate(similarity = stringsim(text, reference, method = "cosine")) |>
-  select(label, similarity)
-```
-
-    # A tibble: 4 × 2
-      label          similarity
-      <chr>               <dbl>
-    1 Near-identical      0.998
-    2 Paraphrase          0.937
-    3 Different           0.839
-    4 Unrelated           0.921
-
-## Comparing metrics
-
-The three metrics often agree but can diverge:
-
-- Levenshtein is sensitive to exact character-level edits, including small differences in spelling or word endings.
-- Jaccard cares only about which characters appear, not how many times or in what order.
-- Cosine looks at the distribution of character patterns and is least sensitive to length differences.
-
-Computing all three gives a fuller picture:
-
-``` r
-variants |>
-  mutate(
-    levenshtein = stringsim(text, reference, method = "lv"),
-    jaccard = stringsim(text, reference, method = "jaccard"),
-    cosine = stringsim(text, reference, method = "cosine")
-  ) |>
-  select(label, levenshtein, jaccard, cosine)
-```
-
-    # A tibble: 4 × 4
-      label          levenshtein jaccard cosine
-      <chr>                <dbl>   <dbl>  <dbl>
-    1 Near-identical       0.982   1      0.998
-    2 Paraphrase           0.491   0.857  0.937
-    3 Different            0.351   0.667  0.839
-    4 Unrelated            0.246   0.818  0.921
-
 ## BLEU score
 
 The three metrics above are general-purpose string comparison tools. BLEU (Bilingual Evaluation Understudy) was designed specifically for evaluating translations and remains the standard metric in translation research. Rather than comparing strings character-by-character, it asks how much of the candidate’s word sequences actually appear in the reference.
 
 BLEU combines three ideas. First, *n-gram precision*: it checks not just whether individual words match, but whether consecutive word sequences match — pairs (bigrams), triples (trigrams), and 4-word sequences. Matching longer sequences is a stronger signal than matching single words, because the candidate would have to produce multiple words in exactly the right order. The standard implementation uses up to 4-grams. Second, *clipping*: each reference word can only be credited once, preventing a candidate that repeats a single word from scoring artificially high. Third, a *brevity penalty*: candidates shorter than the reference are penalized, since short strings have fewer n-grams to get wrong. One adjustment for short strings: `max_n` is capped at the length of the shorter string, so a two-word label like “completely agree” is evaluated on unigrams and bigrams rather than forced to score 0 because 4-grams are impossible.
+
+The `bleu()` function below takes a candidate string and a reference and returns a score between 0 and 1, with helper functions for each component.
 
 ``` r
 brevity_penalty <- function(cand_tokens, ref_tokens) {
@@ -330,6 +199,8 @@ bleu <- function(candidate, reference, max_n = 4) {
 }
 ```
 
+Four candidates, ranging from near-identical to unrelated, scored against the same reference:
+
 ``` r
 ref_bleu <- "to what extent do you agree with the statement"
 
@@ -352,117 +223,121 @@ tribble(
 | how much do you agree with the statement        | paraphrase       | 0.60 |
 | what is your date of birth                      | unrelated        | 0.00 |
 
-Applied to the variants:
-
-``` r
-variants |>
-  mutate(bleu = map_dbl(text, bleu, reference = reference)) |>
-  select(label, bleu)
-```
-
-    # A tibble: 4 × 2
-      label           bleu
-      <chr>          <dbl>
-    1 Near-identical 0.880
-    2 Paraphrase     0.260
-    3 Different      0    
-    4 Unrelated      0    
-
-The near-identical variant scores very high because its word sequences almost perfectly match the reference. The paraphrase scores lower even though it asks essentially the same thing — BLEU does not know that “how much” is similar to “to what extent”. The unrelated variant scores 0 because it shares no 4-grams with the reference, and a single zero precision collapses the entire score to 0.
-
-### Limitations
-
-BLEU measures surface overlap, not meaning. Two questions that ask the same thing in different words — “To what extent do you agree?” and “How much do you agree?” — score low against each other, because they share only the word “agree”. This is the fundamental limitation of all the metrics on this page. For use cases where meaning matters more than exact wording, embedding-based metrics are more appropriate; they compare strings in a semantic space where “to what extent” and “how much” are close together.
-
-BLEU also has a known sensitivity to short texts. On sentence-level comparisons, scores are noisier and harder to interpret than on full documents, because there are fewer n-grams to aggregate over. When comparing individual sentences, the `stringsim()` metrics are often more stable and easier to reason about; BLEU becomes more reliable when aggregated over many sentences or paragraphs.
+BLEU has a known sensitivity to short texts. On sentence-level comparisons, scores are noisier and harder to interpret than on full documents, because there are fewer n-grams to aggregate over.
 
 ## Semantic similarity
 
-All the metrics above measure surface overlap — they compare the actual characters or words present in two strings. A paraphrase that conveys the exact same meaning with entirely different words scores poorly on every one of them. Semantic similarity takes a different approach: instead of comparing the strings directly, it compares their *meaning*.
+All the metrics above measure surface overlap — they compare the actual characters or words present in two strings. A paraphrase that conveys the same meaning in entirely different words scores poorly on every one of them. Semantic similarity takes a different approach: instead of comparing the strings directly, it compares their *meaning*.
 
-The way this works is through embeddings. A language model reads each string and produces a list of numbers — typically several hundred of them — that collectively encode what the string means. Strings that mean similar things end up with similar numbers; strings that mean different things end up with different numbers. Similarity is then computed by measuring how close two strings’ number lists are to each other.
+The way this works is through embeddings. A language model reads each string and produces a list of numbers that collectively encode what the string means. Strings that mean similar things end up with similar numbers; strings that mean different things end up with different numbers. Similarity is then computed by measuring how close two strings’ number lists are to each other.
 
-This section uses the `rollama` package, which calls a locally running Ollama instance to generate embeddings. The model is `nomic-embed-text`, a compact embedding model that produces 768-dimensional embeddings. If you have not already pulled it, run `ollama pull nomic-embed-text` in a terminal first.
+This section uses the `rollama` package, which calls a locally running Ollama instance to generate embeddings. The model is `nomic-embed-text-v2-moe`, a multilingual embedding model. If you have not already pulled it, run `pull_model("nomic-embed-text-v2-moe")` first.
 
 ``` r
 library(rollama)
+pull_model("nomic-embed-text-v2-moe")
 ```
 
-### The concept
+Two pairs illustrate what embeddings capture that surface metrics miss: a paraphrase and an unrelated question.
 
-To see what embeddings do differently, consider two questions that ask the same thing in completely different words:
-
-``` r
-cosine_sim <- function(a, b) sum(a * b) / (sqrt(sum(a^2)) * sqrt(sum(b^2)))
-
-as_vec <- function(embedding) embedding |> unlist() |> as.numeric()
-
-a <- as_vec(embed_text(
-  "to what extent do you agree",
-  model = "nomic-embed-text"
-))
-b <- as_vec(embed_text("how much do you agree", model = "nomic-embed-text"))
-c <- as_vec(embed_text(
-  "what is your date of birth",
-  model = "nomic-embed-text"
-))
-
-cosine_sim(a, b) # paraphrase: should be high
-cosine_sim(a, c) # unrelated: should be low
-```
+| a | b | note | similarity |
+|:---|:---|:---|---:|
+| to what extent do you agree | how much do you agree | paraphrase | 0.87 |
+| to what extent do you agree | what is your date of birth | unrelated | 0.16 |
 
 The paraphrase scores high because the model has learned that “to what extent” and “how much” serve the same communicative purpose. The surface metrics earlier on this page would give this pair a relatively low score, because they share very few words.
 
-### Applied to the variants
-
-``` r
-reference_vec <- as_vec(embed_text(reference, model = "nomic-embed-text"))
-
-variants |>
-  mutate(
-    embedding = map(text, \(t) {
-      as_vec(embed_text(t, model = "nomic-embed-text"))
-    }),
-    similarity = map_dbl(embedding, cosine_sim, b = reference_vec)
-  ) |>
-  select(label, similarity)
-```
-
-Unlike BLEU and the `stringsim()` metrics, semantic similarity can recognise that the paraphrase variant is closer to the reference than the surface overlap suggests. The unrelated and different variants should still score low, because their meaning genuinely differs.
-
-### When to use this
-
-Surface metrics are the right default when you expect responses to be close to the reference — same words, maybe slightly reordered or with small substitutions. They are fast, require no external model, and are easy to reason about.
+Surface metrics are the right default when you expect responses to be close to the reference: the same words, maybe slightly reordered or with small substitutions. They are fast, require no external model, and are easy to reason about.
 
 Semantic similarity is worth reaching for when paraphrasing is expected — valid responses that choose different vocabulary or restructure sentences while preserving meaning. In that case, surface metrics will penalise good matches, and embedding-based similarity gives a more accurate picture.
 
+## Case study: survey question
+
+The metric sections above introduce each method with small, focused examples. This section applies them all to a specific, more realistic scenario.
+
+The reference is a survey question, and the four variants range from near-identical wording to entirely unrelated content. Before computing any metric, the strings are cleaned — lowercased, punctuation stripped — so that surface differences do not distort the scores.
+
+``` r
+reference <- clean("To what extent do you agree with the following statements?")
+
+variants <- tribble(
+  ~label           , ~text                                                       ,
+  "Near-identical" , "To what extent do you agree with the following statement?" ,
+  "Paraphrase"     , "How much do you agree with each of the statements below?"  ,
+  "Different"      , "How satisfied are you with the service you received?"      ,
+  "Unrelated"      , "What is your highest level of education completed?"
+) |>
+  mutate(text = clean(text))
+```
+
+The table below shows all five metrics applied to the four variants:
+
+``` r
+reference_vec <- as_vec(embed_text(
+  reference,
+  model = "nomic-embed-text-v2-moe"
+))
+
+variants |>
+  mutate(
+    levenshtein = stringsim(text, reference, method = "lv"),
+    jaccard = stringsim(text, reference, method = "jaccard"),
+    cosine = stringsim(text, reference, method = "cosine"),
+    bleu = map_dbl(text, bleu, reference = reference),
+    semantic = map_dbl(
+      map(text, \(t) as_vec(embed_text(t, model = "nomic-embed-text-v2-moe"))),
+      cosine_sim,
+      b = reference_vec
+    )
+  ) |>
+  select(label, levenshtein, jaccard, cosine, bleu, semantic) |>
+  knitr::kable(digits = 2)
+```
+
+| label          | levenshtein | jaccard | cosine | bleu | semantic |
+|:---------------|------------:|--------:|-------:|-----:|---------:|
+| Near-identical |        0.98 |    1.00 |   1.00 | 0.88 |     0.96 |
+| Paraphrase     |        0.49 |    0.86 |   0.94 | 0.26 |     0.89 |
+| Different      |        0.35 |    0.67 |   0.84 | 0.00 |     0.32 |
+| Unrelated      |        0.25 |    0.82 |   0.92 | 0.00 |     0.19 |
+
+### Choosing a metric
+
+Levenshtein, Jaccard, and cosine often agree, but they diverge in predictable ways that reflect what each one measures.
+
+Levenshtein is position-sensitive: a character in the wrong place is penalised the same as a missing character. It responds to small, local changes such as a typo, a missing word ending, or a transposition.
+
+Jaccard ignores order and frequency. Where Jaccard and Levenshtein disagree, either word order has shifted or a character appears a different number of times.
+
+Cosine also ignores order but tracks character frequency. It distinguishes between a character appearing once and appearing many times, which Jaccard does not. Cosine and Jaccard agree when frequency makes no difference; they split when it does. For most purposes, cosine is more informative than Jaccard.
+
+Levenshtein is the right choice when small character-level edits matter. Cosine is better suited when strings differ substantially in length but share the same character patterns, because it is not penalised by extra characters the way Levenshtein is. Jaccard adds little alongside cosine, since cosine captures everything Jaccard measures and more.
+
+BLEU operates at a different level. Rather than characters, it checks whether word sequences from the candidate appear in the reference. This makes it sensitive to word order in a way the character metrics are not. Two strings with the same words in a different order score lower on BLEU but are indistinguishable on cosine or Jaccard. For evaluating translations, where word arrangement carries meaning, BLEU is more appropriate.
+
+None of the four metrics captures meaning. When paraphrasing is expected, surface overlap underestimates similarity, and semantic similarity using embeddings gives a more accurate picture.
+
 ## Language considerations
 
-All five methods on this page were developed primarily with English in mind, and they behave somewhat differently across languages. The table below summarises the situation for Dutch, English, Turkish, Polish, and Arabic specifically.
+The metrics on this page were developed primarily with English in mind. For languages where words are separated by spaces, BLEU and Jaccard tokenize correctly; languages without space-delimited words, such as Chinese or Japanese, require a dedicated tokenizer before either metric can be applied. Within space-delimited languages, two features reduce metric reliability: morphological richness and diacritics.
 
-| Language | Script | Space-delimited | Morphology | Notes |
-|----|----|----|----|----|
-| English | Latin | Yes | Low | All methods work well |
-| Dutch | Latin | Yes | Low–moderate | All methods work well |
-| Polish | Latin + diacritics | Yes | Moderate | Works well; diacritics affect character metrics slightly |
-| Turkish | Latin | Yes | Very high | Word-level metrics unreliable |
-| Arabic | Arabic | Yes | Very high | Word-level metrics unreliable; diacritics add noise |
+### Morphological richness
 
-### Space-delimited languages
+Morphology refers to how much a language varies the surface form of a word to express grammatical meaning. In English, a verb has a small number of forms: *walk*, *walks*, *walked*, *walking*. In Turkish, the same root can produce hundreds of forms through suffixation — *evlerinden* (“from their houses”) is a single token built from *ev* (“house”) plus suffixes for plurality, possession, and case. Arabic works similarly, combining a consonantal root with different vowel patterns to produce words with related but distinct meanings.
 
-All five languages use spaces to separate words, so Jaccard and BLEU tokenisation works correctly for all of them — unlike Chinese or Japanese, where splitting on whitespace does not produce meaningful tokens.
+BLEU and Jaccard are most affected by morphological richness, because both match exact word tokens. When two questions express the same idea with different inflected forms, the word tokens may share nothing even though the meaning is the same. BLEU’s n-gram precision drops because bigrams and trigrams in the candidate do not appear verbatim in the reference. Jaccard’s intersection shrinks for the same reason.
 
-### Morphologically rich languages
+Levenshtein and cosine are less affected because they operate on characters rather than words. Shared character sequences still contribute to the score even when inflectional suffixes differ. The scores will underestimate similarity, but less so than word-level metrics.
 
-Turkish and Arabic are both highly agglutinative or inflected: a single root word can produce dozens of forms depending on tense, case, possession, and other markers. In Turkish, *evlerinden* (“from their houses”) is one token derived from *ev* (“house”). In Arabic, the definite article *ال* (al-) is attached directly to the following noun with no space.
+Semantic similarity is the most robust to morphological variation. Embedding models map different surface forms of the same concept to nearby vectors, so a morphologically varied paraphrase scores similarly to one with identical word forms.
 
-This matters most for Jaccard and BLEU, which match exact word tokens. Two questions that express the same idea in Turkish or Arabic may share very few word-form tokens, producing low scores not because the phrasings differ but because the same meaning takes different surface forms. Character-level metrics — Levenshtein and cosine — are less affected, because they still pick up shared character sequences within and across word boundaries.
+### Diacritics
 
-Semantic similarity handles morphological variation best of all, because the embedding model has been trained to map different surface forms of the same concept to similar vectors.
+Diacritics are marks attached to base letters to indicate pronunciation. When they are inconsistently present across texts, surface metrics treat the same word as two different strings. Polish diacritics appear consistently in standard written text, so the issue mainly arises when comparing across sources with inconsistent encoding. Arabic vowel markers are optional and frequently omitted, meaning the same word can appear with or without them across different sources.
 
-### Arabic diacritics
+Levenshtein counts each diacritic as a character, so a word written with and without diacritics has a non-zero distance. Cosine is similarly affected: the frequency vector shifts when diacritical characters appear or disappear. BLEU is affected at the token level — a diacritised and an undiacritised form of the same word will not match.
 
-Arabic text may or may not include diacritical marks (harakat), which indicate vowel sounds. The same word written with and without diacritics will have a non-zero Levenshtein distance and lower cosine similarity even though it is the same word. If your Arabic texts are inconsistently diacritised, strip diacritics during cleaning:
+If texts are inconsistently diacritised, strip diacritics before computing any metric. For Arabic:
 
 ``` r
 strip_arabic_diacritics <- function(x) {
@@ -470,14 +345,11 @@ strip_arabic_diacritics <- function(x) {
 }
 ```
 
+Semantic similarity is largely robust to diacritics. Embedding models are trained on text that contains both diacritised and undiacritised forms, and map them to nearby vectors.
+
 ### Embeddings across languages
 
-`nomic-embed-text` is trained primarily on English and will produce lower-quality embeddings for Turkish and Arabic in particular. For multilingual use, swap it for one of the following models, both available in Ollama and covering all five languages:
-
-- **`nomic-embed-text-v2-moe`** (~1 GB) — Nomic’s official multilingual model, trained on over 1.6 billion pairs across ~100 languages. A direct upgrade from `nomic-embed-text` that works with the same `rollama` code.
-- **`jeffh/intfloat-multilingual-e5-large-instruct`** (~600 MB quantized) — one of the most widely used multilingual embedding models; the quantized version is smaller than `nomic-embed-text-v2-moe` with comparable quality.
-
-Pull whichever you prefer with `ollama pull <model>` and replace `"nomic-embed-text"` with the model name in the code above. No Python required.
+The code above uses `nomic-embed-text-v2-moe`, Nomic’s multilingual model trained on over 1.6 billion pairs across ~100 languages. If you only need English, `nomic-embed-text` (~275 MB) is a smaller alternative. For a second multilingual option, `jeffh/intfloat-multilingual-e5-large-instruct` (~600 MB quantized) is widely used and comparable in quality to `nomic-embed-text-v2-moe`.
 
 ## Item-level vs. document-level
 
