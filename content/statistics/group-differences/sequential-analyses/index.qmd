@@ -1,5 +1,5 @@
 ---
-title: "Sequential analyses"
+title: "Sequential Analyses"
 description: "Bayesian sequential testing: tracking Bayes factors as data accumulate"
 toc: true
 code-tools: true

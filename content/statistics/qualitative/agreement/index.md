@@ -1,6 +1,8 @@
 ---
-title: Measuring rater agreement
-description: "Quantifying how consistently raters or LLMs agree, and choosing the right metric"
+title: Measuring Rater Agreement
+description: >-
+  Quantifying how consistently raters or LLMs agree, and choosing the right
+  metric
 toc: true
 order: 2
 ---

@@ -1,5 +1,5 @@
 ---
-title: Reliability and validity
+title: Reliability and Validity
 description: >-
   How to assess whether a scale measures consistently and captures what it
   claims to measure

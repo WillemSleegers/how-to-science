@@ -1,19 +1,22 @@
 ---
 title: Basics
-description: >-
-  Pooling studies by hand and with metafor: weighting, fixed and random effects,
-  and heterogeneity
+description: A basic introduction to meta-analysis.
 toc: true
 order: 1
 ---
 
 
-- [A set of studies](#a-set-of-studies)
-- [Pooling by precision](#pooling-by-precision)
-- [When studies disagree](#when-studies-disagree)
-- [The random-effects estimate](#the-random-effects-estimate)
-- [Does it matter?](#does-it-matter)
-- [The average versus a new study](#the-average-versus-a-new-study)
+- [Modelling effect sizes](#modelling-effect-sizes)
+- [The fixed effects model](#the-fixed-effects-model)
+  - [Pooling by precision](#pooling-by-precision)
+- [Heterogeneity](#heterogeneity)
+  - [Cochran’s Q](#cochrans-q)
+  - [Between-study variance (tau²)](#between-study-variance-tau²)
+  - [I²](#i²)
+- [The random effects model](#the-random-effects-model)
+
+<details class="code-fold">
+<summary>Code</summary>
 
 ``` r
 library(tidyverse)
@@ -21,52 +24,65 @@ library(metafor)
 
 theme_set(theme_minimal())
 
+mu <- 0.5
 set.seed(3)
 ```
 
-Meta-analysis combines the results of several studies into a single estimate of an effect. Each study reports an effect size and a measure of how uncertain that estimate is, and meta-analysis pools them, weighting more precise studies more heavily, into an estimate sharper than any study on its own. This page builds that machinery up by hand and checks each piece against `metafor`, the standard R package for meta-analysis, so the formulas and the software agree at every step.
+</details>
 
-## A set of studies
+Meta-analysis combines estimates from a related set of studies into a single summary, weighting each study by how precisely it estimated the effect. The sections below cover the basics of conducting a meta-analysis, including topics such as different types of models. We use the metafor package throughout to illustrate and verify the explanations.
 
-To watch the machinery work, we simulate studies from a known true effect, so every result can be checked against the truth. Each of 20 studies estimates the same effect of 0.5. Larger studies estimate it more precisely, so their sampling variance (`vi`) is smaller; the observed effect size (`yi`) is the true effect plus sampling error.
+## Modelling effect sizes
+
+The core of meta-analysis is to take effect sizes from various studies and estimate an overall effect size.
+
+The standard approach to this
+
+A standard approximation treats each study’s estimate as normally distributed around the effect being estimated, with variance equal to the sampling variance. The sampling variance is the squared standard error of the estimate; larger studies have smaller sampling variances and more precise estimates.
+
+Common effect sizes include Cohen’s d for standardized mean differences between groups, the log odds ratio for binary outcomes, and Fisher’s z for correlations. Each has a known sampling variance formula derived from the study’s sample size and design.
+
+Several models can be used to pool effect sizes. The fixed effects model assumes all studies estimate the same effect; the random effects model allows the effect to vary across studies. The fixed effects model is the simpler case and is covered first.
+
+## The fixed effects model
+
+Under the fixed effects model, all studies are assumed to estimate the same underlying effect. The only source of variation between study estimates is sampling error; there is no between-study heterogeneity. Studies are weighted by their precision — the inverse of the sampling variance — and combined into a pooled estimate. The simulation below demonstrates how this works.
+
+The simulation generates 20 studies, each comparing a control and treatment group of equal size, with the effect size (μ) set to 0.5. The effect size we calculate is a Cohen’s d, stored as `yi`, and its sampling variance is stored as `vi`. Per-group sample sizes are drawn at random from 20 to 200.
 
 ``` r
-mu <- 0.5
 k <- 20
+ns <- sample(20:200, k, replace = TRUE)
 
-dat <- tibble(
-  study = seq_len(k),
-  n = sample(40:400, k, replace = TRUE),
-  vi = 4 / n,
-  yi = rnorm(k, mu, sqrt(vi))
-)
+dat <- map(ns, \(n) {
+  control <- rnorm(n, 0, 1)
+  treatment <- rnorm(n, mu, 1)
+  sp <- sqrt(((n - 1) * var(control) + (n - 1) * var(treatment)) / (2 * n - 2))
+  d <- (mean(treatment) - mean(control)) / sp
+  vi <- (n + n) / (n * n) + d^2 / (2 * (n + n))
+  tibble(yi = d, vi = vi, n = n)
+}) |>
+  list_rbind() |>
+  mutate(study = row_number(), .before = 1)
 
 head(dat) |>
   knitr::kable(digits = 3)
 ```
 
-| study |   n |    vi |    yi |
-|------:|----:|------:|------:|
-|     1 | 300 | 0.013 | 0.425 |
-|     2 | 225 | 0.018 | 0.663 |
-|     3 | 179 | 0.022 | 0.530 |
-|     4 |  75 | 0.053 | 0.366 |
-|     5 | 225 | 0.018 | 0.374 |
-|     6 | 315 | 0.013 | 0.477 |
+| study |    yi |    vi |   n |
+|------:|------:|------:|----:|
+|     1 | 0.475 | 0.086 |  24 |
+|     2 | 0.530 | 0.013 | 159 |
+|     3 | 0.640 | 0.038 |  55 |
+|     4 | 0.611 | 0.017 | 126 |
+|     5 | 0.498 | 0.013 | 155 |
+|     6 | 0.668 | 0.054 |  39 |
 
-The effect sizes scatter around the true value of 0.5, some above, some below, and the smaller-variance studies are the ones to trust more.
+The effect sizes vary around 0.5, and larger studies have smaller sampling variances because more observations reduce estimation error.
 
-## Pooling by precision
+### Pooling by precision
 
-A plain average of the effect sizes treats a tiny study and a large one as equals.
-
-``` r
-mean(dat$yi)
-```
-
-    [1] 0.5251863
-
-Meta-analysis instead weights each study by its precision, the inverse of its sampling variance, so informative studies count for more. The pooled estimate is the weighted mean, and its standard error follows from the total weight.
+A plain average of the effect sizes treats a small study and a large one equally. Meta-analysis instead weights each study by the inverse of its sampling variance, so more precise studies count for more. The pooled estimate is the weighted mean of the effect sizes, and its standard error is the square root of the reciprocal of the total weight.
 
 ``` r
 w <- 1 / dat$vi
@@ -78,18 +94,9 @@ c(estimate = pooled, se = se)
 ```
 
       estimate         se 
-    0.50527886 0.03129588 
+    0.49513582 0.02970813 
 
-The payoff of pooling is precision: the standard error of the combined estimate is smaller than that of even the single most precise study.
-
-``` r
-c(pooled = se, best_single_study = sqrt(min(dat$vi)))
-```
-
-               pooled best_single_study 
-           0.03129588        0.10411584 
-
-This is the **fixed-effect model**, and `rma()` with `method = "FE"` fits it directly.
+The output of `rma()` with `method = "FE"` matches the weighted mean calculation above.
 
 ``` r
 fit_fe <- rma(yi, vi, data = dat, method = "FE")
@@ -100,80 +107,79 @@ fit_fe
     Fixed-Effects Model (k = 20)
 
     I^2 (total heterogeneity / total variability):   0.00%
-    H^2 (total variability / sampling variability):  0.81
+    H^2 (total variability / sampling variability):  0.52
 
     Test for Heterogeneity:
-    Q(df = 19) = 15.3458, p-val = 0.7004
+    Q(df = 19) = 9.8177, p-val = 0.9573
 
     Model Results:
 
     estimate      se     zval    pval   ci.lb   ci.ub      
-      0.5053  0.0313  16.1452  <.0001  0.4439  0.5666  *** 
+      0.4951  0.0297  16.6667  <.0001  0.4369  0.5534  *** 
 
     ---
     Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-The estimate and standard error reported by `rma()` match the values we computed by hand. The model recovers the true effect of 0.5 with a tight interval, doing it more precisely than any individual study.
+The pooled estimate is close to `mu`, with a narrower confidence interval than any individual study.
 
-## When studies disagree
+## Heterogeneity
 
-The fixed-effect model assumes every study estimates the *same* true effect. Real studies differ in their populations, methods, and measures, so their true effects vary. We simulate that by drawing each study’s true effect from a distribution centered on `mu` with between-study variance `tau2_true`, then adding sampling error as before.
+When studies differ in populations, procedures, or outcome measures, the effect varies across studies. When it does, the observed effect sizes vary more than sampling error alone would produce, and the fixed effects model is no longer appropriate.
+
+The simulation below extends the previous one so that each study draws its own true effect from a normal distribution centered on `mu`. The spread of that distribution is the between-study variance, `tau2`. Three quantities describe how much of this extra variation is present.
 
 ``` r
-tau2_true <- 0.05
+tau2 <- 0.05
+thetas <- rnorm(k, mu, sqrt(tau2))
 
-dat_het <- dat |>
-  mutate(
-    theta = rnorm(k, mu, sqrt(tau2_true)),
-    yi = rnorm(k, theta, sqrt(vi))
-  )
+dat_het <- map2(ns, thetas, \(n, theta) {
+  control <- rnorm(n, 0, 1)
+  treatment <- rnorm(n, theta, 1)
+  sp <- sqrt(((n - 1) * var(control) + (n - 1) * var(treatment)) / (2 * n - 2))
+  d <- (mean(treatment) - mean(control)) / sp
+  vi <- (n + n) / (n * n) + d^2 / (2 * (n + n))
+  tibble(yi = d, vi = vi, n = n)
+}) |>
+  list_rbind() |>
+  mutate(study = row_number(), .before = 1)
 ```
 
-Three quantities summarize how much the studies disagree. Cochran’s `Q` is the weighted spread of the effect sizes around the pooled estimate; `tau2` is the estimated between-study variance, in the squared units of the effect size; and `I2` is the percentage of the total variation that is due to real heterogeneity rather than sampling error. Each can be written down by hand. `tau2` here uses the DerSimonian-Laird estimator, the classic closed-form one.
+### Cochran’s Q
+
+The first quantity is the weighted sum of squared deviations of the observed effect sizes from the fixed-effect pooled mean, called Cochran’s Q. Under the assumption that a single effect underlies all studies, Q follows a chi-squared distribution with k − 1 degrees of freedom. A Q much larger than k − 1 indicates more spread than sampling error alone would produce.
 
 ``` r
 w <- 1 / dat_het$vi
 fe_mean <- sum(w * dat_het$yi) / sum(w)
 
 Q <- sum(w * (dat_het$yi - fe_mean)^2)
-C <- sum(w) - sum(w^2) / sum(w)
-tau2 <- max(0, (Q - (k - 1)) / C)
-typical_v <- (k - 1) * sum(w) / (sum(w)^2 - sum(w^2))
-I2 <- 100 * tau2 / (tau2 + typical_v)
-
-c(Q = Q, tau2 = tau2, I2 = I2)
+Q
 ```
 
-              Q        tau2          I2 
-    66.25248444  0.04920927 71.32183018 
+    [1] 74.03394
 
-Fitting a random-effects model with `method = "DL"` reproduces all three exactly.
+### Between-study variance (tau²)
+
+tau² is the variance of effects across studies, in the same squared units as the effect size. The default estimation method is restricted maximum likelihood (REML): an iterative procedure that finds the value of tau² most consistent with the observed spread in effect sizes, while accounting for uncertainty in the mean at the same time.
 
 ``` r
-fit_dl <- rma(yi, vi, data = dat_het, method = "DL")
-fit_dl
+fit_re <- rma(yi, vi, data = dat_het)
+fit_re$tau2
 ```
 
+    [1] 0.05150329
 
-    Random-Effects Model (k = 20; tau^2 estimator: DL)
+### I²
 
-    tau^2 (estimated amount of total heterogeneity): 0.0492 (SE = 0.0234)
-    tau (square root of estimated tau^2 value):      0.2218
-    I^2 (total heterogeneity / total variability):   71.32%
-    H^2 (total variability / sampling variability):  3.49
+I² converts tau² into a proportion: the share of total variation in observed effect sizes attributable to between-study differences rather than sampling error. A value near zero means variation across studies is no larger than sampling error would produce; a large value means most of the spread comes from differences in the effects across studies.
 
-    Test for Heterogeneity:
-    Q(df = 19) = 66.2525, p-val < .0001
+``` r
+fit_re$I2
+```
 
-    Model Results:
+    [1] 74.23921
 
-    estimate      se    zval    pval   ci.lb   ci.ub      
-      0.4917  0.0601  8.1752  <.0001  0.3738  0.6096  *** 
-
-    ---
-    Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-The `tau^2`, `I^2`, and `Q` in the output are the hand-computed values. The fixed-effect model, fit to the same data, ignores this extra variation, so the confidence interval it reports is too narrow for data that genuinely disagree.
+The fixed effects model, fit to the same data, does not account for this between-study variance, so its confidence interval is too narrow.
 
 ``` r
 rma(yi, vi, data = dat_het, method = "FE")
@@ -182,26 +188,26 @@ rma(yi, vi, data = dat_het, method = "FE")
 
     Fixed-Effects Model (k = 20)
 
-    I^2 (total heterogeneity / total variability):   71.32%
-    H^2 (total variability / sampling variability):  3.49
+    I^2 (total heterogeneity / total variability):   74.34%
+    H^2 (total variability / sampling variability):  3.90
 
     Test for Heterogeneity:
-    Q(df = 19) = 66.2525, p-val < .0001
+    Q(df = 19) = 74.0339, p-val < .0001
 
     Model Results:
 
     estimate      se     zval    pval   ci.lb   ci.ub      
-      0.4874  0.0313  15.5738  <.0001  0.4261  0.5487  *** 
+      0.4460  0.0297  15.0043  <.0001  0.3878  0.5043  *** 
 
     ---
     Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-## The random-effects estimate
+## The random effects model
 
-The random-effects model accounts for the disagreement by widening each study’s variance by `tau2` before weighting. The weights become `1 / (vi + tau2)`, which pulls the studies closer together: once every study carries an irreducible chunk of between-study variance, the precise studies no longer dominate as heavily.
+Once tau² is estimated, it is added to each study’s sampling variance before computing weights. Where the fixed effects model uses weights of 1/vi, the random effects model uses 1/(vi + tau²). Adding the same tau² to each denominator reduces the variation in weights across studies: a study with a very small vi and one with a large vi receive more similar weights once tau² is added to both.
 
 ``` r
-ws <- 1 / (dat_het$vi + tau2)
+ws <- 1 / (dat_het$vi + fit_re$tau2)
 
 re_pooled <- sum(ws * dat_het$yi) / sum(ws)
 re_se <- sqrt(1 / sum(ws))
@@ -209,87 +215,44 @@ re_se <- sqrt(1 / sum(ws))
 c(estimate = re_pooled, se = re_se)
 ```
 
-     estimate        se 
-    0.4917240 0.0601485 
+      estimate         se 
+    0.47701360 0.06075686 
 
-These match the estimate and standard error from `fit_dl` above. The pooled estimate barely moves, but the standard error is larger, and the confidence interval wider, honestly reflecting that the studies disagree.
-
-`metafor`’s default estimator is REML, not DerSimonian-Laird, so `rma(yi, vi)` with no `method` argument gives a slightly different `tau2`. It is the better default for real use; we used DL only because it has a closed form to check by hand.
+These match the estimate and standard error from `fit_re`. The pooled estimate barely shifts, but the standard error is larger, because between-study variance contributes uncertainty beyond what sampling error alone would produce.
 
 ``` r
-rma(yi, vi, data = dat_het)
+fit_re
 ```
 
 
     Random-Effects Model (k = 20; tau^2 estimator: REML)
 
-    tau^2 (estimated amount of total heterogeneity): 0.0493 (SE = 0.0232)
-    tau (square root of estimated tau^2 value):      0.2220
-    I^2 (total heterogeneity / total variability):   71.36%
-    H^2 (total variability / sampling variability):  3.49
+    tau^2 (estimated amount of total heterogeneity): 0.0515 (SE = 0.0235)
+    tau (square root of estimated tau^2 value):      0.2269
+    I^2 (total heterogeneity / total variability):   74.24%
+    H^2 (total variability / sampling variability):  3.88
 
     Test for Heterogeneity:
-    Q(df = 19) = 66.2525, p-val < .0001
+    Q(df = 19) = 74.0339, p-val < .0001
 
     Model Results:
 
     estimate      se    zval    pval   ci.lb   ci.ub      
-      0.4917  0.0602  8.1696  <.0001  0.3738  0.6097  *** 
+      0.4770  0.0608  7.8512  <.0001  0.3579  0.5961  *** 
 
     ---
     Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-## Does it matter?
-
-A wider interval is only better if it is the *right* width. That is testable: across many simulated heterogeneous datasets, a calibrated 95% confidence interval should contain the true mean of 0.5 about 95% of the time. The check below fits a fixed-effect model, a random-effects model, and a random-effects model with `metafor`’s Hartung-Knapp small-sample adjustment (`test = "knha"`) to 1,000 datasets each.
+The random effects model estimates two parameters: μ, the mean effect across studies, and tau², the between-study variance. The confidence interval on μ describes how precisely the mean is estimated. The prediction interval describes where a new study’s effect is likely to fall; it is wider than the confidence interval because it accounts for tau² as well as uncertainty in μ.
 
 ``` r
-simulate_once <- function() {
-  d <- tibble(n = sample(40:400, k, replace = TRUE), vi = 4 / n) |>
-    mutate(
-      theta = rnorm(k, mu, sqrt(tau2_true)),
-      yi = rnorm(k, theta, sqrt(vi))
-    )
-
-  fit_fe <- rma(yi, vi, data = d, method = "FE")
-  fit_re <- rma(yi, vi, data = d)
-  fit_knha <- rma(yi, vi, data = d, test = "knha")
-
-  tibble(
-    fixed = mu > fit_fe$ci.lb & mu < fit_fe$ci.ub,
-    random = mu > fit_re$ci.lb & mu < fit_re$ci.ub,
-    random_knha = mu > fit_knha$ci.lb & mu < fit_knha$ci.ub
-  )
-}
-
-set.seed(42)
-coverage <- map(seq_len(1000), \(i) simulate_once()) |> list_rbind()
+predict(fit_re)
 ```
 
-``` r
-coverage |>
-  summarise(across(everything(), mean)) |>
-  pivot_longer(everything(), names_to = "model", values_to = "coverage") |>
-  mutate(
-    model = factor(
-      model,
-      levels = c("fixed", "random", "random_knha"),
-      labels = c("Fixed-effect", "Random-effects", "Random-effects\n+ Hartung-Knapp")
-    )
-  ) |>
-  ggplot(aes(x = model, y = coverage)) +
-  geom_col(fill = "steelblue", width = 0.5) +
-  geom_hline(yintercept = 0.95, linetype = "dashed") +
-  scale_y_continuous(limits = c(0, 1), labels = scales::percent) +
-  labs(x = NULL, y = "Coverage")
-```
 
-![](index_files/figure-commonmark/coverage-plot-1.svg)
+       pred     se  ci.lb  ci.ub  pi.lb  pi.ub 
+     0.4770 0.0608 0.3579 0.5961 0.0165 0.9375 
 
-The fixed-effect interval falls well short of 95%: it assumes one true effect, so under heterogeneity it is badly overconfident. The random-effects interval is far better. It still dips a little below 95% because, with only 20 studies, `tau2` is estimated imprecisely and the standard interval doesn’t account for that; the Hartung-Knapp adjustment corrects for it and reaches the nominal rate.
+A large I² and a narrow confidence interval on the mean can occur together when many studies contribute; in that case, the prediction interval will be wide, because it accounts for the full between-study variance.
 
-## The average versus a new study
-
-The random-effects estimate is the *average* true effect across studies. It says nothing about how widely effects vary, that is the job of the prediction interval, which describes the range a new study’s true effect might plausibly fall in. The two answer different questions, and a large `I2` can sit alongside a precise average.
-
-This page assumed each study contributes one independent effect size. When studies contribute several effect sizes that are not independent, from multiple outcomes or a shared control group, see [Dependent Effect Sizes](../dependent-effect-sizes/); when the within-study and between-study variation are themselves of interest, see [Multilevel Meta-Analysis](../multilevel/).
+The methods here assume each study contributes one independent effect size. When studies contribute multiple effect sizes that are not independent, such as from multiple outcomes or a shared control group, see [Dependent Effect Sizes](../dependent-effect-sizes/); when the within-study and between-study variation are themselves of interest, see [Multilevel Meta-Analysis](../multilevel/).

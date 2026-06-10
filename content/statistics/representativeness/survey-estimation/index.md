@@ -1,6 +1,6 @@
 ---
-title: Survey-weighted estimation
-description: "How sampling design and weights shape population estimates from survey data"
+title: Survey-Weighted Estimation
+description: How sampling design and weights shape population estimates from survey data
 toc: true
 order: 3
 ---

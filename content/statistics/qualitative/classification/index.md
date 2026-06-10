@@ -1,6 +1,8 @@
 ---
-title: Text categorization with LLMs
-description: "Classifying open-ended text into categories with LLMs, and validating the output"
+title: Text Categorization with LLMs
+description: >-
+  Classifying open-ended text into categories with LLMs, and validating the
+  output
 toc: true
 ---
 

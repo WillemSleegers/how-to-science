@@ -1,5 +1,5 @@
 ---
-title: Data quality checks
+title: Data Quality Checks
 description: >-
   Techniques for detecting inattentive respondents using attention,
   comprehension, and commitment checks

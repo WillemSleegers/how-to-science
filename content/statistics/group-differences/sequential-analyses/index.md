@@ -1,6 +1,6 @@
 ---
-title: Sequential analyses
-description: "Bayesian sequential testing: tracking Bayes factors as data accumulate"
+title: Sequential Analyses
+description: 'Bayesian sequential testing: tracking Bayes factors as data accumulate'
 toc: true
 code-tools: true
 code-fold: show
