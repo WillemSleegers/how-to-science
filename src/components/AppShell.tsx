@@ -3,6 +3,7 @@
 import { useState, useEffect, Suspense } from "react"
 import { ChevronRightIcon } from "lucide-react"
 import { MarkdownContent } from "@/components/MarkdownContent"
+import { ThemeToggle } from "@/components/ThemeToggle"
 import type { Heading } from "@/lib/headings"
 
 interface Crumb {
@@ -10,30 +11,36 @@ interface Crumb {
   href?: string
 }
 
-// ── Breadcrumb ────────────────────────────────────────────────────────────────
+// ── TopBar ────────────────────────────────────────────────────────────────────
 
-function Breadcrumb({ trail }: { trail: Crumb[] }) {
-  if (trail.length <= 1) return null
+function TopBar({ trail }: { trail: Crumb[] }) {
   return (
-    <nav
-      aria-label="Breadcrumb"
-      className="mb-8 flex flex-wrap items-center gap-1.5 text-sm text-muted-foreground"
-    >
-      {trail.map((crumb, i) => (
-        <span key={i} className="flex items-center gap-1.5">
-          {i > 0 && <ChevronRightIcon className="size-3.5 opacity-60" />}
-          {crumb.href ? (
-            <a href={crumb.href} className="transition-colors hover:text-foreground">
-              {crumb.title}
-            </a>
-          ) : (
-            <span className={i === trail.length - 1 ? "text-foreground" : undefined}>
-              {crumb.title}
+    <div className="mb-8 flex items-center">
+      {trail.length > 1 && (
+        <nav
+          aria-label="Breadcrumb"
+          className="flex flex-wrap items-center gap-1.5 text-sm text-muted-foreground"
+        >
+          {trail.map((crumb, i) => (
+            <span key={i} className="flex items-center gap-1.5">
+              {i > 0 && <ChevronRightIcon className="size-3.5 opacity-60" />}
+              {crumb.href ? (
+                <a href={crumb.href} className="transition-colors hover:text-foreground">
+                  {crumb.title}
+                </a>
+              ) : (
+                <span className={i === trail.length - 1 ? "text-foreground" : undefined}>
+                  {crumb.title}
+                </span>
+              )}
             </span>
-          )}
-        </span>
-      ))}
-    </nav>
+          ))}
+        </nav>
+      )}
+      <div className="ml-auto flex items-center">
+        <ThemeToggle />
+      </div>
+    </div>
   )
 }
 
@@ -123,7 +130,7 @@ export function AppShell({ content, title, slug, headings, tocDepth, trail }: Ap
     <div className="flex min-h-screen">
       <div className="min-w-0 flex-1 px-6 py-8 pb-24 lg:px-8">
         <div className="mx-auto w-full max-w-none lg:max-w-3xl">
-          <Breadcrumb trail={trail} />
+          <TopBar trail={trail} />
           <div className="prose prose-neutral max-w-none dark:prose-invert">
             <h1>{title}</h1>
             {tocHeadings.length > 0 && <InlineToc headings={tocHeadings} />}

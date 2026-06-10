@@ -22,7 +22,10 @@ const sections = nav.map((section) => {
 <Layout title="How to Science">
   <div class="mx-auto max-w-5xl px-6 py-12 lg:px-8 lg:py-16">
     <section class="mb-14">
-      <h1 class="text-3xl font-bold tracking-tight sm:text-4xl">How to Science</h1>
+      <div class="flex items-center justify-between">
+        <h1 class="text-3xl font-bold tracking-tight sm:text-4xl">How to Science</h1>
+        <ThemeToggle client:load />
+      </div>
       <p class="mt-4 text-base text-muted-foreground">
         Notes on methodology and statistics, including literature reviews and R code. A work in progress — spotted a mistake or disagree with something? <a
           href="https://github.com/WillemSleegers/how-to-science/issues"
@@ -68,8 +71,5 @@ const sections = nav.map((section) => {
       ))
     }
 
-    <div class="mt-4 flex justify-center pt-8">
-      <ThemeToggle client:load />
-    </div>
   </div>
 </Layout>
