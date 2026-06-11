@@ -28,6 +28,7 @@
     - title: AI in Research
       items:
         - path: methodology/ai/synthetic-respondents
+        - path: methodology/ai/llm-determinism
     - title: Translation
       items:
         - path: methodology/translation/machine-translation
