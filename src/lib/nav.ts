@@ -38,6 +38,10 @@ interface ConfigSection {
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
+function compact<T>(items: (T | null)[]): T[] {
+  return items.filter((x): x is T => x !== null)
+}
+
 type Frontmatter = Record<string, unknown>
 
 function readFrontmatter(filePath: string): Frontmatter {
@@ -60,6 +64,10 @@ function resolveFile(navPath: string): string | null {
   return null
 }
 
+function resolveTitle(item: ConfigItem, fm: Frontmatter, path: string): string {
+  return item.text ?? item.title ?? (typeof fm.title === "string" ? fm.title : titleFromPath(path))
+}
+
 function titleFromPath(navPath: string): string {
   const file = resolveFile(navPath)
   if (file) {
@@ -76,17 +84,14 @@ function titleFromPath(navPath: string): string {
 
 // ── Config → NavNode ──────────────────────────────────────────────────────────
 
-function buildNode(item: ConfigItem): NavNode | null {
-  const children = (item.items ?? []).flatMap((child) => {
-    const node = buildNode(child)
-    return node ? [node] : []
-  })
+export function buildNode(item: ConfigItem): NavNode | null {
+  const children = compact((item.items ?? []).map(buildNode))
 
   if (item.path) {
     const slug = item.path.toLowerCase()
     const file = resolveFile(item.path)
     const fm = file ? readFrontmatter(file) : {}
-    const title = item.text ?? item.title ?? (typeof fm.title === "string" ? fm.title : titleFromPath(item.path))
+    const title = resolveTitle(item, fm, item.path)
     const description = typeof fm.description === "string" ? fm.description : undefined
     return { title, slug, description, children }
   }
@@ -109,10 +114,7 @@ export function loadNav(): NavSection[] {
     const title = entry.group ?? entry.section
     if (!title) return []
     const kind: "group" | "section" = entry.group ? "group" : "section"
-    const nodes = (entry.items ?? []).flatMap((item) => {
-      const node = buildNode(item)
-      return node ? [node] : []
-    })
+    const nodes = compact((entry.items ?? []).map(buildNode))
     return [{ title, kind, nodes }]
   })
 }

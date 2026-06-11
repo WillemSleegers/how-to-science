@@ -11,6 +11,8 @@
     "lint": "eslint .",
     "format": "prettier --write \"**/*.{ts,tsx,astro}\"",
     "typecheck": "astro check",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "render": "node scripts/render.mjs",
     "cleanup": "find src/content -name '*-gfm.md' -delete"
   },
@@ -50,7 +52,8 @@
     "globals": "^17.6.0",
     "prettier": "^3.8.3",
     "typescript": "~6.0.3",
-    "typescript-eslint": "^8.60.0"
+    "typescript-eslint": "^8.60.0",
+    "vitest": "^4.1.8"
   },
   "overrides": {
     "vite": ">=7 <8"
