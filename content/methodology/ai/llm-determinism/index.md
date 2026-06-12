@@ -1,22 +1,27 @@
 ---
 title: LLM Determinism
+description: >-
+  Why language models give different answers to identical prompts, and how to
+  make their output reproducible
 toc: true
 ---
 
 
-- [Temperature](#temperature)
-- [Reproducibility in practice](#reproducibility-in-practice)
-- [Prompt design and consistency](#prompt-design-and-consistency)
-- [Setting temperature in R](#setting-temperature-in-r)
+<details class="code-fold">
+<summary>Code</summary>
 
 ``` r
 library(tidyverse)
 library(ellmer)
+
+theme_set(theme_minimal())
 ```
 
-LLMs generate text by repeatedly sampling the next token from a probability distribution over the vocabulary. That distribution is computed from the input and the model’s weights, and sampling from it means the same input can produce different output on different calls.
+</details>
 
-To see this directly, the following code asks a model to translate the same Dutch survey text to English 25 times and counts how often each translation appears.
+Each word an LLM produces is the result of a random draw. The model assigns a probability to every token in its vocabulary, then samples the next token from that distribution. That distribution is computed from the input and the model’s weights, and sampling from it means the same input can produce different output on different calls.
+
+To see this directly, the following code asks a model to translate the same Dutch survey text to English 25 times and counts how often each translation appears. The requests are sent with the ellmer package, and sampling parameters are set through its `params()` helper.
 
 ``` r
 results <- replicate(25, {
@@ -31,8 +36,7 @@ results <- replicate(25, {
 })
 
 tibble(translation = results) |>
-  count(translation, sort = TRUE) |>
-  kable()
+  count(translation, sort = TRUE)
 ```
 
 | translation | n |
@@ -47,17 +51,39 @@ With temperature at 1, the same item produces several different translations acr
 
 ## Temperature
 
-The shape of that distribution is controlled by a parameter called temperature. At each step, the model assigns a numerical score to every token in its vocabulary, with higher scores indicating that a token is more likely to come next. Before converting these scores into probabilities, the model divides them by the temperature value (the raw scores are called logits). A lower temperature sharpens the distribution: the highest-scoring token receives most of the probability mass and is selected nearly every time. A higher temperature flattens the distribution so that lower-scoring tokens receive relatively more probability and are selected more often.
+The shape of that distribution is controlled by a parameter called temperature. At each step, the model assigns a numerical score to every token in its vocabulary, with higher scores indicating that a token is more likely to come next. Before converting these scores into probabilities, the model divides them by the temperature value (the raw scores are called logits). The conversion itself is done by a function called softmax, which exponentiates each divided score and rescales the results so they sum to one. A lower temperature sharpens the distribution: the highest-scoring token receives most of the probability mass and is selected nearly every time. A higher temperature flattens the distribution so that lower-scoring tokens receive relatively more probability and are selected more often.
 
 To make this concrete, suppose a model is translating “tevreden” from Dutch into English and has assigned raw scores to five candidate tokens. Applying softmax at different temperatures produces the following distributions.
 
 ![Candidate token probabilities under four temperature values. The raw logits are the same in each panel; only the temperature differs.](index_files/figure-commonmark/temperature-viz-1.svg)
 
-At temperature 0.1, the distribution concentrates almost entirely on the top token, making output effectively deterministic. At temperature 2.0, probability is spread across all candidates and variation between calls is high. Temperature 1.0 leaves the distribution unchanged from what the model computes directly; most APIs default to 1. At the limit, temperature 0 skips sampling entirely: the model selects the highest-scoring token at every step.
+At temperature 0.1, the distribution concentrates almost entirely on the top token, making output effectively deterministic. At temperature 2.0, probability is spread across all candidates and variation between calls is high. Temperature 1.0 leaves the distribution unchanged from what the model computes directly; most APIs default to 1. At the limit, temperature 0 skips sampling entirely. Dividing by zero is undefined, so this case is handled separately: rather than scaling the logits, the model selects the highest-scoring token directly at every step.
+
+In ellmer, the temperature is set through the `params()` helper passed to the chat function. Applying this to our earlier example, setting it to 0 produces consistent translations.
+
+``` r
+results <- replicate(25, {
+  chat <- chat_lmstudio(
+    model = "google/gemma-4-12b",
+    system_prompt = "Translate the following Dutch survey text to English. Output only the translation, nothing else.",
+    params = params(temperature = 0)
+  )
+  chat$chat(
+    "Hieronder volgen een aantal uitspraken over hoe mensen zich kunnen voelen. Geef voor elke uitspraak aan in hoeverre deze op u van toepassing is."
+  )
+})
+
+tibble(translation = results) |>
+  count(translation, sort = TRUE)
+```
+
+| translation | n |
+|:---|---:|
+| Below are a number of statements about how people might feel. For each statement, indicate to what extent it applies to you. | 25 |
 
 ## Reproducibility in practice
 
-Setting temperature to 0 is therefore the right choice for any workflow where reproducibility matters, such as translating a questionnaire that may need to be re-run or auditing stored model output against a new run. For a given input, repeated calls will almost always produce identical output.
+Setting temperature to 0 is therefore the right choice for any workflow where reproducibility matters, such as translating a questionnaire that may need to be re-run. For a given input, repeated calls will almost always produce identical output.
 
 Exact reproducibility is not guaranteed, however. Floating-point operations on GPUs are not always deterministic, and the order of parallel computations can vary across different hardware, library versions, or batch sizes. In practice this rarely changes the output, but it can. Some APIs expose a `seed` parameter to further reduce this variability.
 
@@ -65,18 +91,6 @@ Exact reproducibility is not guaranteed, however. Floating-point operations on G
 
 Temperature is not the only factor that affects how much output varies across calls. The prompt itself also shapes consistency, independently of sampling.
 
-Two mechanisms are at work. First, constraining the output format reduces the number of tokens where variation can accumulate. A prompt that asks for only the translated text produces fewer decisions than one that allows commentary or alternatives, and fewer decisions means less opportunity for different tokens to be sampled. Second, task framing affects how confident the model is at each step. Asking to “translate” implies a single correct rendering, which concentrates probability on the most familiar phrasing. Asking to “suggest a translation” or “rephrase in English” signals that multiple renderings are acceptable, which spreads probability more evenly.
+This happens for two reasons. First, constraining the output format reduces the number of tokens where variation can accumulate. A prompt that asks for only the translated text produces fewer decisions than one that allows commentary or alternatives, and fewer decisions means less opportunity for different tokens to be sampled. Second, task framing affects how confident the model is at each step. Asking to “translate” implies a single correct rendering, which concentrates probability on the most familiar phrasing. Asking to “suggest a translation” or “rephrase in English” signals that multiple renderings are acceptable, which spreads probability more evenly.
 
 The practical consequence is that both levers matter for reproducible workflows. Temperature 0 eliminates sampling randomness, but a loosely specified prompt leaves the model with high uncertainty at many token positions, and greedy decoding across those positions can still produce different outputs when the model or infrastructure changes. A tightly specified prompt reduces that underlying uncertainty, making the output more stable regardless of temperature.
-
-## Setting temperature in R
-
-In `ellmer`, model parameters including temperature are passed via `params()`. Pairing temperature 0 with a tightly specified prompt addresses both sources of variation: sampling randomness and model uncertainty at token positions where multiple renderings are acceptable.
-
-``` r
-chat <- chat_lmstudio(
-  model = "google/gemma-4-12b",
-  system_prompt = "Translate the following Dutch survey text to English. Output only the translation, nothing else.",
-  params = params(temperature = 0)
-)
-```
