@@ -29,6 +29,8 @@ theme_set(theme_minimal())
 
 # Set seed
 set.seed(1)
+
+options(brms.backend = "cmdstanr")
 ```
 
 </details>

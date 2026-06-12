@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "node scripts/render.mjs --watch & astro dev",
+    "dev": "node scripts/render.mjs --watch",
     "build": "node scripts/render.mjs && astro build",
     "preview": "astro preview",
     "astro": "astro",

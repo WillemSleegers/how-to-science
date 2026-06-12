@@ -8,7 +8,7 @@
  *   node scripts/render.mjs content/foo.qmd           # render one file
  */
 
-import { execSync } from "node:child_process"
+import { execSync, spawn } from "node:child_process"
 import { existsSync, readdirSync, cpSync, watch, statSync } from "node:fs"
 import { join, resolve, relative, dirname, basename } from "node:path"
 import { fileURLToPath } from "node:url"
@@ -95,6 +95,11 @@ if (arg === "--watch") {
       if (existsSync(fullPath)) renderFile(fullPath)
     }
   })
+  // Run the Astro dev server alongside the watcher so `npm run dev` works the
+  // same on every OS (a bare shell `&` backgrounds on macOS but runs
+  // sequentially under Windows cmd.exe, which never starts Astro).
+  const astro = spawn("astro dev", { cwd: ROOT, stdio: "inherit", shell: true })
+  astro.on("exit", (code) => process.exit(code ?? 0))
 } else if (arg) {
   renderFile(arg)
   console.log("\nDone.")

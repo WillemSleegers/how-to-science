@@ -85,11 +85,10 @@ data |>
 
 </details>
 
-    # A tibble: 2 × 3
-      sex        n mean_y
-      <fct>  <int>  <dbl>
-    1 male     148   2.98
-    2 female   352   4.01
+| sex    |   n |   mean_y |
+|:-------|----:|---------:|
+| male   | 148 | 2.982665 |
+| female | 352 | 4.006049 |
 
 ## Controlling for sex
 
