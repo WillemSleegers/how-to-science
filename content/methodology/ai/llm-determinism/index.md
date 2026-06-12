@@ -21,11 +21,13 @@ To see this directly, the following code asks a model to translate the same Dutc
 ``` r
 results <- replicate(25, {
   chat <- chat_lmstudio(
-    model         = "google/gemma-4-12b",
+    model = "google/gemma-4-12b",
     system_prompt = "Translate the following Dutch survey text to English. Output only the translation, nothing else.",
-    params        = params(temperature = 1)
+    params = params(temperature = 1)
   )
-  chat$chat("Hieronder volgen een aantal uitspraken over hoe mensen zich kunnen voelen. Geef voor elke uitspraak aan in hoeverre deze op u van toepassing is.")
+  chat$chat(
+    "Hieronder volgen een aantal uitspraken over hoe mensen zich kunnen voelen. Geef voor elke uitspraak aan in hoeverre deze op u van toepassing is."
+  )
 })
 
 tibble(translation = results) |>
@@ -73,8 +75,8 @@ In `ellmer`, model parameters including temperature are passed via `params()`. P
 
 ``` r
 chat <- chat_lmstudio(
-  model         = "google/gemma-4-12b",
+  model = "google/gemma-4-12b",
   system_prompt = "Translate the following Dutch survey text to English. Output only the translation, nothing else.",
-  params        = params(temperature = 0)
+  params = params(temperature = 0)
 )
 ```
