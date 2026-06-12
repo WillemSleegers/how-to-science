@@ -18,7 +18,7 @@ toc: true
 library(tidyverse)
 library(deeplr)
 library(googleLanguageR)
-library(rollama)
+library(ellmer)
 ```
 
 Survey translation has traditionally required human translators working through structured protocols like TRAPD (Translation, Review, Adjudication, Pretesting, Documentation). MT systems have become accurate enough to serve as a first pass or, in some contexts, a full replacement — but they require some care when applied to survey text.
@@ -114,58 +114,56 @@ LLM-based translation gives you full control over context via the prompt. Beyond
 
 This approach is closest to the TRAPD methodology: the Sorato & Zavala-Rojas (2025) paper demonstrates it using GPT-4o mini with prompts that include 477 survey-specific biterms extracted from the Multilingual Corpus of Survey Questionnaires (MCSQ).
 
-The practical challenge with LLMs is extracting the translation cleanly. Without constraints, a model may return commentary, explanations, or reformatted text alongside the translation. Three approaches keep output clean:
+The basic setup is a system prompt that specifies the target language and instructs the model to return only the translation, followed by a call with the item text.
+
+``` r
+chat <- chat_lmstudio(
+  model         = "google/gemma-4-12b",
+  system_prompt = "Translate the following survey item to Dutch. Output only the translated text."
+)
+
+chat$chat("How satisfied are you with your life as a whole?")
+```
+
+The practical challenge is extracting the translation cleanly when processing many items. Without constraints, a model may return commentary, explanations, or reformatted text alongside the translation. Three approaches keep output clean:
 
 **Constrained prompt**: instruct the model explicitly to return only the translated text.
 
 ``` r
-translate_item <- function(text, target_lang, glossary = NULL) {
-  glossary_text <- if (!is.null(glossary)) {
-    paste0(
-      "\nUse the following terminology:\n",
-      paste(paste0(glossary$source, " → ", glossary$target), collapse = "\n")
+translate_item <- function(text, target_lang) {
+  chat <- chat_lmstudio(
+    model         = "google/gemma-4-12b",
+    system_prompt = paste0(
+      "Translate the following survey item to ", target_lang, ". ",
+      "Output only the translated text, nothing else."
     )
-  } else ""
-
-  prompt <- paste0(
-    "Translate the following survey item to ", target_lang, ". ",
-    "Output only the translated text, nothing else.",
-    glossary_text,
-    "\n\nItem: ", text
   )
 
-  query(
-    model  = "gemma4:e4b",
-    prompt = prompt,
-    screen = FALSE
-  )$message$content
+  chat$chat(text)
 }
 ```
 
 **Structured output**: ask the model to return JSON and parse it.
 
 ``` r
-prompt <- paste0(
-  'Translate the following survey item to Dutch. ',
-  'Return a JSON object with a single key "translation". ',
-  'Item: "How satisfied are you with your life as a whole?"'
-)
+chat <- chat_lmstudio(model = "local-model")
 
-response <- query(model = "gemma4:e4b", prompt = prompt, screen = FALSE)
-jsonlite::fromJSON(response$message$content)$translation
+result <- chat$extract_data(
+  'Translate to Dutch: "How satisfied are you with your life as a whole?"',
+  type = type_object(translation = type_string())
+)
+result$translation
 ```
 
 **Delimiter tags**: ask the model to wrap the translation in tags and extract with a regex.
 
 ``` r
-prompt <- paste0(
-  'Translate the following survey item to Dutch. ',
-  'Wrap the translation in <translation> tags. ',
-  'Item: "How satisfied are you with your life as a whole?"'
-)
+chat <- chat_lmstudio(model = "local-model")
 
-response <- query(model = "gemma4:e4b", prompt = prompt, screen = FALSE)
-str_extract(response$message$content, "(?<=<translation>).*(?=</translation>)")
+response <- chat$chat(
+  'Translate the following survey item to Dutch. Wrap the translation in <translation> tags. Item: "How satisfied are you with your life as a whole?"'
+)
+str_extract(response, "(?<=<translation>).*(?=</translation>)")
 ```
 
 Of the three, structured output is most robust for batch processing: JSON parsing fails loudly when the format is wrong, making errors easy to detect.

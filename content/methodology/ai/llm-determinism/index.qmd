@@ -19,11 +19,13 @@ To see this directly, the following code asks a model to translate the same Dutc
 #| eval: false
 results <- replicate(25, {
   chat <- chat_lmstudio(
-    model         = "google/gemma-4-12b",
+    model = "google/gemma-4-12b",
     system_prompt = "Translate the following Dutch survey text to English. Output only the translation, nothing else.",
-    params        = params(temperature = 1)
+    params = params(temperature = 1)
   )
-  chat$chat("Hieronder volgen een aantal uitspraken over hoe mensen zich kunnen voelen. Geef voor elke uitspraak aan in hoeverre deze op u van toepassing is.")
+  chat$chat(
+    "Hieronder volgen een aantal uitspraken over hoe mensen zich kunnen voelen. Geef voor elke uitspraak aan in hoeverre deze op u van toepassing is."
+  )
 })
 
 tibble(translation = results) |>
@@ -63,14 +65,17 @@ temperatures <- c(0.1, 0.5, 1.0, 2.0)
 
 map_dfr(temperatures, \(t) {
   tibble(
-    token       = tokens,
+    token = tokens,
     probability = softmax(logits / t),
     temperature = paste0("Temperature = ", t)
   )
 }) |>
   mutate(
-    temperature = factor(temperature, levels = paste0("Temperature = ", temperatures)),
-    token       = fct_inorder(token)
+    temperature = factor(
+      temperature,
+      levels = paste0("Temperature = ", temperatures)
+    ),
+    token = fct_inorder(token)
   ) |>
   ggplot(aes(x = token, y = probability)) +
   geom_col() +
@@ -79,13 +84,13 @@ map_dfr(temperatures, \(t) {
   labs(x = NULL, y = "Probability")
 ```
 
-At temperature 0.1, the distribution concentrates almost entirely on the top token, making output effectively deterministic. At temperature 2.0, probability is spread across all candidates and variation between calls is high. Temperature 1.0 leaves the distribution unchanged from what the model computes directly; most APIs default to 1.
+At temperature 0.1, the distribution concentrates almost entirely on the top token, making output effectively deterministic. At temperature 2.0, probability is spread across all candidates and variation between calls is high. Temperature 1.0 leaves the distribution unchanged from what the model computes directly; most APIs default to 1. At the limit, temperature 0 skips sampling entirely: the model selects the highest-scoring token at every step.
 
 ## Reproducibility in practice
 
-Setting temperature to 0 makes the model always select the highest-probability token, producing the same output on repeated calls for the same input. This is the right choice for any workflow where reproducibility matters, such as translating a questionnaire that may need to be re-run or auditing stored model output against a new run.
+Setting temperature to 0 is therefore the right choice for any workflow where reproducibility matters, such as translating a questionnaire that may need to be re-run or auditing stored model output against a new run. For a given input, repeated calls will almost always produce identical output.
 
-Even at temperature 0, exact reproducibility across different hardware, library versions, or batch sizes is not guaranteed. Floating-point operations on GPUs are not always deterministic, and the order of parallel computations can vary. In practice this rarely changes the output, but it can. Some APIs expose a `seed` parameter to further reduce this variability.
+Exact reproducibility is not guaranteed, however. Floating-point operations on GPUs are not always deterministic, and the order of parallel computations can vary across different hardware, library versions, or batch sizes. In practice this rarely changes the output, but it can. Some APIs expose a `seed` parameter to further reduce this variability.
 
 ## Prompt design and consistency
 
@@ -97,14 +102,14 @@ The practical consequence is that both levers matter for reproducible workflows.
 
 ## Setting temperature in R
 
-In `ellmer`, model parameters including temperature are passed via `params()`.
+In `ellmer`, model parameters including temperature are passed via `params()`. Pairing temperature 0 with a tightly specified prompt addresses both sources of variation: sampling randomness and model uncertainty at token positions where multiple renderings are acceptable.
 
 ```{r}
 #| label: llm-temperature-r
 #| eval: false
 chat <- chat_lmstudio(
-  model         = "google/gemma-4-12b",
+  model = "google/gemma-4-12b",
   system_prompt = "Translate the following Dutch survey text to English. Output only the translation, nothing else.",
-  params        = params(temperature = 0)
+  params = params(temperature = 0)
 )
 ```
