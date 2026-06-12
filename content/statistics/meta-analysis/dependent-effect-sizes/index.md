@@ -25,10 +25,8 @@ library(tidyverse)
 library(metafor)
 library(knitr)
 
-# Styling
 theme_set(theme_minimal())
 
-# Seed
 set.seed(436)
 ```
 

@@ -8,6 +8,7 @@ order: 3
 ```{r}
 #| label: setup
 #| message: false
+#| code-fold: true
 library(tidyverse)
 library(metafor)
 

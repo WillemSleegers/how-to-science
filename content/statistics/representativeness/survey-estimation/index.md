@@ -13,12 +13,19 @@ order: 3
 - [When the design matters](#when-the-design-matters)
 - [Can you use `lm()` instead?](#can-you-use-lm-instead)
 
+<details class="code-fold">
+<summary>Code</summary>
+
 ``` r
 library(tidyverse)
 library(srvyr)
 
+theme_set(theme_minimal())
+
 set.seed(42)
 ```
+
+</details>
 
 > [!NOTE]
 >

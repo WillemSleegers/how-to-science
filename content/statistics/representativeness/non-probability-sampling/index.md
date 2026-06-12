@@ -7,11 +7,18 @@ order: 2
 ---
 
 
+<details class="code-fold">
+<summary>Code</summary>
+
 ``` r
 library(tidyverse)
 
+theme_set(theme_minimal())
+
 set.seed(42)
 ```
+
+</details>
 
 ## The population
 
@@ -37,7 +44,7 @@ ggplot(population, aes(x = happiness)) +
   )
 ```
 
-![](index_files/figure-commonmark/unnamed-chunk-2-1.svg)
+![](index_files/figure-commonmark/unnamed-chunk-1-1.svg)
 
 The red line marks the true population mean — the quantity we want to estimate from a sample.
 
@@ -64,7 +71,7 @@ tibble(estimate = estimates_srs) |>
   )
 ```
 
-![](index_files/figure-commonmark/unnamed-chunk-3-1.svg)
+![](index_files/figure-commonmark/unnamed-chunk-2-1.svg)
 
 The distribution of estimates is **centred on the true mean**. Individual samples vary — some overestimate, some underestimate — but there is no systematic bias. This is the defining property of probability sampling.
 
@@ -114,7 +121,7 @@ bind_rows(
   theme(legend.position = "top")
 ```
 
-![](index_files/figure-commonmark/unnamed-chunk-6-1.svg)
+![](index_files/figure-commonmark/unnamed-chunk-5-1.svg)
 
 The non-probability sample consistently **overestimates** happiness: people who report higher happiness are more likely to participate, so the sample is no longer a mirror of the population. Crucially, a larger non-probability sample doesn’t fix this — it just gives you a more precise estimate of the wrong number.
 
@@ -237,7 +244,7 @@ bind_rows(
   )
 ```
 
-![](index_files/figure-commonmark/unnamed-chunk-11-1.svg)
+![](index_files/figure-commonmark/unnamed-chunk-10-1.svg)
 
 The intervals show the plausible RMSE range for each approach given realistic data defect correlations. Survey A performs well — its small sample is compensated by a much tighter data defect. Panel surveys only become competitive at very large sizes (500K+) and only if their self-selection bias stays near the lower end of the plausible range, where the intervals just start to overlap.
 

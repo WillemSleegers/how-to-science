@@ -16,11 +16,18 @@ toc: true
   - [Interactive human evaluation](#interactive-human-evaluation)
   - [Sample size planning](#sample-size-planning)
 
+<details class="code-fold">
+<summary>Code</summary>
+
 ``` r
 library(tidyverse)
 library(mall)
 library(cli)
+
+theme_set(theme_minimal())
 ```
+
+</details>
 
 LLMs can assign text to predefined categories reliably and at scale, without manually labelling every item. This is useful for open-ended survey responses, product reviews, social media posts, or any text where you want to sort items into groups. However, despite their abilities, it remains necessary to validate their output and see whether they correctly categorized the responses, or at least match the performance of human raters.
 
@@ -58,20 +65,58 @@ reviews <- movie_review |>
 reviews
 ```
 
-    # A tibble: 50 × 3
-       id       sentiment review                                                    
-       <chr>    <chr>     <chr>                                                     
-     1 1433_10  positive  "Brilliant execution in displaying once and for all, this…
-     2 10403_2  negative  "Just a few words.... This movie really sucks. It's like …
-     3 8716_10  positive  "I thought this was a quiet good movie. It was fun to wat…
-     4 12193_10 positive  "What can I say, it's a damn good movie. See it if you st…
-     5 259_3    negative  "photography was too jumpy to follow. dark scenes hard to…
-     6 1550_1   negative  "I honestly don't understand how tripe like this gets mad…
-     7 11950_2  negative  "This is without a doubt the worst movie I have ever seen…
-     8 8713_10  positive  "This movie is full of references. Like \\\"Mad Max II\\\…
-     9 12058_4  negative  "Repugnant Bronson thriller. Unfortunately, it's technica…
-    10 5060_8   positive  "The movie is wonderful. It shows the man's work for the …
-    # ℹ 40 more rows
+| id | sentiment | review |
+|:---|:---|:---|
+| 1433_10 | positive | Brilliant execution in displaying once and for all, this time in the venue of politics, of how "good intentions do actually pave the road to hell". Excellent! |
+| 10403_2 | negative | Just a few words…. This movie really sucks. It’s like those TV Movies with bad cast and plot. It’s amazing how they could make this sequel worse than the III. Don’t waste your time watching this crap, even if you like the tremors movies. |
+| 8716_10 | positive | I thought this was a quiet good movie. It was fun to watch it. What I liked best where the ‘Outtakes’ at the end of the movie. They were GREAT. |
+| 12193_10 | positive | What can I say, it’s a damn good movie. See it if you still haven’t. Great camera works and lighting techniques. Awesome, just awesome. Orson Welles is incredible ‘The Lady From Shanghai’ can certainly take the place of ‘Citizen Kane’. |
+| 259_3 | negative | photography was too jumpy to follow. dark scenes hard to see.Had good story line too bad it got lost somewhere. Too noisy for what was really happening Bottom line is it’s a baddddd movie |
+| 1550_1 | negative | I honestly don’t understand how tripe like this gets made. The worst junior-high talent show skit you’ve ever seen is more entertaining than this film. Will Ferrell’s wrestling fetish provides the only (briefly) humorous moments. Utterly horrible. |
+| 11950_2 | negative | This is without a doubt the worst movie I have ever seen. It is not funny. It is not interesting and should not have been made. |
+| 8713_10 | positive | This movie is full of references. Like "Mad Max II", "The wild one" and many others. The ladybugs face its a clear reference (or tribute) to Peter Lorre. This movie is a masterpiece. Well talk much more about in the future. |
+| 12058_4 | negative | Repugnant Bronson thriller. Unfortunately, it’s technically good and I gave it 4/10, but it’s so utterly vile that it would be inconceivable to call it "entertainment". Far more disturbing than a typical slasher film. |
+| 5060_8 | positive | The movie is wonderful. It shows the man’s work for the wilderness and a natural understanding of the harmony of nature, without being an "extreme" naturalist. I definitely plan to look for the book. This is a rare treasure! |
+| 10018_3 | negative | The characters are unlikeable and the script is awful. It’s a waste of the talents of Deneuve and Auteuil. |
+| 10477_1 | negative | I would highly recommend seeing this movie. After viewing it, you will be able to walk out of every other bad movie EVER saying "at least it wasn’t The Omega Code."Forget my money, I want my TIME back! |
+| 7881_9 | positive | What fun! Bucketfuls of good humor, terrific cast chemistry (Skelton/Powell/Lahr/O’Brien), dynamite Dorsey-driven soundtrack! Miss Powell’s dance numbers have exceptional individual character and pizzazz. Her most winning film appearance. |
+| 10387_1 | negative | Giant crabs cursing in Japanese? What was in that drink? A terrible movie, but laughable. I love the invisible Samurai ghosties running around. Drink much beer before you see this movie. |
+| 11924_10 | positive | GREAT movie and the family will love it!! If kids are bored one day just pop the tape in and you’ll be so glad you did!!!\~\~~Rubei luv raven-s! |
+| 9599_1 | negative | Boring, badly written Italian exploitation flick.Lots of nudity, gore and awful acting.The werewolf makeup was the only thing that would raise a laugh.Complete rubbish-even for fans of cheesy Italian horror.Please avoid. |
+| 825_1 | negative | I can’t believe they got the actors and actresses of that caliber to do this movie. That’s all I’ve got to say - the movie speaks for itself!! |
+| 7479_3 | negative | It’s terrific when a funny movie doesn’t make smile you. What a pity!! This film is very boring and so long. It’s simply painfull. The story is staggering without goal and no fun.You feel better when it’s finished. |
+| 4466_2 | negative | Spanish horrors are not bad at all, some are smart with interesting stories, but is not the case of "Second Name". It is badly directed, badly acted and boring…boring…boring, a missed chance for an interesting story. |
+| 6016_10 | positive | This movie is one of the masterpieces from Mr. Antonioni. It is about youth, distraction, happiness, alienation, materialism, honor, corruption. And it is like everything else from great Italian director -true art. |
+| 4255_9 | positive | I really enjoyed this movie. The script is fresh and unpredictable and the acting is outstanding.It is a down-to-earth movie with characters one cares about. It brought tears into my eyes a few times but left me with a great feeling afterwards. |
+| 11785_1 | negative | Slim Slam Slum is a sad and disappointing picture. There is absolutely no reason to this sorry excuse for a picture. Don`t go there, what ever you do, don`t. Watch TV-Shop for 10 hours straight instead. That way you will be slightly amused. |
+| 2263_10 | positive | I felt drawn into the world of the manipulation of mind and will at the heart of the story. The acting by Nolte, Lee, Arkin and the supporting cast was superb. The strange twists in the Vonnegut story are made stranger by odd details. |
+| 10288_10 | positive | I absolutely loved this movie. It met all expectations and went beyond that. I loved the humor and the way the movie wasn’t just randomly silly. It also had a message. Jim Carrey makes me happy. :) |
+| 11727_7 | positive | This film is fun, if your a person who likes a good campy feature film every now and then. By no means is this movie fine cinema, but if you dont take things too seriously, and can laugh at yourself once in a while, Elvira is a good frownbuster. |
+| 8714_10 | positive | To quote Flik, that was my reaction exactly: Wow…you’re perfect! This is the best movie! I think I can even say it’s become my favorite movie ever, even. Wow. I tell you what, wow. |
+| 987_8 | positive | The movie is great and I like the story. I prefer this movie than other movie such The cell ( sick movie ) and Highlander ( silly movie ). I just tell the truth, I like a reality hehe and also a true story :) |
+| 9552_8 | positive | A real classic. A shipload of sailors trying to get to the towns daughters while their fathers go to extremes to deter the sailors attempts. A maidens cry for aid results in the dispatch of the "Rape Squad". A cult film waiting to happen! |
+| 1252_4 | negative | After looking at monkeys (oops apes) for more than one hour, I was feeling like one too. I was an ape, spending money on this movie. Please people, hold you money in your pocket and go see some funny movie like Bridget Jones’s Diary.. |
+| 2933_10 | positive | If you ever see a stand up comedy movie this is the one. You will laugh nonstop if you have any sense of humor at all. This is a once in a lifetime performance from a once in a lifetime performer. This is a stand up standard. |
+| 10207_10 | positive | This film has renewed my interest in French cinema. The story is enchanting, the acting is flawless and Audrey Tautou is absolutely beautiful. I imagine that we will be seeing a lot more of her in the States after her upcoming role in Amelie. |
+| 12124_1 | negative | Any movie that portrays the hard-working responsible husband as the person who has to change because of bored, cheating wife is an obvious result of 8 years of the Clinton era.It’s little wonder that this movie was written by a woman. |
+| 1698_10 | positive | Laughs, adventure, a good time, a killer soundtrack, oscar-worthy acting, and special effects/ animitronics like none other, what else could you want in a movie? If you see this will be on the telly, WATCH IT, otherwise, run out now to RENT IT!!! |
+| 4577_10 | positive | This movie is so good I could watch it all day long! Mary-Kate and Ashley were robbed at Oscar time!! If I got to be one of the actors I would be so excited!!! I can’t wait for the new Charlie’s Angels movie starring Mary-Kate and Ashley. |
+| 9480_10 | positive | mature intelligent and highly charged melodrama unbelivebly filmed in China in 1948. wei wei’s stunning performance as the catylast in a love triangle is simply stunning if you have the oppurunity to see this magnificent film take it |
+| 2698_8 | positive | I liked the movie a real lot. Wanted to see it just for Dara Tomanovich, but the plot and story were ok too. A very cool change in plot when you least expect it. |
+| 4464_1 | negative | I have never seen such terrible performances in all my life.Everyone in the entire film was absolute rubbish.Not one decent actor/actress in the whole film, it was a joke.Reminded me of drama at school… |
+| 1434_10 | positive | Kept my attention from start to finish. Great performances added to this tremendous film. Mr. Pacino once again gives us another brilliant character to enjoy. |
+| 11824_1 | negative | This tear-teaser, written by Steve Martin himself, is so unbelievably bad, it makes you sick to your stomach!The plot is pathetic, the acting awful, and the dialogue is even more predictable than the ending.Avoid at all costs! |
+| 728_3 | negative | i am very disappointed with this movie because i like these french actors and i liked "Buffet Froid" from this Director (bertrand blier) but the script of "Les Acteurs" is VERY POOR. why these actors they agreed to play this poor scenario. |
+| 4518_9 | positive | Adrian Pasdar is excellent is this film. He makes a fascinating woman. |
+| 5113_3 | negative | This movie was way too slow and predictable.I wish i could say more but i can’t.If you enjoy action/adventure films,this is not one to see.I’d suggest you go see movies like;Behind Enemy Lines with Owen Wilson and Iron Eagle with Louis Gossett Jr. |
+| 10492_1 | negative | I would love to have that two hours of my life back. It seemed to be several clips from Steve’s Animal Planet series that was spliced into a loosely constructed script. Don’t Go, If you must see it, wait for the video … |
+| 11578_1 | negative | Perhaps the biggest waste of production time, money and the space on the video store shelf. If someone suggests you see this movie, run screaming in the other direction. Unless, of course, you’re into self-abuse. |
+| 1116_9 | positive | Did Sandra (yes, she must have) know we would still be here for her some nine years later?See it if you haven’t, again if you have; see her live while you can. |
+| 9979_1 | negative | This is one of the worst movies I have ever seen! I saw it at the Toronto film festival and totally regret wasting my time. Completely unwatchable with no redeeming qualities whatsoever.Steer clear. |
+| 12421_10 | positive | Very smart, sometimes shocking, I just love it. It shoved one more side of David’s brilliant talent. He impressed me greatly! David is the best. The movie captivates your attention for every second. |
+| 1733_7 | positive | Much underrated camp movie on the level of Cobra Woman, etc. Photographic stills resemble Rembrandt prints. Sometimes subtle dialog and hidden literate touches found throughout. |
+| 11873_1 | negative | "Ally McBeal" was a decent enough show, but it was very overrated. The characters become boring after a while and the jokes begin to fall short.I think it chose an appropriate point in time to leave - it was starting to outstay its welcome. |
+| 12353_1 | negative | I think that movie can`t be a Scott`s film. That is impossible. Do you remember Blade Runner? And Alien? Two greats movies versus a one. I hope didnt see ever it. good bye!! |
 
 ### Classification
 
@@ -97,20 +142,58 @@ mall_results <- map(
 saveRDS(mall_results, "mall_results.rds")
 ```
 
-    # A tibble: 50 × 4
-       id      sentiment review                                            .classify
-       <chr>   <chr>     <chr>                                             <chr>    
-     1 1433_10 positive  "Brilliant execution in displaying once and for … negative 
-     2 9599_1  negative  "Boring, badly written Italian exploitation flic… negative 
-     3 825_1   negative  "I can't believe they got the actors and actress… positive 
-     4 5060_8  positive  "The movie is wonderful. It shows the man's work… positive 
-     5 1550_1  negative  "I honestly don't understand how tripe like this… negative 
-     6 11950_2 negative  "This is without a doubt the worst movie I have … negative 
-     7 8713_10 positive  "<br /><br />This movie is full of references. L… positive 
-     8 12058_4 negative  "Repugnant Bronson thriller. Unfortunately, it's… negative 
-     9 235_10  positive  "A wonderful movie! Anyone growing up in an Ital… positive 
-    10 4518_9  positive  "Adrian Pasdar is excellent is this film. He mak… positive 
-    # ℹ 40 more rows
+| id | sentiment | review | .classify |
+|:---|:---|:---|:---|
+| 1433_10 | positive | Brilliant execution in displaying once and for all, this time in the venue of politics, of how "good intentions do actually pave the road to hell". Excellent! | negative |
+| 9599_1 | negative | Boring, badly written Italian exploitation flick.Lots of nudity, gore and awful acting.The werewolf makeup was the only thing that would raise a laugh.Complete rubbish-even for fans of cheesy Italian horror.Please avoid. | negative |
+| 825_1 | negative | I can’t believe they got the actors and actresses of that caliber to do this movie. That’s all I’ve got to say - the movie speaks for itself!! | positive |
+| 5060_8 | positive | The movie is wonderful. It shows the man’s work for the wilderness and a natural understanding of the harmony of nature, without being an "extreme" naturalist. I definitely plan to look for the book. This is a rare treasure!<br /><br /> | positive |
+| 1550_1 | negative | I honestly don’t understand how tripe like this gets made. The worst junior-high talent show skit you’ve ever seen is more entertaining than this film. Will Ferrell’s wrestling fetish provides the only (briefly) humorous moments. Utterly horrible. | negative |
+| 11950_2 | negative | This is without a doubt the worst movie I have ever seen. It is not funny. It is not interesting and should not have been made. | negative |
+| 8713_10 | positive | <br /><br />This movie is full of references. Like "Mad Max II", "The wild one" and many others. The ladybugs face its a clear reference (or tribute) to Peter Lorre. This movie is a masterpiece. Well talk much more about in the future. | positive |
+| 12058_4 | negative | Repugnant Bronson thriller. Unfortunately, it’s technically good and I gave it 4/10, but it’s so utterly vile that it would be inconceivable to call it "entertainment". Far more disturbing than a typical slasher film. | negative |
+| 235_10 | positive | A wonderful movie! Anyone growing up in an Italian family will definitely see themselves in these characters. A good family movie with sadness, humor, and very good acting from all. You will enjoy this movie!! We need more like it. | positive |
+| 4518_9 | positive | Adrian Pasdar is excellent is this film. He makes a fascinating woman. | positive |
+| 10695_8 | positive | Nicole Kidman is a wonderful actress and here she’s great. I really liked Ben Chaplin in The Thin Red Line and he is very good here too. This is not Great Cinema but I was most entertained. Given most films these days this is High Praise indeed. | positive |
+| 7881_9 | positive | What fun! Bucketfuls of good humor, terrific cast chemistry (Skelton/Powell/Lahr/O’Brien), dynamite Dorsey-driven soundtrack! Miss Powell’s dance numbers have exceptional individual character and pizzazz. Her most winning film appearance. | positive |
+| 7479_3 | negative | It’s terrific when a funny movie doesn’t make smile you. What a pity!! This film is very boring and so long. It’s simply painfull. The story is staggering without goal and no fun.<br /><br />You feel better when it’s finished. | negative |
+| 11924_10 | positive | GREAT movie and the family will love it!! If kids are bored one day just pop the tape in and you’ll be so glad you did!!!<br /><br />\~\~~Rube<br /><br />i luv raven-s! | positive |
+| 1252_4 | negative | After looking at monkeys (oops apes) for more than one hour, I was feeling like one too. I was an ape, spending money on this movie. Please people, hold you money in your pocket and go see some funny movie like Bridget Jones’s Diary.. | negative |
+| 1698_10 | positive | Laughs, adventure, a good time, a killer soundtrack, oscar-worthy acting, and special effects/ animitronics like none other, what else could you want in a movie? If you see this will be on the telly, WATCH IT, otherwise, run out now to RENT IT!!! | positive |
+| 8714_10 | positive | To quote Flik, that was my reaction exactly: Wow…you’re perfect! This is the best movie! I think I can even say it’s become my favorite movie ever, even. Wow. I tell you what, wow. | positive |
+| 8716_10 | positive | I thought this was a quiet good movie. It was fun to watch it. What I liked best where the ‘Outtakes’ at the end of the movie. They were GREAT. | positive |
+| 4466_2 | negative | Spanish horrors are not bad at all, some are smart with interesting stories, but is not the case of "Second Name". It is badly directed, badly acted and boring…boring…boring, a missed chance for an interesting story. | negative |
+| 9480_10 | positive | mature intelligent and highly charged melodrama unbelivebly filmed in China in 1948. wei wei’s stunning performance as the catylast in a love triangle is simply stunning if you have the oppurunity to see this magnificent film take it | positive |
+| 2263_10 | positive | I felt drawn into the world of the manipulation of mind and will at the heart of the story. The acting by Nolte, Lee, Arkin and the supporting cast was superb. The strange twists in the Vonnegut story are made stranger by odd details. | positive |
+| 11785_1 | negative | Slim Slam Slum is a sad and disappointing picture. There is absolutely no reason to this sorry excuse for a picture. Don`t go there, what ever you do, don`t. Watch TV-Shop for 10 hours straight instead. That way you will be slightly amused. | negative |
+| 6016_10 | positive | This movie is one of the masterpieces from Mr. Antonioni. It is about youth, distraction, happiness, alienation, materialism, honor, corruption. And it is like everything else from great Italian director -true art.<br /><br /> | positive |
+| 12124_1 | negative | Any movie that portrays the hard-working responsible husband as the person who has to change because of bored, cheating wife is an obvious result of 8 years of the Clinton era.<br /><br />It’s little wonder that this movie was written by a woman. | negative |
+| 728_3 | negative | i am very disappointed with this movie because i like these french actors and i liked "Buffet Froid" from this Director (bertrand blier) but the script of "Les Acteurs" is VERY POOR. why these actors they agreed to play this poor scenario. | negative |
+| 9552_8 | positive | A real classic. A shipload of sailors trying to get to the towns daughters while their fathers go to extremes to deter the sailors attempts. A maidens cry for aid results in the dispatch of the "Rape Squad". A cult film waiting to happen! | negative |
+| 4464_1 | negative | I have never seen such terrible performances in all my life.<br /><br />Everyone in the entire film was absolute rubbish.<br /><br />Not one decent actor/actress in the whole film, it was a joke.<br /><br />Reminded me of drama at school… | negative |
+| 2933_10 | positive | If you ever see a stand up comedy movie this is the one. You will laugh nonstop if you have any sense of humor at all. This is a once in a lifetime performance from a once in a lifetime performer. This is a stand up standard. | positive |
+| 12193_10 | positive | What can I say, it’s a damn good movie. See it if you still haven’t. Great camera works and lighting techniques. Awesome, just awesome. Orson Welles is incredible ‘The Lady From Shanghai’ can certainly take the place of ‘Citizen Kane’. | positive |
+| 2920_8 | positive | Well I guess it supposedly not a classic because there are only a few easily recognizable faces, but I personally think it is… It’s a very beautiful sweet movie, Henry Winkler did a GREAT job with his character and it really impressed me. | positive |
+| 10018_3 | negative | The characters are unlikeable and the script is awful. It’s a waste of the talents of Deneuve and Auteuil. | negative |
+| 4577_10 | positive | This movie is so good I could watch it all day long! Mary-Kate and Ashley were robbed at Oscar time!! If I got to be one of the actors I would be so excited!!! I can’t wait for the new Charlie’s Angels movie starring Mary-Kate and Ashley. | positive |
+| 10403_2 | negative | Just a few words…. This movie really sucks. It’s like those TV Movies with bad cast and plot. It’s amazing how they could make this sequel worse than the III. Don’t waste your time watching this crap, even if you like the tremors movies. | negative |
+| 10670_10 | positive | This is a great film!! The first time I saw it I thought it was absorbing from start to finish and I still do now. I may not have seen the play, but even if I had it wouldn’t stop me thinking that the film is just as good. | positive |
+| 259_3 | negative | photography was too jumpy to follow. dark scenes hard to see.<br /><br />Had good story line too bad it got lost somewhere. Too noisy for what was really happening Bottom line is it’s a baddddd movie | negative |
+| 1434_10 | positive | Kept my attention from start to finish. Great performances added to this tremendous film. Mr. Pacino once again gives us another brilliant character to enjoy. | positive |
+| 4255_9 | positive | I really enjoyed this movie. The script is fresh and unpredictable and the acting is outstanding.It is a down-to-earth movie with characters one cares about. It brought tears into my eyes a few times but left me with a great feeling afterwards. | positive |
+| 987_8 | positive | The movie is great and I like the story. I prefer this movie than other movie such The cell ( sick movie ) and Highlander ( silly movie ). I just tell the truth, I like a reality hehe and also a true story :)<br /><br /> | positive |
+| 11727_7 | positive | This film is fun, if your a person who likes a good campy feature film every now and then. By no means is this movie fine cinema, but if you dont take things too seriously, and can laugh at yourself once in a while, Elvira is a good frownbuster. | positive |
+| 5113_3 | negative | This movie was way too slow and predictable.I wish i could say more but i can’t.If you enjoy action/adventure films,this is not one to see.I’d suggest you go see movies like;Behind Enemy Lines with Owen Wilson and Iron Eagle with Louis Gossett Jr. | negative |
+| 10492_1 | negative | I would love to have that two hours of my life back. It seemed to be several clips from Steve’s Animal Planet series that was spliced into a loosely constructed script. Don’t Go, If you must see it, wait for the video … | negative |
+| 10477_1 | negative | <br /><br />I would highly recommend seeing this movie. After viewing it, you will be able to walk out of every other bad movie EVER saying "at least it wasn’t The Omega Code."<br /><br />Forget my money, I want my TIME back! | negative |
+| 1116_9 | positive | Did Sandra (yes, she must have) know we would still be here for her some nine years later?<br /><br />See it if you haven’t, again if you have; see her live while you can. | positive |
+| 9979_1 | negative | This is one of the worst movies I have ever seen! I saw it at the Toronto film festival and totally regret wasting my time. Completely unwatchable with no redeeming qualities whatsoever.<br /><br />Steer clear. | negative |
+| 10288_10 | positive | I absolutely loved this movie. It met all expectations and went beyond that. I loved the humor and the way the movie wasn’t just randomly silly. It also had a message. Jim Carrey makes me happy. :) | positive |
+| 11578_1 | negative | Perhaps the biggest waste of production time, money and the space on the video store shelf. If someone suggests you see this movie, run screaming in the other direction. Unless, of course, you’re into self-abuse. | negative |
+| 10387_1 | negative | Giant crabs cursing in Japanese? What was in that drink? A terrible movie, but laughable. I love the invisible Samurai ghosties running around. Drink much beer before you see this movie. | positive |
+| 12353_1 | negative | I think that movie can`t be a Scott`s film. That is impossible. Do you remember Blade Runner? And Alien? Two greats movies versus a one. I hope didnt see ever it. good bye!! | negative |
+| 2698_8 | positive | I liked the movie a real lot. Wanted to see it just for Dara Tomanovich, but the plot and story were ok too. A very cool change in plot when you least expect it. | positive |
+| 10207_10 | positive | This film has renewed my interest in French cinema. The story is enchanting, the acting is flawless and Audrey Tautou is absolutely beautiful. I imagine that we will be seeing a lot more of her in the States after her upcoming role in Amelie. | positive |
 
 ## Evaluating LLM performance
 

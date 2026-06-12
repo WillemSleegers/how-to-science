@@ -14,7 +14,7 @@ code-fold: show
   - [marginaleffects](#marginaleffects)
 - [Using population weights](#using-population-weights)
 
-<details open class="code-fold">
+<details class="code-fold">
 <summary>Code</summary>
 
 ``` r

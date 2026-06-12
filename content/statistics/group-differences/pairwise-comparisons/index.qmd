@@ -6,15 +6,13 @@ description: "Estimating and testing pairwise differences between group means wi
 ```{r}
 #| label: setup
 #| message: false
-
-# Load packages
+#| code-fold: true
 library(MASS)
 library(tidyverse)
 library(viridis)
 library(brms)
 library(emmeans)
 
-# Set the default ggplot theme
 theme_set(theme_minimal())
 ```
 

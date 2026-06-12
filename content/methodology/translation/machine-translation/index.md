@@ -14,12 +14,17 @@ toc: true
   - [LLMs](#llms)
 - [Practical recommendation](#practical-recommendation)
 
+<details class="code-fold">
+<summary>Code</summary>
+
 ``` r
 library(tidyverse)
 library(deeplr)
 library(googleLanguageR)
 library(ellmer)
 ```
+
+</details>
 
 Survey translation has traditionally required human translators working through structured protocols like TRAPD (Translation, Review, Adjudication, Pretesting, Documentation). MT systems have become accurate enough to serve as a first pass or, in some contexts, a full replacement — but they require some care when applied to survey text.
 
@@ -119,10 +124,12 @@ The basic setup is a system prompt that specifies the target language and instru
 ``` r
 chat <- chat_lmstudio(
   model         = "google/gemma-4-12b",
-  system_prompt = "Translate the following survey item to Dutch. Output only the translated text."
+  system_prompt = "Translate the following text from Dutch to English. Output only the translated text."
 )
 
-chat$chat("How satisfied are you with your life as a whole?")
+chat$chat("Hoe tevreden of ontevredent bent u in het algemeen met uw leven?")
+
+chat$chat("Volgende")
 ```
 
 The practical challenge is extracting the translation cleanly when processing many items. Without constraints, a model may return commentary, explanations, or reformatted text alongside the translation. Three approaches keep output clean:

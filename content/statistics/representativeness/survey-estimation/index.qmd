@@ -8,9 +8,11 @@ order: 3
 ```{r}
 #| label: setup
 #| message: false
-
+#| code-fold: true
 library(tidyverse)
 library(srvyr)
+
+theme_set(theme_minimal())
 
 set.seed(42)
 ```

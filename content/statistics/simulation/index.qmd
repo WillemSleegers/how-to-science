@@ -6,6 +6,7 @@ toc: true
 ```{r}
 #| label: setup
 #| message: false
+#| code-fold: true
 library(tidyverse)
 
 theme_set(theme_minimal())

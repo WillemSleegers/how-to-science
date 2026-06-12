@@ -11,11 +11,10 @@ code-fold: show
   - [Two groups](#two-groups)
   - [Four groups](#four-groups)
 
-<details open class="code-fold">
+<details class="code-fold">
 <summary>Code</summary>
 
 ``` r
-# Load packages
 library(MASS)
 library(tidyverse)
 library(viridis)
@@ -24,10 +23,8 @@ library(emmeans)
 library(BayesFactor)
 library(tidybayes)
 
-# Set the default ggplot theme
 theme_set(theme_minimal())
 
-# Set seed
 set.seed(1)
 
 options(brms.backend = "cmdstanr")

@@ -12,6 +12,9 @@ toc: true
 - [Correlated variables from a covariance matrix](#correlated-variables-from-a-covariance-matrix)
 - [Reproducibility](#reproducibility)
 
+<details class="code-fold">
+<summary>Code</summary>
+
 ``` r
 library(tidyverse)
 
@@ -19,6 +22,8 @@ theme_set(theme_minimal())
 
 set.seed(42)
 ```
+
+</details>
 
 Simulating data means generating it yourself from a process you fully control. Because you choose the parameters, you know the truth, and you can check whether a method recovers it. That makes simulation useful for power analysis, for sanity-checking an analysis before running it on real data, and for building intuition about how a statistical model behaves.
 
