@@ -111,69 +111,174 @@ One limitation: glossary support requires the Cloud Translation v3 API, which is
 
 ### LLMs
 
-LLM-based translation gives you full control over context via the prompt. Beyond just surrounding items, you can include:
+LLM-based translation puts the entire instruction in a prompt. The text to translate, the surrounding questionnaire, a list of required term translations, and notes on register or target population all go in the same place. This makes an LLM the most flexible of the three systems described here. The flexibility comes with a cost: a prompt that only says “translate this” supplies no more than a sentence-level MT system has, so it reproduces the same failures. Improving an LLM translation means adding the missing information to the prompt. The sections below first show what a minimal prompt gets wrong, then fix each problem by adding to the prompt.
 
-- A glossary of key terms and their required translations, ensuring consistency across the questionnaire
-- Examples of how specific items were translated in previous rounds of the same survey
-- Instructions about register, target population, and cultural adaptation
+The examples translate Dutch survey text into English using a local model served through LM Studio and called with the `ellmer` package. The `chat_lmstudio()` function opens a connection to the local model, `system_prompt` sets the standing instruction, and `params(temperature = 0)` makes repeated runs return the same output.
 
-This approach is closest to the TRAPD methodology: the Sorato & Zavala-Rojas (2025) paper demonstrates it using GPT-4o mini with prompts that include 477 survey-specific biterms extracted from the Multilingual Corpus of Survey Questionnaires (MCSQ).
+#### A bare prompt reproduces sentence-level failures
 
-The basic setup is a system prompt that specifies the target language and instructs the model to return only the translation, followed by a call with the item text.
+The minimal prompt translates each piece of text on its own, with no information about the questionnaire it belongs to. That is usually enough for a full sentence, but survey response options are short, and a short Dutch word that is unambiguous inside a sentence can carry more than one meaning on its own. Take the response option “Eens”. On a rating scale it means “agree”, but in isolation it also reads as “once”, and translated without the question it answers it comes back as “once”, the wrong reading for a survey. What would settle the meaning is the question the option belongs to, and that is exactly what the minimal prompt leaves out.
 
-``` r
-chat <- chat_lmstudio(
-  model         = "google/gemma-4-12b",
-  system_prompt = "Translate the following text from Dutch to English. Output only the translated text."
-)
+#### Supplying context
 
-chat$chat("Hoe tevreden of ontevredent bent u in het algemeen met uw leven?")
-
-chat$chat("Volgende")
-```
-
-The practical challenge is extracting the translation cleanly when processing many items. Without constraints, a model may return commentary, explanations, or reformatted text alongside the translation. Three approaches keep output clean:
-
-**Constrained prompt**: instruct the model explicitly to return only the translated text.
+Supplying context takes two changes to the call. The instruction has to state that the text is a survey response option and tell the model to read it in light of the question, and the question itself has to be included in the input. The chunk below keeps the original bare prompt as `translate_without_context`, adds `translate_with_context` for the version that makes both changes, and runs each on the same option.
 
 ``` r
-translate_item <- function(text, target_lang) {
+translate_without_context <- function(text) {
   chat <- chat_lmstudio(
-    model         = "google/gemma-4-12b",
-    system_prompt = paste0(
-      "Translate the following survey item to ", target_lang, ". ",
-      "Output only the translated text, nothing else."
-    )
+    model         = "google/gemma-4-26b-a4b-qat",
+    system_prompt = "Translate the following text from Dutch to English. Output only the translation.",
+    params        = params(temperature = 0)
   )
-
   chat$chat(text)
 }
+
+translate_with_context <- function(option, question) {
+  chat <- chat_lmstudio(
+    model         = "google/gemma-4-26b-a4b-qat",
+    system_prompt = paste0(
+      "Translate the Dutch survey response option to English. ",
+      "Use the survey question for context. Output only the translation."
+    ),
+    params        = params(temperature = 0)
+  )
+  chat$chat(paste0("Question: ", question, "\nResponse option: ", option))
+}
+
+tibble(
+  option          = "Eens",
+  without_context = translate_without_context("Eens"),
+  with_context    = translate_with_context(
+    "Eens",
+    "In hoeverre bent u het eens met de volgende stelling?"
+  )
+)
 ```
 
-**Structured output**: ask the model to return JSON and parse it.
+| option | without_context | with_context |
+|:-------|:----------------|:-------------|
+| Eens   | Once            | Agree        |
+
+#### Supplying a glossary
+
+A glossary is a list of required translations for specific terms. It is the right tool when a term has no clean English equivalent and the project has agreed on a standard rendering, so that every occurrence is translated the same way across items and across survey rounds. It is not a tool for resolving meaning: a word whose correct sense depends on the sentence, like the response options above, belongs in context rather than pinned to a fixed translation.
+
+The agreed renderings go into the prompt as explicit term pairs.
 
 ``` r
-chat <- chat_lmstudio(model = "local-model")
+edu_items <- tibble(dutch = c("VWO", "HAVO", "VMBO"))
 
-result <- chat$extract_data(
-  'Translate to Dutch: "How satisfied are you with your life as a whole?"',
-  type = type_object(translation = type_string())
+glossary <- c(
+  "VWO  = pre-university education (VWO)",
+  "HAVO = senior general secondary education (HAVO)",
+  "VMBO = pre-vocational secondary education (VMBO)"
 )
-result$translation
+
+translate_with_glossary <- function(text) {
+  chat <- chat_lmstudio(
+    model         = "google/gemma-4-26b-a4b-qat",
+    system_prompt = paste0(
+      "Translate the following Dutch text to English.\n",
+      "Use these required translations for specific terms:\n",
+      paste(glossary, collapse = "\n"), "\n",
+      "Output only the translation."
+    ),
+    params        = params(temperature = 0)
+  )
+  chat$chat(text)
+}
+
+edu_items |>
+  mutate(
+    without_glossary = map_chr(dutch, translate_without_context),
+    with_glossary    = map_chr(dutch, translate_with_glossary)
+  )
 ```
 
-**Delimiter tags**: ask the model to wrap the translation in tags and extract with a regex.
+| dutch | without_glossary | with_glossary |
+|:---|:---|:---|
+| VWO | Pre-university education | pre-university education (VWO) |
+| HAVO | HAVO (Higher General Continued Education) | senior general secondary education (HAVO) |
+| VMBO | Pre-vocational secondary education | pre-vocational secondary education (VMBO) |
+
+The same glossary applies when an education level appears inside a full item rather than on its own. The rest of the sentence is translated normally, and the listed term takes its agreed rendering.
 
 ``` r
-chat <- chat_lmstudio(model = "local-model")
+item <- "Bent u na de HAVO doorgestroomd naar het hoger onderwijs?"
 
-response <- chat$chat(
-  'Translate the following survey item to Dutch. Wrap the translation in <translation> tags. Item: "How satisfied are you with your life as a whole?"'
+tibble(
+  dutch            = item,
+  without_glossary = translate_without_context(item),
+  with_glossary    = translate_with_glossary(item)
 )
-str_extract(response, "(?<=<translation>).*(?=</translation>)")
 ```
 
-Of the three, structured output is most robust for batch processing: JSON parsing fails loudly when the format is wrong, making errors easy to detect.
+| dutch | without_glossary | with_glossary |
+|:---|:---|:---|
+| Bent u na de HAVO doorgestroomd naar het hoger onderwijs? | Did you proceed to higher education after HAVO? | Did you proceed to higher education after senior general secondary education (HAVO)? |
+
+#### Combining context and a glossary
+
+Translating a real questionnaire combines both techniques, but the context an item needs is specific: a response option needs its own question, not the entire questionnaire. Recording the survey structure makes that possible. Each row stores the text, what kind of element it is, the question it belongs to, and the block it sits in. A block can span several questions, so `question` identifies the question and `block` groups related questions together.
+
+``` r
+questionnaire <- tribble(
+  ~block,      ~question, ~type,      ~text,
+  "agreement", 1,         "question", "In hoeverre bent u het eens met de volgende stelling?",
+  "agreement", 1,         "option",   "Eens",
+  "education", 2,         "question", "Wat is uw hoogst voltooide opleiding?",
+  "education", 2,         "option",   "VWO",
+  "education", 2,         "option",   "HAVO",
+  "education", 2,         "option",   "VMBO",
+  "education", 3,         "question", "Bent u na de HAVO doorgestroomd naar het hoger onderwijs?"
+)
+```
+
+The prompt for each item is built from these columns. It names the element type, and for a response option it supplies that option’s own question as context, found by matching on `question`. The glossary is added as before.
+
+``` r
+stems <- questionnaire |>
+  filter(type == "question") |>
+  select(question, stem = text)
+
+translate_item <- function(text, type, block, stem) {
+  type_desc <- switch(type,
+    question    = "a survey question",
+    option      = "a response option",
+    instruction = "interviewer instruction text"
+  )
+
+  system_prompt <- paste0(
+    "Translate Dutch survey text to English.\n",
+    "The text is ", type_desc, " from the \"", block, "\" block of a survey.\n",
+    if (type == "option") paste0("It is a response option to the question: \"", stem, "\"\n"),
+    "Use these required translations for specific terms:\n",
+    paste(glossary, collapse = "\n"), "\n",
+    "Output only the translation of the text."
+  )
+
+  chat <- chat_lmstudio(
+    model         = "google/gemma-4-26b-a4b-qat",
+    system_prompt = system_prompt,
+    params        = params(temperature = 0)
+  )
+  chat$chat(text)
+}
+
+questionnaire |>
+  left_join(stems, by = "question") |>
+  mutate(translation = pmap_chr(list(text, type, block, stem), translate_item)) |> kable()
+```
+
+| block | question | type | text | stem | translation |
+|:---|---:|:---|:---|:---|:---|
+| agreement | 1 | question | In hoeverre bent u het eens met de volgende stelling? | In hoeverre bent u het eens met de volgende stelling? | To what extent do you agree with the following statement? |
+| agreement | 1 | option | Eens | In hoeverre bent u het eens met de volgende stelling? | Agree |
+| education | 2 | question | Wat is uw hoogst voltooide opleiding? | Wat is uw hoogst voltooide opleiding? | What is your highest level of completed education? |
+| education | 2 | option | VWO | Wat is uw hoogst voltooide opleiding? | pre-university education (VWO) |
+| education | 2 | option | HAVO | Wat is uw hoogst voltooide opleiding? | senior general secondary education (HAVO) |
+| education | 2 | option | VMBO | Wat is uw hoogst voltooide opleiding? | pre-vocational secondary education (VMBO) |
+| education | 3 | question | Bent u na de HAVO doorgestroomd naar het hoger onderwijs? | Bent u na de HAVO doorgestroomd naar het hoger onderwijs? | Did you proceed to higher education after senior general secondary education (HAVO)? |
 
 ## Practical recommendation
 
