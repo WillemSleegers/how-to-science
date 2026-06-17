@@ -1,0 +1,75 @@
+---
+title: LLM Basics
+toc: true
+---
+
+
+- [Tokenization](#tokenization)
+- [Embeddings](#embeddings)
+- [Positional encoding](#positional-encoding)
+- [Attention](#attention)
+- [Feedforward layers](#feedforward-layers)
+- [The transformer stack](#the-transformer-stack)
+- [Decoding](#decoding)
+
+This page explains the basics of how large language models (LLMs) work.
+
+An LLM is a statistical model trained on large amounts of text. During training, the model learns to predict the next word or word fragment in a sequence; these pieces are called tokens. After training on enough text, next-token prediction produces a model that can generate fluent, coherent language. When generating text, the model produces it one token at a time: it takes the current sequence as input, produces a probability distribution over possible next tokens, samples one, appends it to the sequence, and repeats. The sections below describe each component that makes this possible in order to produce an understanding of their basic mechanics.
+
+## Tokenization
+
+Before a model can process text, the text has to be converted into a sequence of discrete units. These units are called tokens. A token is typically a word, part of a word, or a punctuation mark. The process of splitting text into tokens is called tokenization.
+
+For example, the sentence “The cats are running” might be split into the tokens `["The", "cats", "are", "running"]`. But common subword patterns are also recognized: “unhappiness” might be tokenized as `["un", "happiness"]` because the model has learned that the prefix “un-” appears across many words. This allows the model to handle words it has never seen before by combining familiar parts.
+
+The full set of tokens a model knows is called its vocabulary. Vocabulary sizes vary considerably across models: LLaMA 2 uses 32,000 tokens, LLaMA 3 uses 128,256, GPT-4 uses around 100,000, and GPT-4o uses around 200,000.
+
+## Embeddings
+
+Once text is tokenized, each token needs to be converted into a format the model can compute with. For every token in its vocabulary, the model stores a list of numbers. When a token appears in the input, the model looks up that token’s list. These lists are called embeddings, and the component that stores and retrieves them is called the embedding layer.
+
+Each list contains many numbers, not just one. A single number could only order tokens along one axis, like ranking words from positive to negative sentiment. But words have many independent properties at once: their grammatical role, how concrete or abstract they are, what kinds of entities they refer to, and so on. More numbers let the model encode more of these properties simultaneously. The length of each list is called the embedding dimension, and it is a design choice made by the model’s creators. LLaMA 2 7B uses an embedding dimension of 4,096; LLaMA 2 70B uses 8,192.
+
+The individual values do not have human-readable meanings. Rather than one value capturing “sentiment” and another capturing “concreteness,” the model distributes information across all values in whatever way best supports next-token prediction. The values in the embedding table are an example of weights: numbers inside the model that start out random and are adjusted during training. Training works by repeatedly showing the model text, measuring how wrong its next-token predictions are, and nudging the weights in the direction that reduces that error. This process runs over billions of examples until the weights stabilize into values that produce good predictions.
+
+What emerges from training is that tokens used in similar contexts end up with similar lists of numbers. For example, the embedding for “cat” might look like `[0.23, -0.41, 0.87, 0.12, ...]` and the embedding for “dog” might look like `[0.21, -0.39, 0.85, 0.15, ...]`. The values are close because the two words appear in similar contexts during training. “democracy” would produce a very different pattern. Tokens that behave alike end up with similar embeddings; tokens that behave differently end up with very different ones.
+
+## Positional encoding
+
+After tokenization, each token in the input is replaced by its embedding. The model receives a collection of embeddings with no information about which one came first, second, or third. This means that “dog bites man” and “man bites dog” would look identical to the model, since they contain the same tokens with the same embeddings.
+
+To fix this, an additional list of numbers is added to each token’s embedding before it enters the rest of the model. This addition is called positional encoding. The numbers encode the token’s position in the sequence, so each token’s final representation carries two things: what the token is and where it appears. The token at position 1 gets a different positional encoding than the token at position 2, even if they happen to be the same word.
+
+## Attention
+
+At this point in the pipeline, each token has an embedding: a list of numbers retrieved from a lookup table. But that lookup depends only on the token itself, not on what surrounds it. The word “bank” gets the same initial representation whether it appears in “river bank” or “savings bank.” The meaning of a word, however, often depends on its context. Attention is the mechanism that allows each token to update its representation by drawing on information from the other tokens in the sequence.
+
+Consider the sentence: “The cat sat on the mat, and it was comfortable.” To determine what “it” refers to, the model needs to connect “it” to “cat.” This connection spans several tokens. Attention is what makes it possible.
+
+In the attention mechanism, each token’s embedding is transformed into three new lists of numbers, called the query, key, and value. These transformations are learned during training: each one multiplies the embedding by a matrix of weights to produce a new list of numbers. The query and key only need to encode enough information to compute a useful similarity score between tokens; the value only needs to encode what is worth transferring. Because each serves a narrower purpose than the full embedding, each list is shorter.
+
+The query and key together determine how much attention one token should pay to another. For each pair of tokens, the model computes the similarity between one token’s query and the other’s key. A high similarity produces a high attention weight; a low similarity produces a low one.
+
+The value determines what information actually gets transferred once the weights are known. Each token collects a weighted sum of the values of all other tokens, pulling in more from tokens with high weights and less from tokens with low weights. The key and value are kept separate because the features that make a token relevant to attend to are not necessarily the same as the features that are useful to extract from it. Separating them lets the model learn different projections for each role.
+
+To make this concrete, take the token “it” in “The cat sat on the mat, and it was comfortable.” When its query is compared against the key of every other token, nouns like “cat” and “mat” produce higher similarity scores than function words like “the” or “and” — a pattern that emerged from training on text where pronouns consistently appear near their referents. Between the two nouns, “cat” ends up with a higher weight — other tokens in the sentence, like “comfortable,” tend to appear near animals more than near floor coverings, which pushes the balance toward “cat.” As a result, “it” absorbs information from “cat”’s value into its own representation. After attention, the representation of “it” reflects what the model knows about “cat.”
+
+This is run multiple times in parallel, with different learned weights each time. Each run is called an attention head. Different heads can pick up different kinds of relationships: one head might track syntactic structure, another might track coreference like the “it” example above.
+
+One consequence of this design is the context window. Computing attention requires comparing every token against every other token, which becomes expensive as the sequence grows. This limits how much text a model can process at once. GPT-4, for example, has a context window of 128,000 tokens, roughly the length of a short novel.
+
+## Feedforward layers
+
+After attention, each token passes through a feedforward network independently. Unlike attention, this step does not involve any communication between tokens; each token is processed on its own. This is where much of the model’s factual knowledge is thought to be stored, as a result of patterns learned during training.
+
+## The transformer stack
+
+Attention and the feedforward network together form one layer. The output of that layer becomes the input to the next, and a typical LLM has dozens of these layers stacked on top of each other. Each pass through a layer gives every token a chance to gather more information from its context and refine its representation. By the final layer, each token’s representation reflects not just what it is, but everything the model has inferred about its role in the full sequence.
+
+## Decoding
+
+After the final layer, the model produces a probability distribution over its entire vocabulary for the next token. For example, given the prompt “The capital of France is”, the model might assign “Paris” a probability of 85%, “Lyon” a probability of 3%, and so on across all tokens in its vocabulary.
+
+To generate text, the model samples from this distribution, adds the sampled token to the sequence, and repeats the process.
+
+Two parameters control how this sampling works. Temperature scales the probability distribution before sampling. A low temperature (below 1) makes the distribution sharper, so the model more consistently picks high-probability tokens. A high temperature (above 1) flattens the distribution, making lower-probability tokens more likely. Top-p (also called nucleus sampling) restricts sampling to the smallest set of tokens whose combined probability reaches a threshold p, ignoring the long tail of low-probability options.
