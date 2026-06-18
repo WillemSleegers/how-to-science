@@ -284,6 +284,205 @@ questionnaire |>
 |education |        2|option   |VMBO                                                      |Wat is uw hoogst voltooide opleiding?                     |pre-vocational secondary education (VMBO)                                            |
 |education |        3|question |Bent u na de HAVO doorgestroomd naar het hoger onderwijs? |Bent u na de HAVO doorgestroomd naar het hoger onderwijs? |Did you proceed to higher education after senior general secondary education (HAVO)? |
 
+## Piped text
+
+Some survey items are not fixed text. They contain a placeholder that the survey software replaces at the moment the item is shown, filling it with a value taken from an earlier answer or from the sample record. A satisfaction item might be stored as "How satisfied are you with {provider}?", where `{provider}` is replaced by the provider the respondent named a few questions earlier. This filled-in text is called piped text, and the placeholder is called a fill.
+
+Piped text is the hardest case of the context problem from the start of this page. Every other failure described here comes from context that exists but was not supplied to the MT system: the surrounding questionnaire, the question a response option belongs to, the agreed translation of a term. The value that fills a placeholder is different, because it does not exist when the item is translated. The questionnaire is translated once, in advance; the value is supplied later, per respondent. The translation therefore has to be correct for every value the placeholder might take, without any of them being available.
+
+This raises two concerns. The first is whether the placeholder itself survives translation intact. The second is whether the words around the placeholder fit the value that fills it. The first turns out not to be a problem for the model used here; the second is, and it cannot be fixed by adding to the prompt.
+
+The examples so far translated Dutch into English. Piped text is clearest in the other direction, because the problems it causes are most visible when the target language inflects more than the source. The examples below translate English survey text into Dutch.
+
+### Does the placeholder survive translation?
+
+The survey software finds a fill by matching the exact placeholder text, so the placeholder has to come back from translation unchanged. If the MT system translates, reorders, or alters it, the placeholder no longer matches the key the software substitutes on, and the fill silently fails. Whether this happens is an empirical question, and it depends on the placeholder convention and on where the placeholder sits in the item. Survey tools use several conventions, from plain braces to the longer reference syntax of platforms like Qualtrics, and an item can carry one placeholder or several.
+
+The list below collects these cases: each placeholder convention on its own, then items with a repeated fill, two fills, several fills, and a fill carried over from an earlier answer. Each is translated with the bare prompt, which says nothing about placeholders, and checked for whether every placeholder it started with comes back unchanged.
+
+```{r}
+#| label: pipe-survival
+#| eval: false
+translate_en_nl <- function(text) {
+  chat <- chat_lmstudio(
+    model         = "google/gemma-4-26b-a4b-qat",
+    system_prompt = "Translate the following text from English to Dutch. Output only the translation.",
+    params        = params(temperature = 0)
+  )
+  chat$chat(text)
+}
+
+items <- tibble(
+  text = c(
+    "How satisfied are you with {provider}?",
+    "How satisfied are you with {{provider}}?",
+    "How satisfied are you with [provider]?",
+    "How satisfied are you with <provider>?",
+    "How satisfied are you with %provider%?",
+    "How satisfied are you with ${provider}?",
+    "How satisfied are you with ${e://Field/provider}?",
+    "How satisfied are you with ^provider?",
+    "How satisfied are you with |provider|?",
+    "You told us your provider is {provider}. Has {provider} contacted you this year?",
+    "Compared with {provider_a}, how would you rate {provider_b}?",
+    "On {date}, did you contact {provider} about your {product}?",
+    "Earlier you said you live in {city}. Is {city} where you were born?"
+  ),
+  placeholders = list(
+    "{provider}",
+    "{{provider}}",
+    "[provider]",
+    "<provider>",
+    "%provider%",
+    "${provider}",
+    "${e://Field/provider}",
+    "^provider",
+    "|provider|",
+    "{provider}",
+    c("{provider_a}", "{provider_b}"),
+    c("{date}", "{provider}", "{product}"),
+    "{city}"
+  )
+)
+
+items |>
+  mutate(
+    translation = map_chr(text, translate_en_nl),
+    preserved   = map2_lgl(translation, placeholders, \(out, ph) all(str_detect(out, fixed(ph))))
+  ) |>
+  select(text, translation)
+```
+
+|text                                                                             |translation                                                                                            |
+|:--------------------------------------------------------------------------------|:------------------------------------------------------------------------------------------------------|
+|How satisfied are you with {provider}?                                           |Hoe tevreden bent u met {provider}?                                                                    |
+|How satisfied are you with {{provider}}?                                         |Hoe tevreden bent u met {{provider}}?                                                                  |
+|How satisfied are you with [provider]?                                           |Hoe tevreden bent u met [provider]?                                                                    |
+|How satisfied are you with <provider>?                                           |Hoe tevreden bent u met <provider>?                                                                    |
+|How satisfied are you with %provider%?                                           |Hoe tevreden bent u met %provider%?                                                                    |
+|How satisfied are you with ${provider}?                                          |Hoe tevreden bent u met ${provider}?                                                                   |
+|How satisfied are you with ${e://Field/provider}?                                |Hoe tevreden bent u met ${e://Field/provider}?                                                         |
+|How satisfied are you with ^provider?                                            |Hoe tevreden bent u met ^provider?                                                                     |
+|How satisfied are you with &#124;provider&#124;?                                 |Hoe tevreden bent u met &#124;provider&#124;?                                                          |
+|You told us your provider is {provider}. Has {provider} contacted you this year? |U heeft ons verteld dat uw aanbieder {provider} is. Heeft {provider} dit jaar contact met u opgenomen? |
+|Compared with {provider_a}, how would you rate {provider_b}?                     |Hoe zou u {provider_b} beoordelen in vergelijking met {provider_a}?                                    |
+|On {date}, did you contact {provider} about your {product}?                      |Heeft u op {date} contact opgenomen met {provider} over uw {product}?                                  |
+|Earlier you said you live in {city}. Is {city} where you were born?              |Eerder zei je dat je in {city} woont. Is {city} de plek waar je bent geboren?                          |
+
+Every placeholder comes back unchanged, in every convention and every position, and the `preserved` column is `TRUE` throughout. For this model, the placeholder surviving translation is not a problem, and no instruction about placeholders is needed. This is a property of the model rather than a guarantee: a weaker model, or a more unusual placeholder syntax, could still alter the token, so a line in the prompt telling the model to leave placeholders untouched is cheap insurance worth keeping.
+
+### Agreement with the filled-in value
+
+The problem that does not go away is grammatical. The words around a placeholder have to agree with the value that fills it, and Dutch marks agreement that English does not. English "the" becomes either "de" or "het" in Dutch, and English "this" becomes either "deze" or "dit", with the choice set by the noun that follows. Which form is correct therefore depends on the noun that will fill the slot. The frame is translated once, before any value is known, so the model has to settle on one form.
+
+The chunk translates two frames once each, one using "this" and one using "the", then substitutes two fills of different gender: "bank", a "de" noun, and "energiebedrijf", a "het" noun.
+
+```{r}
+#| label: pipe-agreement
+#| eval: false
+frames <- tibble(
+  english = c(
+    "How satisfied are you with this {x}?",
+    "Was the {x} helpful?"
+  )
+)
+
+fills <- tribble(
+  ~fill,            ~gender,
+  "bank",           "de",
+  "energiebedrijf", "het"
+)
+
+frames |>
+  mutate(translated = map_chr(english, translate_en_nl)) |>
+  crossing(fills) |>
+  mutate(filled = str_replace(translated, fixed("{x}"), fill))
+```
+
+|english                              |translated                        |fill           |gender |filled                                       |
+|:------------------------------------|:---------------------------------|:--------------|:------|:--------------------------------------------|
+|How satisfied are you with this {x}? |Hoe tevreden bent u met deze {x}? |bank           |de     |Hoe tevreden bent u met deze bank?           |
+|How satisfied are you with this {x}? |Hoe tevreden bent u met deze {x}? |energiebedrijf |het    |Hoe tevreden bent u met deze energiebedrijf? |
+|Was the {x} helpful?                 |Was de {x} behulpzaam?            |bank           |de     |Was de bank behulpzaam?                      |
+|Was the {x} helpful?                 |Was de {x} behulpzaam?            |energiebedrijf |het    |Was de energiebedrijf behulpzaam?            |
+
+In both frames the model settles on the "de" form, "deze" for "this" and "de" for "the", and bakes it into the frame. That is correct when a "de" noun fills the slot ("deze bank", "de bank") and wrong when a "het" noun does, where Dutch requires "dit" and "het" ("deze energiebedrijf", "de energiebedrijf"). The two fills come from the same question, so the survey cannot select a different frame for each. Whatever form the model commits to is wrong for the values of the other gender.
+
+#### A targeted prompt does not fix it
+
+The obvious response is to tell the model what it is dealing with: that the placeholder will be replaced by a noun whose gender is not known in advance, and that the translation has to stay correct whatever fills it.
+
+```{r}
+#| label: pipe-agreement-prompt
+#| eval: false
+translate_robust <- function(text) {
+  chat <- chat_lmstudio(
+    model         = "google/gemma-4-26b-a4b-qat",
+    system_prompt = paste0(
+      "Translate the following English survey item to Dutch. ",
+      "The text contains a placeholder in curly braces that will later be replaced ",
+      "by a noun whose grammatical gender (de-word or het-word) is not known in advance. ",
+      "Phrase the translation so that it stays grammatically correct whatever the gender ",
+      "of the noun that fills the placeholder. Leave the placeholder unchanged. ",
+      "Output only the translation."
+    ),
+    params        = params(temperature = 0)
+  )
+  chat$chat(text)
+}
+
+frames |>
+  mutate(translated = map_chr(english, translate_robust)) |>
+  crossing(fills) |>
+  mutate(filled = str_replace(translated, fixed("{x}"), fill))
+```
+
+|english                              |translated                        |fill           |gender |filled                                       |
+|:------------------------------------|:---------------------------------|:--------------|:------|:--------------------------------------------|
+|How satisfied are you with this {x}? |Hoe tevreden bent u met deze {x}? |bank           |de     |Hoe tevreden bent u met deze bank?           |
+|How satisfied are you with this {x}? |Hoe tevreden bent u met deze {x}? |energiebedrijf |het    |Hoe tevreden bent u met deze energiebedrijf? |
+|Was the {x} helpful?                 |Was de/het {x} nuttig?            |bank           |de     |Was de/het bank nuttig?                      |
+|Was the {x} helpful?                 |Was de/het {x} nuttig?            |energiebedrijf |het    |Was de/het energiebedrijf nuttig?            |
+
+For "this", the instruction makes no difference: the model still produces "deze", so the "het" fill is still wrong. For "the", the model does respond to the instruction, but only by leaving both options in the text, "de/het", which is not something that can be shown to a respondent. The prompt cannot help because the fact it would need, the gender of the value, is not in the prompt. No instruction supplies information that is not there.
+
+#### Fixing it outside the translation
+
+Since the gender lives in the value, the fix has to involve the value. The most direct option is to keep the "the" out of the frame and carry it in the fill instead. The source item is written without it, and the Dutch fill is stored with the correct word already attached, "de bank" and "het energiebedrijf". The frame then has nothing to agree with, and the result is correct because the "de" or "het" was chosen together with the noun.
+
+```{r}
+#| label: pipe-agreement-fill
+#| eval: false
+frames_no_article <- tibble(
+  english = c(
+    "Was {x} helpful?",
+    "Did you find {x} clear?"
+  )
+)
+
+fills_with_article <- tribble(
+  ~fill,                ~gender,
+  "de bank",            "de",
+  "het energiebedrijf", "het"
+)
+
+frames_no_article |>
+  mutate(translated = map_chr(english, translate_en_nl)) |>
+  crossing(fills_with_article) |>
+  mutate(filled = str_replace(translated, fixed("{x}"), fill))
+```
+
+|english               |translated            |fill                |gender |filled                              |
+|:---------------------|:---------------------|:-------------------|:------|:-----------------------------------|
+|Did you find {x} clear? |Vond je {x} duidelijk? |de bank             |de     |Vond je de bank duidelijk?          |
+|Did you find {x} clear? |Vond je {x} duidelijk? |het energiebedrijf  |het    |Vond je het energiebedrijf duidelijk? |
+|Was {x} helpful?      |Was {x} nuttig?       |de bank             |de     |Was de bank nuttig?                 |
+|Was {x} helpful?      |Was {x} nuttig?       |het energiebedrijf  |het    |Was het energiebedrijf nuttig?      |
+
+Every filled sentence is now correct, because the "de" or "het" travelled with the noun instead of being guessed by the translator.
+
+This works for "the", but not for "this". The word "this" belongs to the frame rather than to the value: the same provider can be "this bank" in one item and "the bank" in another, so it cannot be stored once alongside the noun the way "de" and "het" can. Where the word that has to agree belongs to the frame, the two remaining options are to rephrase the source so it does not force agreement, or to substitute each value into the source first and translate the filled-in items individually. Both move the agreement decision to a point where the value, and so its gender, is known. The cost of the second is that the questionnaire can no longer be translated once in advance, since the items to translate now depend on the answers.
+
 ## Practical recommendation
 
 DeepL's `context` parameter is the most direct way to pass surrounding questionnaire text when translating item by item. Google Translate's glossary support is the most direct way to enforce consistent terminology across all items. LLMs combine both capabilities in a single prompt, and also allow instructions about register, cultural adaptation, and formatting — at the cost of more setup and less predictable output format.
