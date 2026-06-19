@@ -15,7 +15,8 @@
       "mcp__r-btw__btw_tool_agent_subagent",
       "mcp__r-btw__btw_tool_docs_help_page",
       "Bash(npx fallow *)",
-      "Bash(npm test *)"
+      "Bash(npm test *)",
+      "Bash(wait)"
     ]
   }
 }
