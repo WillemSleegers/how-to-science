@@ -32,6 +32,7 @@
         - path: methodology/ai/llm-determinism
     - title: Translation
       items:
+        - path: methodology/translation/translation-validation
         - path: methodology/translation/machine-translation
 
 - group: Data Analysis

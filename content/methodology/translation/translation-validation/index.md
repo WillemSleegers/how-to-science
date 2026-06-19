@@ -1,0 +1,110 @@
+---
+title: Translation Validation
+toc: true
+toc-depth: 4
+---
+
+
+- [Back-translation](#back-translation)
+  - [Limitations](#limitations)
+    - [Invisible register shifts](#invisible-register-shifts)
+    - [Systematic meaning shifts](#systematic-meaning-shifts)
+    - [Shared misconceptions](#shared-misconceptions)
+    - [False alarms on legitimate choices](#false-alarms-on-legitimate-choices)
+    - [What it catches and what it misses](#what-it-catches-and-what-it-misses)
+- [References](#references)
+
+After a survey is translated, you need to check whether the translation says what the original said. This is a question about linguistic equivalence: do the items in the target language carry the same meaning, register, and connotations as their source-language versions?
+
+## Back-translation
+
+Back-translation was introduced as a method for evaluating translation quality in cross-cultural research <span data-cite-id="brislin1970" data-cite-quote="[]" data-cite-page="" class="cite-ref">(Brislin, 1970)</span>, and has since been adopted as a recommended practice in numerous translation guidelines across disciplines <span data-cite-id="behr2017" data-cite-quote="[&quot;Since the 1970s, a large number of translation guidelines have been drafted, most notably across the health disciplines, that list back translation as one of the recommended assessment methods [...].&quot;]" data-cite-page="" class="cite-ref">(Behr, 2017)</span>. The procedure is: one translator renders the source into the target language; a second, independent translator who has not seen the source renders it back; the original and back-translation are then compared for discrepancies.
+
+The appeal is straightforward. A mistranslation in the forward step should surface as a mismatch when the back-translator works from the flawed target text. If a term was translated with the wrong sense, the back-translator should come back with something that does not match the original.
+
+This logic holds when the error is obvious enough that the back-translator would notice it. It breaks down in the more common case: a translation that reads naturally in the target language but has shifted meaning in a subtle way. The back-translator has no access to the original — they see only the target text. If that text reads fluently, they will produce a fluent back-translation, and if it sounds like the original, the discrepancy is hidden. Several types of error are invisible to back-translation for this reason.
+
+### Limitations
+
+#### Invisible register shifts
+
+Languages that distinguish formal and informal address force a choice that English cannot see. A Dutch or German translator must decide whether to use the formal or informal second person — *u* or *jij* in Dutch, *Sie* or *du* in German — but both choices translate back to the same English “you.” The register choice affects how respondents experience the item, but no comparison of back-translation to original will reveal it.
+
+| Source | Translation | Back-translation |
+|----|----|----|
+| “How often do you feel lonely?” | “Hoe vaak voel jij je eenzaam?” (informal *jij*) | “How often do you feel lonely?” |
+| “How often do you feel lonely?” | “Hoe vaak voelt u zich eenzaam?” (formal *u*) | “How often do you feel lonely?” |
+
+#### Systematic meaning shifts
+
+More commonly, a translation is entirely plausible and produces a clean back-translation, but has shifted the construct in a direction the back-translation cannot detect.
+
+A question about religiosity illustrates this. “How religious would you say you are?” can be rendered in Dutch as *Hoe kerkelijk bent u?* — which literally means “how churchgoing are you?” and frames religiosity in terms of institutional practice rather than personal belief. A Dutch-English bilingual rendering it back could use “religious” as the natural equivalent of *kerkelijk*, and the narrowing disappears.
+
+| Source | Translation | Back-translation |
+|----|----|----|
+| “How religious would you say you are?” | “Hoe kerkelijk bent u?” | “How religious are you?” |
+
+The same happens with fairness. The German *gerecht* leans toward moral rightness — closer to “just” — rather than neutral procedural fairness. A back-translator would produce “fair” as the natural English equivalent, hiding the shift in loading.
+
+| Source | Translation | Back-translation |
+|----|----|----|
+| “Do you think the tax system is fair?” | “Finden Sie das Steuersystem gerecht?” | “Do you think the tax system is fair?” |
+
+Borrowed terms cause a similar problem. Words like *gestresst* in German are borrowed from English but used more colloquially — more often tied to everyday busyness than chronic physiological strain. The back-translation is identical to the source, but what respondents understand by the word may differ.
+
+| Source | Translation | Back-translation |
+|----|----|----|
+| “How often do you feel stressed?” | “Wie oft fühlen Sie sich gestresst?” | “How often do you feel stressed?” |
+
+Constructs that name a community are often narrowed without detection. *Omgeving* in Dutch — literally surroundings or environment — is sometimes used as a rough equivalent of “community,” but carries a more spatial and less social sense. A back-translator would render it as “community” or “surroundings,” and the narrowing may not surface.
+
+| Source | Translation | Back-translation |
+|----|----|----|
+| “Do you feel connected to your community?” | “Voelt u zich verbonden met uw omgeving?” | “Do you feel connected to your community?” |
+
+Connotation shifts are harder still to detect. *Trots* in Dutch and *stolz* in German are the natural translations of “proud” and both back-translate identically. But each word can carry a self-satisfied or defensive quality in certain contexts that the English “proud” does not, which may affect how respondents interpret an item about pride in their country or their achievements.
+
+| Source | Translation | Back-translation |
+|----|----|----|
+| “Are you proud of your country?” | “Bent u trots op uw land?” | “Are you proud of your country?” |
+
+#### Shared misconceptions
+
+The deeper problem is that back-translation tests consistency between two translations rather than equivalence to the source construct. Two translators who share the same misunderstanding will produce a clean back-translation and still have the wrong meaning. The procedure has no way to detect errors that both translators make in the same direction <span class="cite-ref" data-cite-id="behr2017" data-cite-ids="[&quot;behr2017&quot;]" data-cite-quote="[]" data-cite-page="">Behr (2017)</span>.
+
+This is most likely when both translators come from the same cultural background and share a common interpretation of a foreign concept. Consider an item asking “Do you do voluntary work?” Both translators, working in a country where volunteering typically means formal work for registered organisations, render it as *vrijwilligerswerk* — formal volunteer work — when the source item was intended to cover informal helping as well. The back-translation comes back as “voluntary work” and nothing is flagged, but the construct has been narrowed by a shared assumption about what volunteering means.
+
+#### False alarms on legitimate choices
+
+Back-translation also flags differences that are not errors. Two correct but different translations of the same concept can look like a discrepancy when compared to the original. If a translator renders “How satisfied are you with your life?” as *Hoe tevreden bent u met uw leven?* and the back-translator would have chosen *content* rather than *satisfied* as the English equivalent of *tevreden*, the comparison flags a discrepancy that does not exist. Behr found this pattern in the documentation from the European Quality of Life Survey: back-translation produced a substantial number of false alarms alongside real problems, making it harder to identify where genuine issues lay <span class="cite-ref" data-cite-id="behr2017" data-cite-ids="[&quot;behr2017&quot;]" data-cite-quote="[]" data-cite-page="">Behr (2017)</span>.
+
+| Source | Translation | Back-translation |
+|----|----|----|
+| “How satisfied are you with your life?” | “Hoe tevreden bent u met uw leven?” | “How content are you with your life?” |
+
+#### What it catches and what it misses
+
+Back-translation reliably catches a narrower set of problems: missing content, obvious lexical errors, and source items that are genuinely ambiguous. That last case is useful: a mismatch caused by source ambiguity means the item needs revision before it can be translated reliably at all.
+
+The examples above show the same underlying pattern. Back-translation can only detect what the back-translator notices. When a shift is small enough to produce a fluent translation, when both translators share the same interpretation, or when the difference lives in connotation or register rather than word choice, the procedure gives no signal.
+
+A clean back-translation is therefore weak evidence of a good translation. It rules out obvious errors but cannot confirm that the translation captures the intended construct. More direct evidence comes from expert review of the forward translation by bilingual subject-matter experts who can assess meaning, register, and cultural fit — the thing back-translation is often used as a substitute for.
+
+## References
+
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0" line-spacing="2">
+
+<div id="ref-behr2017" class="csl-entry">
+
+Behr, D. (2017). Assessing the use of back translation: The shortcomings of back translation as a quality testing method. *International Journal of Social Research Methodology*, *20*(6), 573–584. <https://doi.org/10.1080/13645579.2016.1252188>
+
+</div>
+
+<div id="ref-brislin1970" class="csl-entry">
+
+Brislin, R. W. (1970). Back-Translation for Cross-Cultural Research. *Journal of Cross-Cultural Psychology*, *1*(3), 185–216. <https://doi.org/10.1177/135910457000100301>
+
+</div>
+
+</div>
