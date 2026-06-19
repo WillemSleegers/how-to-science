@@ -131,3 +131,120 @@ This happens for two reasons. First, constraining the output format reduces the 
 
 The practical consequence is that both levers matter for reproducible workflows. Temperature 0 eliminates sampling randomness, but a loosely specified prompt leaves the model with high uncertainty at many token positions, and greedy decoding across those positions can still produce different outputs when the model or infrastructure changes. A tightly specified prompt reduces that underlying uncertainty, making the output more stable regardless of temperature.
 
+## Consistency across survey texts
+
+The earlier demo translated a single item 25 times at temperature 0 and returned the same string every time. Whether that holds across different kinds of survey text depends on how much uncertainty the model has at each token position. A single unambiguous word leaves almost no uncertainty: there is one plausible translation and greedy decoding finds it on every run. Longer items, and items where multiple English renderings are equally natural, create more token positions where small differences in the floating-point arithmetic discussed above could tip the model toward a different choice. The following translates 20 Dutch survey texts 100 times each at temperature 0, using the same bare prompt as before, and records how many distinct translations each item produces.
+
+The items span the range of text types that appear in a translated questionnaire. Response options include both single unambiguous words and options where two or more English renderings are equally natural. Question stems range from short factual questions to a long trust item with an embedded contrast. The set also includes two items containing Dutch-specific institutional terms whose standard English rendering differs between British and American usage.
+
+```{r}
+#| label: consistency-items
+#| echo: false
+items <- tibble(
+  type = c(
+    rep("Response option", 10),
+    rep("Question stem", 4),
+    rep("Scale instruction", 2),
+    rep("Complex item", 2),
+    rep("Culturally specific", 2)
+  ),
+  dutch = c(
+    "Ja",
+    "Nee",
+    "Nooit",
+    "Altijd",
+    "Weet niet",
+    "Eens",
+    "Helemaal mee eens",
+    "Enigszins mee eens",
+    "Soms",
+    "Doorgaans",
+    "Hoe oud bent u?",
+    "Hoe geïnteresseerd bent u in politiek?",
+    "Hoe tevreden bent u met uw leven als geheel?",
+    "In het algemeen gesproken, vindt u dat de meeste mensen te vertrouwen zijn, of vindt u dat men niet voorzichtig genoeg kan zijn?",
+    "Hieronder volgen een aantal uitspraken over hoe mensen zich kunnen voelen. Geef voor elke uitspraak aan in hoeverre deze op u van toepassing is.",
+    "Kunt u uw mening geven op een schaal van 0 tot 10, waarbij 0 'helemaal niet tevreden' betekent en 10 'volledig tevreden'?",
+    "Bent u, voor zover u weet, in het buitenland geboren, of zijn uw vader of moeder in het buitenland geboren?",
+    "Als u zou kiezen tussen een baan die meer bevredigend maar slecht betaald is, en een baan die minder bevredigend maar goed betaald is, welke zou u dan kiezen?",
+    "Heeft u in het afgelopen jaar contact gehad met een huisarts?",
+    "Bent u lid van een vakbond?"
+  )
+)
+
+items |>
+  knitr::kable(col.names = c("Type", "Dutch"))
+```
+
+Each item is translated 100 times using the same model and bare prompt, with temperature set to 0.
+
+```{r}
+#| label: consistency-run
+#| eval: false
+items <- tibble(
+  type = c(
+    rep("Response option", 10),
+    rep("Question stem", 4),
+    rep("Scale instruction", 2),
+    rep("Complex item", 2),
+    rep("Culturally specific", 2)
+  ),
+  dutch = c(
+    "Ja",
+    "Nee",
+    "Nooit",
+    "Altijd",
+    "Weet niet",
+    "Eens",
+    "Helemaal mee eens",
+    "Enigszins mee eens",
+    "Soms",
+    "Doorgaans",
+    "Hoe oud bent u?",
+    "Hoe geïnteresseerd bent u in politiek?",
+    "Hoe tevreden bent u met uw leven als geheel?",
+    "In het algemeen gesproken, vindt u dat de meeste mensen te vertrouwen zijn, of vindt u dat men niet voorzichtig genoeg kan zijn?",
+    "Hieronder volgen een aantal uitspraken over hoe mensen zich kunnen voelen. Geef voor elke uitspraak aan in hoeverre deze op u van toepassing is.",
+    "Kunt u uw mening geven op een schaal van 0 tot 10, waarbij 0 'helemaal niet tevreden' betekent en 10 'volledig tevreden'?",
+    "Bent u, voor zover u weet, in het buitenland geboren, of zijn uw vader of moeder in het buitenland geboren?",
+    "Als u zou kiezen tussen een baan die meer bevredigend maar slecht betaald is, en een baan die minder bevredigend maar goed betaald is, welke zou u dan kiezen?",
+    "Heeft u in het afgelopen jaar contact gehad met een huisarts?",
+    "Bent u lid van een vakbond?"
+  )
+)
+
+consistency_results <- items |>
+  mutate(
+    translations = map(dutch, \(text) {
+      replicate(100, {
+        chat <- chat_lmstudio(
+          model = "google/gemma-4-12b",
+          system_prompt = "Translate the following Dutch survey text to English. Output only the translation, nothing else.",
+          params = params(temperature = 0)
+        )
+        chat$chat(text)
+      })
+    })
+  ) |>
+  unnest_longer(translations) |>
+  count(type, dutch, translation = translations)
+
+write_csv(consistency_results, "consistency-results.csv")
+```
+
+```{r}
+#| label: consistency-results-table
+#| echo: false
+#| message: false
+read_csv("consistency-results.csv", show_col_types = FALSE) |>
+  mutate(entry = paste0(translation, " (", n, ")")) |>
+  summarise(
+    `Unique translations` = n(),
+    `Translation(s)` = paste(entry, collapse = "; "),
+    .by = c(Type = type, Dutch = dutch)
+  ) |>
+  knitr::kable()
+```
+
+Each row shows how many distinct translations appeared across the 100 runs. A count of 1 means every run returned the same string. A count above 1 means at least one run returned a different string despite temperature being fixed at 0 — the floating-point caveat from above, taking effect in practice.
+
