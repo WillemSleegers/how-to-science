@@ -1,5 +1,6 @@
 ---
 title: "Translation Validation"
+description: "Methods for checking whether texts were translated correctly."
 toc: true
 toc-depth: 4
 ---
