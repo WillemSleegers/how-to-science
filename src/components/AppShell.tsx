@@ -3,7 +3,7 @@
 import { useState, useEffect, Suspense } from "react"
 import { ChevronRightIcon } from "lucide-react"
 import { MarkdownContent } from "@/components/MarkdownContent"
-import { ThemeToggle } from "@/components/ThemeToggle"
+import { ActionsMenu } from "@/components/ActionsMenu"
 import type { Heading } from "@/lib/headings"
 
 interface Crumb {
@@ -13,7 +13,17 @@ interface Crumb {
 
 // ── TopBar ────────────────────────────────────────────────────────────────────
 
-function TopBar({ trail }: { trail: Crumb[] }) {
+function TopBar({
+  trail,
+  showTocToggle,
+  tocOpen,
+  onTocToggle,
+}: {
+  trail: Crumb[]
+  showTocToggle: boolean
+  tocOpen: boolean
+  onTocToggle: () => void
+}) {
   return (
     <div className="mb-8 flex items-center">
       {trail.length > 1 && (
@@ -38,7 +48,11 @@ function TopBar({ trail }: { trail: Crumb[] }) {
         </nav>
       )}
       <div className="ml-auto flex items-center">
-        <ThemeToggle />
+        <ActionsMenu
+          showTocToggle={showTocToggle}
+          tocOpen={tocOpen}
+          onTocToggle={onTocToggle}
+        />
       </div>
     </div>
   )
@@ -71,7 +85,7 @@ function TocLinks({ headings, activeId }: { headings: Heading[]; activeId: strin
   )
 }
 
-function TocPanel({ headings }: { headings: Heading[] }) {
+function useActiveHeading(headings: Heading[]) {
   const [activeId, setActiveId] = useState("")
 
   useEffect(() => {
@@ -91,23 +105,36 @@ function TocPanel({ headings }: { headings: Heading[] }) {
     return () => window.removeEventListener("scroll", onScroll)
   }, [headings])
 
+  return activeId
+}
+
+function TocPanel({ headings, open }: { headings: Heading[]; open: boolean }) {
+  const activeId = useActiveHeading(headings)
+
   return (
-    <div className="sticky top-0 hidden max-h-screen w-56 shrink-0 self-start overflow-y-auto py-8 pr-6 lg:block">
-      <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-        On this page
-      </p>
-      <TocLinks headings={headings} activeId={activeId} />
+    <div
+      className={`sticky top-0 hidden min-w-0 max-h-screen self-start overflow-hidden transition-opacity duration-300 ease-in-out min-[72rem]:block ${
+        open ? "opacity-100" : "opacity-0"
+      }`}
+    >
+      <div className="max-h-screen w-56 overflow-y-auto py-8 pr-6">
+        <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+          On this page
+        </p>
+        <TocLinks headings={headings} activeId={activeId} />
+      </div>
     </div>
   )
 }
 
 function InlineToc({ headings }: { headings: Heading[] }) {
+  const activeId = useActiveHeading(headings)
   return (
-    <nav className="lg:hidden mb-8 rounded-lg border p-4">
+    <nav className="not-prose mb-8 min-[72rem]:hidden">
       <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
         On this page
       </p>
-      <TocLinks headings={headings} activeId="" />
+      <TocLinks headings={headings} activeId={activeId} />
     </nav>
   )
 }
@@ -125,22 +152,35 @@ interface AppShellProps {
 
 export function AppShell({ content, title, slug, headings, tocDepth, trail }: AppShellProps) {
   const tocHeadings = headings.filter((h) => h.level <= tocDepth)
+  const [tocOpen, setTocOpen] = useState(true)
+  const showToc = tocHeadings.length > 0
 
   return (
-    <div className="flex min-h-screen">
-      <div className="min-w-0 flex-1 px-6 py-8 pb-24 lg:px-8">
+    <div
+      className={`mx-auto grid min-h-screen w-full max-w-6xl grid-cols-1 transition-[grid-template-columns,column-gap] duration-300 ease-in-out ${
+        showToc && tocOpen
+          ? "min-[72rem]:grid-cols-[minmax(0,1fr)_14rem] min-[72rem]:gap-x-12"
+          : "min-[72rem]:grid-cols-[minmax(0,1fr)_0rem] min-[72rem]:gap-x-0"
+      }`}
+    >
+      <div className="min-w-0 px-6 py-8 pb-24 lg:px-8">
         <div className="mx-auto w-full max-w-none lg:max-w-3xl">
-          <TopBar trail={trail} />
+          <TopBar
+            trail={trail}
+            showTocToggle={showToc}
+            tocOpen={tocOpen}
+            onTocToggle={() => setTocOpen((v) => !v)}
+          />
           <div className="prose prose-neutral max-w-none dark:prose-invert">
             <h1>{title}</h1>
-            {tocHeadings.length > 0 && <InlineToc headings={tocHeadings} />}
+            {showToc && tocOpen && <InlineToc headings={tocHeadings} />}
             <Suspense>
               <MarkdownContent content={content} slug={slug} />
             </Suspense>
           </div>
         </div>
       </div>
-      {tocHeadings.length > 0 && <TocPanel headings={tocHeadings} />}
+      {showToc && <TocPanel headings={tocHeadings} open={tocOpen} />}
     </div>
   )
 }

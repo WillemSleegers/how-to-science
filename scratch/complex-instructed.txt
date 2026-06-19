@@ -1,0 +1,14 @@
+{Header}Welcome to the questionnaire{/Header}
+Thank you for taking the time to complete this questionnaire.
+CBS is interested in your opinions and experiences. There are no right or wrong answers.
+Are you unsure about an answer? Then choose the answer that best describes you.
+Save and close
+You can interrupt the completion of the questionnaire using the 'Save and close' button. Your previously entered
+answers will then be saved.
+Do you have questions?
+($3: Please visit <Main.NAW.URL_specifiekesite> for frequently asked questions about this study.
+If the answer to your question is not listed here, please feel free to call $4: Call us at (045) 570 6400 or email
+contactcenter@cbs.nl ($5: mentioning the correspondence number:
+<Main.NAW.Correspondentienummer>).
+We are available from Monday to Friday between 9:00 and 17:00.
+Press 'Next' to continue with the questionnaire.

@@ -240,8 +240,8 @@
   scroll-margin-top: 1.5rem;
 }
 
-/* Links use the accent color */
-.prose a {
+/* Links use the accent color (but not inside opted-out regions) */
+.prose a:not(.not-prose a) {
   color: var(--primary);
 }
 

@@ -1,0 +1,10 @@
+syntax,token,text,bare,instructed,bare_preserved,instructed_preserved
+curly,{provider},How satisfied are you with {provider}?,Hoe tevreden bent u met {provider}?,Hoe tevreden bent u met {provider}?,TRUE,TRUE
+double_curly,{{provider}},How satisfied are you with {{provider}}?,Hoe tevreden bent u met {{provider}}?,Hoe tevreden bent u met {{provider}}?,TRUE,TRUE
+square,[provider],How satisfied are you with [provider]?,Hoe tevreden bent u met [provider]?,Hoe tevreden bent u met [provider]?,TRUE,TRUE
+angle,<provider>,How satisfied are you with <provider>?,Hoe tevreden bent u met <provider>?,Hoe tevreden bent u met <provider>?,TRUE,TRUE
+percent,%provider%,How satisfied are you with %provider%?,Hoe tevreden bent u met %provider%?,Hoe tevreden bent u met %provider%?,TRUE,TRUE
+dollar_curly,${provider},How satisfied are you with ${provider}?,Hoe tevreden bent u met ${provider}?,Hoe tevreden bent u met ${provider}?,TRUE,TRUE
+qualtrics,${e://Field/provider},How satisfied are you with ${e://Field/provider}?,Hoe tevreden bent u met ${e://Field/provider}?,Hoe tevreden bent u met ${e://Field/provider}?,TRUE,TRUE
+blaise,^provider,How satisfied are you with ^provider?,Hoe tevreden bent u met ^provider?,Hoe tevreden bent u met ^provider?,TRUE,TRUE
+pipe,|provider|,How satisfied are you with |provider|?,Hoe tevreden bent u met |provider|?,Hoe tevreden bent u met |provider|?,TRUE,TRUE
