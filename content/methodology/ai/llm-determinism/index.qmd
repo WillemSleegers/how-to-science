@@ -14,9 +14,9 @@ library(ellmer)
 theme_set(theme_minimal())
 ```
 
-Each token an LLM produces is the result of a random draw. The model assigns a probability to every token in its vocabulary, then samples the next token from that distribution. That distribution is computed from the input and the model's weights, and sampling from it means the same input can produce different output on different calls.
+Each token an LLM produces is the result of a random draw. The model assigns a probability to every token in its vocabulary, then samples a token from that distribution. The distribution is computed from the input and the model's weights, and sampling from it means the same input can produce different output on different calls.
 
-To see this directly, the following code asks a model to translate the same Dutch survey text to English 25 times and counts how often each translation appears. The requests are sent with the ellmer package, and sampling parameters are set through its `params()` helper.
+Let's demo this using a local LLM model to translate the same Dutch survey text to English 25 times and count how often each translation appears.
 
 ```{r}
 #| label: stochastic-demo
@@ -181,4 +181,3 @@ read_csv("consistency-results.csv") |>
 ```
 
 Every item returned the same translation on all 100 runs, so each row shows a single string. Across all 20 items, spanning single words, long question stems, scale instructions, and items with embedded contrasts, fixing temperature at 0 produced complete consistency. The floating-point variation described above is possible in principle, but it did not surface here.
-

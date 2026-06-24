@@ -1,43 +1,28 @@
 ---
-title: Machine Translation
-description: >-
-  When machine translation can stand in for human survey-translation protocols,
-  used with care
+title: "Machine Translation"
+description: "When machine translation can stand in for human survey-translation protocols, used with care"
 toc: true
 ---
 
-
-- [Context](#context)
-- [MT systems](#mt-systems)
-  - [DeepL](#deepl)
-  - [Google Translate](#google-translate)
-  - [LLMs](#llms)
-- [Piped text](#piped-text)
-  - [Does the placeholder survive translation?](#does-the-placeholder-survive-translation)
-  - [Agreement with the filled-in value](#agreement-with-the-filled-in-value)
-- [Practical recommendation](#practical-recommendation)
-
-<details class="code-fold">
-<summary>Code</summary>
-
-``` r
+```{r}
+#| label: setup
+#| message: false
+#| code-fold: true
 library(tidyverse)
 library(deeplr)
 library(googleLanguageR)
 library(ellmer)
 ```
 
-</details>
-
 Survey translation has traditionally required human translators working through structured protocols like TRAPD (Translation, Review, Adjudication, Pretesting, Documentation). MT systems have become accurate enough to serve as a first pass or, in some contexts, a full replacement — but they require some care when applied to survey text.
 
-Survey items present specific challenges for MT. They are short, often grammatically incomplete, and highly decontextualised: a response option like “Agree strongly” or an interviewer instruction like “Read out” means nothing without knowing what question it belongs to. Terminology also needs to be consistent across items — the same concept should always be translated the same way throughout a questionnaire. Both of these problems are addressed by providing context to the MT system.
+Survey items present specific challenges for MT. They are short, often grammatically incomplete, and highly decontextualised: a response option like "Agree strongly" or an interviewer instruction like "Read out" means nothing without knowing what question it belongs to. Terminology also needs to be consistent across items — the same concept should always be translated the same way throughout a questionnaire. Both of these problems are addressed by providing context to the MT system.
 
 ## Context
 
 MT systems trained on sentence pairs translate each sentence independently by default. For general text this is usually fine, but for surveys it causes two problems:
 
-- **Ambiguity**: short items are more ambiguous than full sentences, and the correct translation often depends on the surrounding questionnaire. “How often?” could translate differently depending on whether the preceding item asked about behaviour, attitudes, or frequency of contact.
+- **Ambiguity**: short items are more ambiguous than full sentences, and the correct translation often depends on the surrounding questionnaire. "How often?" could translate differently depending on whether the preceding item asked about behaviour, attitudes, or frequency of contact.
 - **Inconsistency**: without seeing the full questionnaire, an MT system may translate the same term differently across items — using two different words for the same concept in the same questionnaire.
 
 Providing the surrounding questionnaire as context mitigates both. How you do this depends on the MT system.
@@ -52,7 +37,9 @@ DeepL is among the most widely used MT systems in translation research and produ
 
 **The `context` parameter** is the cleanest approach for item-by-item translation. You pass the text you want translated as `text` and the surrounding questionnaire as `context`. DeepL uses the context to inform the translation but only returns the translation of `text` — there is no extraction problem.
 
-``` r
+```{r}
+#| label: deepl-context
+#| eval: false
 translate2(
   text = "Generally speaking, would you say that most people can be trusted?",
   target_lang = "NL",
@@ -65,7 +52,9 @@ translate2(
 
 To translate all items in a questionnaire with their surrounding context:
 
-``` r
+```{r}
+#| label: deepl-context-all
+#| eval: false
 questionnaire <- tribble(
   ~item_id , ~text                                                                ,
          1 , "How satisfied are you with your life as a whole?"                   ,
@@ -92,11 +81,13 @@ questionnaire |>
 
 ### Google Translate
 
-Google Translate has no equivalent to DeepL’s `context` parameter — you cannot explicitly pass surrounding text to inform the translation of a single item. It translates each piece of text you give it without awareness of other items in the questionnaire unless you pass them together.
+Google Translate has no equivalent to DeepL's `context` parameter — you cannot explicitly pass surrounding text to inform the translation of a single item. It translates each piece of text you give it without awareness of other items in the questionnaire unless you pass them together.
 
 What it does offer, via the v3 (Advanced) API, is **glossary support**: you define a set of source→target term pairs and the API enforces those translations consistently across all requests. This addresses the terminology consistency problem directly, even without sentence-level context.
 
-``` r
+```{r}
+#| label: google-glossary
+#| eval: false
 library(googleLanguageR)
 
 # Glossaries are created once via the Cloud Translation API and referenced by ID.
@@ -114,19 +105,21 @@ One limitation: glossary support requires the Cloud Translation v3 API, which is
 
 ### LLMs
 
-LLM-based translation puts the entire instruction in a prompt. The text to translate, the surrounding questionnaire, a list of required term translations, and notes on register or target population all go in the same place. This makes an LLM the most flexible of the three systems described here. The flexibility comes with a cost: a prompt that only says “translate this” supplies no more than a sentence-level MT system has, so it reproduces the same failures. Improving an LLM translation means adding the missing information to the prompt. The sections below first show what a minimal prompt gets wrong, then fix each problem by adding to the prompt.
+LLM-based translation puts the entire instruction in a prompt. The text to translate, the surrounding questionnaire, a list of required term translations, and notes on register or target population all go in the same place. This makes an LLM the most flexible of the three systems described here. The flexibility comes with a cost: a prompt that only says "translate this" supplies no more than a sentence-level MT system has, so it reproduces the same failures. Improving an LLM translation means adding the missing information to the prompt. The sections below first show what a minimal prompt gets wrong, then fix each problem by adding to the prompt.
 
 The examples translate Dutch survey text into English using a local model served through LM Studio and called with the `ellmer` package. The `chat_lmstudio()` function opens a connection to the local model, `system_prompt` sets the standing instruction, and `params(temperature = 0)` makes repeated runs return the same output.
 
 #### A bare prompt reproduces sentence-level failures
 
-The minimal prompt translates each piece of text on its own, with no information about the questionnaire it belongs to. That is usually enough for a full sentence, but survey response options are short, and a short Dutch word that is unambiguous inside a sentence can carry more than one meaning on its own. Take the response option “Eens”. On a rating scale it means “agree”, but in isolation it also reads as “once”, and translated without the question it answers it comes back as “once”, the wrong reading for a survey. What would settle the meaning is the question the option belongs to, and that is exactly what the minimal prompt leaves out. Short questions can lose meaning the same way: a follow-up question such as “Hoeveel per dag?” needs the question it follows to know whether it is asking “how many” or “how much”.
+The minimal prompt translates each piece of text on its own, with no information about the questionnaire it belongs to. That is usually enough for a full sentence, but survey response options are short, and a short Dutch word that is unambiguous inside a sentence can carry more than one meaning on its own. Take the response option "Eens". On a rating scale it means "agree", but in isolation it also reads as "once", and translated without the question it answers it comes back as "once", the wrong reading for a survey. What would settle the meaning is the question the option belongs to, and that is exactly what the minimal prompt leaves out. Short questions can lose meaning the same way: a follow-up question such as "Hoeveel per dag?" needs the question it follows to know whether it is asking "how many" or "how much".
 
 #### Supplying context
 
 Short, decontextualized text loses meaning without its surroundings. A response option needs the question it answers and the other options on the scale; a follow-up question needs the question before it. The chunk below keeps the original bare prompt as `translate_without_context`, and adds `translate_with_context`, which takes a piece of text together with its surrounding context and tells the model to read the text in light of it.
 
-``` r
+```{r}
+#| label: llm-context-fns
+#| eval: false
 translate_without_context <- function(text) {
   chat <- chat_lmstudio(
     model = "google/gemma-4-26b-a4b-qat",
@@ -152,9 +145,11 @@ translate_with_context <- function(text, context) {
 }
 ```
 
-The next chunk runs a set of items that fail in different ways when each piece of text is translated alone. Some response options are ambiguous on their own: “Eens” reads as “once” rather than “agree”, and “Dalen” can be read as the plural of “dal”, “valleys”, rather than the verb “to fall”. Some translate to different English words depending on the item they sit in: “Man” and “Vrouw” should become “Male” and “Female” under a question about sex but “Man” and “Woman” under a question about gender. Some read correctly only as a set: the rungs of an agreement scale or a likelihood scale have to stay parallel to each other, which requires seeing the rest of the scale. And a follow-up question can fail the same way: “Hoeveel per dag?” has to become “How many per day?” after a question about smoking but “How much per day?” after a question about alcohol, because Dutch “hoeveel” does not distinguish count from mass. Response options carry their stem and the full option set as context; a follow-up question carries the question before it. Every piece of text is translated both ways.
+The next chunk runs a set of items that fail in different ways when each piece of text is translated alone. Some response options are ambiguous on their own: "Eens" reads as "once" rather than "agree", and "Dalen" can be read as the plural of "dal", "valleys", rather than the verb "to fall". Some translate to different English words depending on the item they sit in: "Man" and "Vrouw" should become "Male" and "Female" under a question about sex but "Man" and "Woman" under a question about gender. Some read correctly only as a set: the rungs of an agreement scale or a likelihood scale have to stay parallel to each other, which requires seeing the rest of the scale. And a follow-up question can fail the same way: "Hoeveel per dag?" has to become "How many per day?" after a question about smoking but "How much per day?" after a question about alcohol, because Dutch "hoeveel" does not distinguish count from mass. Response options carry their stem and the full option set as context; a follow-up question carries the question before it. Every piece of text is translated both ways.
 
-``` r
+```{r}
+#| label: llm-context-battery
+#| eval: false
 options_items <- tribble(
   ~stem                                                                                                     , ~options ,
   "In hoeverre bent u het eens met de volgende stelling?"                                                   ,
@@ -210,30 +205,22 @@ context_results <- bind_rows(option_rows, followup_rows) |>
 write_csv(context_results, "supplying-context.csv")
 ```
 
-| Type | Context | Text | Without context | With context |
-|:---|:---|:---|:---|:---|
-| Response option | Question: In hoeverre bent u het eens met de volgende stelling? Answer options: Eens; Oneens | Eens | Once | Agree |
-| Response option | Question: In hoeverre bent u het eens met de volgende stelling? Answer options: Eens; Oneens | Oneens | Disagree | Disagree |
-| Response option | Question: Wat is uw geslacht? Answer options: Man; Vrouw | Man | Man | Man |
-| Response option | Question: Wat is uw geslacht? Answer options: Man; Vrouw | Vrouw | Woman | Female |
-| Response option | Question: Met welk gender identificeert u zich? Answer options: Man; Vrouw | Man | Man | Man |
-| Response option | Question: Met welk gender identificeert u zich? Answer options: Man; Vrouw | Vrouw | Woman | Woman |
-| Response option | Question: Wat verwacht u dat uw inkomen de komende 12 maanden zal doen? Answer options: Dalen; Stijgen; Gelijk blijven | Dalen | Valleys | Decrease |
-| Response option | Question: Wat verwacht u dat uw inkomen de komende 12 maanden zal doen? Answer options: Dalen; Stijgen; Gelijk blijven | Stijgen | Rise | Increase |
-| Response option | Question: Wat verwacht u dat uw inkomen de komende 12 maanden zal doen? Answer options: Dalen; Stijgen; Gelijk blijven | Gelijk blijven | Stay the same | Stay the same |
-| Response option | Question: In hoeverre bent u het eens met de stelling ‘De overheid moet meer investeren in onderwijs’? Answer options: Helemaal mee oneens; Mee oneens; Niet mee eens, niet mee oneens; Mee eens; Helemaal mee eens | Helemaal mee oneens | Completely disagree | Strongly disagree |
-| Response option | Question: In hoeverre bent u het eens met de stelling ‘De overheid moet meer investeren in onderwijs’? Answer options: Helemaal mee oneens; Mee oneens; Niet mee eens, niet mee oneens; Mee eens; Helemaal mee eens | Mee oneens | Disagree | Disagree |
-| Response option | Question: In hoeverre bent u het eens met de stelling ‘De overheid moet meer investeren in onderwijs’? Answer options: Helemaal mee oneens; Mee oneens; Niet mee eens, niet mee oneens; Mee eens; Helemaal mee eens | Niet mee eens, niet mee oneens | Don’t agree, don’t disagree | Neither agree nor disagree |
-| Response option | Question: In hoeverre bent u het eens met de stelling ‘De overheid moet meer investeren in onderwijs’? Answer options: Helemaal mee oneens; Mee oneens; Niet mee eens, niet mee oneens; Mee eens; Helemaal mee eens | Mee eens | Agreed | Agree |
-| Response option | Question: In hoeverre bent u het eens met de stelling ‘De overheid moet meer investeren in onderwijs’? Answer options: Helemaal mee oneens; Mee oneens; Niet mee eens, niet mee oneens; Mee eens; Helemaal mee eens | Helemaal mee eens | Totally agree | Completely agree |
-| Response option | Question: Hoe waarschijnlijk is het dat u volgend jaar verhuist? Answer options: Zeer onwaarschijnlijk; Onwaarschijnlijk; Waarschijnlijk; Zeer waarschijnlijk | Zeer onwaarschijnlijk | Very unlikely | Very unlikely |
-| Response option | Question: Hoe waarschijnlijk is het dat u volgend jaar verhuist? Answer options: Zeer onwaarschijnlijk; Onwaarschijnlijk; Waarschijnlijk; Zeer waarschijnlijk | Onwaarschijnlijk | Unlikely | Unlikely |
-| Response option | Question: Hoe waarschijnlijk is het dat u volgend jaar verhuist? Answer options: Zeer onwaarschijnlijk; Onwaarschijnlijk; Waarschijnlijk; Zeer waarschijnlijk | Waarschijnlijk | Probably | Likely |
-| Response option | Question: Hoe waarschijnlijk is het dat u volgend jaar verhuist? Answer options: Zeer onwaarschijnlijk; Onwaarschijnlijk; Waarschijnlijk; Zeer waarschijnlijk | Zeer waarschijnlijk | Very likely | Very likely |
-| Follow-up question | Previous question: Rookt u? | Hoeveel per dag? | How much per day? | How many per day? |
-| Follow-up question | Previous question: Drinkt u alcohol? | Hoeveel per dag? | How much per day? | How much per day? |
+```{r}
+#| label: supplying-context-table
+#| echo: false
+#| message: false
+read_csv("supplying-context.csv") |>
+  mutate(context = str_replace_all(context, "\n", " ")) |>
+  select(
+    Type = type,
+    Context = context,
+    Text = text,
+    `Without context` = without_context,
+    `With context` = with_context
+  )
+```
 
-Context corrects the text that was wrong on its own and leaves what was already right untouched. “Eens” moves from “once” to “agree”, and “Dalen” from “valleys” to “fall”, because the stem fixes the reading. “Man” and “Vrouw” come back as “Male” and “Female” under the sex question and as “Man” and “Woman” under the gender question, the same two words resolved two ways by the item around them. The scale endpoints stay parallel, “very unlikely” against “very likely”, because each option was translated with the rest of the scale in view. The follow-up question “Hoeveel per dag?” becomes “How many per day?” after “Rookt u?” and “How much per day?” after “Drinkt u alcohol?”, with the previous question supplying the count-or-mass distinction English needs. The text that was never ambiguous, such as “Oneens” or “Gelijk blijven”, translates the same with or without context. Supplying context fixes what needs it without disturbing the rest.
+Context corrects the text that was wrong on its own and leaves what was already right untouched. "Eens" moves from "once" to "agree", and "Dalen" from "valleys" to "fall", because the stem fixes the reading. "Man" and "Vrouw" come back as "Male" and "Female" under the sex question and as "Man" and "Woman" under the gender question, the same two words resolved two ways by the item around them. The scale endpoints stay parallel, "very unlikely" against "very likely", because each option was translated with the rest of the scale in view. The follow-up question "Hoeveel per dag?" becomes "How many per day?" after "Rookt u?" and "How much per day?" after "Drinkt u alcohol?", with the previous question supplying the count-or-mass distinction English needs. The text that was never ambiguous, such as "Oneens" or "Gelijk blijven", translates the same with or without context. Supplying context fixes what needs it without disturbing the rest.
 
 #### Supplying a glossary
 
@@ -241,7 +228,9 @@ A glossary is a list of required translations for specific terms. It is the righ
 
 The agreed renderings go into the prompt as explicit term pairs.
 
-``` r
+```{r}
+#| label: llm-glossary-fix
+#| eval: false
 edu_items <- tibble(dutch = c("VWO", "HAVO", "VMBO"))
 
 glossary <- c(
@@ -272,15 +261,17 @@ edu_items |>
   )
 ```
 
-| dutch | without_glossary | with_glossary |
-|:---|:---|:---|
-| VWO | Pre-university education | pre-university education (VWO) |
-| HAVO | HAVO (Higher General Continued Education) | senior general secondary education (HAVO) |
-| VMBO | Pre-vocational secondary education | pre-vocational secondary education (VMBO) |
+|dutch |without_glossary                          |with_glossary                             |
+|:-----|:-----------------------------------------|:-----------------------------------------|
+|VWO   |Pre-university education                  |pre-university education (VWO)            |
+|HAVO  |HAVO (Higher General Continued Education) |senior general secondary education (HAVO) |
+|VMBO  |Pre-vocational secondary education        |pre-vocational secondary education (VMBO) |
 
 The same glossary applies when an education level appears inside a full item rather than on its own. The rest of the sentence is translated normally, and the listed term takes its agreed rendering.
 
-``` r
+```{r}
+#| label: llm-glossary-sentence
+#| eval: false
 item <- "Bent u na de HAVO doorgestroomd naar het hoger onderwijs?"
 
 tibble(
@@ -290,15 +281,17 @@ tibble(
 )
 ```
 
-| dutch | without_glossary | with_glossary |
-|:---|:---|:---|
-| Bent u na de HAVO doorgestroomd naar het hoger onderwijs? | Did you proceed to higher education after HAVO? | Did you proceed to higher education after senior general secondary education (HAVO)? |
+|dutch                                                     |without_glossary                                |with_glossary                                                                        |
+|:---------------------------------------------------------|:-----------------------------------------------|:------------------------------------------------------------------------------------|
+|Bent u na de HAVO doorgestroomd naar het hoger onderwijs? |Did you proceed to higher education after HAVO? |Did you proceed to higher education after senior general secondary education (HAVO)? |
 
 #### Combining context and a glossary
 
 Translating a real questionnaire combines both techniques, but the context an item needs is specific: a response option needs its own question, not the entire questionnaire. Recording the survey structure makes that possible. Each row stores the text, what kind of element it is, the question it belongs to, and the block it sits in. A block can span several questions, so `question` identifies the question and `block` groups related questions together.
 
-``` r
+```{r}
+#| label: llm-combined
+#| eval: false
 questionnaire <- tribble(
   ~block      , ~question , ~type      , ~text                                                       ,
   "agreement" ,         1 , "question" , "In hoeverre bent u het eens met de volgende stelling?"     ,
@@ -311,9 +304,11 @@ questionnaire <- tribble(
 )
 ```
 
-The prompt for each item is built from these columns. It names the element type, and for a response option it supplies that option’s own question as context, found by matching on `question`. The glossary is added as before.
+The prompt for each item is built from these columns. It names the element type, and for a response option it supplies that option's own question as context, found by matching on `question`. The glossary is added as before.
 
-``` r
+```{r}
+#| label: llm-combined-translate
+#| eval: false
 stems <- questionnaire |>
   filter(type == "question") |>
   select(question, stem = text)
@@ -358,19 +353,19 @@ questionnaire |>
   kable()
 ```
 
-| block | question | type | text | stem | translation |
-|:---|---:|:---|:---|:---|:---|
-| agreement | 1 | question | In hoeverre bent u het eens met de volgende stelling? | In hoeverre bent u het eens met de volgende stelling? | To what extent do you agree with the following statement? |
-| agreement | 1 | option | Eens | In hoeverre bent u het eens met de volgende stelling? | Agree |
-| education | 2 | question | Wat is uw hoogst voltooide opleiding? | Wat is uw hoogst voltooide opleiding? | What is your highest level of completed education? |
-| education | 2 | option | VWO | Wat is uw hoogst voltooide opleiding? | pre-university education (VWO) |
-| education | 2 | option | HAVO | Wat is uw hoogst voltooide opleiding? | senior general secondary education (HAVO) |
-| education | 2 | option | VMBO | Wat is uw hoogst voltooide opleiding? | pre-vocational secondary education (VMBO) |
-| education | 3 | question | Bent u na de HAVO doorgestroomd naar het hoger onderwijs? | Bent u na de HAVO doorgestroomd naar het hoger onderwijs? | Did you proceed to higher education after senior general secondary education (HAVO)? |
+|block     | question|type     |text                                                      |stem                                                      |translation                                                                          |
+|:---------|--------:|:--------|:---------------------------------------------------------|:---------------------------------------------------------|:------------------------------------------------------------------------------------|
+|agreement |        1|question |In hoeverre bent u het eens met de volgende stelling?     |In hoeverre bent u het eens met de volgende stelling?     |To what extent do you agree with the following statement?                            |
+|agreement |        1|option   |Eens                                                      |In hoeverre bent u het eens met de volgende stelling?     |Agree                                                                                |
+|education |        2|question |Wat is uw hoogst voltooide opleiding?                     |Wat is uw hoogst voltooide opleiding?                     |What is your highest level of completed education?                                   |
+|education |        2|option   |VWO                                                       |Wat is uw hoogst voltooide opleiding?                     |pre-university education (VWO)                                                       |
+|education |        2|option   |HAVO                                                      |Wat is uw hoogst voltooide opleiding?                     |senior general secondary education (HAVO)                                            |
+|education |        2|option   |VMBO                                                      |Wat is uw hoogst voltooide opleiding?                     |pre-vocational secondary education (VMBO)                                            |
+|education |        3|question |Bent u na de HAVO doorgestroomd naar het hoger onderwijs? |Bent u na de HAVO doorgestroomd naar het hoger onderwijs? |Did you proceed to higher education after senior general secondary education (HAVO)? |
 
 ## Piped text
 
-Some survey items are not fixed text. They contain a placeholder that the survey software replaces at the moment the item is shown, filling it with a value taken from an earlier answer or from the sample record. A satisfaction item might be stored as “How satisfied are you with {provider}?”, where `{provider}` is replaced by the provider the respondent named a few questions earlier. This filled-in text is called piped text, and the placeholder is called a fill.
+Some survey items are not fixed text. They contain a placeholder that the survey software replaces at the moment the item is shown, filling it with a value taken from an earlier answer or from the sample record. A satisfaction item might be stored as "How satisfied are you with {provider}?", where `{provider}` is replaced by the provider the respondent named a few questions earlier. This filled-in text is called piped text, and the placeholder is called a fill.
 
 Piped text is the hardest case of the context problem from the start of this page. Every other failure described here comes from context that exists but was not supplied to the MT system: the surrounding questionnaire, the question a response option belongs to, the agreed translation of a term. The value that fills a placeholder is different, because it does not exist when the item is translated. The questionnaire is translated once, in advance; the value is supplied later, per respondent. The translation therefore has to be correct for every value the placeholder might take, without any of them being available.
 
@@ -384,7 +379,9 @@ The survey software finds a fill by matching the exact placeholder text, so the 
 
 The list below collects these cases: each placeholder convention on its own, then items with a repeated fill, two fills, several fills, and a fill carried over from an earlier answer. Each is translated with the bare prompt, which says nothing about placeholders, and checked for whether every placeholder it started with comes back unchanged.
 
-``` r
+```{r}
+#| label: pipe-survival
+#| eval: false
 translate_en_nl <- function(text) {
   chat <- chat_lmstudio(
     model = "google/gemma-4-26b-a4b-qat",
@@ -437,31 +434,33 @@ items |>
   select(text, translation)
 ```
 
-| text | translation |
-|:---|:---|
-| How satisfied are you with {provider}? | Hoe tevreden bent u met {provider}? |
-| How satisfied are you with {{provider}}? | Hoe tevreden bent u met {{provider}}? |
-| How satisfied are you with \[provider\]? | Hoe tevreden bent u met \[provider\]? |
-| How satisfied are you with <provider>? | Hoe tevreden bent u met <provider>? |
-| How satisfied are you with %provider%? | Hoe tevreden bent u met %provider%? |
-| How satisfied are you with \${provider}? | Hoe tevreden bent u met \${provider}? |
-| How satisfied are you with \${e://Field/provider}? | Hoe tevreden bent u met \${e://Field/provider}? |
-| How satisfied are you with ^provider? | Hoe tevreden bent u met ^provider? |
-| How satisfied are you with \|provider\|? | Hoe tevreden bent u met \|provider\|? |
-| You told us your provider is {provider}. Has {provider} contacted you this year? | U heeft ons verteld dat uw aanbieder {provider} is. Heeft {provider} dit jaar contact met u opgenomen? |
-| Compared with {provider_a}, how would you rate {provider_b}? | Hoe zou u {provider_b} beoordelen in vergelijking met {provider_a}? |
-| On {date}, did you contact {provider} about your {product}? | Heeft u op {date} contact opgenomen met {provider} over uw {product}? |
-| Earlier you said you live in {city}. Is {city} where you were born? | Eerder zei je dat je in {city} woont. Is {city} de plek waar je bent geboren? |
+|text                                                                             |translation                                                                                            |
+|:--------------------------------------------------------------------------------|:------------------------------------------------------------------------------------------------------|
+|How satisfied are you with {provider}?                                           |Hoe tevreden bent u met {provider}?                                                                    |
+|How satisfied are you with {{provider}}?                                         |Hoe tevreden bent u met {{provider}}?                                                                  |
+|How satisfied are you with [provider]?                                           |Hoe tevreden bent u met [provider]?                                                                    |
+|How satisfied are you with <provider>?                                           |Hoe tevreden bent u met <provider>?                                                                    |
+|How satisfied are you with %provider%?                                           |Hoe tevreden bent u met %provider%?                                                                    |
+|How satisfied are you with ${provider}?                                          |Hoe tevreden bent u met ${provider}?                                                                   |
+|How satisfied are you with ${e://Field/provider}?                                |Hoe tevreden bent u met ${e://Field/provider}?                                                         |
+|How satisfied are you with ^provider?                                            |Hoe tevreden bent u met ^provider?                                                                     |
+|How satisfied are you with &#124;provider&#124;?                                 |Hoe tevreden bent u met &#124;provider&#124;?                                                          |
+|You told us your provider is {provider}. Has {provider} contacted you this year? |U heeft ons verteld dat uw aanbieder {provider} is. Heeft {provider} dit jaar contact met u opgenomen? |
+|Compared with {provider_a}, how would you rate {provider_b}?                     |Hoe zou u {provider_b} beoordelen in vergelijking met {provider_a}?                                    |
+|On {date}, did you contact {provider} about your {product}?                      |Heeft u op {date} contact opgenomen met {provider} over uw {product}?                                  |
+|Earlier you said you live in {city}. Is {city} where you were born?              |Eerder zei je dat je in {city} woont. Is {city} de plek waar je bent geboren?                          |
 
 Every placeholder comes back unchanged, in every convention and every position, and the `preserved` column is `TRUE` throughout. For this model, the placeholder surviving translation is not a problem, and no instruction about placeholders is needed. This is a property of the model rather than a guarantee: a weaker model, or a more unusual placeholder syntax, could still alter the token, so a line in the prompt telling the model to leave placeholders untouched is cheap insurance worth keeping.
 
 ### Agreement with the filled-in value
 
-The problem that does not go away is grammatical. The words around a placeholder have to agree with the value that fills it, and Dutch marks agreement that English does not. English “the” becomes either “de” or “het” in Dutch, and English “this” becomes either “deze” or “dit”, with the choice set by the noun that follows. Which form is correct therefore depends on the noun that will fill the slot. The frame is translated once, before any value is known, so the model has to settle on one form.
+The problem that does not go away is grammatical. The words around a placeholder have to agree with the value that fills it, and Dutch marks agreement that English does not. English "the" becomes either "de" or "het" in Dutch, and English "this" becomes either "deze" or "dit", with the choice set by the noun that follows. Which form is correct therefore depends on the noun that will fill the slot. The frame is translated once, before any value is known, so the model has to settle on one form.
 
-The chunk translates two frames once each, one using “this” and one using “the”, then substitutes two fills of different gender: “bank”, a “de” noun, and “energiebedrijf”, a “het” noun.
+The chunk translates two frames once each, one using "this" and one using "the", then substitutes two fills of different gender: "bank", a "de" noun, and "energiebedrijf", a "het" noun.
 
-``` r
+```{r}
+#| label: pipe-agreement
+#| eval: false
 frames <- tibble(
   english = c(
     "How satisfied are you with this {x}?",
@@ -481,20 +480,22 @@ frames |>
   mutate(filled = str_replace(translated, fixed("{x}"), fill))
 ```
 
-| english | translated | fill | gender | filled |
-|:---|:---|:---|:---|:---|
-| How satisfied are you with this {x}? | Hoe tevreden bent u met deze {x}? | bank | de | Hoe tevreden bent u met deze bank? |
-| How satisfied are you with this {x}? | Hoe tevreden bent u met deze {x}? | energiebedrijf | het | Hoe tevreden bent u met deze energiebedrijf? |
-| Was the {x} helpful? | Was de {x} behulpzaam? | bank | de | Was de bank behulpzaam? |
-| Was the {x} helpful? | Was de {x} behulpzaam? | energiebedrijf | het | Was de energiebedrijf behulpzaam? |
+|english                              |translated                        |fill           |gender |filled                                       |
+|:------------------------------------|:---------------------------------|:--------------|:------|:--------------------------------------------|
+|How satisfied are you with this {x}? |Hoe tevreden bent u met deze {x}? |bank           |de     |Hoe tevreden bent u met deze bank?           |
+|How satisfied are you with this {x}? |Hoe tevreden bent u met deze {x}? |energiebedrijf |het    |Hoe tevreden bent u met deze energiebedrijf? |
+|Was the {x} helpful?                 |Was de {x} behulpzaam?            |bank           |de     |Was de bank behulpzaam?                      |
+|Was the {x} helpful?                 |Was de {x} behulpzaam?            |energiebedrijf |het    |Was de energiebedrijf behulpzaam?            |
 
-In both frames the model settles on the “de” form, “deze” for “this” and “de” for “the”, and bakes it into the frame. That is correct when a “de” noun fills the slot (“deze bank”, “de bank”) and wrong when a “het” noun does, where Dutch requires “dit” and “het” (“deze energiebedrijf”, “de energiebedrijf”). The two fills come from the same question, so the survey cannot select a different frame for each. Whatever form the model commits to is wrong for the values of the other gender.
+In both frames the model settles on the "de" form, "deze" for "this" and "de" for "the", and bakes it into the frame. That is correct when a "de" noun fills the slot ("deze bank", "de bank") and wrong when a "het" noun does, where Dutch requires "dit" and "het" ("deze energiebedrijf", "de energiebedrijf"). The two fills come from the same question, so the survey cannot select a different frame for each. Whatever form the model commits to is wrong for the values of the other gender.
 
 #### A targeted prompt does not fix it
 
 The obvious response is to tell the model what it is dealing with: that the placeholder will be replaced by a noun whose gender is not known in advance, and that the translation has to stay correct whatever fills it.
 
-``` r
+```{r}
+#| label: pipe-agreement-prompt
+#| eval: false
 translate_robust <- function(text) {
   chat <- chat_lmstudio(
     model = "google/gemma-4-26b-a4b-qat",
@@ -517,20 +518,22 @@ frames |>
   mutate(filled = str_replace(translated, fixed("{x}"), fill))
 ```
 
-| english | translated | fill | gender | filled |
-|:---|:---|:---|:---|:---|
-| How satisfied are you with this {x}? | Hoe tevreden bent u met deze {x}? | bank | de | Hoe tevreden bent u met deze bank? |
-| How satisfied are you with this {x}? | Hoe tevreden bent u met deze {x}? | energiebedrijf | het | Hoe tevreden bent u met deze energiebedrijf? |
-| Was the {x} helpful? | Was de/het {x} nuttig? | bank | de | Was de/het bank nuttig? |
-| Was the {x} helpful? | Was de/het {x} nuttig? | energiebedrijf | het | Was de/het energiebedrijf nuttig? |
+|english                              |translated                        |fill           |gender |filled                                       |
+|:------------------------------------|:---------------------------------|:--------------|:------|:--------------------------------------------|
+|How satisfied are you with this {x}? |Hoe tevreden bent u met deze {x}? |bank           |de     |Hoe tevreden bent u met deze bank?           |
+|How satisfied are you with this {x}? |Hoe tevreden bent u met deze {x}? |energiebedrijf |het    |Hoe tevreden bent u met deze energiebedrijf? |
+|Was the {x} helpful?                 |Was de/het {x} nuttig?            |bank           |de     |Was de/het bank nuttig?                      |
+|Was the {x} helpful?                 |Was de/het {x} nuttig?            |energiebedrijf |het    |Was de/het energiebedrijf nuttig?            |
 
-For “this”, the instruction makes no difference: the model still produces “deze”, so the “het” fill is still wrong. For “the”, the model does respond to the instruction, but only by leaving both options in the text, “de/het”, which is not something that can be shown to a respondent. The prompt cannot help because the fact it would need, the gender of the value, is not in the prompt. No instruction supplies information that is not there.
+For "this", the instruction makes no difference: the model still produces "deze", so the "het" fill is still wrong. For "the", the model does respond to the instruction, but only by leaving both options in the text, "de/het", which is not something that can be shown to a respondent. The prompt cannot help because the fact it would need, the gender of the value, is not in the prompt. No instruction supplies information that is not there.
 
 #### Fixing it outside the translation
 
-Since the gender lives in the value, the fix has to involve the value. The most direct option is to keep the “the” out of the frame and carry it in the fill instead. The source item is written without it, and the Dutch fill is stored with the correct word already attached, “de bank” and “het energiebedrijf”. The frame then has nothing to agree with, and the result is correct because the “de” or “het” was chosen together with the noun.
+Since the gender lives in the value, the fix has to involve the value. The most direct option is to keep the "the" out of the frame and carry it in the fill instead. The source item is written without it, and the Dutch fill is stored with the correct word already attached, "de bank" and "het energiebedrijf". The frame then has nothing to agree with, and the result is correct because the "de" or "het" was chosen together with the noun.
 
-``` r
+```{r}
+#| label: pipe-agreement-fill
+#| eval: false
 frames_no_article <- tibble(
   english = c(
     "Was {x} helpful?",
@@ -550,19 +553,20 @@ frames_no_article |>
   mutate(filled = str_replace(translated, fixed("{x}"), fill))
 ```
 
-| english | translated | fill | gender | filled |
-|:---|:---|:---|:---|:---|
-| Did you find {x} clear? | Vond je {x} duidelijk? | de bank | de | Vond je de bank duidelijk? |
-| Did you find {x} clear? | Vond je {x} duidelijk? | het energiebedrijf | het | Vond je het energiebedrijf duidelijk? |
-| Was {x} helpful? | Was {x} nuttig? | de bank | de | Was de bank nuttig? |
-| Was {x} helpful? | Was {x} nuttig? | het energiebedrijf | het | Was het energiebedrijf nuttig? |
+|english               |translated            |fill                |gender |filled                              |
+|:---------------------|:---------------------|:-------------------|:------|:-----------------------------------|
+|Did you find {x} clear? |Vond je {x} duidelijk? |de bank             |de     |Vond je de bank duidelijk?          |
+|Did you find {x} clear? |Vond je {x} duidelijk? |het energiebedrijf  |het    |Vond je het energiebedrijf duidelijk? |
+|Was {x} helpful?      |Was {x} nuttig?       |de bank             |de     |Was de bank nuttig?                 |
+|Was {x} helpful?      |Was {x} nuttig?       |het energiebedrijf  |het    |Was het energiebedrijf nuttig?      |
 
-Every filled sentence is now correct, because the “de” or “het” travelled with the noun instead of being guessed by the translator.
+Every filled sentence is now correct, because the "de" or "het" travelled with the noun instead of being guessed by the translator.
 
-This works for “the”, but not for “this”. The word “this” belongs to the frame rather than to the value: the same provider can be “this bank” in one item and “the bank” in another, so it cannot be stored once alongside the noun the way “de” and “het” can. Where the word that has to agree belongs to the frame, the two remaining options are to rephrase the source so it does not force agreement, or to substitute each value into the source first and translate the filled-in items individually. Both move the agreement decision to a point where the value, and so its gender, is known. The cost of the second is that the questionnaire can no longer be translated once in advance, since the items to translate now depend on the answers.
+This works for "the", but not for "this". The word "this" belongs to the frame rather than to the value: the same provider can be "this bank" in one item and "the bank" in another, so it cannot be stored once alongside the noun the way "de" and "het" can. Where the word that has to agree belongs to the frame, the two remaining options are to rephrase the source so it does not force agreement, or to substitute each value into the source first and translate the filled-in items individually. Both move the agreement decision to a point where the value, and so its gender, is known. The cost of the second is that the questionnaire can no longer be translated once in advance, since the items to translate now depend on the answers.
 
 ## Practical recommendation
 
-DeepL’s `context` parameter is the most direct way to pass surrounding questionnaire text when translating item by item. Google Translate’s glossary support is the most direct way to enforce consistent terminology across all items. LLMs combine both capabilities in a single prompt, and also allow instructions about register, cultural adaptation, and formatting — at the cost of more setup and less predictable output format.
+DeepL's `context` parameter is the most direct way to pass surrounding questionnaire text when translating item by item. Google Translate's glossary support is the most direct way to enforce consistent terminology across all items. LLMs combine both capabilities in a single prompt, and also allow instructions about register, cultural adaptation, and formatting — at the cost of more setup and less predictable output format.
 
 For workflows where terminology consistency across rounds matters — for example, translating a new round of the ESS to match previous rounds — including reference translations from the MCSQ in the prompt encodes that requirement directly.
+

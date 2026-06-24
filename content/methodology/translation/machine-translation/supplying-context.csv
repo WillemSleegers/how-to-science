@@ -1,0 +1,39 @@
+type,context,text,without_context,with_context
+Response option,"Question: In hoeverre bent u het eens met de volgende stelling?
+Answer options: Eens; Oneens",Eens,Once,Agree
+Response option,"Question: In hoeverre bent u het eens met de volgende stelling?
+Answer options: Eens; Oneens",Oneens,Disagree,Disagree
+Response option,"Question: Wat is uw geslacht?
+Answer options: Man; Vrouw",Man,Man,Man
+Response option,"Question: Wat is uw geslacht?
+Answer options: Man; Vrouw",Vrouw,Woman,Female
+Response option,"Question: Met welk gender identificeert u zich?
+Answer options: Man; Vrouw",Man,Man,Man
+Response option,"Question: Met welk gender identificeert u zich?
+Answer options: Man; Vrouw",Vrouw,Woman,Woman
+Response option,"Question: Wat verwacht u dat uw inkomen de komende 12 maanden zal doen?
+Answer options: Dalen; Stijgen; Gelijk blijven",Dalen,Valleys,Decrease
+Response option,"Question: Wat verwacht u dat uw inkomen de komende 12 maanden zal doen?
+Answer options: Dalen; Stijgen; Gelijk blijven",Stijgen,Rise,Increase
+Response option,"Question: Wat verwacht u dat uw inkomen de komende 12 maanden zal doen?
+Answer options: Dalen; Stijgen; Gelijk blijven",Gelijk blijven,Stay the same,Stay the same
+Response option,"Question: In hoeverre bent u het eens met de stelling 'De overheid moet meer investeren in onderwijs'?
+Answer options: Helemaal mee oneens; Mee oneens; Niet mee eens, niet mee oneens; Mee eens; Helemaal mee eens",Helemaal mee oneens,Completely disagree,Strongly disagree
+Response option,"Question: In hoeverre bent u het eens met de stelling 'De overheid moet meer investeren in onderwijs'?
+Answer options: Helemaal mee oneens; Mee oneens; Niet mee eens, niet mee oneens; Mee eens; Helemaal mee eens",Mee oneens,Disagree,Disagree
+Response option,"Question: In hoeverre bent u het eens met de stelling 'De overheid moet meer investeren in onderwijs'?
+Answer options: Helemaal mee oneens; Mee oneens; Niet mee eens, niet mee oneens; Mee eens; Helemaal mee eens","Niet mee eens, niet mee oneens","Don't agree, don't disagree",Neither agree nor disagree
+Response option,"Question: In hoeverre bent u het eens met de stelling 'De overheid moet meer investeren in onderwijs'?
+Answer options: Helemaal mee oneens; Mee oneens; Niet mee eens, niet mee oneens; Mee eens; Helemaal mee eens",Mee eens,Agreed,Agree
+Response option,"Question: In hoeverre bent u het eens met de stelling 'De overheid moet meer investeren in onderwijs'?
+Answer options: Helemaal mee oneens; Mee oneens; Niet mee eens, niet mee oneens; Mee eens; Helemaal mee eens",Helemaal mee eens,Totally agree,Completely agree
+Response option,"Question: Hoe waarschijnlijk is het dat u volgend jaar verhuist?
+Answer options: Zeer onwaarschijnlijk; Onwaarschijnlijk; Waarschijnlijk; Zeer waarschijnlijk",Zeer onwaarschijnlijk,Very unlikely,Very unlikely
+Response option,"Question: Hoe waarschijnlijk is het dat u volgend jaar verhuist?
+Answer options: Zeer onwaarschijnlijk; Onwaarschijnlijk; Waarschijnlijk; Zeer waarschijnlijk",Onwaarschijnlijk,Unlikely,Unlikely
+Response option,"Question: Hoe waarschijnlijk is het dat u volgend jaar verhuist?
+Answer options: Zeer onwaarschijnlijk; Onwaarschijnlijk; Waarschijnlijk; Zeer waarschijnlijk",Waarschijnlijk,Probably,Likely
+Response option,"Question: Hoe waarschijnlijk is het dat u volgend jaar verhuist?
+Answer options: Zeer onwaarschijnlijk; Onwaarschijnlijk; Waarschijnlijk; Zeer waarschijnlijk",Zeer waarschijnlijk,Very likely,Very likely
+Follow-up question,Previous question: Rookt u?,Hoeveel per dag?,How much per day?,How many per day?
+Follow-up question,Previous question: Drinkt u alcohol?,Hoeveel per dag?,How much per day?,How much per day?

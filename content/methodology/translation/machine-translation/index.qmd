@@ -41,12 +41,12 @@ DeepL is among the most widely used MT systems in translation research and produ
 #| label: deepl-context
 #| eval: false
 translate2(
-  text        = "Generally speaking, would you say that most people can be trusted?",
+  text = "Generally speaking, would you say that most people can be trusted?",
   target_lang = "NL",
-  context     = "This item is part of a social attitudes survey.
+  context = "This item is part of a social attitudes survey.
                  The response options are: Most people can be trusted;
                  Can't be too careful; Don't know.",
-  auth_key    = Sys.getenv("DEEPL_API_KEY")
+  auth_key = Sys.getenv("DEEPL_API_KEY")
 )
 ```
 
@@ -56,10 +56,10 @@ To translate all items in a questionnaire with their surrounding context:
 #| label: deepl-context-all
 #| eval: false
 questionnaire <- tribble(
-  ~item_id, ~text,
-  1, "How satisfied are you with your life as a whole?",
-  2, "Generally speaking, would you say that most people can be trusted?",
-  3, "How interested would you say you are in politics?"
+  ~item_id , ~text                                                                ,
+         1 , "How satisfied are you with your life as a whole?"                   ,
+         2 , "Generally speaking, would you say that most people can be trusted?" ,
+         3 , "How interested would you say you are in politics?"
 )
 
 full_context <- paste(questionnaire$text, collapse = "\n")
@@ -68,10 +68,10 @@ questionnaire |>
   mutate(
     translation = map_chr(text, \(item) {
       translate2(
-        text        = item,
+        text = item,
         target_lang = "NL",
-        context     = full_context,
-        auth_key    = Sys.getenv("DEEPL_API_KEY")
+        context = full_context,
+        auth_key = Sys.getenv("DEEPL_API_KEY")
       )
     })
   )
@@ -93,11 +93,11 @@ library(googleLanguageR)
 # Glossaries are created once via the Cloud Translation API and referenced by ID.
 # Here we use an existing glossary and translate a batch of items.
 gl_translate(
-  string      = questionnaire$text,
-  target      = "nl",
-  source      = "en",
-  glossaryId  = "my-survey-glossary",
-  key         = Sys.getenv("GOOGLE_API_KEY")
+  string = questionnaire$text,
+  target = "nl",
+  source = "en",
+  glossaryId = "my-survey-glossary",
+  key = Sys.getenv("GOOGLE_API_KEY")
 )
 ```
 
@@ -111,49 +111,116 @@ The examples translate Dutch survey text into English using a local model served
 
 #### A bare prompt reproduces sentence-level failures
 
-The minimal prompt translates each piece of text on its own, with no information about the questionnaire it belongs to. That is usually enough for a full sentence, but survey response options are short, and a short Dutch word that is unambiguous inside a sentence can carry more than one meaning on its own. Take the response option "Eens". On a rating scale it means "agree", but in isolation it also reads as "once", and translated without the question it answers it comes back as "once", the wrong reading for a survey. What would settle the meaning is the question the option belongs to, and that is exactly what the minimal prompt leaves out.
+The minimal prompt translates each piece of text on its own, with no information about the questionnaire it belongs to. That is usually enough for a full sentence, but survey response options are short, and a short Dutch word that is unambiguous inside a sentence can carry more than one meaning on its own. Take the response option "Eens". On a rating scale it means "agree", but in isolation it also reads as "once", and translated without the question it answers it comes back as "once", the wrong reading for a survey. What would settle the meaning is the question the option belongs to, and that is exactly what the minimal prompt leaves out. Short questions can lose meaning the same way: a follow-up question such as "Hoeveel per dag?" needs the question it follows to know whether it is asking "how many" or "how much".
 
 #### Supplying context
 
-Supplying context takes two changes to the call. The instruction has to state that the text is a survey response option and tell the model to read it in light of the question, and the question itself has to be included in the input. The chunk below keeps the original bare prompt as `translate_without_context`, adds `translate_with_context` for the version that makes both changes, and runs each on the same option.
+Short, decontextualized text loses meaning without its surroundings. A response option needs the question it answers and the other options on the scale; a follow-up question needs the question before it. The chunk below keeps the original bare prompt as `translate_without_context`, and adds `translate_with_context`, which takes a piece of text together with its surrounding context and tells the model to read the text in light of it.
 
 ```{r}
-#| label: llm-context-fix
+#| label: llm-context-fns
 #| eval: false
 translate_without_context <- function(text) {
   chat <- chat_lmstudio(
-    model         = "google/gemma-4-26b-a4b-qat",
+    model = "google/gemma-4-26b-a4b-qat",
     system_prompt = "Translate the following text from Dutch to English. Output only the translation.",
-    params        = params(temperature = 0)
+    params = params(temperature = 0)
   )
   chat$chat(text)
 }
 
-translate_with_context <- function(option, question) {
+translate_with_context <- function(text, context) {
   chat <- chat_lmstudio(
-    model         = "google/gemma-4-26b-a4b-qat",
+    model = "google/gemma-4-26b-a4b-qat",
     system_prompt = paste0(
-      "Translate the Dutch survey response option to English. ",
-      "Use the survey question for context. Output only the translation."
+      "Translate a single piece of Dutch survey text to English. ",
+      "The survey item below is provided only as context to disambiguate it. ",
+      "Do not translate the context. Translate only the text the user sends, ",
+      "and output only that translation.\n\n",
+      context
     ),
-    params        = params(temperature = 0)
+    params = params(temperature = 0)
   )
-  chat$chat(paste0("Question: ", question, "\nResponse option: ", option))
+  chat$chat(text)
 }
-
-tibble(
-  option          = "Eens",
-  without_context = translate_without_context("Eens"),
-  with_context    = translate_with_context(
-    "Eens",
-    "In hoeverre bent u het eens met de volgende stelling?"
-  )
-)
 ```
 
-|option |without_context |with_context |
-|:------|:---------------|:------------|
-|Eens   |Once            |Agree        |
+The next chunk runs a set of items that fail in different ways when each piece of text is translated alone. Some response options are ambiguous on their own: "Eens" reads as "once" rather than "agree", and "Dalen" can be read as the plural of "dal", "valleys", rather than the verb "to fall". Some translate to different English words depending on the item they sit in: "Man" and "Vrouw" should become "Male" and "Female" under a question about sex but "Man" and "Woman" under a question about gender. Some read correctly only as a set: the rungs of an agreement scale or a likelihood scale have to stay parallel to each other, which requires seeing the rest of the scale. And a follow-up question can fail the same way: "Hoeveel per dag?" has to become "How many per day?" after a question about smoking but "How much per day?" after a question about alcohol, because Dutch "hoeveel" does not distinguish count from mass. Response options carry their stem and the full option set as context; a follow-up question carries the question before it. Every piece of text is translated both ways.
+
+```{r}
+#| label: llm-context-battery
+#| eval: false
+options_items <- tribble(
+  ~stem                                                                                                     , ~options ,
+  "In hoeverre bent u het eens met de volgende stelling?"                                                   ,
+  c("Eens", "Oneens")                                                                                       ,
+  "Wat is uw geslacht?"                                                                                     ,
+  c("Man", "Vrouw")                                                                                         ,
+  "Met welk gender identificeert u zich?"                                                                   ,
+  c("Man", "Vrouw")                                                                                         ,
+  "Wat verwacht u dat uw inkomen de komende 12 maanden zal doen?"                                           ,
+  c("Dalen", "Stijgen", "Gelijk blijven")                                                                   ,
+  "In hoeverre bent u het eens met de stelling 'De overheid moet meer investeren in onderwijs'?"            ,
+  c("Helemaal mee oneens", "Mee oneens", "Niet mee eens, niet mee oneens", "Mee eens", "Helemaal mee eens") ,
+  "Hoe waarschijnlijk is het dat u volgend jaar verhuist?"                                                  ,
+  c("Zeer onwaarschijnlijk", "Onwaarschijnlijk", "Waarschijnlijk", "Zeer waarschijnlijk")
+)
+
+option_rows <- options_items |>
+  mutate(
+    context = paste0(
+      "Question: ",
+      stem,
+      "\nAnswer options: ",
+      map_chr(options, \(o) paste(o, collapse = "; "))
+    )
+  ) |>
+  unnest(options) |>
+  transmute(
+    type = "Response option",
+    text = options,
+    context
+  )
+
+followup_items <- tribble(
+  ~previous           , ~question          ,
+  "Rookt u?"          , "Hoeveel per dag?" ,
+  "Drinkt u alcohol?" , "Hoeveel per dag?"
+)
+
+followup_rows <- followup_items |>
+  transmute(
+    type = "Follow-up question",
+    text = question,
+    context = paste0("Previous question: ", previous)
+  )
+
+context_results <- bind_rows(option_rows, followup_rows) |>
+  mutate(
+    without_context = map_chr(text, translate_without_context),
+    with_context = map2_chr(text, context, translate_with_context)
+  ) |>
+  select(type, context, text, without_context, with_context)
+
+write_csv(context_results, "supplying-context.csv")
+```
+
+```{r}
+#| label: supplying-context-table
+#| echo: false
+#| message: false
+read_csv("supplying-context.csv") |>
+  mutate(context = str_replace_all(context, "\n", " ")) |>
+  select(
+    Type = type,
+    Context = context,
+    Text = text,
+    `Without context` = without_context,
+    `With context` = with_context
+  )
+```
+
+Context corrects the text that was wrong on its own and leaves what was already right untouched. "Eens" moves from "once" to "agree", and "Dalen" from "valleys" to "fall", because the stem fixes the reading. "Man" and "Vrouw" come back as "Male" and "Female" under the sex question and as "Man" and "Woman" under the gender question, the same two words resolved two ways by the item around them. The scale endpoints stay parallel, "very unlikely" against "very likely", because each option was translated with the rest of the scale in view. The follow-up question "Hoeveel per dag?" becomes "How many per day?" after "Rookt u?" and "How much per day?" after "Drinkt u alcohol?", with the previous question supplying the count-or-mass distinction English needs. The text that was never ambiguous, such as "Oneens" or "Gelijk blijven", translates the same with or without context. Supplying context fixes what needs it without disturbing the rest.
 
 #### Supplying a glossary
 
@@ -174,14 +241,15 @@ glossary <- c(
 
 translate_with_glossary <- function(text) {
   chat <- chat_lmstudio(
-    model         = "google/gemma-4-26b-a4b-qat",
+    model = "google/gemma-4-26b-a4b-qat",
     system_prompt = paste0(
       "Translate the following Dutch text to English.\n",
       "Use these required translations for specific terms:\n",
-      paste(glossary, collapse = "\n"), "\n",
+      paste(glossary, collapse = "\n"),
+      "\n",
       "Output only the translation."
     ),
-    params        = params(temperature = 0)
+    params = params(temperature = 0)
   )
   chat$chat(text)
 }
@@ -189,7 +257,7 @@ translate_with_glossary <- function(text) {
 edu_items |>
   mutate(
     without_glossary = map_chr(dutch, translate_without_context),
-    with_glossary    = map_chr(dutch, translate_with_glossary)
+    with_glossary = map_chr(dutch, translate_with_glossary)
   )
 ```
 
@@ -207,9 +275,9 @@ The same glossary applies when an education level appears inside a full item rat
 item <- "Bent u na de HAVO doorgestroomd naar het hoger onderwijs?"
 
 tibble(
-  dutch            = item,
+  dutch = item,
   without_glossary = translate_without_context(item),
-  with_glossary    = translate_with_glossary(item)
+  with_glossary = translate_with_glossary(item)
 )
 ```
 
@@ -225,14 +293,14 @@ Translating a real questionnaire combines both techniques, but the context an it
 #| label: llm-combined
 #| eval: false
 questionnaire <- tribble(
-  ~block,      ~question, ~type,      ~text,
-  "agreement", 1,         "question", "In hoeverre bent u het eens met de volgende stelling?",
-  "agreement", 1,         "option",   "Eens",
-  "education", 2,         "question", "Wat is uw hoogst voltooide opleiding?",
-  "education", 2,         "option",   "VWO",
-  "education", 2,         "option",   "HAVO",
-  "education", 2,         "option",   "VMBO",
-  "education", 3,         "question", "Bent u na de HAVO doorgestroomd naar het hoger onderwijs?"
+  ~block      , ~question , ~type      , ~text                                                       ,
+  "agreement" ,         1 , "question" , "In hoeverre bent u het eens met de volgende stelling?"     ,
+  "agreement" ,         1 , "option"   , "Eens"                                                      ,
+  "education" ,         2 , "question" , "Wat is uw hoogst voltooide opleiding?"                     ,
+  "education" ,         2 , "option"   , "VWO"                                                       ,
+  "education" ,         2 , "option"   , "HAVO"                                                      ,
+  "education" ,         2 , "option"   , "VMBO"                                                      ,
+  "education" ,         3 , "question" , "Bent u na de HAVO doorgestroomd naar het hoger onderwijs?"
 )
 ```
 
@@ -246,32 +314,43 @@ stems <- questionnaire |>
   select(question, stem = text)
 
 translate_item <- function(text, type, block, stem) {
-  type_desc <- switch(type,
-    question    = "a survey question",
-    option      = "a response option",
+  type_desc <- switch(
+    type,
+    question = "a survey question",
+    option = "a response option",
     instruction = "interviewer instruction text"
   )
 
   system_prompt <- paste0(
     "Translate Dutch survey text to English.\n",
-    "The text is ", type_desc, " from the \"", block, "\" block of a survey.\n",
-    if (type == "option") paste0("It is a response option to the question: \"", stem, "\"\n"),
+    "The text is ",
+    type_desc,
+    " from the \"",
+    block,
+    "\" block of a survey.\n",
+    if (type == "option") {
+      paste0("It is a response option to the question: \"", stem, "\"\n")
+    },
     "Use these required translations for specific terms:\n",
-    paste(glossary, collapse = "\n"), "\n",
+    paste(glossary, collapse = "\n"),
+    "\n",
     "Output only the translation of the text."
   )
 
   chat <- chat_lmstudio(
-    model         = "google/gemma-4-26b-a4b-qat",
+    model = "google/gemma-4-26b-a4b-qat",
     system_prompt = system_prompt,
-    params        = params(temperature = 0)
+    params = params(temperature = 0)
   )
   chat$chat(text)
 }
 
 questionnaire |>
   left_join(stems, by = "question") |>
-  mutate(translation = pmap_chr(list(text, type, block, stem), translate_item)) |> kable()
+  mutate(
+    translation = pmap_chr(list(text, type, block, stem), translate_item)
+  ) |>
+  kable()
 ```
 
 |block     | question|type     |text                                                      |stem                                                      |translation                                                                          |
@@ -305,9 +384,9 @@ The list below collects these cases: each placeholder convention on its own, the
 #| eval: false
 translate_en_nl <- function(text) {
   chat <- chat_lmstudio(
-    model         = "google/gemma-4-26b-a4b-qat",
+    model = "google/gemma-4-26b-a4b-qat",
     system_prompt = "Translate the following text from English to Dutch. Output only the translation.",
-    params        = params(temperature = 0)
+    params = params(temperature = 0)
   )
   chat$chat(text)
 }
@@ -348,7 +427,9 @@ items <- tibble(
 items |>
   mutate(
     translation = map_chr(text, translate_en_nl),
-    preserved   = map2_lgl(translation, placeholders, \(out, ph) all(str_detect(out, fixed(ph))))
+    preserved = map2_lgl(translation, placeholders, \(out, ph) {
+      all(str_detect(out, fixed(ph)))
+    })
   ) |>
   select(text, translation)
 ```
@@ -388,9 +469,9 @@ frames <- tibble(
 )
 
 fills <- tribble(
-  ~fill,            ~gender,
-  "bank",           "de",
-  "energiebedrijf", "het"
+  ~fill            , ~gender ,
+  "bank"           , "de"    ,
+  "energiebedrijf" , "het"
 )
 
 frames |>
@@ -417,7 +498,7 @@ The obvious response is to tell the model what it is dealing with: that the plac
 #| eval: false
 translate_robust <- function(text) {
   chat <- chat_lmstudio(
-    model         = "google/gemma-4-26b-a4b-qat",
+    model = "google/gemma-4-26b-a4b-qat",
     system_prompt = paste0(
       "Translate the following English survey item to Dutch. ",
       "The text contains a placeholder in curly braces that will later be replaced ",
@@ -426,7 +507,7 @@ translate_robust <- function(text) {
       "of the noun that fills the placeholder. Leave the placeholder unchanged. ",
       "Output only the translation."
     ),
-    params        = params(temperature = 0)
+    params = params(temperature = 0)
   )
   chat$chat(text)
 }
@@ -461,9 +542,9 @@ frames_no_article <- tibble(
 )
 
 fills_with_article <- tribble(
-  ~fill,                ~gender,
-  "de bank",            "de",
-  "het energiebedrijf", "het"
+  ~fill                , ~gender ,
+  "de bank"            , "de"    ,
+  "het energiebedrijf" , "het"
 )
 
 frames_no_article |>

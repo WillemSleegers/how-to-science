@@ -19,9 +19,9 @@ theme_set(theme_minimal())
 
 </details>
 
-Each token an LLM produces is the result of a random draw. The model assigns a probability to every token in its vocabulary, then samples the next token from that distribution. That distribution is computed from the input and the model’s weights, and sampling from it means the same input can produce different output on different calls.
+Each token an LLM produces is the result of a random draw. The model assigns a probability to every token in its vocabulary, then samples a token from that distribution. The distribution is computed from the input and the model’s weights, and sampling from it means the same input can produce different output on different calls.
 
-To see this directly, the following code asks a model to translate the same Dutch survey text to English 25 times and counts how often each translation appears. The requests are sent with the ellmer package, and sampling parameters are set through its `params()` helper.
+Let’s demo this using a local LLM model to translate the same Dutch survey text to English 25 times and count how often each translation appears.
 
 ``` r
 results <- replicate(25, {
@@ -41,11 +41,17 @@ tibble(translation = results) |>
 
 | Translation | Count |
 |:---|---:|
-| Below are a number of statements about how people might feel. For each statement, indicate to what extent it applies to you. | 10 |
-| Below are a number of statements about how people may feel. For each statement, indicate to what extent it applies to you. | 8 |
-| Below are several statements about how people may feel. For each statement, indicate to what extent it applies to you. | 3 |
-| Below are several statements about how people might feel. For each statement, indicate to what extent it applies to you. | 3 |
-| Below are a number of statements about how people might feel. Indicate to what extent each statement applies to you. | 1 |
+| Below are several statements about how people may feel. For each statement, indicate to what extent it applies to you. | 7 |
+| Below are several statements about how people may feel. For each statement, please indicate to what extent it applies to you. | 5 |
+| Below are a number of statements about how people may feel. For each statement, please indicate to what extent it applies to you. | 3 |
+| Below are several statements about how people might feel. For each statement, please indicate to what extent it applies to you. | 2 |
+| Below is a number of statements about how people may feel. For each statement, indicate to what extent it applies to you. | 2 |
+| Below are a number of statements about how people might feel. For each statement, indicate to what extent it applies to you. | 1 |
+| Below are a number of statements about how people might feel. For each statement, please indicate to what extent it applies to you. | 1 |
+| Below are several statements about how people may feel. For each statement, indicate the extent to which it applies to you. | 1 |
+| Below are several statements about how people may feel. For each statement, please indicate the extent to which it applies to you. | 1 |
+| Below are several statements about how people might feel. For each statement, indicate to what extent it applies to you. | 1 |
+| Below is a number of statements about how people may feel. For each statement, please indicate the extent to which it applies to you. | 1 |
 
 With temperature at 1, the same item produces several different translations across calls. The rest of this page explains why, and how to suppress the variation when consistent output is needed.
 
