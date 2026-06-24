@@ -1,5 +1,6 @@
 ---
 title: "LLM Basics"
+description: "How large language models work."
 toc: true
 ---
 

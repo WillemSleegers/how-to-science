@@ -1,5 +1,8 @@
 ---
 title: Data Simulation
+description: >-
+  Common simulation techniques to test out statistical methods and build
+  intuitions.
 toc: true
 ---
 
