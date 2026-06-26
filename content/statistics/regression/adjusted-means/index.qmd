@@ -69,6 +69,21 @@ To get a mean that controls for sex, we fit a regression with sex as a predictor
 model <- lm(y ~ sex, data = data)
 ```
 
+### predict()
+
+Build a reference grid with one row per sex level, use `predict()` to get the model's fitted value for each row, then average those predictions.
+
+```{r}
+#| label: base-r-marginal-mean
+grid <- tibble(sex = factor(c("male", "female"), levels = levels(data$sex)))
+
+grid |>
+  mutate(pred = predict(model, newdata = grid)) |>
+  summarise(mean(pred))
+```
+
+Each level contributes one prediction, weighted equally, so the result doesn't depend on how many observations fell in each group.
+
 ### emmeans
 
 `emmeans` extracts the marginal mean by averaging the predicted values for each sex level equally, regardless of how many observations each has.
