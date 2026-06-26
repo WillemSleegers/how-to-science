@@ -10,6 +10,7 @@ code-fold: show
 
 - [Setup](#setup)
 - [Controlling for sex](#controlling-for-sex)
+  - [predict()](#predict)
   - [emmeans](#emmeans)
   - [marginaleffects](#marginaleffects)
 - [Using population weights](#using-population-weights)
@@ -102,6 +103,29 @@ model <- lm(y ~ sex, data = data)
 ```
 
 </details>
+
+### predict()
+
+Build a reference grid with one row per sex level, use `predict()` to get the model’s fitted value for each row, then average those predictions.
+
+<details open class="code-fold">
+<summary>Code</summary>
+
+``` r
+grid <- tibble(sex = factor(c("male", "female"), levels = levels(data$sex)))
+
+grid |>
+  mutate(pred = predict(model, newdata = grid)) |>
+  summarise(mean(pred))
+```
+
+</details>
+
+| mean(pred) |
+|-----------:|
+|   3.494357 |
+
+Each level contributes one prediction, weighted equally, so the result doesn’t depend on how many observations fell in each group.
 
 ### emmeans
 
