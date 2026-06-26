@@ -133,9 +133,7 @@ means <- tapply(data$score, data$group, mean)
 
 The two approaches are the same process in different units. Setting descriptives fixes the means and standard deviations and lets *d* fall out; setting *d* fixes the standardized difference and lets the descriptives fall out. They convert directly into each other through the definition of *d*:
 
-$$
-d = \frac{m_\text{treatment} - m_\text{control}}{sd}
-$$
+$$d = \frac{m_\text{treatment} - m_\text{control}}{sd}$$
 
 Any pair of descriptives implies a *d*, and any *d* paired with a standard deviation implies a pair of means. The descriptives example used means of 100 and 106 with a standard deviation of 15, giving *d* = 0.4. Going the other way, *d* = 0.4 with a standard deviation of 15 implies a 6-point gap, so the treatment mean is 100 + 0.4 × 15 = 106. The two simulations describe the same effect.
 
@@ -165,9 +163,7 @@ The effect is identical to the standardized version; only the surface numbers di
 
 Both group simulations are special cases of a linear model. A regression equation builds the outcome from an intercept, one or more slopes, and random error:
 
-$$
-y = b_0 + b_1 x + \varepsilon, \qquad \varepsilon \sim \text{Normal}(0, \sigma)
-$$
+$$y = b_0 + b_1 x + \varepsilon, \qquad \varepsilon \sim \text{Normal}(0, \sigma)$$
 
 Coding the group as 0 for control and 1 for treatment makes the intercept the control mean, the slope the difference between groups, and the error standard deviation the within-group spread. The earlier two-group simulation is exactly this equation with `b0 = 100`, `b1 = 6`, and `sigma = 15`:
 

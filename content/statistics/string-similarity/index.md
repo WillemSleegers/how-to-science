@@ -11,7 +11,11 @@ toc: true
 - [Jaccard similarity](#jaccard-similarity)
 - [Cosine similarity](#cosine-similarity)
 - [BLEU score](#bleu-score)
-- [Semantic similarity](#semantic-similarity)
+- [Semantic similarity with embeddings](#semantic-similarity-with-embeddings)
+  - [Whole-string cosine](#whole-string-cosine)
+  - [BERTScore](#bertscore)
+  - [Calibrating BERTScore](#calibrating-bertscore)
+  - [Matching across languages](#matching-across-languages)
 - [Case study: survey question](#case-study-survey-question)
   - [Choosing a metric](#choosing-a-metric)
 - [Language considerations](#language-considerations)
@@ -26,21 +30,14 @@ toc: true
 ``` r
 library(tidyverse)
 library(stringdist)
-library(rollama)
-
-clean <- function(x) {
-  x |> str_to_lower() |> str_remove_all("[[:punct:]]") |> str_squish()
-}
-
-cosine_sim <- function(a, b) sum(a * b) / (sqrt(sum(a^2)) * sqrt(sum(b^2)))
-as_vec <- function(embedding) embedding |> unlist() |> as.numeric()
+library(ditto)
 ```
 
 </details>
 
 String similarity metrics reduce the comparison between two pieces of text to a single number, making it possible to rank, filter, or aggregate comparisons at scale. Common use cases include comparing survey responses across time points, detecting duplicate records, and evaluating translations.
 
-This page covers three general-purpose surface-level metrics from the `stringdist` package (Levenshtein, Jaccard, and cosine), BLEU — a metric designed specifically for translation evaluation — and semantic similarity using embeddings, which captures meaning rather than surface overlap.
+This page covers three general-purpose surface-level metrics from the `stringdist` package (Levenshtein, Jaccard, and cosine), BLEU — a metric designed specifically for translation evaluation — and two embedding-based metrics that capture meaning rather than surface overlap: a whole-string cosine similarity and the token-level BERTScore. The BLEU, embedding, and cleaning functions come from the `ditto` package; the surface metrics come from `stringdist`.
 
 ## Levenshtein similarity
 
@@ -152,54 +149,7 @@ The three metrics above are general-purpose string comparison tools. BLEU (Bilin
 
 BLEU combines three ideas. First, *n-gram precision*: it checks not just whether individual words match, but whether consecutive word sequences match — pairs (bigrams), triples (trigrams), and 4-word sequences. Matching longer sequences is a stronger signal than matching single words, because the candidate would have to produce multiple words in exactly the right order. The standard implementation uses up to 4-grams. Second, *clipping*: each reference word can only be credited once, preventing a candidate that repeats a single word from scoring artificially high. Third, a *brevity penalty*: candidates shorter than the reference are penalized, since short strings have fewer n-grams to get wrong. One adjustment for short strings: `max_n` is capped at the length of the shorter string, so a two-word label like “completely agree” is evaluated on unigrams and bigrams rather than forced to score 0 because 4-grams are impossible.
 
-The `bleu()` function below takes a candidate string and a reference and returns a score between 0 and 1, with helper functions for each component.
-
-``` r
-brevity_penalty <- function(cand_tokens, ref_tokens) {
-  if (length(cand_tokens) >= length(ref_tokens)) {
-    1
-  } else {
-    exp(1 - length(ref_tokens) / length(cand_tokens))
-  }
-}
-
-get_ngrams <- function(tokens, n) {
-  if (length(tokens) < n) {
-    return(character(0))
-  }
-  map_chr(seq_len(length(tokens) - n + 1), \(i) {
-    paste(tokens[i:(i + n - 1)], collapse = " ")
-  })
-}
-
-clipped_precision <- function(cand_tokens, ref_tokens, n) {
-  cand_ngrams <- get_ngrams(cand_tokens, n)
-  ref_ngrams <- get_ngrams(ref_tokens, n)
-  if (length(cand_ngrams) == 0) {
-    return(0)
-  }
-  sum(map_dbl(unique(cand_ngrams), \(ng) {
-    min(sum(cand_ngrams == ng), sum(ref_ngrams == ng))
-  })) /
-    length(cand_ngrams)
-}
-
-bleu <- function(candidate, reference, max_n = 4) {
-  cand_tokens <- str_split(candidate, "\\s+")[[1]]
-  ref_tokens <- str_split(reference, "\\s+")[[1]]
-  max_n <- min(max_n, length(cand_tokens), length(ref_tokens))
-  precisions <- map_dbl(seq_len(max_n), \(n) {
-    clipped_precision(cand_tokens, ref_tokens, n)
-  })
-  if (any(precisions == 0)) {
-    return(0)
-  }
-  bp <- brevity_penalty(cand_tokens, ref_tokens)
-  bp * exp(mean(log(precisions)))
-}
-```
-
-Four candidates, ranging from near-identical to unrelated, scored against the same reference:
+The `bleu()` function from `ditto` takes a candidate string and a reference and returns a score between 0 and 1. Four candidates, ranging from near-identical to unrelated, scored against the same reference:
 
 ``` r
 ref_bleu <- "to what extent do you agree with the statement"
@@ -225,31 +175,96 @@ tribble(
 
 BLEU has a known sensitivity to short texts. On sentence-level comparisons, scores are noisier and harder to interpret than on full documents, because there are fewer n-grams to aggregate over.
 
-## Semantic similarity
+## Semantic similarity with embeddings
 
-All the metrics above measure surface overlap — they compare the actual characters or words present in two strings. A paraphrase that conveys the same meaning in entirely different words scores poorly on every one of them. Semantic similarity takes a different approach: instead of comparing the strings directly, it compares their *meaning*.
+All the metrics above measure surface overlap — they compare the actual characters or words present in two strings. A paraphrase that conveys the same meaning in entirely different words scores poorly on every one of them. Embedding-based metrics compare meaning instead. A language model reads each string and produces a list of numbers that encode what it means; strings that mean similar things end up with similar numbers. Two metrics build on this in different ways. A whole-string cosine similarity pools each string into a single vector and measures how close the two vectors are. BERTScore keeps one vector per token and matches the tokens of one string against the other.
 
-The way this works is through embeddings. A language model reads each string and produces a list of numbers that collectively encode what the string means. Strings that mean similar things end up with similar numbers; strings that mean different things end up with different numbers. Similarity is then computed by measuring how close two strings’ number lists are to each other.
-
-This section uses the `rollama` package, which calls a locally running Ollama instance to generate embeddings. The model is `nomic-embed-text-v2-moe`, a multilingual embedding model. If you have not already pulled it, run `pull_model("nomic-embed-text-v2-moe")` first.
+Both metrics need a model that produces these embeddings. `ditto` reads them from a local `llama.cpp` server run with `--pooling none`, which returns one vector per token. `start_llama_server()` launches that server and waits until it is ready to answer requests, given the path to the `llama-server` binary and a model file. The examples here use `bge-m3`, a multilingual embedding model.
 
 ``` r
-library(rollama)
-pull_model("nomic-embed-text-v2-moe")
+start_llama_server(
+  exe = "path/to/llama-server",
+  model = "path/to/bge-m3-f16.gguf"
+)
 ```
 
-Two pairs illustrate what embeddings capture that surface metrics miss: a paraphrase and an unrelated question.
+The `exe` argument can be omitted if `llama-server` is on your `PATH` or set through the `ditto.llama_server` option.
 
-| a | b | note | similarity |
-|:---|:---|:---|---:|
-| to what extent do you agree | how much do you agree | paraphrase | 0.87 |
-| to what extent do you agree | what is your date of birth | unrelated | 0.16 |
+### Whole-string cosine
 
-The paraphrase scores high because the model has learned that “to what extent” and “how much” serve the same communicative purpose. The surface metrics earlier on this page would give this pair a relatively low score, because they share very few words.
+`cosine_similarity()` collapses each string into a single vector and returns the cosine between the two. The server returns per-token vectors, so the pooling into one vector happens in R, set by the `pooling` argument. The setting must match how the model was trained: `bge-m3` uses the leading token’s vector, selected with `pooling = "cls"`.
 
-Surface metrics are the right default when you expect responses to be close to the reference: the same words, maybe slightly reordered or with small substitutions. They are fast, require no external model, and are easy to reason about.
+``` r
+cosine_similarity(
+  "how much do you agree",
+  "to what extent do you agree",
+  pooling = "cls"
+)
+#> [1] 0.892
+cosine_similarity(
+  "what is your date of birth",
+  "to what extent do you agree",
+  pooling = "cls"
+)
+#> [1] 0.474
+```
 
-Semantic similarity is worth reaching for when paraphrasing is expected — valid responses that choose different vocabulary or restructure sentences while preserving meaning. In that case, surface metrics will penalise good matches, and embedding-based similarity gives a more accurate picture.
+The paraphrase scores 0.89 and the unrelated question 0.47. The surface metrics earlier on this page give the paraphrase a low score, because it shares few words with the reference; the embedding registers that the two ask the same thing.
+
+### BERTScore
+
+BERTScore keeps the per-token vectors rather than pooling them. It embeds each token in the context of its sentence, matches every candidate token to its most similar reference token, and reports precision, recall, and their harmonic mean. Precision measures match quality from the candidate’s side, recall from the reference’s side.
+
+``` r
+bertscore("how much do you agree", "to what extent do you agree")
+#>  precision     recall         f1
+#>      0.944      0.938      0.941
+bertscore("what is your date of birth", "to what extent do you agree")
+#>  precision     recall         f1
+#>      0.709      0.720      0.714
+```
+
+The paraphrase scores 0.94 and the unrelated question 0.71. Both are high: `bge-m3` places even unrelated text at a substantial similarity, so the raw separation is narrow. The ordering is correct, but the scores need calibrating before they work as thresholds.
+
+### Calibrating BERTScore
+
+`bertscore_baseline()` estimates the score the model assigns to unrelated text by averaging over many random pairs of distinct sentences. Passing that baseline to `bertscore()` rescales each score as (x − baseline) / (1 − baseline), mapping the unrelated floor to 0 while leaving a perfect match at 1.
+
+``` r
+baseline <- bertscore_baseline(seed = 1)
+
+bertscore(
+  "how much do you agree",
+  "to what extent do you agree",
+  baseline = baseline
+)[["f1"]]
+#> [1] 0.842
+bertscore(
+  "what is your date of birth",
+  "to what extent do you agree",
+  baseline = baseline
+)[["f1"]]
+#> [1] 0.231
+```
+
+After rescaling, the paraphrase stays at 0.84 while the unrelated question drops to 0.23, a separation the raw scores hid. The baseline is specific to the model and the language, so estimate it from text that matches the comparison.
+
+### Matching across languages
+
+Because `bge-m3` is multilingual, the embedding metrics recognise a paraphrase across languages, where the character and word metrics see no overlap. Comparing the English reference with its Dutch translation:
+
+``` r
+bertscore("to what extent do you agree", "in hoeverre bent u het eens")[["f1"]]
+#> [1] 0.921
+cosine_similarity(
+  "to what extent do you agree",
+  "in hoeverre bent u het eens",
+  pooling = "cls"
+)
+#> [1] 0.895
+```
+
+Both score the cross-lingual pair almost as high as an English paraphrase.
 
 ## Case study: survey question
 
@@ -270,36 +285,20 @@ variants <- tribble(
   mutate(text = clean(text))
 ```
 
-The table below shows all five metrics applied to the four variants:
+The table below shows all six metrics applied to the four variants. `compare_strings()` computes the surface metrics and BLEU from the cleaned text directly, and adds the two embedding columns when `bert = TRUE`:
 
 ``` r
-reference_vec <- as_vec(embed_text(
-  reference,
-  model = "nomic-embed-text-v2-moe"
-))
-
-variants |>
-  mutate(
-    levenshtein = stringsim(text, reference, method = "lv"),
-    jaccard = stringsim(text, reference, method = "jaccard"),
-    cosine = stringsim(text, reference, method = "cosine"),
-    bleu = map_dbl(text, bleu, reference = reference),
-    semantic = map_dbl(
-      map(text, \(t) as_vec(embed_text(t, model = "nomic-embed-text-v2-moe"))),
-      cosine_sim,
-      b = reference_vec
-    )
-  ) |>
-  select(label, levenshtein, jaccard, cosine, bleu, semantic) |>
-  knitr::kable(digits = 2)
+compare_strings(variants$text, reference, bert = TRUE, pooling = "cls") |>
+  mutate(label = variants$label, .before = 1) |>
+  select(label, levenshtein, jaccard, cosine, bleu, bertscore_f1, cosine_emb)
 ```
 
-| label          | levenshtein | jaccard | cosine | bleu | semantic |
-|:---------------|------------:|--------:|-------:|-----:|---------:|
-| Near-identical |        0.98 |    1.00 |   1.00 | 0.88 |     0.96 |
-| Paraphrase     |        0.49 |    0.86 |   0.94 | 0.26 |     0.89 |
-| Different      |        0.35 |    0.67 |   0.84 | 0.00 |     0.32 |
-| Unrelated      |        0.25 |    0.82 |   0.92 | 0.00 |     0.19 |
+| label          | levenshtein | jaccard | cosine | bleu | bertscore_f1 | cosine_emb |
+|:---------------|------------:|--------:|-------:|-----:|-------------:|-----------:|
+| Near-identical |        0.98 |    1.00 |   1.00 | 0.88 |         0.99 |       0.97 |
+| Paraphrase     |        0.49 |    0.86 |   0.94 | 0.26 |         0.96 |       0.93 |
+| Different      |        0.35 |    0.67 |   0.84 | 0.00 |         0.78 |       0.65 |
+| Unrelated      |        0.25 |    0.82 |   0.92 | 0.00 |         0.71 |       0.49 |
 
 ### Choosing a metric
 
@@ -381,9 +380,8 @@ items |>
   )
 ```
 
-    # A tibble: 1 × 4
-      mean_a mean_b min_a min_b
-       <dbl>  <dbl> <dbl> <dbl>
-    1      1  0.550     1 0.464
+| mean_a |    mean_b | min_a |     min_b |
+|-------:|----------:|------:|----------:|
+|      1 | 0.5503132 |     1 | 0.4642857 |
 
 The item-level summary shows not just the average similarity but also where a version diverges most from the original.
