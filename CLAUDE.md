@@ -8,7 +8,7 @@ Work within the permissions already granted in `.claude/settings.json`. If a com
 
 ## Project Overview
 
-This is a documentation/teaching site built on **Astro 6** with **Quarto** for code-heavy pages. The site is deployed to GitHub Pages.
+This is a documentation/teaching site built on **Astro** with **Quarto** for code-heavy pages. The site is deployed to GitHub Pages.
 
 **Key directories:**
 
