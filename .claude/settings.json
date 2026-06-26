@@ -17,7 +17,8 @@
       "Bash(npx fallow *)",
       "Bash(npm test *)",
       "Bash(wait)",
-      "mcp__r-btw__btw_tool_cran_search"
+      "mcp__r-btw__btw_tool_cran_search",
+      "Bash(git add *)"
     ]
   }
 }
