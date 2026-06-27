@@ -123,20 +123,7 @@ Before writing any prose for a page or section, outline the logical flow to the 
 
 ### Writing style
 
-- Write claims directly; don't make authors or studies the grammatical subject. Say "X is true" not "Smith et al. found that X is true."
-- Prefer concrete simulated examples to abstract description.
-- Pages tend to be practical and code-forward; show working R code with explanations.
-- Always set up before introducing detail. Never drop a code chunk, result, or new concept on the reader without first explaining what it is and why it matters.
-- Use em dashes only when a pause or aside genuinely cannot be expressed as cleanly another way. Default to plain sentence structure with commas and periods.
-- No figurative or symbolic language. Avoid phrases like "sharper than any study", "to watch the machinery work", "honesty in models", "data can agree or disagree". Describe what is literally happening.
-- Describe before labeling. Introduce what something is before giving it its name. The reader should understand the concept before seeing the term.
-- Announce before describing. State what is about to happen and why before diving into it. Never jump into a simulation, code chunk, or new topic without first saying what it is and what purpose it serves.
-- Don't use "true effect" or "the truth". Refer to simulation parameters and model parameters directly: `mu`, the population effect, the value we set.
-- Introduce before using. Don't reference a function, package, concept, or model before it has been introduced in the prose.
-- No circular definitions. Don't define something in terms of itself.
-- Don't make software the agent. Packages can't call, report, or know things. They are tools.
-- Don't make stronger claims than necessary. No superlatives or strong framing without justification.
-- Every sentence must connect. No sentence should stand alone without pulling from what came before or setting up what comes next.
+Prose style rules live in the `writing-style` skill ([.claude/skills/writing-style/skill.md](.claude/skills/writing-style/skill.md)). Follow them whenever writing or editing prose on the site. The skill is also invocable as `/writing-style` to review and fix an existing file.
 
 ## Citation Shortcodes
 

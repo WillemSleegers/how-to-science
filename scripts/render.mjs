@@ -59,11 +59,21 @@ function isStale(qmdPath) {
   return statSync(qmdPath).mtimeMs > statSync(mdPath).mtimeMs
 }
 
-function renderFile(qmdPath) {
+// Render one file. By default a Quarto failure throws (so `build` and the
+// pre-push hook fail loudly). Pass { tolerant: true } in watch mode to log the
+// failure and keep going instead, returning false. Returns true on success.
+function renderFile(qmdPath, { tolerant = false } = {}) {
   const abs = resolve(qmdPath)
   console.log(`\nRendering ${relative(ROOT, abs)}`)
-  execSync(`quarto render "${abs}"`, { cwd: ROOT, stdio: "inherit" })
-  copyFigures(abs)
+  try {
+    execSync(`quarto render "${abs}"`, { cwd: ROOT, stdio: "inherit" })
+    copyFigures(abs)
+    return true
+  } catch (err) {
+    if (!tolerant) throw err
+    console.error(`\n✗ Failed to render ${relative(ROOT, abs)} — skipping (fix and save to retry)`)
+    return false
+  }
 }
 
 function walk(dir) {
@@ -77,22 +87,32 @@ function walk(dir) {
   return files
 }
 
-function renderAll() {
+function renderAll({ tolerant = false } = {}) {
   const files = walk(CONTENT_DIR)
   const stale = files.filter(isStale)
   console.log(`Found ${files.length} .qmd files, ${stale.length} need rendering`)
-  for (const f of stale) renderFile(f)
+  const failed = []
+  for (const f of stale) {
+    if (!renderFile(f, { tolerant })) failed.push(f)
+  }
   for (const f of files) if (figuresNeedSync(f)) copyFigures(f)
+  return failed
 }
 
 const arg = process.argv[2]
 if (arg === "--watch") {
-  renderAll()
+  // In watch mode a broken page must not take down the dev server: render what
+  // we can, report the rest, and let saving the file trigger a retry.
+  const failed = renderAll({ tolerant: true })
+  if (failed.length > 0) {
+    console.warn(`\n⚠ ${failed.length} file(s) failed to render; starting dev server anyway:`)
+    for (const f of failed) console.warn(`   ${relative(ROOT, f)}`)
+  }
   console.log("\nWatching for .qmd changes...")
   watch(CONTENT_DIR, { recursive: true }, (_, filename) => {
     if (filename?.endsWith(".qmd")) {
       const fullPath = join(CONTENT_DIR, filename)
-      if (existsSync(fullPath)) renderFile(fullPath)
+      if (existsSync(fullPath)) renderFile(fullPath, { tolerant: true })
     }
   })
   // Run the Astro dev server alongside the watcher so `npm run dev` works the

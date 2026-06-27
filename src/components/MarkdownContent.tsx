@@ -5,64 +5,10 @@ import remarkMath from "remark-math"
 import rehypeRaw from "rehype-raw"
 import rehypeKatex from "rehype-katex"
 import { CitationDialog } from "./CitationDialog"
-
-function splitMultiCitations(content: string): string {
-  return content.replace(
-    /<span([^>]+)>\(([^<]*)\)<\/span>/g,
-    (match, attrs: string, innerText: string) => {
-      if (!attrs.includes('class="cite-ref"')) return match
-
-      const idsMatch = attrs.match(/data-cite-ids="([^"]*)"/)
-      if (!idsMatch) return match
-
-      let ids: string[]
-      try {
-        ids = JSON.parse(idsMatch[1].replace(/&quot;/g, '"'))
-      } catch {
-        return match
-      }
-
-      if (ids.length <= 1) return match
-
-      const segments = innerText.split('; ')
-      if (segments.length !== ids.length) return match
-
-      // Parse per-key quote map from {{< cites >}} shortcode
-      let quoteMap: Record<string, string> = {}
-      const quotesMatch = attrs.match(/data-cite-quotes="([^"]*)"/)
-      if (quotesMatch) {
-        try {
-          quoteMap = JSON.parse(quotesMatch[1].replace(/&quot;/g, '"'))
-        } catch { /* ignore */ }
-      }
-
-      // citeproc renders a citation group sorted alphabetically by author,
-      // but data-cite-ids is in source order. To map each visible segment to
-      // its key (and thus its quote), we re-sort the ids by their name prefix
-      // (the part before the year) to approximate citeproc's order.
-      // Assumption: citation keys follow the `surnameYEAR` convention, so the
-      // key prefix sorts the same as the rendered author surname. If a key's
-      // prefix does not match its first author's surname, a per-citation quote
-      // in a {{< cites >}} group could be attached to the wrong citation.
-      const sortedIds = [...ids].sort((a, b) =>
-        a.replace(/\d+.*$/, '').localeCompare(b.replace(/\d+.*$/, ''))
-      )
-
-      const spans = segments.map((seg, i) => {
-        const id = sortedIds[i]
-        const quote = quoteMap[id] ?? ''
-        const quoteAttr = quote
-          ? `[&quot;${quote.replace(/&/g, '&amp;').replace(/"/g, '&quot;')}&quot;]`
-          : '[]'
-        return `<span class="cite-ref" data-cite-id="${id}" data-cite-ids="[&quot;${id}&quot;]" data-cite-quote="${quoteAttr}" data-cite-page="">${seg}</span>`
-      })
-
-      return '(' + spans.join('; ') + ')'
-    }
-  )
-}
 import { slugify } from "@/lib/headings"
 import { preprocessCallouts } from "@/lib/callouts"
+import { splitMultiCitations } from "@/lib/citations"
+import { resolveInternalHref, resolveAssetSrc } from "@/lib/links"
 import { createHighlighter } from "shiki"
 
 const g = globalThis as typeof globalThis & { __shikiHighlighter?: ReturnType<typeof createHighlighter> }
@@ -162,12 +108,14 @@ export function MarkdownContent({ content, slug }: MarkdownContentProps) {
   const base = import.meta.env.BASE_URL.replace(/\/$/, "")
   const pageComponents: Components = {
     ...components,
-    img: ({ src, alt }) => {
-      const resolved = src && !src.startsWith("http") && !src.startsWith("/")
-        ? `${base}/${slug}/${src}`
-        : src
-      return <img src={resolved} alt={alt ?? ""} />
-    },
+    img: ({ src, alt }) => (
+      <img src={resolveAssetSrc(src, base, slug)} alt={alt ?? ""} />
+    ),
+    a: ({ href, children, ...props }) => (
+      <a href={resolveInternalHref(href, base)} {...props}>
+        {children}
+      </a>
+    ),
   }
   return (
     <>

@@ -1,6 +1,0 @@
-case,text,bare,instructed,n_in,n_bare,n_instructed
-single,How satisfied are you with {provider}?,Hoe tevreden bent u met {provider}?,Hoe tevreden bent u met {provider}?,1,1,1
-repeated,You told us your provider is {provider}. Has {provider} contacted you this year?,U heeft ons verteld dat uw aanbieder {provider} is. Heeft {provider} dit jaar contact met u opgenomen?,U heeft ons verteld dat uw aanbieder {provider} is. Heeft {provider} dit jaar contact met u opgenomen?,2,2,2
-two_fills,"Compared with {provider_a}, how would you rate {provider_b}?",Hoe zou u {provider_b} beoordelen in vergelijking met {provider_a}?,Hoe zou u {provider_b} beoordelen in vergelijking met {provider_a}?,2,2,2
-many_fills,"On {date}, did you contact {provider} about your {product}?",Heeft u op {date} contact opgenomen met {provider} over uw {product}?,Heeft u op {date} contact opgenomen met {provider} over uw {product}?,3,3,3
-back_reference,Earlier you said you live in {city}. Is {city} where you were born?,Eerder zei je dat je in {city} woont. Is {city} de plek waar je bent geboren?,Eerder zei je dat je in {city} woont. Is {city} de plek waar je bent geboren?,2,2,2

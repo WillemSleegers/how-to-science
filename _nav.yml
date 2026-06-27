@@ -79,3 +79,8 @@
         - path: materials/scales/SOP2
         - path: materials/scales/TIPI
         - path: materials/scales/speciesism
+
+- group: About
+  items:
+    - path: about
+    - path: about/features
