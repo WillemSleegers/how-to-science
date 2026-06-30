@@ -18,6 +18,7 @@
         - path: methodology/survey-design/response-order
         - path: methodology/survey-design/clarification-features
         - path: methodology/survey-design/data-quality-checks
+        - path: methodology/survey-design/ai
     - title: Scale Development
       items:
         - path: methodology/scale-development/item-development
@@ -49,6 +50,7 @@
         - path: statistics/factor-analysis/cfa
     - title: Group Differences
       items:
+        - path: statistics/group-differences/omnibus-test
         - path: statistics/group-differences/pairwise-comparisons
         - path: statistics/group-differences/sequential-analyses
     - title: Representativeness

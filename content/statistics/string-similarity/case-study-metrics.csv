@@ -1,5 +1,5 @@
 label,levenshtein,jaccard,cosine,bleu,bertscore_f1,cosine_emb
-Near-identical,0.98,1.00,1.00,0.88,0.99,0.97
-Paraphrase,0.49,0.86,0.94,0.26,0.96,0.93
-Different,0.35,0.67,0.84,0.00,0.78,0.65
-Unrelated,0.25,0.82,0.92,0.00,0.71,0.49
+Near-identical,0.98,1.00,1.00,0.88,0.98,0.96
+Paraphrase,0.49,0.86,0.94,0.26,0.95,0.91
+Different,0.35,0.67,0.84,0.00,0.77,0.62
+Unrelated,0.25,0.82,0.92,0.00,0.73,0.48
