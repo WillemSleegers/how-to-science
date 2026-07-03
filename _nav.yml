@@ -33,6 +33,7 @@
         - path: methodology/ai/llm-determinism
     - title: Translation
       items:
+        - path: methodology/translation/trapd
         - path: methodology/translation/translation-validation
         - path: methodology/translation/machine-translation
 
@@ -48,6 +49,9 @@
       items:
         - path: statistics/factor-analysis/efa
         - path: statistics/factor-analysis/cfa
+    - title: Statistical Inference
+      items:
+        - path: statistics/statistical-inference/ci-overlap
     - title: Group Differences
       items:
         - path: statistics/group-differences/omnibus-test

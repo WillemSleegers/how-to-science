@@ -7,15 +7,28 @@ toc: true
 ---
 
 
-- [Levenshtein similarity](#levenshtein-similarity)
-- [Jaccard similarity](#jaccard-similarity)
-- [Cosine similarity](#cosine-similarity)
-- [BLEU score](#bleu-score)
-- [Semantic similarity with embeddings](#semantic-similarity-with-embeddings)
+- [Edit distance](#edit-distance)
+  - [Levenshtein similarity](#levenshtein-similarity)
+  - [Optimal string alignment](#optimal-string-alignment)
+  - [Damerau-Levenshtein](#damerau-levenshtein)
+  - [Hamming distance](#hamming-distance)
+  - [LCS distance](#lcs-distance)
+  - [Jaro-Winkler](#jaro-winkler)
+  - [TER](#ter)
+- [n-gram](#n-gram)
+  - [Jaccard similarity](#jaccard-similarity)
+  - [Cosine similarity](#cosine-similarity)
+  - [BLEU score](#bleu-score)
+  - [METEOR](#meteor)
+  - [CHRF](#chrf)
+  - [ROUGE](#rouge)
+- [Embedding](#embedding)
   - [Whole-string cosine](#whole-string-cosine)
+  - [WMD](#wmd)
   - [BERTScore](#bertscore)
   - [Calibrating BERTScore](#calibrating-bertscore)
   - [Matching across languages](#matching-across-languages)
+  - [MoverScore](#moverscore)
 - [Case study: survey question](#case-study-survey-question)
   - [Choosing a metric](#choosing-a-metric)
 - [Language considerations](#language-considerations)
@@ -23,6 +36,11 @@ toc: true
   - [Diacritics](#diacritics)
   - [Embeddings across languages](#embeddings-across-languages)
 - [Item-level vs. document-level](#item-level-vs-document-level)
+- [Metric overview](#metric-overview)
+  - [Edit distance](#edit-distance-1)
+  - [n-gram](#n-gram-1)
+  - [Embedding](#embedding-1)
+  - [Learned](#learned)
 
 <details class="code-fold">
 <summary>Code</summary>
@@ -31,15 +49,21 @@ toc: true
 library(tidyverse)
 library(stringdist)
 library(ditto)
+
+options(digits = 2)
 ```
 
 </details>
 
 String similarity metrics reduce the comparison between two pieces of text to a single number, making it possible to rank, filter, or aggregate comparisons at scale. Common use cases include comparing survey responses across time points, detecting duplicate records, and evaluating translations.
 
-This page covers three general-purpose surface-level metrics from the `stringdist` package (Levenshtein, Jaccard, and cosine), BLEU — a metric designed specifically for translation evaluation — and two embedding-based metrics that capture meaning rather than surface overlap: a whole-string cosine similarity and the token-level BERTScore. The BLEU, embedding, and cleaning functions come from the `ditto` package; the surface metrics come from `stringdist`.
+These metrics fall into four categories, distinguished by what counts as similar. Edit distance metrics count the character-level changes needed to turn one string into the other. n-gram metrics ignore order and position entirely and instead compare which character or word sequences the two strings have in common. Embedding-based metrics set aside the surface text and compare the meaning a language model assigns to each string. Learned metrics are fit on human similarity judgments to predict a score directly, rather than applying a fixed rule.
 
-## Levenshtein similarity
+The `stringdist` package implements the edit-distance and n-gram metrics; the `ditto` package implements BLEU and the embedding-based metrics.
+
+## Edit distance
+
+### Levenshtein similarity
 
 The Levenshtein distance counts the smallest number of single-character edits (insertions, deletions, or substitutions) needed to turn one string into the other. Turning `"next"` into `"text"` requires one substitution, replacing `'n'` with `'t'`, so the distance is 1.
 
@@ -60,8 +84,7 @@ tribble(
   "completely agree" , "completely agrre" , "typo (missing e)"         ,
   "agree"            , "skip"             , "no characters in common"
 ) |>
-  mutate(similarity = stringsim(a, b, method = "lv")) |>
-  knitr::kable(digits = 2)
+  mutate(similarity = stringsim(a, b, method = "lv"))
 ```
 
 </details>
@@ -75,13 +98,68 @@ tribble(
 | completely agree | completely agrre | typo (missing e)         |       0.94 |
 | agree            | skip             | no characters in common  |       0.00 |
 
-## Jaccard similarity
+### Optimal string alignment
+
+OSA extends Levenshtein by treating a transposition (swapping two adjacent characters) as a single edit rather than two substitutions. “Teh” is one transposition away from “the”, so OSA assigns a distance of 1 where Levenshtein assigns 2. Each character position can only be involved in one edit, so cascading transpositions still require multiple steps. Available in `stringdist` as `method = "osa"`.
+
+### Damerau-Levenshtein
+
+Damerau-Levenshtein lifts OSA’s per-position restriction, allowing cascading transpositions. In practice the two metrics agree on most inputs; the difference only appears in strings where the same character would need to be involved in multiple edit operations. Available as `method = "dl"`.
+
+### Hamming distance
+
+Hamming distance counts positions where two strings differ character by character. It only applies to equal-length strings, which makes it unsuitable for most open-ended text comparisons but appropriate for fixed-format strings such as coded response options. Available as `method = "hamming"`.
+
+### LCS distance
+
+The LCS distance allows only insertions and deletions, not substitutions. Substituting a character costs two operations (one deletion and one insertion), so LCS distances are always at least as large as Levenshtein distances. Available as `method = "lcs"`.
+
+### Jaro-Winkler
+
+The Jaro score counts how many characters in one string appear within a matching window in the other, with a penalty for transpositions. The window is roughly half the length of the longer string.
+
+Jaro-Winkler extends Jaro with a prefix bonus: if the two strings share an identical prefix of up to four characters, the score is boosted toward 1. This makes the metric sensitive to where strings diverge. Two strings that start the same but end differently score higher than two strings with the same characters in a different arrangement throughout. The property makes Jaro-Winkler a natural fit for name matching, where small suffix variations are common.
+
+<details class="code-fold">
+<summary>Code</summary>
+
+``` r
+tribble(
+  ~a         , ~b          , ~note                 ,
+  "smith"    , "smith"     , "identical"           ,
+  "smith"    , "smithe"    , "extra letter at end" ,
+  "smith"    , "smyth"     , "one substitution"    ,
+  "mcdonald" , "macdonald" , "prefix difference"   ,
+  "jonathan" , "johnathan" , "inserted letter"     ,
+  "smith"    , "jones"     , "different names"
+) |>
+  mutate(similarity = stringsim(a, b, method = "jw"))
+```
+
+</details>
+
+| a        | b         | note                | similarity |
+|:---------|:----------|:--------------------|-----------:|
+| smith    | smith     | identical           |       1.00 |
+| smith    | smithe    | extra letter at end |       0.94 |
+| smith    | smyth     | one substitution    |       0.87 |
+| mcdonald | macdonald | prefix difference   |       0.96 |
+| jonathan | johnathan | inserted letter     |       0.88 |
+| smith    | jones     | different names     |       0.00 |
+
+### TER
+
+TER (Translation Edit Rate) applies edit distance at the word level rather than the character level. The count of word-level edits needed to turn the candidate into the reference is divided by the number of reference words. Unlike similarity scores, TER is not bounded between 0 and 1; a score above 1 is possible when the candidate requires more edits than the reference has words. TER is common in machine translation evaluation.
+
+## n-gram
+
+### Jaccard similarity
 
 Levenshtein is sensitive to the exact sequence of characters. Jaccard takes a different approach: it ignores order and frequency entirely and compares only which characters the two strings have in common.
 
-Each string is reduced to a set of unique characters. Jaccard similarity is the size of the intersection divided by the size of the union — the characters present in both strings divided by all distinct characters across both strings. If two strings have the same character set, the score is 1. If they share no characters, it is 0.
+Each string is reduced to a set of unique characters. Jaccard similarity is the size of the intersection divided by the size of the union (the characters present in both strings divided by all distinct characters across both strings). If two strings have the same character set, the score is 1. If they share no characters, it is 0.
 
-Take `"yes"` and `"yet"` as a worked example. Their character sets are {y, e, s} and {y, e, t} — 3 distinct characters each. The intersection is {y, e} — 2 characters. The union is all 4 distinct characters across both: {y, e, s, t}. Similarity = 2/4 = **0.5**. See below for more examples.
+Take `"yes"` and `"yet"`, for example. Their character sets are {y, e, s} and {y, e, t} (3 distinct characters each). The intersection is {y, e} (2 characters). The union is all 4 distinct characters across both: {y, e, s, t}. The similarity score 2/4 = **0.5**.
 
 <details class="code-fold">
 <summary>Code</summary>
@@ -95,8 +173,7 @@ tribble(
   "neither agree nor disagree" , "disagree nor agree neither" , "same characters, different order" ,
   "strongly strongly agree"    , "strongly agree"             , "repetition ignored"
 ) |>
-  mutate(similarity = stringsim(a, b, method = "jaccard")) |>
-  knitr::kable(digits = 2)
+  mutate(similarity = stringsim(a, b, method = "jaccard"))
 ```
 
 </details>
@@ -109,13 +186,13 @@ tribble(
 | neither agree nor disagree | disagree nor agree neither | same characters, different order | 1.00 |
 | strongly strongly agree | strongly agree | repetition ignored | 1.00 |
 
-Because only the character set matters, `"neither agree nor disagree"` and `"disagree nor agree neither"` are treated as identical — they contain exactly the same characters. Jaccard is also blind to repetition: “strongly” appearing twice contributes the same as once.
+Because only the character set matters, `"neither agree nor disagree"` and `"disagree nor agree neither"` are treated as identical, since they contain exactly the same characters. Jaccard also ignores repetition: “strongly” appearing twice contributes the same as once.
 
-## Cosine similarity
+### Cosine similarity
 
 Cosine similarity counts how often each character appears in each string, then asks whether the two strings have similar distributions. If the same characters show up with similar frequency in both strings, the score is high. If the distributions are very different, the score is low.
 
-Take `"agree"` and `"disagree"`. Their character frequencies are {a:1, e:2, g:1, r:1} and {a:1, d:1, e:2, g:1, i:1, r:1, s:1}. The dot product — multiply the count of each shared character and sum — is (1×1) + (2×2) + (1×1) + (1×1) = 7. The magnitude of each frequency vector is √(1²+2²+1²+1²) = √7 ≈ 2.65 and √(1²+2²+1²+1²+1²+1²+1²) = 3. Similarity = 7 / (2.65 × 3) ≈ **0.88**. The score is high because all of `"agree"`’s characters appear in `"disagree"` with the same frequency.
+For `"agree"` and `"disagree"`, the character frequencies are {a:1, e:2, g:1, r:1} and {a:1, d:1, e:2, g:1, i:1, r:1, s:1}. The dot product is (1×1) + (2×2) + (1×1) + (1×1) = 7. The magnitude of each frequency vector is √(1²+2²+1²+1²) = √7 ≈ 2.65 and √(1²+2²+1²+1²+1²+1²+1²) = 3. The similarity score is 7 / (2.65 × 3) ≈ **0.88**. The score is high because all of `"agree"`’s characters appear in `"disagree"` with the same frequency.
 
 <details class="code-fold">
 <summary>Code</summary>
@@ -129,8 +206,7 @@ tribble(
   "agree"            , "next"                , "share only the letter 'e'"                         ,
   "yes"              , "yesterday"           , "all characters of 'yes' appear in 'yesterday'"
 ) |>
-  mutate(similarity = stringsim(a, b, method = "cosine")) |>
-  knitr::kable(digits = 2)
+  mutate(similarity = stringsim(a, b, method = "cosine"))
 ```
 
 </details>
@@ -143,11 +219,11 @@ tribble(
 | agree | next | share only the letter ‘e’ | 0.38 |
 | yes | yesterday | all characters of ‘yes’ appear in ‘yesterday’ | 0.80 |
 
-## BLEU score
+### BLEU score
 
-The three metrics above are general-purpose string comparison tools. BLEU (Bilingual Evaluation Understudy) was designed specifically for evaluating translations and remains the standard metric in translation research. Rather than comparing strings character-by-character, it asks how much of the candidate’s word sequences actually appear in the reference.
+The three metrics above are general-purpose string comparison tools. BLEU (Bilingual Evaluation Understudy) was designed specifically for evaluating translations. Rather than comparing strings character-by-character, BLEU measures how much of the candidate’s word sequences appear in the reference.
 
-BLEU combines three ideas. First, *n-gram precision*: it checks not just whether individual words match, but whether consecutive word sequences match — pairs (bigrams), triples (trigrams), and 4-word sequences. Matching longer sequences is a stronger signal than matching single words, because the candidate would have to produce multiple words in exactly the right order. The standard implementation uses up to 4-grams. Second, *clipping*: each reference word can only be credited once, preventing a candidate that repeats a single word from scoring artificially high. Third, a *brevity penalty*: candidates shorter than the reference are penalized, since short strings have fewer n-grams to get wrong. One adjustment for short strings: `max_n` is capped at the length of the shorter string, so a two-word label like “completely agree” is evaluated on unigrams and bigrams rather than forced to score 0 because 4-grams are impossible.
+BLEU combines three ideas. First, *n-gram precision*: it checks not just whether individual words match, but whether consecutive word sequences match, including pairs (bigrams), triples (trigrams), and longer sequences. Matching longer sequences is a stronger signal than matching single words, because the candidate would have to produce multiple words in exactly the right order. The standard implementation uses up to 4-grams. Second, *clipping*: each reference word can only be credited once, preventing a candidate that repeats a single word from scoring artificially high. Third, a *brevity penalty*: candidates shorter than the reference are penalized, since short strings have fewer n-grams to get wrong. For short strings, `max_n` is capped at the length of the shorter string, so a two-word label like “completely agree” is scored on unigrams and bigrams, not penalized for lacking 4-grams.
 
 The `bleu()` function from `ditto` takes a candidate string and a reference and returns a score between 0 and 1. Four candidates, ranging from near-identical to unrelated, scored against the same reference:
 
@@ -162,8 +238,7 @@ tribble(
   "what is your date of birth"                      , "unrelated"
 ) |>
   mutate(bleu = map_dbl(candidate, bleu, reference = ref_bleu)) |>
-  select(candidate, note, bleu) |>
-  knitr::kable(digits = 2)
+  select(candidate, note, bleu)
 ```
 
 | candidate                                       | note             | bleu |
@@ -173,22 +248,40 @@ tribble(
 | how much do you agree with the statement        | paraphrase       | 0.60 |
 | what is your date of birth                      | unrelated        | 0.00 |
 
-BLEU has a known sensitivity to short texts. On sentence-level comparisons, scores are noisier and harder to interpret than on full documents, because there are fewer n-grams to aggregate over.
+On sentence-level comparisons, scores are noisier and harder to interpret than on full documents because there are fewer n-grams to aggregate over.
 
-## Semantic similarity with embeddings
+### METEOR
 
-All the metrics above measure surface overlap — they compare the actual characters or words present in two strings. A paraphrase that conveys the same meaning in entirely different words scores poorly on every one of them. Embedding-based metrics compare meaning instead. A language model reads each string and produces a list of numbers that encode what it means; strings that mean similar things end up with similar numbers. Two metrics build on this in different ways. A whole-string cosine similarity pools each string into a single vector and measures how close the two vectors are. BERTScore keeps one vector per token and matches the tokens of one string against the other.
+METEOR addresses two limitations of BLEU. First, BLEU measures only n-gram precision — what fraction of the candidate’s words appear in the reference — without considering recall. A candidate that covers only part of the reference content can score well on BLEU as long as what it does say is accurate. METEOR computes an F-score over unigrams, combining precision and recall, then applies a fragmentation penalty when the matching words are scattered rather than contiguous.
 
-Both metrics need a model that produces these embeddings. `ditto` reads them from a local `llama.cpp` server run with `--pooling none`, which returns one vector per token. `start_llama_server()` launches that server and waits until it is ready to answer requests, given the path to the `llama-server` binary and a model file. The examples here use `bge-m3`, a multilingual embedding model.
+Second, BLEU requires exact word matches. METEOR extends matching to word stems and synonyms: “walking” matches “walk”, and a synonym from an external lexicon counts as a match. This generally produces better correlation with human judgments than BLEU, but requires external resources — a stemmer and synonym lexicon — limiting full support to five languages.
+
+### CHRF
+
+CHRF (character n-gram F-score) computes precision and recall over character n-grams rather than word n-grams. Because character sequences are shared across inflected forms of a word, CHRF handles morphological variation better than BLEU. A candidate that says “walking” where the reference says “walked” shares the character sequence “walk” and scores higher on CHRF than on BLEU. CHRF++ extends the metric by also counting word bigrams.
+
+### ROUGE
+
+ROUGE-n is the recall-oriented counterpart to BLEU. Where BLEU asks what fraction of the candidate’s n-grams appear in the reference, ROUGE-n asks what fraction of the reference’s n-grams appear in the candidate. A short candidate can score well on BLEU by being precise while missing most of the reference content; ROUGE-n penalizes that.
+
+ROUGE-L replaces n-gram counts with the longest common subsequence. Two strings that share a long common subsequence score high even when the matching tokens are not contiguous, making ROUGE-L less sensitive to exact phrasing than ROUGE-n.
+
+ROUGE is the standard evaluation metric for summarization, where coverage of the reference matters more than precision.
+
+## Embedding
+
+All the metrics above measure surface overlap: they compare the actual characters or words present in two strings. A paraphrase that conveys the same meaning in entirely different words scores poorly on every one of them. Embedding-based metrics compare meaning instead. A language model reads each string and produces a list of numbers that encode what it means; strings that mean similar things end up with similar numbers. Two metrics build on this in different ways. A whole-string cosine similarity pools each string into a single vector and measures how close the two vectors are. BERTScore keeps one vector per token and matches the tokens of one string against the other.
+
+Both metrics need a model that produces these embeddings. The embeddings come from a local `llama.cpp` server run with `--pooling none`, which returns one vector per token. `start_llama_server()` launches that server and waits until it is ready to answer requests, given the path to the `llama-server` binary and a model file. The examples here use `bge-m3`, a multilingual embedding model.
 
 ``` r
 start_llama_server(
-  exe = "path/to/llama-server",
-  model = "path/to/bge-m3-f16.gguf"
+  exe = "/opt/homebrew/bin/llama-server",
+  model = "/Users/willem/Downloads/bge-m3-gguf/bge-m3-Q4_K_M.gguf"
 )
 ```
 
-The `exe` argument can be omitted if `llama-server` is on your `PATH` or set through the `ditto.llama_server` option.
+The `exe` argument can be omitted if `llama-server` is on the `PATH` or set through the `ditto.llama_server` option.
 
 ### Whole-string cosine
 
@@ -200,16 +293,24 @@ cosine_similarity(
   "to what extent do you agree",
   pooling = "cls"
 )
-#> [1] 0.892
+#> [1] 0.87
 cosine_similarity(
   "what is your date of birth",
   "to what extent do you agree",
   pooling = "cls"
 )
-#> [1] 0.474
+#> [1] 0.53
 ```
 
-The paraphrase scores 0.89 and the unrelated question 0.47. The surface metrics earlier on this page give the paraphrase a low score, because it shares few words with the reference; the embedding registers that the two ask the same thing.
+The paraphrase scores 0.87 and the unrelated question 0.53. The surface metrics earlier on this page give the paraphrase a low score, because it shares few words with the reference; the embedding score reflects their shared meaning.
+
+### WMD
+
+Word Mover’s Distance (WMD) frames similarity as a transport problem. Each word in a string is placed at its position in embedding space, and WMD finds the minimum total cost to move every word in the candidate to the nearest word in the reference. The cost of each move is the distance between the word’s embedding and its destination.
+
+Because the cost depends on how close word embeddings are rather than whether words are identical, WMD handles paraphrases without requiring exact matches. “Car” and “automobile” are close in embedding space, so a candidate that uses one where the reference uses the other incurs a low transport cost. The main limitation is computational: finding the optimal transport plan scales poorly with string length compared to cosine similarity or greedy matching.
+
+WMD uses static word embeddings such as GloVe or Word2Vec, where each word maps to a single fixed vector regardless of context. “Bank” in “river bank” and “bank account” would receive the same vector.
 
 ### BERTScore
 
@@ -218,13 +319,13 @@ BERTScore keeps the per-token vectors rather than pooling them. It embeds each t
 ``` r
 bertscore("how much do you agree", "to what extent do you agree")
 #>  precision     recall         f1
-#>      0.944      0.938      0.941
+#>      0.934      0.927      0.930
 bertscore("what is your date of birth", "to what extent do you agree")
 #>  precision     recall         f1
-#>      0.709      0.720      0.714
+#>      0.746      0.755      0.751
 ```
 
-The paraphrase scores 0.94 and the unrelated question 0.71. Both are high: `bge-m3` places even unrelated text at a substantial similarity, so the raw separation is narrow. The ordering is correct, but the scores need calibrating before they work as thresholds.
+The paraphrase scores 0.93 and the unrelated question 0.75. Both are high: even unrelated text scores above 0.7, so the raw separation is narrow. The ordering is correct, but the scores need calibrating before they work as thresholds.
 
 ### Calibrating BERTScore
 
@@ -238,39 +339,41 @@ bertscore(
   "to what extent do you agree",
   baseline = baseline
 )[["f1"]]
-#> [1] 0.842
+#> [1] 0.80
 bertscore(
   "what is your date of birth",
   "to what extent do you agree",
   baseline = baseline
 )[["f1"]]
-#> [1] 0.231
+#> [1] 0.29
 ```
 
-After rescaling, the paraphrase stays at 0.84 while the unrelated question drops to 0.23, a separation the raw scores hid. The baseline is specific to the model and the language, so estimate it from text that matches the comparison.
+After rescaling, the paraphrase stays at 0.80 while the unrelated question drops to 0.29, a separation the raw scores hid. The baseline is specific to the model and the language and should be estimated from text representative of the comparison.
 
 ### Matching across languages
 
-Because `bge-m3` is multilingual, the embedding metrics recognise a paraphrase across languages, where the character and word metrics see no overlap. Comparing the English reference with its Dutch translation:
+Because `bge-m3` is multilingual, the embedding metrics recognise a paraphrase across languages where surface metrics find no word overlap, as in this comparison of an English question with its Dutch equivalent:
 
 ``` r
 bertscore("to what extent do you agree", "in hoeverre bent u het eens")[["f1"]]
-#> [1] 0.921
+#> [1] 0.91
 cosine_similarity(
   "to what extent do you agree",
   "in hoeverre bent u het eens",
   pooling = "cls"
 )
-#> [1] 0.895
+#> [1] 0.887
 ```
 
 Both score the cross-lingual pair almost as high as an English paraphrase.
 
+### MoverScore
+
+MoverScore applies WMD’s optimal transport approach using contextual BERT embeddings rather than static word vectors. Each token is represented in the context of its full sentence, and IDF weighting down-weights common function words. In practice, MoverScore and BERTScore perform similarly; the optimal assignment does not consistently outperform greedy matching across tasks.
+
 ## Case study: survey question
 
-The metric sections above introduce each method with small, focused examples. This section applies them all to a specific, more realistic scenario.
-
-The reference is a survey question, and the four variants range from near-identical wording to entirely unrelated content. Before computing any metric, the strings are cleaned — lowercased, punctuation stripped — so that surface differences do not distort the scores.
+The reference is a survey question, and the four variants range from near-identical wording to entirely unrelated content. Before computing any metric, the strings are cleaned (lowercased, punctuation stripped) so that surface differences do not distort the scores.
 
 ``` r
 reference <- clean("To what extent do you agree with the following statements?")
@@ -295,10 +398,10 @@ compare_strings(variants$text, reference, bert = TRUE, pooling = "cls") |>
 
 | label          | levenshtein | jaccard | cosine | bleu | bertscore_f1 | cosine_emb |
 |:---------------|------------:|--------:|-------:|-----:|-------------:|-----------:|
-| Near-identical |        0.98 |    1.00 |   1.00 | 0.88 |         0.99 |       0.97 |
-| Paraphrase     |        0.49 |    0.86 |   0.94 | 0.26 |         0.96 |       0.93 |
-| Different      |        0.35 |    0.67 |   0.84 | 0.00 |         0.78 |       0.65 |
-| Unrelated      |        0.25 |    0.82 |   0.92 | 0.00 |         0.71 |       0.49 |
+| Near-identical |        0.98 |    1.00 |   1.00 | 0.88 |         0.98 |       0.96 |
+| Paraphrase     |        0.49 |    0.86 |   0.94 | 0.26 |         0.95 |       0.91 |
+| Different      |        0.35 |    0.67 |   0.84 | 0.00 |         0.77 |       0.62 |
+| Unrelated      |        0.25 |    0.82 |   0.92 | 0.00 |         0.73 |       0.48 |
 
 ### Choosing a metric
 
@@ -312,7 +415,7 @@ Cosine also ignores order but tracks character frequency. It distinguishes betwe
 
 Levenshtein is the right choice when small character-level edits matter. Cosine is better suited when strings differ substantially in length but share the same character patterns, because it is not penalised by extra characters the way Levenshtein is. Jaccard adds little alongside cosine, since cosine captures everything Jaccard measures and more.
 
-BLEU operates at a different level. Rather than characters, it checks whether word sequences from the candidate appear in the reference. This makes it sensitive to word order in a way the character metrics are not. Two strings with the same words in a different order score lower on BLEU but are indistinguishable on cosine or Jaccard. For evaluating translations, where word arrangement carries meaning, BLEU is more appropriate.
+BLEU operates at a different level. Rather than characters, BLEU measures the overlap of word sequences between the candidate and the reference. This makes it sensitive to word order in a way the character metrics are not. Two strings with the same words in a different order score lower on BLEU but are indistinguishable on cosine or Jaccard. For evaluating translations, where word arrangement carries meaning, BLEU is more appropriate.
 
 None of the four metrics captures meaning. When paraphrasing is expected, surface overlap underestimates similarity, and semantic similarity using embeddings gives a more accurate picture.
 
@@ -322,21 +425,21 @@ The metrics on this page were developed primarily with English in mind. For lang
 
 ### Morphological richness
 
-Morphology refers to how much a language varies the surface form of a word to express grammatical meaning. In English, a verb has a small number of forms: *walk*, *walks*, *walked*, *walking*. In Turkish, the same root can produce hundreds of forms through suffixation — *evlerinden* (“from their houses”) is a single token built from *ev* (“house”) plus suffixes for plurality, possession, and case. Arabic works similarly, combining a consonantal root with different vowel patterns to produce words with related but distinct meanings.
+Morphology refers to how much a language varies the surface form of a word to express grammatical meaning. In English, a verb has a small number of forms: *walk*, *walks*, *walked*, *walking*. In Turkish, the same root can produce hundreds of forms through suffixation: *evlerinden* (“from their houses”) is a single token built from *ev* (“house”) plus suffixes for plurality, possession, and case. Arabic works similarly, combining a consonantal root with different vowel patterns to produce words with related but distinct meanings.
 
 BLEU and Jaccard are most affected by morphological richness, because both match exact word tokens. When two questions express the same idea with different inflected forms, the word tokens may share nothing even though the meaning is the same. BLEU’s n-gram precision drops because bigrams and trigrams in the candidate do not appear verbatim in the reference. Jaccard’s intersection shrinks for the same reason.
 
 Levenshtein and cosine are less affected because they operate on characters rather than words. Shared character sequences still contribute to the score even when inflectional suffixes differ. The scores will underestimate similarity, but less so than word-level metrics.
 
-Semantic similarity is the most robust to morphological variation. Embedding models map different surface forms of the same concept to nearby vectors, so a morphologically varied paraphrase scores similarly to one with identical word forms.
+Semantic similarity is the most robust to morphological variation. Different surface forms of the same concept are mapped to nearby vectors, so a morphologically varied paraphrase scores similarly to one with identical word forms.
 
 ### Diacritics
 
 Diacritics are marks attached to base letters to indicate pronunciation. When they are inconsistently present across texts, surface metrics treat the same word as two different strings. Polish diacritics appear consistently in standard written text, so the issue mainly arises when comparing across sources with inconsistent encoding. Arabic vowel markers are optional and frequently omitted, meaning the same word can appear with or without them across different sources.
 
-Levenshtein counts each diacritic as a character, so a word written with and without diacritics has a non-zero distance. Cosine is similarly affected: the frequency vector shifts when diacritical characters appear or disappear. BLEU is affected at the token level — a diacritised and an undiacritised form of the same word will not match.
+Levenshtein counts each diacritic as a character, so a word written with and without diacritics has a non-zero distance. Cosine is similarly affected: the frequency vector shifts when diacritical characters appear or disappear. BLEU is affected at the token level: a diacritised and an undiacritised form of the same word will not match.
 
-If texts are inconsistently diacritised, strip diacritics before computing any metric. For Arabic:
+When texts are inconsistently diacritised, stripping diacritics before any comparison avoids this. For Arabic:
 
 ``` r
 strip_arabic_diacritics <- function(x) {
@@ -344,19 +447,19 @@ strip_arabic_diacritics <- function(x) {
 }
 ```
 
-Semantic similarity is largely robust to diacritics. Embedding models are trained on text that contains both diacritised and undiacritised forms, and map them to nearby vectors.
+Semantic similarity is largely robust to diacritics. Embedding models are trained on text with both diacritised and undiacritised forms and typically map both variants to nearby vectors.
 
 ### Embeddings across languages
 
-The code above uses `nomic-embed-text-v2-moe`, Nomic’s multilingual model trained on over 1.6 billion pairs across ~100 languages. If you only need English, `nomic-embed-text` (~275 MB) is a smaller alternative. For a second multilingual option, `jeffh/intfloat-multilingual-e5-large-instruct` (~600 MB quantized) is widely used and comparable in quality to `nomic-embed-text-v2-moe`.
+The examples on this page use `bge-m3`, BAAI’s multilingual embedding model with support for over 100 languages. It is available as a GGUF for use with `llama.cpp` and performs well across a wide range of multilingual similarity tasks.
 
 ## Item-level vs. document-level
 
-The examples above compare single strings. When working with full questionnaires or multi-item instruments, you have two options:
+The examples above compare single strings. For full questionnaires or multi-item instruments, there are two approaches:
 
-**Document-level:** concatenate all items into one long string and compute similarity once. This is fast but hides variation within the instrument — a questionnaire that is nearly identical on most items but differs on one key question looks the same as one that is slightly different throughout.
+**Document-level:** All items are concatenated into one long string and similarity is computed once. This is fast but hides variation within the instrument: a questionnaire that is nearly identical on most items but differs on one key question looks the same as one that is slightly different throughout.
 
-**Item-level:** align the source and variant item by item, compute similarity for each pair, then summarize across items. This requires aligned data but reveals where the variants diverge.
+**Item-level:** Source and variant items are aligned one-to-one, similarity is computed for each pair, and the results are summarized across items. This requires aligned data but reveals where the variants diverge.
 
 ``` r
 items <- tribble(
@@ -380,8 +483,71 @@ items |>
   )
 ```
 
-| mean_a |    mean_b | min_a |     min_b |
-|-------:|----------:|------:|----------:|
-|      1 | 0.5503132 |     1 | 0.4642857 |
+| mean_a | mean_b | min_a | min_b |
+|-------:|-------:|------:|------:|
+|      1 |   0.55 |     1 |  0.46 |
 
 The item-level summary shows not just the average similarity but also where a version diverges most from the original.
+
+## Metric overview
+
+### Edit distance
+
+Edit distance metrics count the operations needed to transform one string into another. Several are available in the `stringdist` package.
+
+| Metric | Description | `stringdist` | Covered |
+|----|----|:--:|:--:|
+| Levenshtein | Minimum insertions, deletions, and substitutions | `"lv"` | Yes |
+| Optimal string alignment | Levenshtein plus transpositions, each position edited at most once | `"osa"` | Yes |
+| Damerau-Levenshtein | Like OSA but allows cascading transpositions | `"dl"` | Yes |
+| Hamming | Number of positions where equal-length strings differ | `"hamming"` | Yes |
+| LCS | Minimum insertions and deletions, no substitutions | `"lcs"` | Yes |
+| Jaro-Winkler | Edit similarity weighted toward prefix matches | `"jw"` | Yes |
+| TER | Edit distance normalized by reference length | — | Yes |
+| ITER | TER with improved stem matching and normalization | — | No |
+| PER | Position-independent edit rate | — | No |
+| CDER | Edit rate that allows block reorderings | — | No |
+| CHARACTER | Character-level edit rate | — | No |
+| EED | Extended edit distance | — | No |
+
+### n-gram
+
+n-gram metrics count how many character or word sequences the two strings share. Jaccard, cosine, and q-gram are available in `stringdist`.
+
+| Metric | Description | `stringdist` | Covered |
+|----|----|:--:|:--:|
+| Jaccard | Fraction of shared character types | `"jaccard"` | Yes |
+| Cosine | Character frequency similarity | `"cosine"` | Yes |
+| q-gram | Count of shared character q-grams | `"qgram"` | No |
+| BLEU | Word n-gram precision with brevity penalty | — | Yes |
+| NIST | BLEU variant weighting rare n-grams more heavily | — | No |
+| ABLEU | BLEU extended with negative reference sentences | — | No |
+| METEOR | Unigram matching extended to stems, synonyms, and paraphrases | — | Yes |
+| CHRF | Character n-gram F-score | — | Yes |
+| CHRF++ | CHRF extended with word bigrams | — | No |
+| ROUGE-n | Recall-oriented word n-gram overlap | — | Yes |
+| ROUGE-L | Recall using longest common subsequence | — | Yes |
+| CIDEr | TF-IDF weighted n-gram similarity for image captioning | — | No |
+
+### Embedding
+
+Embedding metrics represent strings as vectors and compare the vectors. The `ditto` package provides the two covered here.
+
+| Metric | Description | Covered |
+|----|----|:--:|
+| Embedding cosine | Cosine similarity of pooled sentence vectors | Yes |
+| MEANT 2.0 | Semantic similarity via word embeddings and shallow parses | No |
+| YiSi-1 | MEANT 2.0 with optional semantic parses | No |
+| WMD | Minimum transport cost between word embedding distributions | Yes |
+| MoverScore | WMD with contextual BERT embeddings | Yes |
+| BERTScore | Token-level contextual embedding matching | Yes |
+
+### Learned
+
+Learned metrics are trained to maximize correlation with human judgments. They require annotated data for each domain and generalize poorly to new settings.
+
+| Metric | Description | Covered |
+|----|----|:--:|
+| BEER | Regression on character n-grams and word bigrams | No |
+| BLEND | Combines 29 existing metrics via regression | No |
+| RUSE | Combines pre-trained sentence embedding models via regression | No |

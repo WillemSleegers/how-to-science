@@ -1,0 +1,29 @@
+---
+title: "TRAPD"
+toc: true
+order: 1
+---
+
+TRAPD is the dominant methodological framework for translating survey instruments in cross-cultural research. It was developed through the Survey Translation Project and became the basis for translation protocols in large-scale comparative surveys including the European Social Survey and the International Social Survey Programme. The name is an acronym for the five steps of the process: Translation, Review, Adjudication, Pretesting, and Documentation. The framework replaced earlier single-translator workflows and positioned back-translation alone as insufficient. The core idea is that translation quality depends on a structured team process rather than individual expertise.
+
+## Translation
+
+The process begins with two independent translators each producing a complete translation of the source instrument. Having two translators work independently produces divergent solutions, which is desirable. The differences reveal where the source language is ambiguous, where equivalent constructs are contested, or where one translator has made a choice the other would not. A single translator's blind spots are invisible in their own output; two translators make those blind spots visible.
+
+## Review
+
+The two translations are then compared and discussed by a review team. The team typically includes the translators, a bilingual subject-matter expert who understands the construct being measured, and often a native speaker of the target language without translation training. The subject-matter expert's role is important because linguistic fluency alone cannot assess whether a translated item captures the right psychological content. The team resolves discrepancies through discussion and records the reasoning behind contested decisions.
+
+## Adjudication
+
+An adjudicator consolidates the team's output into a single target-language version. The adjudicator is typically a senior researcher or translation expert who was not part of the original review team, so they can apply fresh judgment across the instrument, reconcile cases the review team left unresolved, and ensure the final version reads as natural target-language text rather than translated text.
+
+## Pretesting
+
+The adjudicated version is tested with speakers of the target language before the instrument is deployed. Pretesting typically involves cognitive interviews, in which participants think aloud while responding to items, or probing, in which an interviewer asks follow-up questions about how participants interpreted specific items. Problems that escaped the translators and reviewers often surface here: an item may read naturally in the target language but be understood in a way that does not match the intended construct.
+
+## Documentation
+
+All decisions made during the process are recorded. Documentation captures what alternatives were considered, why a particular choice was made, and what problems emerged in pretesting and how they were resolved. This serves two purposes: it allows users of the instrument to evaluate the translation's quality, and it provides a basis for updating the translation if the source instrument is revised or a new cross-cultural comparison requires review.
+
+## References
