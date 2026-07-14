@@ -19,7 +19,8 @@
       "Bash(npm test *)",
       "Bash(wait)",
       "Bash(git add *)",
-      "Bash(xxd)"
+      "Bash(xxd)",
+      "Read(//Users/willem/Documents/Papers/Zotero/**)"
     ]
   }
 }

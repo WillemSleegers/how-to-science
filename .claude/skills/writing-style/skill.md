@@ -5,6 +5,10 @@ description: Writing-style rules for prose on this site. Use whenever writing a 
 
 These are the writing-style rules for prose on this site. Apply them both when writing new prose and when reviewing an existing file. When asked to review or improve a file, check it against every rule below and fix any violations.
 
+## Process
+
+**Outline before writing.** Before writing any prose for a page or section, outline the logical flow to the user first. Do not write until the outline is approved.
+
 ## Tone
 
 **Conversational but precise.** Write in the first person and state opinions directly. Use "we" to include the reader as a collaborator ("Now that we know...").
