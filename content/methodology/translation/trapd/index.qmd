@@ -1,5 +1,8 @@
 ---
 title: "TRAPD"
+description: >-
+  The five-step Translation, Review, Adjudication, Pretesting, and
+  Documentation framework for translating survey instruments.
 toc: true
 order: 1
 ---

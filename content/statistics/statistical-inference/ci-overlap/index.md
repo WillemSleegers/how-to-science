@@ -1,5 +1,8 @@
 ---
 title: Confidence Interval Overlap
+description: >-
+  Why eyeballing whether two confidence intervals overlap is an unreliable test
+  of whether two groups differ significantly.
 toc: true
 ---
 

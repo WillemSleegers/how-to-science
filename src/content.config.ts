@@ -12,6 +12,7 @@ const docs = defineCollection({
     "code-tools": z.boolean().optional(),
     order: z.number().optional(),
     description: z.string().optional(),
+    draft: z.boolean().optional(),
   }),
 })
 

@@ -88,9 +88,11 @@ export function buildNode(item: ConfigItem): NavNode | null {
   const children = compact((item.items ?? []).map(buildNode))
 
   if (item.path) {
-    const slug = item.path.toLowerCase()
     const file = resolveFile(item.path)
     const fm = file ? readFrontmatter(file) : {}
+    if (fm.draft === true && !import.meta.env.DEV) return null
+
+    const slug = item.path.toLowerCase()
     const title = resolveTitle(item, fm, item.path)
     const description = typeof fm.description === "string" ? fm.description : undefined
     return { title, slug, description, children }
