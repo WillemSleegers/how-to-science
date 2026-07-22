@@ -18,16 +18,15 @@ mu <- 0.5
 set.seed(3)
 ```
 
-Meta-analysis combines estimates from a related set of studies into a single summary, weighting each study by how precisely it estimated the effect. The sections below cover the basics of conducting a meta-analysis, including topics such as different types of models. We use the metafor package throughout to illustrate and verify the explanations.
+Meta-analysis combines estimates from a related set of studies into a single estimate, weighting each study by how precisely it estimated the effect. The sections below cover the basics of conducting a meta-analysis.
 
 ## Modelling effect sizes
 
 The core of meta-analysis is to take effect sizes from various studies and estimate an overall effect size.
 
-The standard approach to this 
+Doing so requires accounting for sampling error: each study estimates the effect from a limited number of participants, and individual participants vary in their responses for reasons that have nothing to do with the effect itself. A different set of participants, even under an otherwise identical study, would produce a somewhat different estimate. The standard approach to meta-analysis models this directly, treating each study's estimate as normally distributed around the effect, with a spread equal to that study's sampling variance.
 
-
-A standard approximation treats each study's estimate as normally distributed around the effect being estimated, with variance equal to the sampling variance. The sampling variance is the squared standard error of the estimate; larger studies have smaller sampling variances and more precise estimates.
+A study's sampling variance comes from its sample size: with more participants, the estimate is based on more information and would vary less if the study were repeated, so larger studies have smaller sampling variances and more precise estimates. The standard error is the square root of the sampling variance, expressed in the same units as the effect size.
 
 Common effect sizes include Cohen's d for standardized mean differences between groups, the log odds ratio for binary outcomes, and Fisher's z for correlations. Each has a known sampling variance formula derived from the study's sample size and design.
 

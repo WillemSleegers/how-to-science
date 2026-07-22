@@ -44,6 +44,7 @@
     - title: Regression
       items:
         - path: statistics/regression/collinearity
+        - path: statistics/regression/predictions
         - path: statistics/regression/adjusted-means
     - title: Factor Analysis
       items:
