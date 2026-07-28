@@ -55,6 +55,7 @@
         - path: statistics/statistical-inference/ci-overlap
     - title: Group Differences
       items:
+        - path: statistics/group-differences/family-wise-error
         - path: statistics/group-differences/omnibus-test
         - path: statistics/group-differences/pairwise-comparisons
         - path: statistics/group-differences/sequential-analyses

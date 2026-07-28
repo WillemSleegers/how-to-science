@@ -6,19 +6,17 @@ code-tools: true
 code-fold: show
 ---
 
+{{< include /_setup.qmd >}}
+
 ```{r}
-#| label: setup
+#| label: setup-page
 #| message: false
-#| code-fold: true
 library(MASS)
-library(tidyverse)
 library(viridis)
 library(brms)
 library(emmeans)
 library(BayesFactor)
 library(tidybayes)
-
-theme_set(theme_minimal())
 
 set.seed(1)
 

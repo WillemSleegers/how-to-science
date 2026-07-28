@@ -30,23 +30,23 @@ set.seed(3)
 
 </details>
 
-Meta-analysis combines estimates from a related set of studies into a single summary, weighting each study by how precisely it estimated the effect. The sections below cover the basics of conducting a meta-analysis, including topics such as different types of models. We use the metafor package throughout to illustrate and verify the explanations.
+Meta-analysis combines estimates from a related set of studies into a single estimate, weighting each study by how precisely it estimated the effect. Individual studies differ in sample size and design, so some carry more information about the effect than others. Combining them into a single weighted estimate makes better use of the available evidence than looking at any one study alone.
 
 ## Modelling effect sizes
 
-The core of meta-analysis is to take effect sizes from various studies and estimate an overall effect size.
+Combining studies means first choosing how we think they relate to each other: whether they are all estimating one shared effect, or whether the effect varies from study to study. Different meta-analysis models make different assumptions here, and the simplest one assumes all studies are estimating the same effect.
 
-The standard approach to this
+Even with one shared effect, no single study recovers that value exactly. Each study estimates the effect from a limited number of participants, and individual participants vary in their responses for reasons that have nothing to do with the effect itself. A different set of participants, even under an otherwise identical study, would produce a somewhat different estimate: this is sampling error. What differs between studies is not the effect being estimated, but how far sampling error moves each study’s estimate away from it, an amount captured by that study’s sampling variance.
 
-A standard approximation treats each study’s estimate as normally distributed around the effect being estimated, with variance equal to the sampling variance. The sampling variance is the squared standard error of the estimate; larger studies have smaller sampling variances and more precise estimates.
+A study’s sampling variance comes from its sample size: with more participants, the estimate is based on more information and would vary less if the study were repeated, so larger studies have smaller sampling variances and more precise estimates. The standard error is the square root of the sampling variance, expressed in the same units as the effect size.
 
 Common effect sizes include Cohen’s d for standardized mean differences between groups, the log odds ratio for binary outcomes, and Fisher’s z for correlations. Each has a known sampling variance formula derived from the study’s sample size and design.
 
-Several models can be used to pool effect sizes. The fixed effects model assumes all studies estimate the same effect; the random effects model allows the effect to vary across studies. The fixed effects model is the simpler case and is covered first.
+This shared-effect assumption is what the fixed effects model uses; the random effects model relaxes it, allowing the effect to vary across studies. The fixed effects model is the simpler case and is covered first.
 
 ## The fixed effects model
 
-Under the fixed effects model, all studies are assumed to estimate the same underlying effect. The only source of variation between study estimates is sampling error; there is no between-study heterogeneity. Studies are weighted by their precision — the inverse of the sampling variance — and combined into a pooled estimate. The simulation below demonstrates how this works.
+Under the fixed effects model, the only source of variation between study estimates is sampling error; there is no between-study heterogeneity. Studies are weighted by their precision (the inverse of the sampling variance) and combined into a pooled estimate. The simulation below demonstrates how this works.
 
 The simulation generates 20 studies, each comparing a control and treatment group of equal size, with the effect size (μ) set to 0.5. The effect size we calculate is a Cohen’s d, stored as `yi`, and its sampling variance is stored as `vi`. Per-group sample sizes are drawn at random from 20 to 200.
 
@@ -120,7 +120,7 @@ fit_fe
     ---
     Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-The pooled estimate is close to `mu`, with a narrower confidence interval than any individual study.
+The pooled estimate is close to `mu`, with a narrower confidence interval than any individual study. That interval treats the pooled estimate as normally distributed, which is what justifies reading ±1.96 standard errors as a 95% interval.
 
 ## Heterogeneity
 
@@ -146,7 +146,7 @@ dat_het <- map2(ns, thetas, \(n, theta) {
 
 ### Cochran’s Q
 
-The first quantity is the weighted sum of squared deviations of the observed effect sizes from the fixed-effect pooled mean, called Cochran’s Q. Under the assumption that a single effect underlies all studies, Q follows a chi-squared distribution with k − 1 degrees of freedom. A Q much larger than k − 1 indicates more spread than sampling error alone would produce.
+The first quantity is the weighted sum of squared deviations of the observed effect sizes from the fixed-effect pooled mean, called Cochran’s Q. Assuming a single effect underlies all studies, and relying on the same normality assumption behind the fixed-effect model’s confidence interval, Q follows a chi-squared distribution with k − 1 degrees of freedom. A Q much larger than k − 1 indicates more spread than sampling error alone would produce.
 
 ``` r
 w <- 1 / dat_het$vi

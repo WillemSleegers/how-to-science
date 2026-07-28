@@ -11,10 +11,11 @@ nocite: |
   @dunlap2000
 ---
 
+{{< include /_setup.qmd >}}
+
 ```{r}
-#| label: setup
+#| label: setup-page
 #| message: false
-library(tidyverse)
 items <- read_csv("NEP-items.csv")
 ```
 

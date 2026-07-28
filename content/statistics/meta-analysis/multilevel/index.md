@@ -15,12 +15,19 @@ order: 3
 
 ``` r
 library(tidyverse)
-library(metafor)
 
 theme_set(theme_minimal())
+
+color_primary <- "#2171b5"
+color_secondary <- "#888888"
+color_reference <- "gray50"
 ```
 
 </details>
+
+``` r
+library(metafor)
+```
 
 ## When to use a multilevel model
 

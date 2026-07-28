@@ -5,14 +5,7 @@ toc: true
 code-fold: show
 ---
 
-```{r}
-#| label: setup
-#| message: false
-#| code-fold: true
-library(tidyverse)
-
-theme_set(theme_minimal())
-```
+{{< include /_setup.qmd >}}
 
 After fitting a regression model, it can be used to predict the outcome for specific predictor values. Those values could describe a hypothetical respondent with, for example, a chosen age and income. It could be a long sequence of predictor values spanning the data's range, used to trace how the model's prediction changes across that range while every other predictor stays fixed, something the raw data can't show directly once more than one predictor is in the model. Or it could be one meaningful reference value, like the sample mean, used to report what the model predicts at that point directly, rather than leaving the reader to work it out from the model's coefficients.
 

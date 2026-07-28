@@ -11,10 +11,11 @@ nocite: |
   @soto2017
 ---
 
+{{< include /_setup.qmd >}}
+
 ```{r}
-#| label: setup
+#| label: setup-page
 #| message: false
-library(tidyverse)
 items <- read_csv("BFI-2-XS-items.csv")
 ```
 

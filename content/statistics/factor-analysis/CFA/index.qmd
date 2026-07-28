@@ -188,11 +188,12 @@ Reliability increases the closer the value gets to 1.00, with an acceptability t
 
 -   Dynamic Fit Index Cutoffs for Confirmatory Factor Analysis Models by @mcneish2021
 
+{{< include /_setup.qmd >}}
+
 ```{r}
-#| label: setup
+#| label: setup-page
 
 # Load packages
-library(tidyverse)
 library(lavaan)
 library(dynamic)
 ```

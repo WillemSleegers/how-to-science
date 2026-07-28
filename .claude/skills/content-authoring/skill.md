@@ -72,26 +72,45 @@ title: "My Topic"
 toc: true
 ---
 
-```{r}
-#| label: setup
-#| message: false
+{{< include /_setup.qmd >}}
 
-library(tidyverse)
+```{r}
+#| label: setup-page
+#| message: false
 library(emmeans)
 
-theme_set(theme_minimal())
+set.seed(42)
 ```
 
 Prose explanation.
 
 ```{r}
 #| label: simulate-data
-set.seed(42)
 # ... simulation code
 ```
 ````
 
 Standard chunk options used in this project: `label`, `message: false`, `fig-cap`, `echo: false`.
+
+### Shared setup include
+
+Every `.qmd` page starts with `{{< include /_setup.qmd >}}`. This is the single source of truth for the site's visual theme. Quarto splices the real chunk into the page before rendering, so the reader still sees the code (foldable), it is just defined once. `/_setup.qmd` provides:
+
+- `library(tidyverse)`
+- `theme_set(theme_minimal())`
+- The plot palette: `color_primary` (`#2171b5`), `color_secondary` (`#888888`), `color_reference` (`gray50`, for dashed reference lines like an α threshold)
+
+Do **not** repeat `library(tidyverse)` or `theme_set()` on the page — the include covers them. Add a separate page chunk (label it something other than `setup`, e.g. `setup-page`) only for page-specific libraries (`metafor`, `brms`, …), seeds, and parameters. A page whose only needs are tidyverse plus the theme needs no page setup chunk at all, just the include.
+
+Reference the palette variables in plots rather than hardcoding hex, so colors stay consistent across pages:
+
+```r
+ggplot(data, aes(m, fwer)) +
+  geom_line(color = color_primary) +
+  geom_hline(yintercept = alpha, linetype = "dashed", color = color_reference)
+```
+
+A page that deliberately needs a different scale (e.g. viridis for many ordered series) can use one; the palette variables are the default, not a hard rule.
 
 ## Citation Shortcodes
 

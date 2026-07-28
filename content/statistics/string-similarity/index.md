@@ -39,13 +39,22 @@ toc-depth: 3
 
 ``` r
 library(tidyverse)
+
+theme_set(theme_minimal())
+
+color_primary <- "#2171b5"
+color_secondary <- "#888888"
+color_reference <- "gray50"
+```
+
+</details>
+
+``` r
 library(stringdist)
 library(ditto)
 
 options(digits = 2)
 ```
-
-</details>
 
 String similarity metrics reduce the comparison between two pieces of text to a single number, making it possible to rank, filter, or aggregate comparisons at scale. Common use cases include comparing survey responses across time points, detecting duplicate records, and evaluating translations.
 

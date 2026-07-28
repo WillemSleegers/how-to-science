@@ -212,23 +212,23 @@ Reliability increases the closer the value gets to 1.00, with an acceptability t
 
 - Dynamic Fit Index Cutoffs for Confirmatory Factor Analysis Models by <span class="cite-ref" data-cite-id="mcneish2021" data-cite-ids="[&quot;mcneish2021&quot;]" data-cite-quote="[]" data-cite-page="">McNeish & Wolf (2021)</span>
 
+<details class="code-fold">
+<summary>Code</summary>
+
 ``` r
-# Load packages
 library(tidyverse)
+
+theme_set(theme_minimal())
+
+color_primary <- "#2171b5"
+color_secondary <- "#888888"
+color_reference <- "gray50"
 ```
 
-    ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-    ✔ dplyr     1.2.1     ✔ readr     2.2.0
-    ✔ forcats   1.0.1     ✔ stringr   1.6.0
-    ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
-    ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
-    ✔ purrr     1.2.2     
-    ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-    ✖ dplyr::filter() masks stats::filter()
-    ✖ dplyr::lag()    masks stats::lag()
-    ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+</details>
 
 ``` r
+# Load packages
 library(lavaan)
 ```
 
@@ -368,7 +368,7 @@ Barrett, P. (2007). Structural equation modelling: Adjudging model fit. *Persona
 
 <div id="ref-donnellan2016" class="csl-entry">
 
-Donnellan, M. B., Ackerman, R. A., & Brecheen, C. (2016). Extending structural analyses of the Rosenberg self-esteem scale to consider criterion-related validity: Can composite self-esteem scores be good enough? *Journal of Personality Assessment*, *98*(2), 169–177. <https://doi.org/10.1080/00223891.2015.1058268>
+Donnellan, M. B., Ackerman, R. A., & Brecheen, C. (2016). Extending structural analyses of the rosenberg self-esteem scale to consider criterion-related validity: Can composite self-esteem scores be good enough? *Journal of Personality Assessment*, *98*(2), 169–177. <https://doi.org/10.1080/00223891.2015.1058268>
 
 </div>
 
@@ -380,7 +380,7 @@ Greiff, S., & Heene, M. (2017). Why psychological assessment needs to start worr
 
 <div id="ref-jak2021" class="csl-entry">
 
-Jak, S., Jorgensen, T. D., Verdam, M. G. E., Oort, F. J., & Elffers, L. (2021). Analytical power calculations for structural equation modeling: A tutorial and Shiny app. *Behavior Research Methods*, *53*(4), 1385–1406. <https://doi.org/10.3758/s13428-020-01479-0>
+Jak, S., Jorgensen, T. D., Verdam, M. G. E., Oort, F. J., & Elffers, L. (2021). Analytical power calculations for structural equation modeling: A tutorial and shiny app. *Behavior Research Methods*, *53*(4), 1385–1406. <https://doi.org/10.3758/s13428-020-01479-0>
 
 </div>
 
@@ -404,7 +404,7 @@ Marsh, H. W., Hau, K.-T., Balla, J. R., & Grayson, D. (1998). Is more ever too m
 
 <div id="ref-mcintosh2007" class="csl-entry">
 
-McIntosh, C. N. (2007). Rethinking fit assessment in structural equation modelling: A commentary and elaboration on Barrett (2007). *Personality and Individual Differences*, *42*(5), 859–867. <https://doi.org/10.1016/j.paid.2006.09.020>
+McIntosh, C. N. (2007). Rethinking fit assessment in structural equation modelling: A commentary and elaboration on barrett (2007). *Personality and Individual Differences*, *42*(5), 859–867. <https://doi.org/10.1016/j.paid.2006.09.020>
 
 </div>
 

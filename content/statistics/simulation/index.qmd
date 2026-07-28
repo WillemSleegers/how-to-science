@@ -4,14 +4,10 @@ description: "Common simulation techniques to test out statistical methods and b
 toc: true
 ---
 
+{{< include /_setup.qmd >}}
+
 ```{r}
-#| label: setup
-#| message: false
-#| code-fold: true
-library(tidyverse)
-
-theme_set(theme_minimal())
-
+#| label: setup-page
 set.seed(42)
 ```
 

@@ -5,14 +5,12 @@ toc: true
 order: 3
 ---
 
-```{r}
-#| label: setup
-#| message: false
-#| code-fold: true
-library(tidyverse)
-library(metafor)
+{{< include /_setup.qmd >}}
 
-theme_set(theme_minimal())
+```{r}
+#| label: setup-page
+#| message: false
+library(metafor)
 ```
 
 ## When to use a multilevel model

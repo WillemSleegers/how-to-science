@@ -74,7 +74,7 @@ See also this [link](https://www.colby.edu/psych/personality-lab/) for more info
 
 <div id="ref-soto2017" class="csl-entry">
 
-Soto, C. J., & John, O. P. (2017). Short and extra-short forms of the Big Five Inventory2: The BFI-2-S and BFI-2-XS. *Journal of Research in Personality*, *68*, 69–81. <https://doi.org/10.1016/j.jrp.2017.02.004>
+Soto, C. J., & John, O. P. (2017). Short and extra-short forms of the big five inventory2: The BFI-2-s and BFI-2-XS. *Journal of Research in Personality*, *68*, 69–81. <https://doi.org/10.1016/j.jrp.2017.02.004>
 
 </div>
 

@@ -13,11 +13,20 @@ toc: true
 - [A note on proportions](#a-note-on-proportions)
 - [A note on within-subject designs](#a-note-on-within-subject-designs)
 
+<details class="code-fold">
+<summary>Code</summary>
+
 ``` r
 library(tidyverse)
 
 theme_set(theme_minimal())
+
+color_primary <- "#2171b5"
+color_secondary <- "#888888"
+color_reference <- "gray50"
 ```
+
+</details>
 
 A pair of 95% confidence intervals that don’t overlap visually looks like evidence of a statistically significant difference between two groups. A pair that overlaps looks like evidence that there isn’t one.
 

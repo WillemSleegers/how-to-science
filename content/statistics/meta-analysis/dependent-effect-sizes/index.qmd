@@ -6,15 +6,13 @@ toc-depth: 3
 order: 2
 ---
 
+{{< include /_setup.qmd >}}
+
 ```{r}
-#| label: setup
+#| label: setup-page
 #| message: false
-#| code-fold: true
-library(tidyverse)
 library(metafor)
 library(knitr)
-
-theme_set(theme_minimal())
 
 set.seed(436)
 ```

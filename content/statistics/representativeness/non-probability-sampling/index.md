@@ -15,10 +15,16 @@ library(tidyverse)
 
 theme_set(theme_minimal())
 
-set.seed(42)
+color_primary <- "#2171b5"
+color_secondary <- "#888888"
+color_reference <- "gray50"
 ```
 
 </details>
+
+``` r
+set.seed(42)
+```
 
 ## The population
 

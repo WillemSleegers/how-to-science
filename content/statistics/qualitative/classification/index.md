@@ -21,13 +21,20 @@ toc: true
 
 ``` r
 library(tidyverse)
-library(mall)
-library(cli)
 
 theme_set(theme_minimal())
+
+color_primary <- "#2171b5"
+color_secondary <- "#888888"
+color_reference <- "gray50"
 ```
 
 </details>
+
+``` r
+library(mall)
+library(cli)
+```
 
 LLMs can assign text to predefined categories reliably and at scale, without manually labelling every item. This is useful for open-ended survey responses, product reviews, social media posts, or any text where you want to sort items into groups. However, despite their abilities, it remains necessary to validate their output and see whether they correctly categorized the responses, or at least match the performance of human raters.
 
@@ -81,7 +88,7 @@ reviews
 | 10477_1 | negative | I would highly recommend seeing this movie. After viewing it, you will be able to walk out of every other bad movie EVER saying "at least it wasn’t The Omega Code."Forget my money, I want my TIME back! |
 | 7881_9 | positive | What fun! Bucketfuls of good humor, terrific cast chemistry (Skelton/Powell/Lahr/O’Brien), dynamite Dorsey-driven soundtrack! Miss Powell’s dance numbers have exceptional individual character and pizzazz. Her most winning film appearance. |
 | 10387_1 | negative | Giant crabs cursing in Japanese? What was in that drink? A terrible movie, but laughable. I love the invisible Samurai ghosties running around. Drink much beer before you see this movie. |
-| 11924_10 | positive | GREAT movie and the family will love it!! If kids are bored one day just pop the tape in and you’ll be so glad you did!!!\~\~~Rubei luv raven-s! |
+| 11924_10 | positive | GREAT movie and the family will love it!! If kids are bored one day just pop the tape in and you’ll be so glad you did!!!~Rubei luv raven-s! |
 | 9599_1 | negative | Boring, badly written Italian exploitation flick.Lots of nudity, gore and awful acting.The werewolf makeup was the only thing that would raise a laugh.Complete rubbish-even for fans of cheesy Italian horror.Please avoid. |
 | 825_1 | negative | I can’t believe they got the actors and actresses of that caliber to do this movie. That’s all I’ve got to say - the movie speaks for itself!! |
 | 7479_3 | negative | It’s terrific when a funny movie doesn’t make smile you. What a pity!! This film is very boring and so long. It’s simply painfull. The story is staggering without goal and no fun.You feel better when it’s finished. |
@@ -157,7 +164,7 @@ saveRDS(mall_results, "mall_results.rds")
 | 10695_8 | positive | Nicole Kidman is a wonderful actress and here she’s great. I really liked Ben Chaplin in The Thin Red Line and he is very good here too. This is not Great Cinema but I was most entertained. Given most films these days this is High Praise indeed. | positive |
 | 7881_9 | positive | What fun! Bucketfuls of good humor, terrific cast chemistry (Skelton/Powell/Lahr/O’Brien), dynamite Dorsey-driven soundtrack! Miss Powell’s dance numbers have exceptional individual character and pizzazz. Her most winning film appearance. | positive |
 | 7479_3 | negative | It’s terrific when a funny movie doesn’t make smile you. What a pity!! This film is very boring and so long. It’s simply painfull. The story is staggering without goal and no fun.<br /><br />You feel better when it’s finished. | negative |
-| 11924_10 | positive | GREAT movie and the family will love it!! If kids are bored one day just pop the tape in and you’ll be so glad you did!!!<br /><br />\~\~~Rube<br /><br />i luv raven-s! | positive |
+| 11924_10 | positive | GREAT movie and the family will love it!! If kids are bored one day just pop the tape in and you’ll be so glad you did!!!<br /><br />~Rube<br /><br />i luv raven-s! | positive |
 | 1252_4 | negative | After looking at monkeys (oops apes) for more than one hour, I was feeling like one too. I was an ape, spending money on this movie. Please people, hold you money in your pocket and go see some funny movie like Bridget Jones’s Diary.. | negative |
 | 1698_10 | positive | Laughs, adventure, a good time, a killer soundtrack, oscar-worthy acting, and special effects/ animitronics like none other, what else could you want in a movie? If you see this will be on the telly, WATCH IT, otherwise, run out now to RENT IT!!! | positive |
 | 8714_10 | positive | To quote Flik, that was my reaction exactly: Wow…you’re perfect! This is the best movie! I think I can even say it’s become my favorite movie ever, even. Wow. I tell you what, wow. | positive |

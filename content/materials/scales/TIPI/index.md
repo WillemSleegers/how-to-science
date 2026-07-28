@@ -62,7 +62,7 @@ The TIPI is a 10-item measure of the Big Five (or Five-Factor Model) dimensions.
 
 <div id="ref-gosling2003" class="csl-entry">
 
-Gosling, S. D., Rentfrow, P. J., & Swann, W. B. (2003). A very brief measure of the Big-Five personality domains. *Journal of Research in Personality*, *37*(6), 504–528. <https://doi.org/10.1016/S0092-6566(03)00046-1>
+Gosling, S. D., Rentfrow, P. J., & Swann, W. B. (2003). A very brief measure of the big-five personality domains. *Journal of Research in Personality*, *37*(6), 504–528. <https://doi.org/10.1016/S0092-6566(03)00046-1>
 
 </div>
 

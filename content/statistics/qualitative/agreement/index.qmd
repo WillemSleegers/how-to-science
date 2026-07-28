@@ -9,15 +9,13 @@ order: 2
 This page is a work in progress.
 :::
 
+{{< include /_setup.qmd >}}
+
 ```{r}
-#| label: setup
+#| label: setup-page
 #| message: false
-#| code-fold: true
-library(tidyverse)
 library(irr)
 library(psych)
-
-theme_set(theme_minimal())
 ```
 
 When two or more people code the same material — or when you compare human labels to LLM output — you need a way to quantify how consistently the labels agree. Several metrics exist, and the right choice depends on how many raters you have, the level of measurement (nominal, ordinal, continuous), and whether you care about correcting for chance.

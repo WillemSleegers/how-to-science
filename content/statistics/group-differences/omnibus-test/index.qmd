@@ -4,16 +4,10 @@ description: "What it is, when to use it, and when to use something else."
 toc: true
 ---
 
+{{< include /_setup.qmd >}}
+
 ```{r}
-#| label: setup
-#| message: false
-#| code-fold: true
-
-library(tidyverse)
-library(purrr)
-
-theme_set(theme_minimal())
-
+#| label: setup-page
 set.seed(42)
 n <- 50
 n_sim <- 1000
@@ -211,7 +205,7 @@ sim_power |>
   geom_point(size = 1.5) +
   scale_y_continuous(labels = scales::percent_format()) +
   scale_color_manual(
-    values = c("Omnibus" = "#888888", "Contrast" = "#2171b5")
+    values = c("Omnibus" = color_secondary, "Contrast" = color_primary)
   ) +
   labs(x = "Effect size (d)", y = "Power", color = NULL) +
   theme(legend.position = "bottom")

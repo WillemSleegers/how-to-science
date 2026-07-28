@@ -4,14 +4,10 @@ description: "How non-probability samples behave and when they can approximate p
 order: 2
 ---
 
+{{< include /_setup.qmd >}}
+
 ```{r}
-#| label: setup
-#| message: false
-#| code-fold: true
-library(tidyverse)
-
-theme_set(theme_minimal())
-
+#| label: setup-page
 set.seed(42)
 ```
 

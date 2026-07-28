@@ -21,16 +21,21 @@ toc: true
 
 ``` r
 library(tidyverse)
-library(purrr)
 
 theme_set(theme_minimal())
 
+color_primary <- "#2171b5"
+color_secondary <- "#888888"
+color_reference <- "gray50"
+```
+
+</details>
+
+``` r
 set.seed(42)
 n <- 50
 n_sim <- 1000
 ```
-
-</details>
 
 ## What it is
 
@@ -236,7 +241,7 @@ sim_power |>
   geom_point(size = 1.5) +
   scale_y_continuous(labels = scales::percent_format()) +
   scale_color_manual(
-    values = c("Omnibus" = "#888888", "Contrast" = "#2171b5")
+    values = c("Omnibus" = color_secondary, "Contrast" = color_primary)
   ) +
   labs(x = "Effect size (d)", y = "Power", color = NULL) +
   theme(legend.position = "bottom")

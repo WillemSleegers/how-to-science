@@ -12,12 +12,19 @@ toc: true
 
 ``` r
 library(tidyverse)
-library(ellmer)
 
 theme_set(theme_minimal())
+
+color_primary <- "#2171b5"
+color_secondary <- "#888888"
+color_reference <- "gray50"
 ```
 
 </details>
+
+``` r
+library(ellmer)
+```
 
 Each token an LLM produces is the result of a random draw. The model assigns a probability to every token in its vocabulary, then samples a token from that distribution. The distribution is computed from the input and the model’s weights, and sampling from it means the same input can produce different output on different calls.
 

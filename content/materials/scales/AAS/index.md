@@ -86,7 +86,7 @@ Herzog, H. A., Betchart, N. S., & Pittman, R. B. (1991). Gender, sex role orient
 
 <div id="ref-herzog2015" class="csl-entry">
 
-Herzog, H., Grayson, S., & McCord, D. (2015). Brief measures of the Animal Attitude Scale. *Anthrozoös*, *28*(1), 145–152. <https://doi.org/10.2752/089279315X14129350721894>
+Herzog, H., Grayson, S., & McCord, D. (2015). Brief measures of the animal attitude scale. *Anthrozoös*, *28*(1), 145–152. <https://doi.org/10.2752/089279315X14129350721894>
 
 </div>
 

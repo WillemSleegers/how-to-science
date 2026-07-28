@@ -5,11 +5,11 @@ toc: true
 toc-depth: 3
 ---
 
+{{< include /_setup.qmd >}}
+
 ```{r}
-#| label: setup
+#| label: setup-page
 #| message: false
-#| code-fold: true
-library(tidyverse)
 library(stringdist)
 library(ditto)
 

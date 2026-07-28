@@ -46,7 +46,7 @@ For the pessimism item:
 
 <div id="ref-nießen2022" class="csl-entry">
 
-Nießen, D., Groskurth, K., Kemper, C. J., Rammstedt, B., & Lechner, C. M. (2022). The OptimismPessimism Short Scale2 (SOP2): A comprehensive validation of the English-language adaptation. *Measurement Instruments for the Social Sciences*, *4*(1), 1. <https://doi.org/10.1186/s42409-021-00027-6>
+Nießen, D., Groskurth, K., Kemper, C. J., Rammstedt, B., & Lechner, C. M. (2022). The optimismpessimism short scale2 (SOP2): A comprehensive validation of the english-language adaptation. *Measurement Instruments for the Social Sciences*, *4*(1), 1. <https://doi.org/10.1186/s42409-021-00027-6>
 
 </div>
 
