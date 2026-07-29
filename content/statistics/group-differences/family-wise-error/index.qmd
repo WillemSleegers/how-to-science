@@ -2,6 +2,7 @@
 title: "Family-Wise Error"
 description: "What family-wise error is, how the claim being tested determines whether it applies, and when correction is worth the loss in power."
 toc: true
+draft: true
 ---
 
 ```{r}
@@ -68,7 +69,7 @@ n <- 40
 k <- 4
 d <- 0.6
 alpha <- .05
-n_sim <- 8000
+n_sim <- 1000
 
 sim_all_beat_control <- map_dfr(0:k, \(n_null) {
   effects <- c(rep(0, n_null), rep(d, k - n_null))
