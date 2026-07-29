@@ -32,7 +32,7 @@ Suppose that this claim is false: the treatment affects none of the outcomes, so
 ```{r}
 #| label: fwer-any-effect
 #| code-fold: true
-#| fig-cap: "Probability of wrongly claiming the treatment affected at least one outcome, as a function of the number of outcomes measured, from 1 - (1 - .05)^m."
+#| fig-cap: "Probability of wrongly claiming the treatment affected at least one outcome, as a function of the number of outcomes measured"
 
 alpha <- 0.05
 k_max <- 20
@@ -51,13 +51,13 @@ ggplot(fwer_any_effect, aes(x = m, y = fwer)) +
 
 The false-claim rate is 1 - (1 - α)^m. With one outcome measured, it equals α, the per-comparison rate. With five outcomes it has already climbed past 20%; with twenty, past 60%.
 
-The claim here is disjunctive: it is true if the treatment affects at least one outcome, so a false claim requires only one of the m comparisons to be a false positive. That is exactly the family-wise error rate, and it grows with the number of outcomes tested. A claim of this shape needs a correction procedure to keep the false-claim rate near the intended level.
+The claim here is disjunctive: it is true if the treatment affects at least one outcome, so a false claim requires only one of the comparisons to be a false positive. That is exactly the family-wise error rate, and it grows with the number of outcomes tested. A claim of this shape needs a correction procedure to keep the false-claim rate near the intended level.
 
 ## Claim 2: Every condition beats the control
 
-The second scenario is a claim that only holds if every one of several tests comes out significant. In a different study, researchers compare four treatment conditions against a single shared control and claim that every one of the four beats it — four redesigned versions of a product tested against the current baseline, say, with the claim being that all four improve on it. This claim is conjunctive rather than disjunctive: it is only true if every one of the four individual comparisons reflects a real difference, and asserting it means requiring all four p-values to be significant at once.
+The second scenario is a claim that only holds if every one of several tests comes out significant. In a different study, researchers compare four treatment conditions against a single shared control and claim that every one of the four beats it. This claim is conjunctive rather than disjunctive: it is only true if every one of the four individual comparisons reflects a real difference, and asserting it means requiring all four p-values to be significant at once.
 
-The simulation below is run across configurations that differ in how many of the four conditions are genuinely identical to control, from all four (a true null throughout) down to none (all four genuinely differ by the same amount), while the rest are drawn with a real effect. Each simulated dataset draws one control sample and reuses it for all four comparisons, matching a shared-control design. For each configuration it records how often all four comparisons are significant at once, both without correction and under a Bonferroni correction that divides α by 4.
+For a claim like this, it is not necessary to worry about the family-wise error rate, as seen in the simulation below. The simulation is run across configurations that differ in how many of the four conditions are genuinely identical to control, from all four (a true null throughout) down to none (all four genuinely differ by the same amount), while the rest are drawn with a real effect. Each simulated dataset draws one control sample and reuses it for all four comparisons, matching a shared-control design. For each configuration it records how often all four comparisons are significant at once, both without correction and under a Bonferroni correction that divides α by 4.
 
 ```{r}
 #| label: sim-all-beat-control
