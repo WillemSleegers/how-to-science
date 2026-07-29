@@ -64,7 +64,7 @@ summary(model)
 
 ### Pages with executed R code (`.qmd`)
 
-Use `{r}` chunk syntax. Quarto renders these to output and embeds results in the `.md`:
+Use `{r}` chunk syntax. Quarto renders these to output and embeds results in the `.md`. Every `.qmd` page opens with a single `setup` chunk holding its libraries, the theme, and (on pages that plot) the palette:
 
 ````markdown
 ---
@@ -72,12 +72,18 @@ title: "My Topic"
 toc: true
 ---
 
-{{< include /_setup.qmd >}}
-
 ```{r}
-#| label: setup-page
+#| label: setup
 #| message: false
+#| code-fold: true
+library(tidyverse)
 library(emmeans)
+
+theme_set(theme_minimal())
+
+color_primary <- "#2171b5"
+color_secondary <- "#888888"
+color_reference <- "gray50"
 
 set.seed(42)
 ```
@@ -92,17 +98,17 @@ Prose explanation.
 
 Standard chunk options used in this project: `label`, `message: false`, `fig-cap`, `echo: false`.
 
-### Shared setup include
+### The setup chunk and plot palette
 
-Every `.qmd` page starts with `{{< include /_setup.qmd >}}`. This is the single source of truth for the site's visual theme. Quarto splices the real chunk into the page before rendering, so the reader still sees the code (foldable), it is just defined once. `/_setup.qmd` provides:
+Each page's `setup` chunk is self-contained — there is no shared setup file. Load `library(tidyverse)` first, then any page-specific libraries, then `theme_set(theme_minimal())`, then page-specific seeds/parameters. Keep the block in this order so pages read consistently.
 
-- `library(tidyverse)`
-- `theme_set(theme_minimal())`
-- The plot palette: `color_primary` (`#2171b5`), `color_secondary` (`#888888`), `color_reference` (`gray50`, for dashed reference lines like an α threshold)
+Pages that draw plots also define the standard palette in the setup chunk, right after `theme_set()`:
 
-Do **not** repeat `library(tidyverse)` or `theme_set()` on the page — the include covers them. Add a separate page chunk (label it something other than `setup`, e.g. `setup-page`) only for page-specific libraries (`metafor`, `brms`, …), seeds, and parameters. A page whose only needs are tidyverse plus the theme needs no page setup chunk at all, just the include.
+- `color_primary` (`#2171b5`) — main series
+- `color_secondary` (`#888888`) — second series
+- `color_reference` (`gray50`) — dashed reference lines, e.g. an α threshold
 
-Reference the palette variables in plots rather than hardcoding hex, so colors stay consistent across pages:
+Reference these variables in plots rather than hardcoding the hex, so colors match across pages:
 
 ```r
 ggplot(data, aes(m, fwer)) +
@@ -110,7 +116,7 @@ ggplot(data, aes(m, fwer)) +
   geom_hline(yintercept = alpha, linetype = "dashed", color = color_reference)
 ```
 
-A page that deliberately needs a different scale (e.g. viridis for many ordered series) can use one; the palette variables are the default, not a hard rule.
+These three lines are copied verbatim into every plotting page — if the palette ever changes, update it across the pages together. A page that deliberately needs a different scale (e.g. viridis for many ordered series) can use one, and a prose page that never plots can omit the palette (and `theme_set()`) entirely.
 
 ## Citation Shortcodes
 

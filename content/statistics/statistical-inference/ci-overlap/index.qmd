@@ -6,7 +6,17 @@ description: >-
 toc: true
 ---
 
-{{< include /_setup.qmd >}}
+```{r}
+#| label: setup
+#| message: false
+library(tidyverse)
+
+theme_set(theme_minimal())
+
+color_primary <- "#2171b5"
+color_secondary <- "#888888"
+color_reference <- "gray50"
+```
 
 A pair of 95% confidence intervals that don't overlap visually looks like evidence of a statistically significant difference between two groups. A pair that overlaps looks like evidence that there isn't one.
 

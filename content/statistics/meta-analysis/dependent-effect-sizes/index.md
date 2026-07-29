@@ -22,22 +22,19 @@ order: 2
 
 ``` r
 library(tidyverse)
+library(metafor)
+library(knitr)
 
 theme_set(theme_minimal())
 
 color_primary <- "#2171b5"
 color_secondary <- "#888888"
 color_reference <- "gray50"
-```
-
-</details>
-
-``` r
-library(metafor)
-library(knitr)
 
 set.seed(436)
 ```
+
+</details>
 
 Meta-analysis combines effect sizes from multiple sources to estimate an overall effect. Conventionally, each study contributes one effect size and studies are treated as independent observations. That assumption breaks when a single study contributes multiple effect sizes, whether from different outcomes, time points, or subgroups sharing a common control group. Those effect sizes are not independent draws from the population of studies, and treating them as if they were leads to incorrect inferences.
 

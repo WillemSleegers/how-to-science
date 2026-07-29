@@ -3,15 +3,21 @@ title: "Pairwise Comparisons"
 description: "Estimating and testing pairwise differences between group means with emmeans"
 ---
 
-{{< include /_setup.qmd >}}
-
 ```{r}
-#| label: setup-page
+#| label: setup
 #| message: false
+#| code-fold: true
 library(MASS)
+library(tidyverse)
 library(viridis)
 library(brms)
 library(emmeans)
+
+theme_set(theme_minimal())
+
+color_primary <- "#2171b5"
+color_secondary <- "#888888"
+color_reference <- "gray50"
 ```
 
 This section is about different statistical techniques to analyze group differences.

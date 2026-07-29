@@ -10,7 +10,6 @@ order: 1
 - [The fixed effects model](#the-fixed-effects-model)
   - [Pooling by precision](#pooling-by-precision)
 - [Heterogeneity](#heterogeneity)
-  - [Cochran’s Q](#cochrans-q)
   - [Between-study variance (tau²)](#between-study-variance-tau²)
   - [I²](#i²)
 - [The random effects model](#the-random-effects-model)
@@ -23,6 +22,10 @@ library(tidyverse)
 library(metafor)
 
 theme_set(theme_minimal())
+
+color_primary <- "#2171b5"
+color_secondary <- "#888888"
+color_reference <- "gray50"
 
 mu <- 0.5
 set.seed(3)
@@ -38,45 +41,56 @@ Combining studies means first choosing how we think they relate to each other: w
 
 Even with one shared effect, no single study recovers that value exactly. Each study estimates the effect from a limited number of participants, and individual participants vary in their responses for reasons that have nothing to do with the effect itself. A different set of participants, even under an otherwise identical study, would produce a somewhat different estimate: this is sampling error. What differs between studies is not the effect being estimated, but how far sampling error moves each study’s estimate away from it, an amount captured by that study’s sampling variance.
 
-A study’s sampling variance comes from its sample size: with more participants, the estimate is based on more information and would vary less if the study were repeated, so larger studies have smaller sampling variances and more precise estimates. The standard error is the square root of the sampling variance, expressed in the same units as the effect size.
+A study’s sampling variance comes from its sample size: with more participants, the estimate is based on more information and would vary less if the study were repeated, so larger studies have smaller sampling variances and more precise estimates.
 
 Common effect sizes include Cohen’s d for standardized mean differences between groups, the log odds ratio for binary outcomes, and Fisher’s z for correlations. Each has a known sampling variance formula derived from the study’s sample size and design.
-
-This shared-effect assumption is what the fixed effects model uses; the random effects model relaxes it, allowing the effect to vary across studies. The fixed effects model is the simpler case and is covered first.
 
 ## The fixed effects model
 
 Under the fixed effects model, the only source of variation between study estimates is sampling error; there is no between-study heterogeneity. Studies are weighted by their precision (the inverse of the sampling variance) and combined into a pooled estimate. The simulation below demonstrates how this works.
 
-The simulation generates 20 studies, each comparing a control and treatment group of equal size, with the effect size (μ) set to 0.5. The effect size we calculate is a Cohen’s d, stored as `yi`, and its sampling variance is stored as `vi`. Per-group sample sizes are drawn at random from 20 to 200.
+The simulation generates 5 studies, each comparing a control and treatment group of equal size, with the effect size (μ) set to 0.5. The effect size we calculate is a Cohen’s d, stored as `yi`, and its sampling variance is stored as `vi`, based on 5 different sample sizes.
 
 ``` r
-k <- 20
-ns <- sample(20:200, k, replace = TRUE)
+k <- 5
+ns <- c(10, 25, 50, 100, 250)
 
-dat <- map(ns, \(n) {
-  control <- rnorm(n, 0, 1)
+data <- map(ns, \(n) {
   treatment <- rnorm(n, mu, 1)
-  sp <- sqrt(((n - 1) * var(control) + (n - 1) * var(treatment)) / (2 * n - 2))
-  d <- (mean(treatment) - mean(control)) / sp
-  vi <- (n + n) / (n * n) + d^2 / (2 * (n + n))
-  tibble(yi = d, vi = vi, n = n)
+  control <- rnorm(n, 0, 1)
+
+  tibble(
+    m1i = mean(treatment),
+    sd1i = sd(treatment),
+    n1i = n,
+    m2i = mean(control),
+    sd2i = sd(control),
+    n2i = n
+  )
 }) |>
   list_rbind() |>
-  mutate(study = row_number(), .before = 1)
+  mutate(study = row_number(), .before = 1) |>
+  escalc(
+    measure = "SMD",
+    m1i = m1i,
+    sd1i = sd1i,
+    n1i = n1i,
+    m2i = m2i,
+    sd2i = sd2i,
+    n2i = n2i,
+    data = _
+  )
 
-head(dat) |>
-  knitr::kable(digits = 3)
+data
 ```
 
-| study |    yi |    vi |   n |
-|------:|------:|------:|----:|
-|     1 | 0.475 | 0.086 |  24 |
-|     2 | 0.530 | 0.013 | 159 |
-|     3 | 0.640 | 0.038 |  55 |
-|     4 | 0.611 | 0.017 | 126 |
-|     5 | 0.498 | 0.013 | 155 |
-|     6 | 0.668 | 0.054 |  39 |
+| study |       m1i |      sd1i | n1i |        m2i |      sd2i | n2i |        yi |        vi |
+|------:|----------:|----------:|----:|-----------:|----------:|----:|----------:|----------:|
+|     1 | 0.4328643 | 0.8657293 |  10 | -0.2672452 | 0.7212842 |  10 | 0.8414516 | 0.2177010 |
+|     2 | 0.6119666 | 0.8908396 |  25 | -0.1353325 | 0.9917927 |  25 | 0.7802860 | 0.0860885 |
+|     3 | 0.6257893 | 0.7535076 |  50 |  0.0766915 | 1.2044126 |  50 | 0.5423959 | 0.0414710 |
+|     4 | 0.5289554 | 1.0773589 | 100 |  0.1170698 | 1.0521130 | 100 | 0.3853484 | 0.0203712 |
+|     5 | 0.4390259 | 0.9970733 | 250 | -0.0228270 | 0.9800336 | 250 | 0.4664794 | 0.0082176 |
 
 The effect sizes vary around 0.5, and larger studies have smaller sampling variances because more observations reduce estimation error.
 
@@ -85,42 +99,37 @@ The effect sizes vary around 0.5, and larger studies have smaller sampling varia
 A plain average of the effect sizes treats a small study and a large one equally. Meta-analysis instead weights each study by the inverse of its sampling variance, so more precise studies count for more. The pooled estimate is the weighted mean of the effect sizes, and its standard error is the square root of the reciprocal of the total weight.
 
 ``` r
-w <- 1 / dat$vi
+w <- 1 / data$vi
 
-pooled <- sum(w * dat$yi) / sum(w)
-se <- sqrt(1 / sum(w))
-
-c(estimate = pooled, se = se)
+pooled <- sum(w * data$yi) / sum(w)
+pooled
 ```
 
-      estimate         se 
-    0.49513582 0.02970813 
+    [1] 0.4817117
 
 The output of `rma()` with `method = "FE"` matches the weighted mean calculation above.
 
 ``` r
-fit_fe <- rma(yi, vi, data = dat, method = "FE")
+fit_fe <- rma(yi, vi, data = data, method = "FE")
 fit_fe
 ```
 
 
-    Fixed-Effects Model (k = 20)
+    Fixed-Effects Model (k = 5)
 
     I^2 (total heterogeneity / total variability):   0.00%
-    H^2 (total variability / sampling variability):  0.52
+    H^2 (total variability / sampling variability):  0.55
 
     Test for Heterogeneity:
-    Q(df = 19) = 9.8177, p-val = 0.9573
+    Q(df = 4) = 2.2028, p-val = 0.6985
 
     Model Results:
 
-    estimate      se     zval    pval   ci.lb   ci.ub      
-      0.4951  0.0297  16.6667  <.0001  0.4369  0.5534  *** 
+    estimate      se    zval    pval   ci.lb   ci.ub      
+      0.4817  0.0688  6.9989  <.0001  0.3468  0.6166  *** 
 
     ---
     Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-The pooled estimate is close to `mu`, with a narrower confidence interval than any individual study. That interval treats the pooled estimate as normally distributed, which is what justifies reading ±1.96 standard errors as a 95% interval.
 
 ## Heterogeneity
 
@@ -129,45 +138,76 @@ When studies differ in populations, procedures, or outcome measures, the effect 
 The simulation below extends the previous one so that each study draws its own true effect from a normal distribution centered on `mu`. The spread of that distribution is the between-study variance, `tau2`. Three quantities describe how much of this extra variation is present.
 
 ``` r
+k <- 5
+ns <- c(10, 25, 50, 100, 250)
+
 tau2 <- 0.05
 thetas <- rnorm(k, mu, sqrt(tau2))
 
-dat_het <- map2(ns, thetas, \(n, theta) {
-  control <- rnorm(n, 0, 1)
+data <- map2(ns, thetas, \(n, theta) {
   treatment <- rnorm(n, theta, 1)
-  sp <- sqrt(((n - 1) * var(control) + (n - 1) * var(treatment)) / (2 * n - 2))
-  d <- (mean(treatment) - mean(control)) / sp
-  vi <- (n + n) / (n * n) + d^2 / (2 * (n + n))
-  tibble(yi = d, vi = vi, n = n)
+  control <- rnorm(n, 0, 1)
+
+  tibble(
+    m1i = mean(treatment),
+    sd1i = sd(treatment),
+    n1i = n,
+    m2i = mean(control),
+    sd2i = sd(control),
+    n2i = n
+  )
 }) |>
   list_rbind() |>
-  mutate(study = row_number(), .before = 1)
+  mutate(study = row_number(), .before = 1) |>
+  escalc(
+    measure = "SMD",
+    m1i = m1i,
+    sd1i = sd1i,
+    n1i = n1i,
+    m2i = m2i,
+    sd2i = sd2i,
+    n2i = n2i,
+    data = _
+  )
+
+data
 ```
 
-### Cochran’s Q
-
-The first quantity is the weighted sum of squared deviations of the observed effect sizes from the fixed-effect pooled mean, called Cochran’s Q. Assuming a single effect underlies all studies, and relying on the same normality assumption behind the fixed-effect model’s confidence interval, Q follows a chi-squared distribution with k − 1 degrees of freedom. A Q much larger than k − 1 indicates more spread than sampling error alone would produce.
-
-``` r
-w <- 1 / dat_het$vi
-fe_mean <- sum(w * dat_het$yi) / sum(w)
-
-Q <- sum(w * (dat_het$yi - fe_mean)^2)
-Q
-```
-
-    [1] 74.03394
+| study |       m1i |      sd1i | n1i |        m2i |      sd2i | n2i |        yi |        vi |
+|------:|----------:|----------:|----:|-----------:|----------:|----:|----------:|----------:|
+|     1 | 0.5510820 | 0.8819388 |  10 |  0.2768318 | 0.7186743 |  10 | 0.3264736 | 0.2026646 |
+|     2 | 0.2136506 | 1.0045850 |  25 |  0.1638911 | 0.8382465 |  25 | 0.0529392 | 0.0800280 |
+|     3 | 0.6258561 | 1.0403293 |  50 |  0.0239156 | 1.1603187 |  50 | 0.5420532 | 0.0414691 |
+|     4 | 0.5141498 | 1.0781745 | 100 | -0.1032391 | 0.8466240 | 100 | 0.6345019 | 0.0210065 |
+|     5 | 0.1988641 | 1.0006359 | 250 | -0.0420593 | 0.9819556 | 250 | 0.2426619 | 0.0080589 |
 
 ### Between-study variance (tau²)
 
 tau² is the variance of effects across studies, in the same squared units as the effect size. The default estimation method is restricted maximum likelihood (REML): an iterative procedure that finds the value of tau² most consistent with the observed spread in effect sizes, while accounting for uncertainty in the mean at the same time.
 
 ``` r
-fit_re <- rma(yi, vi, data = dat_het)
-fit_re$tau2
+fit_re <- rma(yi, vi, data = data)
+fit_re
 ```
 
-    [1] 0.05150329
+
+    Random-Effects Model (k = 5; tau^2 estimator: REML)
+
+    tau^2 (estimated amount of total heterogeneity): 0.0277 (SE = 0.0445)
+    tau (square root of estimated tau^2 value):      0.1666
+    I^2 (total heterogeneity / total variability):   46.80%
+    H^2 (total variability / sampling variability):  1.88
+
+    Test for Heterogeneity:
+    Q(df = 4) = 7.2727, p-val = 0.1222
+
+    Model Results:
+
+    estimate      se    zval    pval   ci.lb   ci.ub      
+      0.3860  0.1143  3.3764  0.0007  0.1619  0.6101  *** 
+
+    ---
+    Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 ### I²
 
@@ -177,27 +217,27 @@ I² converts tau² into a proportion: the share of total variation in observed e
 fit_re$I2
 ```
 
-    [1] 74.23921
+    [1] 46.79671
 
 The fixed effects model, fit to the same data, does not account for this between-study variance, so its confidence interval is too narrow.
 
 ``` r
-rma(yi, vi, data = dat_het, method = "FE")
+rma(yi, vi, data = data, method = "FE")
 ```
 
 
-    Fixed-Effects Model (k = 20)
+    Fixed-Effects Model (k = 5)
 
-    I^2 (total heterogeneity / total variability):   74.34%
-    H^2 (total variability / sampling variability):  3.90
+    I^2 (total heterogeneity / total variability):   45.00%
+    H^2 (total variability / sampling variability):  1.82
 
     Test for Heterogeneity:
-    Q(df = 19) = 74.0339, p-val < .0001
+    Q(df = 4) = 7.2727, p-val = 0.1222
 
     Model Results:
 
-    estimate      se     zval    pval   ci.lb   ci.ub      
-      0.4460  0.0297  15.0043  <.0001  0.3878  0.5043  *** 
+    estimate      se    zval    pval   ci.lb   ci.ub      
+      0.3548  0.0685  5.1813  <.0001  0.2206  0.4890  *** 
 
     ---
     Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
@@ -207,16 +247,16 @@ rma(yi, vi, data = dat_het, method = "FE")
 Once tau² is estimated, it is added to each study’s sampling variance before computing weights. Where the fixed effects model uses weights of 1/vi, the random effects model uses 1/(vi + tau²). Adding the same tau² to each denominator reduces the variation in weights across studies: a study with a very small vi and one with a large vi receive more similar weights once tau² is added to both.
 
 ``` r
-ws <- 1 / (dat_het$vi + fit_re$tau2)
+ws <- 1 / (data$vi + fit_re$tau2)
 
-re_pooled <- sum(ws * dat_het$yi) / sum(ws)
+re_pooled <- sum(ws * data$yi) / sum(ws)
 re_se <- sqrt(1 / sum(ws))
 
 c(estimate = re_pooled, se = re_se)
 ```
 
-      estimate         se 
-    0.47701360 0.06075686 
+     estimate        se 
+    0.3859972 0.1143219 
 
 These match the estimate and standard error from `fit_re`. The pooled estimate barely shifts, but the standard error is larger, because between-study variance contributes uncertainty beyond what sampling error alone would produce.
 
@@ -225,20 +265,20 @@ fit_re
 ```
 
 
-    Random-Effects Model (k = 20; tau^2 estimator: REML)
+    Random-Effects Model (k = 5; tau^2 estimator: REML)
 
-    tau^2 (estimated amount of total heterogeneity): 0.0515 (SE = 0.0235)
-    tau (square root of estimated tau^2 value):      0.2269
-    I^2 (total heterogeneity / total variability):   74.24%
-    H^2 (total variability / sampling variability):  3.88
+    tau^2 (estimated amount of total heterogeneity): 0.0277 (SE = 0.0445)
+    tau (square root of estimated tau^2 value):      0.1666
+    I^2 (total heterogeneity / total variability):   46.80%
+    H^2 (total variability / sampling variability):  1.88
 
     Test for Heterogeneity:
-    Q(df = 19) = 74.0339, p-val < .0001
+    Q(df = 4) = 7.2727, p-val = 0.1222
 
     Model Results:
 
     estimate      se    zval    pval   ci.lb   ci.ub      
-      0.4770  0.0608  7.8512  <.0001  0.3579  0.5961  *** 
+      0.3860  0.1143  3.3764  0.0007  0.1619  0.6101  *** 
 
     ---
     Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
@@ -250,8 +290,8 @@ predict(fit_re)
 ```
 
 
-       pred     se  ci.lb  ci.ub  pi.lb  pi.ub 
-     0.4770 0.0608 0.3579 0.5961 0.0165 0.9375 
+       pred     se  ci.lb  ci.ub   pi.lb  pi.ub 
+     0.3860 0.1143 0.1619 0.6101 -0.0099 0.7819 
 
 A large I² and a narrow confidence interval on the mean can occur together when many studies contribute; in that case, the prediction interval will be wide, because it accounts for the full between-study variance.
 

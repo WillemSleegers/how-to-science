@@ -26,13 +26,11 @@ theme_set(theme_minimal())
 color_primary <- "#2171b5"
 color_secondary <- "#888888"
 color_reference <- "gray50"
+
+set.seed(42)
 ```
 
 </details>
-
-``` r
-set.seed(42)
-```
 
 Simulating data means generating it yourself from a process you fully control. Because you choose the parameters, you know the truth, and you can check whether a method recovers it. That makes simulation useful for power analysis, for sanity-checking an analysis before running it on real data, and for building intuition about how a statistical model behaves.
 

@@ -4,12 +4,18 @@ description: "Why language models give different answers to identical prompts, a
 toc: true
 ---
 
-{{< include /_setup.qmd >}}
-
 ```{r}
-#| label: setup-page
+#| label: setup
 #| message: false
+#| code-fold: true
+library(tidyverse)
 library(ellmer)
+
+theme_set(theme_minimal())
+
+color_primary <- "#2171b5"
+color_secondary <- "#888888"
+color_reference <- "gray50"
 ```
 
 Each token an LLM produces is the result of a random draw. The model assigns a probability to every token in its vocabulary, then samples a token from that distribution. The distribution is computed from the input and the model's weights, and sampling from it means the same input can produce different output on different calls.

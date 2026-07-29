@@ -212,23 +212,23 @@ Reliability increases the closer the value gets to 1.00, with an acceptability t
 
 - Dynamic Fit Index Cutoffs for Confirmatory Factor Analysis Models by <span class="cite-ref" data-cite-id="mcneish2021" data-cite-ids="[&quot;mcneish2021&quot;]" data-cite-quote="[]" data-cite-page="">McNeish & Wolf (2021)</span>
 
-<details class="code-fold">
-<summary>Code</summary>
-
-``` r
-library(tidyverse)
-
-theme_set(theme_minimal())
-
-color_primary <- "#2171b5"
-color_secondary <- "#888888"
-color_reference <- "gray50"
-```
-
-</details>
-
 ``` r
 # Load packages
+library(tidyverse)
+```
+
+    ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+    ✔ dplyr     1.2.1     ✔ readr     2.2.0
+    ✔ forcats   1.0.1     ✔ stringr   1.6.0
+    ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+    ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+    ✔ purrr     1.2.2     
+    ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+    ✖ dplyr::filter() masks stats::filter()
+    ✖ dplyr::lag()    masks stats::lag()
+    ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+
+``` r
 library(lavaan)
 ```
 

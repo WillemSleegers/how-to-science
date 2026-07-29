@@ -27,15 +27,13 @@ theme_set(theme_minimal())
 color_primary <- "#2171b5"
 color_secondary <- "#888888"
 color_reference <- "gray50"
-```
 
-</details>
-
-``` r
 set.seed(42)
 n <- 50
 n_sim <- 1000
 ```
+
+</details>
 
 ## What it is
 

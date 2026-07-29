@@ -21,6 +21,8 @@ toc: true
 
 ``` r
 library(tidyverse)
+library(mall)
+library(cli)
 
 theme_set(theme_minimal())
 
@@ -30,11 +32,6 @@ color_reference <- "gray50"
 ```
 
 </details>
-
-``` r
-library(mall)
-library(cli)
-```
 
 LLMs can assign text to predefined categories reliably and at scale, without manually labelling every item. This is useful for open-ended survey responses, product reviews, social media posts, or any text where you want to sort items into groups. However, despite their abilities, it remains necessary to validate their output and see whether they correctly categorized the responses, or at least match the performance of human raters.
 

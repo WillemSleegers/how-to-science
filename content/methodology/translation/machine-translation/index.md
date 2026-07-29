@@ -22,21 +22,12 @@ toc: true
 
 ``` r
 library(tidyverse)
-
-theme_set(theme_minimal())
-
-color_primary <- "#2171b5"
-color_secondary <- "#888888"
-color_reference <- "gray50"
-```
-
-</details>
-
-``` r
 library(deeplr)
 library(googleLanguageR)
 library(ellmer)
 ```
+
+</details>
 
 Survey translation has traditionally required human translators working through structured protocols like TRAPD (Translation, Review, Adjudication, Pretesting, Documentation). MT systems have become accurate enough to serve as a first pass or, in some contexts, a full replacement — but they require some care when applied to survey text.
 

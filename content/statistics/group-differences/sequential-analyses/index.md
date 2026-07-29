@@ -15,27 +15,19 @@ code-fold: show
 <summary>Code</summary>
 
 ``` r
+library(MASS)
 library(tidyverse)
+library(viridis)
+library(brms)
+library(emmeans)
+library(BayesFactor)
+library(tidybayes)
 
 theme_set(theme_minimal())
 
 color_primary <- "#2171b5"
 color_secondary <- "#888888"
 color_reference <- "gray50"
-```
-
-</details>
-
-<details open class="code-fold">
-<summary>Code</summary>
-
-``` r
-library(MASS)
-library(viridis)
-library(brms)
-library(emmeans)
-library(BayesFactor)
-library(tidybayes)
 
 set.seed(1)
 

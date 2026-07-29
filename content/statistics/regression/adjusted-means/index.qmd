@@ -5,11 +5,11 @@ toc: true
 code-fold: show
 ---
 
-{{< include /_setup.qmd >}}
-
 ```{r}
-#| label: setup-page
+#| label: setup
 #| message: false
+#| code-fold: true
+library(tidyverse)
 library(emmeans)
 library(marginaleffects)
 ```

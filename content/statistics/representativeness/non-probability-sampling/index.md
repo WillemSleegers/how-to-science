@@ -18,13 +18,11 @@ theme_set(theme_minimal())
 color_primary <- "#2171b5"
 color_secondary <- "#888888"
 color_reference <- "gray50"
+
+set.seed(42)
 ```
 
 </details>
-
-``` r
-set.seed(42)
-```
 
 ## The population
 

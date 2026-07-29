@@ -6,17 +6,23 @@ code-tools: true
 code-fold: show
 ---
 
-{{< include /_setup.qmd >}}
-
 ```{r}
-#| label: setup-page
+#| label: setup
 #| message: false
+#| code-fold: true
 library(MASS)
+library(tidyverse)
 library(viridis)
 library(brms)
 library(emmeans)
 library(BayesFactor)
 library(tidybayes)
+
+theme_set(theme_minimal())
+
+color_primary <- "#2171b5"
+color_secondary <- "#888888"
+color_reference <- "gray50"
 
 set.seed(1)
 

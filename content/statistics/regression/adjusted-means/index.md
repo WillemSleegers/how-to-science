@@ -20,20 +20,6 @@ code-fold: show
 
 ``` r
 library(tidyverse)
-
-theme_set(theme_minimal())
-
-color_primary <- "#2171b5"
-color_secondary <- "#888888"
-color_reference <- "gray50"
-```
-
-</details>
-
-<details open class="code-fold">
-<summary>Code</summary>
-
-``` r
 library(emmeans)
 library(marginaleffects)
 ```

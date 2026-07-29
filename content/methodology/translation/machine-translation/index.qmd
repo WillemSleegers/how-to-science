@@ -4,11 +4,11 @@ description: "When machine translation can stand in for human survey-translation
 toc: true
 ---
 
-{{< include /_setup.qmd >}}
-
 ```{r}
-#| label: setup-page
+#| label: setup
 #| message: false
+#| code-fold: true
+library(tidyverse)
 library(deeplr)
 library(googleLanguageR)
 library(ellmer)

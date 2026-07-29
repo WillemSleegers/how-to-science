@@ -25,6 +25,8 @@ order: 2
 
 ``` r
 library(tidyverse)
+library(irr)
+library(psych)
 
 theme_set(theme_minimal())
 
@@ -34,11 +36,6 @@ color_reference <- "gray50"
 ```
 
 </details>
-
-``` r
-library(irr)
-library(psych)
-```
 
 When two or more people code the same material — or when you compare human labels to LLM output — you need a way to quantify how consistently the labels agree. Several metrics exist, and the right choice depends on how many raters you have, the level of measurement (nominal, ordinal, continuous), and whether you care about correcting for chance.
 
