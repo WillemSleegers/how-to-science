@@ -22,233 +22,118 @@ color_reference <- "gray50"
 
 A single hypothesis test run at α = .05 has a 5% chance of a false positive when the null hypothesis is true. Running more than one test on the same data raises the probability that at least one of them turns up significant by chance alone, even though each test still runs at α = .05. The family-wise error rate is the probability of at least one false positive across a set, or family, of tests, all conducted under a true null.
 
-Whether the family-wise error rate is something to worry about depends on the claim the tests are being used to support. Below are several claims that researchers are commonly interested in and whether or not to worry about the family-wise error rate.
+Whether the family-wise error rate is something to worry about depends on the claim the tests are being used to support.
 
-## Claim 1: The treatment affects at least one of multiple outcomes
+## Claim 1: At least one of several tests shows a real effect
 
-The first scenario is a claim that holds as soon as any one of several tests comes out significant. It comes up when researchers compare a treatment group to a control group and record multiple outcome measures rather than one, because they don't know in advance which of them the treatment might affect: the research claim is then that the treatment affects at least one of these outcomes.
+The first scenario is a claim that holds as soon as any one of several tests comes out significant. Such a claim arises whenever a researcher runs a batch of tests and treats a single significant result as enough to support it. Comparing a treatment group to a control group on several outcome measures is one example: not knowing in advance which outcome the treatment might affect, the researcher claims that it affects at least one of them. Computing a batch of correlations and claiming that at least one of the variables is related to the outcome is another, as is testing several subgroups and claiming an effect in at least one. In each case the claim is disjunctive: any single significant test is taken to support it. This is the structure behind much of what is called researcher degrees of freedom {{< cite simmons2011 >}}. Measuring several outcomes, splitting the sample several ways, or running several analyses and keeping whichever comparison reached significance all give the disjunctive claim more chances to be wrongly supported.
 
-Suppose that this claim is false: the treatment affects none of the outcomes, so every one of the comparisons is testing a true null. The claim is wrongly supported whenever at least one of the comparisons is significant by chance. This means that the family-wise error rate increases as more outcomes are considered, as seen in the graph below.
+Suppose that the claim is false: none of the tested effects is real, so every test is a true null. The claim is wrongly supported whenever at least one test is significant by chance, and the probability of that grows as more tests are run. The graph below shows this rate climbing with the number of tests, alongside the same rate once a Bonferroni correction is applied.
 
 ```{r}
 #| label: fwer-any-effect
 #| code-fold: true
-#| fig-cap: "Probability of wrongly claiming the treatment affected at least one outcome, as a function of the number of outcomes measured"
+#| fig-cap: "Probability of wrongly claiming at least one real effect, without correction and under a Bonferroni correction, as a function of the number of tests run. The dashed line marks α = .05."
 
 alpha <- 0.05
 k_max <- 20
 
 fwer_any_effect <- tibble(
   m = 1:k_max,
-  fwer = 1 - (1 - alpha)^m
-)
-
-ggplot(fwer_any_effect, aes(x = m, y = fwer)) +
-  geom_line(color = color_primary) +
-  geom_point(color = color_primary) +
-  scale_y_continuous(labels = scales::percent_format()) +
-  labs(x = "Number of outcomes measured (m)", y = "P(claim wrongly asserted)")
-```
-
-The false-claim rate is 1 - (1 - α)^m. With one outcome measured, it equals α, the per-comparison rate. With five outcomes it has already climbed past 20%; with twenty, past 60%.
-
-The claim here is disjunctive: it is true if the treatment affects at least one outcome, so a false claim requires only one of the comparisons to be a false positive. That is exactly the family-wise error rate, and it grows with the number of outcomes tested. A claim of this shape needs a correction procedure to keep the false-claim rate near the intended level.
-
-## Claim 2: Every condition beats the control
-
-The second scenario is a claim that only holds if every one of several tests comes out significant. In a different study, researchers compare four treatment conditions against a single shared control and claim that every one of the four beats it. This claim is conjunctive rather than disjunctive: it is only true if every one of the four individual comparisons reflects a real difference, and asserting it means requiring all four p-values to be significant at once.
-
-For a claim like this, it is not necessary to worry about the family-wise error rate, as seen in the simulation below. The simulation is run across configurations that differ in how many of the four conditions are genuinely identical to control, from all four (a true null throughout) down to none (all four genuinely differ by the same amount), while the rest are drawn with a real effect. Each simulated dataset draws one control sample and reuses it for all four comparisons, matching a shared-control design. For each configuration it records how often all four comparisons are significant at once, both without correction and under a Bonferroni correction that divides α by 4.
-
-```{r}
-#| label: sim-all-beat-control
-#| code-fold: true
-
-set.seed(123)
-n <- 40
-k <- 4
-d <- 0.6
-alpha <- .05
-n_sim <- 1000
-
-sim_all_beat_control <- map_dfr(0:k, \(n_null) {
-  effects <- c(rep(0, n_null), rep(d, k - n_null))
-
-  reps <- map_dfr(seq_len(n_sim), \(i) {
-    control <- rnorm(n, 0, 1)
-    ps <- map_dbl(effects, \(delta) {
-      treatment <- rnorm(n, delta, 1)
-      t.test(treatment, control)$p.value
-    })
-    tibble(
-      Uncorrected = all(ps < alpha),
-      Corrected = all(ps < alpha / k)
-    )
-  })
-
-  tibble(
-    n_null = n_null,
-    Uncorrected = mean(reps$Uncorrected),
-    Corrected = mean(reps$Corrected)
-  )
-})
-
-sim_all_beat_control
-```
-
-```{r}
-#| label: plot-all-beat-control
-#| fig-cap: "P(all four comparisons significant) as a function of how many of the four conditions are truly identical to control. The dashed line marks α = .05."
-
-sim_all_beat_control_long <- sim_all_beat_control |>
+  Uncorrected = 1 - (1 - alpha)^m,
+  Bonferroni = 1 - (1 - alpha / m)^m
+) |>
   pivot_longer(
-    c(Uncorrected, Corrected),
+    c(Uncorrected, Bonferroni),
     names_to = "method",
-    values_to = "rate"
+    values_to = "fwer"
   )
 
-ggplot(sim_all_beat_control_long, aes(x = n_null, y = rate, color = method)) +
+ggplot(fwer_any_effect, aes(x = m, y = fwer, color = method)) +
   geom_line() +
   geom_point() +
   geom_hline(yintercept = alpha, linetype = "dashed", color = color_reference) +
+  scale_y_continuous(labels = scales::percent_format()) +
   scale_color_manual(
-    values = c("Uncorrected" = color_primary, "Corrected" = color_secondary)
+    values = c("Uncorrected" = color_primary, "Bonferroni" = color_secondary)
   ) +
   labs(
-    x = "Number of the 4 conditions that are truly identical to control",
-    y = "P(all 4 comparisons significant)",
+    x = "Number of tests run (m)",
+    y = "P(claim wrongly asserted)",
     color = NULL
   )
 ```
 
-The right-hand side of the plot is where the claim is false: at least one of the four conditions doesn't really differ from control, so asserting "all four beat control" would be a mistake. Making that mistake requires the one (or more) truly null comparisons to come up significant by chance while the genuinely different conditions also come up significant. Requiring more from the compound event only makes it less likely, not more, so the uncorrected false-claim rate stays at or below α across every one of these configurations without any correction at all.
+Without correction, the false-claim rate is 1 - (1 - α)^m. With a single test it equals α, the per-comparison rate. With five tests it has already climbed past 20%, and with twenty, past 60%.
 
-The left-hand side, at zero truly null conditions, is where the claim is true: all four conditions really do differ from control. There, the value on the y-axis is the power to correctly assert the claim, not an error rate, and this is where the two methods pull apart. The uncorrected procedure has substantially more power to detect the true conjunction than the Bonferroni-corrected one, because the correction applies a stricter threshold on all four comparisons even though the false-claim rate was already controlled without it.
+A Bonferroni correction tests each of the m comparisons at α / m instead of α. The false-claim rate is then 1 - (1 - α/m)^m, which stays just under α no matter how many tests are run, the flat line along the dashed reference. Dividing the threshold by the number of tests holds the family-wise error rate at the intended level.
 
-A claim that only holds when every one of several comparisons holds is called an intersection-union test. Using each comparison at the uncorrected level α already keeps the overall false-claim rate at or below α, regardless of how many comparisons are involved or how correlated they are with each other. Correcting for multiplicity here trades power for protection the claim never needed.
+The claim here is disjunctive: it is true as soon as any one of the tested effects is real, so a false claim requires only one test to be a false positive. That probability is exactly the family-wise error rate, which is why this is the kind of claim a correction is built for.
 
-## Claim 3: Which of the outcomes does the treatment affect?
+## Claim 2: Every one of several tests shows a real effect
 
-The third scenario sits between the first two. A researcher measures many outcomes, tests each one, and reports the subset that came out significant as the outcomes the treatment affected. The claim is not that at least one outcome is affected, and not that all of them are. It is a claim about the membership of the reported set, asserted separately for each outcome the set contains.
+The second scenario is the conjunctive counterpart to the first: where the disjunctive claim held as soon as one test was significant, this one holds only if every test is significant. Comparing four treatment conditions against a shared control and claiming that all four beat it is one example. Running several correlations and claiming that every one of them is nonzero is another. Mediation has the same structure, since claiming that X affects the mediator, that the mediator affects the outcome, and that the indirect effect is present requires each of those tests to succeed. So does a multi-study paper that claims an effect appears in every one of its studies rather than merely somewhere among them. In each case, asserting the claim means requiring all of its tests to be significant at once.
 
-A single false positive does not sink a claim of this shape the way it sinks the disjunctive claim of the first scenario, because the other genuine discoveries still stand. But multiplicity cannot be ignored the way it can for the conjunctive claim of the second, because each outcome in the set is asserted on its own and each one can be wrong. What matters is how large a fraction of the reported set is wrong. The relevant quantity is the false discovery rate: the expected proportion of false positives among the outcomes flagged as significant, counting the proportion as zero when nothing is flagged.
+What counts as a Type I error changes with the claim. Here the claim is false as soon as even one of its components is truly null, so wrongly asserting it means concluding that every effect is real when at least one is not. The error is judged against the whole claim, not the individual tests. To make it, each truly null test has to reach significance by chance while every genuine test also comes out significant. That hinges on the null test firing by chance, an event with probability α, so the error rate cannot exceed α. With more than one null test, several chance hits would have to line up at once, which only makes it smaller.
 
-This is a different target from the family-wise error rate. The family-wise error rate asks whether there is any false positive at all; the false discovery rate asks what share of the flagged outcomes are false. When a researcher screens twenty outcomes expecting to follow up on the hits, one false positive among ten genuine discoveries is a very different situation from one false positive and nothing else, and the family-wise error rate treats them the same.
-
-The simulation below measures twenty outcomes and varies how many of them are truly identical to control, from none up to all twenty, drawing the rest with a real effect of the same size. For each simulated dataset it tests all twenty comparisons and forms a reported set three ways: uncorrected, with each comparison at α; Bonferroni, which divides α by twenty and controls the family-wise error rate; and Benjamini-Hochberg, which controls the false discovery rate at a target level q. For each configuration it records the false discovery rate and the proportion of the truly affected outcomes that end up flagged.
+The graph below traces this maximum. It takes the worst case, where exactly one of the tests is a true null and the rest carry effects large enough to be detected essentially every time. The full claim is then wrongly asserted exactly when that single null test fires by chance, so the worst-case rate depends on that one test alone, not on how many genuine tests sit alongside it. The graph plots this rate against the number of tests in the conjunction, without correction and under a Bonferroni correction that divides α by the number of tests.
 
 ```{r}
-#| label: sim-which-outcomes
+#| label: fwer-all-effects
 #| code-fold: true
+#| fig-cap: "Maximum probability of wrongly asserting the full conjunction, without correction and under a Bonferroni correction, as a function of the number of tests in the conjunction. The dashed line marks α = .05."
 
-set.seed(123)
-n <- 40
-k <- 20
-d <- 0.6
-q <- .05
-n_sim <- 2000
+alpha <- 0.05
+k_max <- 20
 
-sim_which_outcomes <- map_dfr(seq(0, k, by = 4), \(n_null) {
-  is_null <- c(rep(TRUE, n_null), rep(FALSE, k - n_null))
-  effects <- ifelse(is_null, 0, d)
+fwer_all_effects <- tibble(
+  m = 1:k_max,
+  Uncorrected = alpha,
+  Bonferroni = alpha / m
+) |>
+  pivot_longer(
+    c(Uncorrected, Bonferroni),
+    names_to = "method",
+    values_to = "fwer"
+  )
 
-  reps <- map_dfr(seq_len(n_sim), \(i) {
-    ps <- map_dbl(effects, \(delta) {
-      control <- rnorm(n, 0, 1)
-      treatment <- rnorm(n, delta, 1)
-      t.test(treatment, control)$p.value
-    })
-
-    flag <- function(reject) {
-      tibble(
-        fdp = sum(reject & is_null) / max(1, sum(reject)),
-        tdr = sum(reject & !is_null) / max(1, sum(!is_null))
-      )
-    }
-
-    bind_rows(
-      flag(ps < q) |> mutate(method = "Uncorrected"),
-      flag(ps < q / k) |> mutate(method = "Bonferroni"),
-      flag(p.adjust(ps, "BH") < q) |> mutate(method = "Benjamini-Hochberg")
-    )
-  })
-
-  reps |>
-    group_by(method) |>
-    summarize(fdr = mean(fdp), power = mean(tdr), .groups = "drop") |>
-    mutate(n_null = n_null)
-})
-```
-
-```{r}
-#| label: plot-which-outcomes-fdr
-#| fig-cap: "False discovery rate as a function of how many of the 20 outcomes are truly identical to control, without correction and under Benjamini-Hochberg. The dashed line marks the target q = .05."
-
-sim_which_outcomes |>
-  filter(method %in% c("Uncorrected", "Benjamini-Hochberg")) |>
-  ggplot(aes(x = n_null, y = fdr, color = method)) +
+ggplot(fwer_all_effects, aes(x = m, y = fwer, color = method)) +
   geom_line() +
   geom_point() +
-  geom_hline(yintercept = q, linetype = "dashed", color = color_reference) +
+  geom_hline(yintercept = alpha, linetype = "dashed", color = color_reference) +
   scale_y_continuous(labels = scales::percent_format()) +
   scale_color_manual(
-    values = c(
-      "Benjamini-Hochberg" = color_primary,
-      "Uncorrected" = color_secondary
-    )
+    values = c("Uncorrected" = color_primary, "Bonferroni" = color_secondary)
   ) +
   labs(
-    x = "Number of the 20 outcomes that are truly identical to control",
-    y = "False discovery rate",
+    x = "Number of tests in the conjunction (m)",
+    y = "Maximum P(claim wrongly asserted)",
     color = NULL
   )
 ```
 
-Without correction, the false discovery rate climbs well past the target as more of the outcomes are truly null, because each null outcome contributes its own 5% chance of a false positive to the reported set. Benjamini-Hochberg holds the false discovery rate at or below q across every configuration. Where there are no true effects at all, at the far right, it coincides with the family-wise error rate, since any single false positive then makes the entire reported set false.
+Without correction, the worst-case false-claim rate sits at α and stays there as more tests are added to the conjunction. This is the mirror image of the first scenario. There, each additional test gave the disjunctive claim another way to fail, so the error rate climbed with the number of tests. Here, each additional test is one more result that must come out significant, which can only hold the error rate down. The uncorrected conjunction is already a valid test at level α no matter how many tests it contains.
 
-Controlling the false discovery rate is not the same as controlling the family-wise error rate, and Bonferroni does the latter. The question is what that stricter control costs in true discoveries.
+Bonferroni pushes the rate down to α divided by the number of tests, well below the α it was already at, so it buys no protection the claim needed. The cost shows up when the claim is true and every effect is real: the stricter α/m threshold on every test lowers the chance of correctly asserting the whole conjunction, which is the power to detect the effect.
 
-```{r}
-#| label: plot-which-outcomes-power
-#| fig-cap: "Proportion of the truly affected outcomes that get flagged, under Bonferroni and Benjamini-Hochberg, as a function of how many of the 20 outcomes are truly identical to control."
+A claim that holds only when every one of several tests holds is called an intersection-union test. Testing each component at the uncorrected level α already keeps the false-claim rate at or below α, regardless of how many tests are involved or how correlated they are. Correcting for multiplicity here trades power for protection the claim never needed.
 
-sim_which_outcomes |>
-  filter(method %in% c("Bonferroni", "Benjamini-Hochberg"), n_null < k) |>
-  ggplot(aes(x = n_null, y = power, color = method)) +
-  geom_line() +
-  geom_point() +
-  scale_y_continuous(labels = scales::percent_format()) +
-  scale_color_manual(
-    values = c(
-      "Benjamini-Hochberg" = color_primary,
-      "Bonferroni" = color_secondary
-    )
-  ) +
-  labs(
-    x = "Number of the 20 outcomes that are truly identical to control",
-    y = "Proportion of true effects flagged",
-    color = NULL
-  )
-```
+## Other kinds of claim
 
-When many of the outcomes carry a real effect, Benjamini-Hochberg flags substantially more of them than Bonferroni does, because its threshold relaxes as more small p-values appear. As the number of true effects shrinks, the gap narrows: with fewer genuine effects among many null outcomes, there is less for the relaxed threshold to work with, and Benjamini-Hochberg moves toward Bonferroni. The gain from targeting the false discovery rate is largest exactly when it matters most, when there are many real effects to be found.
+Not every research claim is a clean disjunction or conjunction. Two common ones fall outside the pair above and call for a different treatment.
 
-The identification claim calls for controlling the false discovery rate, not the family-wise error rate. Bonferroni guards against any false positive at all, which is stricter than a claim about the membership of a set requires, and it pays for that strictness in missed true effects. Benjamini-Hochberg controls the quantity the claim actually puts at risk, the fraction of the reported set that is false, and recovers much of the lost power in return.
+The first is a claim about which specific effects are real. A researcher who tests many effects and reports the subset that came out significant is not asserting one claim but making a separate decision about each effect, so there is no single claim to be true or false. The family-wise error rate is not the right target here. What matters instead is the false discovery rate, the expected fraction of the reported set that is a false positive, and it calls for its own kind of correction, such as Benjamini-Hochberg.
 
-## What counts as a "family"
+The second is a claim about the pattern the results form. A moderation claim is the common example, often stated as an effect being present in one condition and absent in another. It is neither disjunctive nor conjunctive, because it mixes a rejection with a non-rejection: showing the effect in the first condition means rejecting a null, but showing its absence in the second means affirming one, and a non-significant test is not evidence that the effect is zero.
 
-The formula from the first scenario takes one input: m, the number of tests in the family. Deciding what belongs in that family is a judgment call, not something the data can settle.
+The claim that the two conditions differ from each other is a single test, the interaction, and that is what should carry the moderation claim in the first place. Comparing a significant simple effect in one condition against a non-significant one in the other is not a test of moderation, because the difference between significant and not significant is not itself significant {{< cite gelman2006 >}}. Even a significant interaction does not settle the matter, since it shows only that the effect differs across conditions, not that it follows the specific pattern that was predicted. Recovering that pattern calls for follow-up tests of the simple effects, which bring back the same multiplicity questions for a claim whose logic is harder to pin down.
 
-A family is usually understood as the set of tests that address one research question or one claim. The 20 outcome comparisons in the first scenario are a natural family, since a reader would treat "the treatment did something" as one claim regardless of which specific outcome carries it. A comparison reported in an unrelated part of the same paper, addressing a different question with different data, is ordinarily a separate family: correcting across it would control an error rate that has no shared claim behind it.
+## Conclusion
 
-The boundary gets harder to draw with secondary or exploratory comparisons. A study with one pre-registered primary outcome and ten additional outcomes examined without a specific prior hypothesis raises the question of whether the primary test stands alone or belongs to a family of eleven. Two researchers can look at the same set of analyses and disagree about how many families it contains, because the answer depends on what claim each analysis is being used to support, not on any property of the data itself.
+Whether the family-wise error rate is worth worrying about comes down to the claim the tests support, not the number of tests. A disjunctive claim, true as soon as one test is significant, is put at risk by every extra test and needs a correction. A conjunctive claim, true only if every test is significant, is protected by its own structure and needs none. A single planned comparison is a family of one, where the family-wise error rate is already α and there is nothing to correct.
 
-## When to correct and when not to
+Applying this means deciding which tests belong to the same family, which is a judgment call rather than something the data can settle. A family is the set of tests that support one claim, so two researchers can look at the same analyses and disagree about how many families they contain, because the answer depends on what each test is being used to claim.
 
-A single planned comparison, specified before the data were seen and used to answer one question, is a family of one. The formula from the first scenario gives a family-wise error rate equal to α in that case, so there is nothing for a correction to do.
+Where a correction is warranted, it is a trade rather than a free improvement. Holding the family-wise error rate at α means a stricter threshold on each test, which lowers the power to detect a real effect. Whether the trade is worth it depends on the cost of a false positive against the cost of missing a true effect: a confirmatory result feeding a costly decision calls for tighter control, while an exploratory scan meant to surface candidates for later follow-up can accept a higher error rate for more power.
 
-Beyond that, whether a family needs correction, and what kind, depends on the shape of the claim, not just the number of comparisons in it. A disjunctive claim — true if any one comparison shows an effect, as in the first scenario — is put at risk by a single false positive, and the false-claim rate climbs with the number of comparisons exactly as the family-wise error rate does. A conjunctive claim — true only if every comparison shows an effect, as in the second scenario — is protected by its own structure: making the compound claim requires every comparison to come out significant, and that requirement can only lower the chance of a false claim, never raise it. An identification claim — asserting which specific comparisons hold, as in the third scenario — needs correction too, but aimed at the false discovery rate rather than the family-wise error rate, because what is at risk is the fraction of the reported set that is wrong rather than the presence of any single false positive. The conjunctive claim is the one that needs no correction at all.
-
-Even where correction is warranted, it is a trade, not a free improvement: holding the family-wise error rate at α means using a stricter threshold for each individual test, which lowers the power to detect a real effect on any one of them. Whether that trade is worth making depends on the cost of a false positive relative to the cost of missing a true effect in the context at hand. A confirmatory result that will inform a costly downstream decision usually calls for tighter control; an early, exploratory scan intended to generate candidates for later, better-powered follow-up can tolerate a higher family-wise error rate in exchange for more power to notice something worth pursuing.
-
-The [omnibus F-test](../omnibus-test/) page works through this trade-off concretely for the case of pairwise comparisons following an ANOVA, comparing an uncorrected procedure against Holm and Tukey correction under a partial null.
+The [omnibus F-test](../omnibus-test/) page works through this trade-off concretely for pairwise comparisons following an ANOVA, comparing an uncorrected procedure against Holm and Tukey correction under a partial null.
