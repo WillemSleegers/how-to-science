@@ -1,0 +1,343 @@
+---
+title: "Non-Response Bias"
+description: "When non-response distorts a survey estimate, how to tell how badly, and how to reason about it when you can't"
+toc: true
+order: 1
+draft: true
+---
+
+```{r}
+#| label: setup
+#| message: false
+#| code-fold: true
+library(tidyverse)
+
+theme_set(theme_minimal())
+
+color_primary <- "#2171b5"
+color_secondary <- "#888888"
+color_reference <- "gray50"
+
+set.seed(42)
+```
+
+Almost no survey reaches everyone it invites. People are unavailable, decline, or drop out partway. The worry is that the people who answer are not like the people who don't, so the estimate you compute from respondents no longer matches the population you cared about. This is **non-response bias**.
+
+The instinct is to treat the **response rate** as the measure of the problem: a survey with 80% non-response feels untrustworthy, one with 10% feels safe. That instinct is mostly wrong, and seeing why is the key to the whole topic.
+
+## Non-response is only a problem if it relates to the outcome
+
+Write the population mean as a weighted average of the people who would respond and the people who would not:
+
+$$\bar Y_N = r\,\bar Y_{r} + (1 - r)\,\bar Y_{nr}$$
+
+where $r$ is the response rate, $\bar Y_r$ the mean among responders, and $\bar Y_{nr}$ the mean among non-responders. The estimate you actually compute is $\bar Y_r$. Its bias is the difference:
+
+$$\text{Bias}(\bar Y_r) = \bar Y_r - \bar Y_N = \underbrace{(1 - r)}_{\text{non-response rate}}\;\times\;\underbrace{(\bar Y_r - \bar Y_{nr})}_{\text{responder–non-responder gap}}$$
+
+Bias is a **product of two things**: how many people are missing, and how different the missing people are on the variable being measured. Both have to be non-zero for bias to appear. A survey can lose 70% of its sample and still be unbiased for a variable on which responders and non-responders happen to agree, and a survey can lose only 15% and be badly biased for a variable on which they differ sharply. The response rate on its own caps the damage but tells you nothing about how much of that cap is used.
+
+This is the same quantity as the data defect correlation $\rho_{R,Y}$ on the [non-probability sampling](../non-probability-sampling/) page — the correlation between being in the data and the outcome. Here we write it as a gap in the outcome's own units, which is easier to reason about for a single survey.
+
+To see the two factors at work, we simulate a national health survey. Each person has a latent health level that shapes their behaviour and, crucially, their willingness to respond.
+
+```{r}
+#| label: population
+
+N <- 100000
+
+population <- tibble(
+  id = 1:N,
+  age = round(pmin(pmax(rnorm(N, mean = 45, sd = 15), 18), 90))
+) |>
+  mutate(
+    health = -0.025 * (age - 45) + rnorm(N),
+    activity = 180 + 30 * health - 0.3 * (age - 45) + rnorm(N, sd = 45),
+    smoker = rbinom(N, 1, plogis(-1.1 - 0.7 * health))
+  )
+
+true_activity <- mean(population$activity)
+true_smoke <- mean(population$smoker)
+```
+
+We want two population quantities: mean weekly physical activity (a **mean**, `r round(true_activity)` minutes) and the proportion who smoke (a **percentage**, `r round(100 * true_smoke)`%).
+
+Now the response mechanism. We compare two worlds that have the **same response rate** but differ in *why* people respond. In the first, response depends on health: healthier people are more likely to answer a health survey. In the second, response is unrelated to anything (missing completely at random), set to the same average rate.
+
+```{r}
+#| label: response-mechanisms
+
+population <- population |>
+  mutate(
+    p_related = plogis(-0.6 + 0.9 * health), # healthier respond more
+    p_unrelated = mean(p_related) # same rate, unrelated to health
+  )
+
+response_rate <- mean(population$p_related)
+```
+
+The response rate is `r round(100 * response_rate)`% in both worlds. We draw an invited sample, apply the response mechanism, and keep the responders, repeating many times to trace the sampling distribution of each estimate.
+
+```{r}
+#| label: simulate-nonresponse
+
+n_invited <- 5000
+sims <- 500
+
+responders_from <- function(prob_col) {
+  invited <- population |> slice_sample(n = n_invited)
+  invited[runif(n_invited) < invited[[prob_col]], ]
+}
+
+estimate_over_sims <- function(prob_col) {
+  map_dfr(seq_len(sims), function(i) {
+    r <- responders_from(prob_col)
+    tibble(activity = mean(r$activity), smoke = mean(r$smoker))
+  })
+}
+
+est_related <- estimate_over_sims("p_related")
+est_unrelated <- estimate_over_sims("p_unrelated")
+```
+
+```{r}
+#| label: fig-mean
+#| echo: false
+#| fig-cap: "Mean weekly activity under two response mechanisms with the same response rate. Dashed line = true population mean."
+
+bind_rows(
+  est_unrelated |> mutate(mechanism = "Unrelated to outcome"),
+  est_related |> mutate(mechanism = "Related to outcome")
+) |>
+  mutate(mechanism = fct_relevel(mechanism, "Unrelated to outcome")) |>
+  ggplot(aes(activity, fill = mechanism)) +
+  geom_histogram(bins = 45, alpha = 0.7, position = "identity") +
+  geom_vline(
+    xintercept = true_activity,
+    linetype = "dashed",
+    color = color_reference
+  ) +
+  scale_fill_manual(
+    values = c(
+      "Unrelated to outcome" = color_secondary,
+      "Related to outcome" = color_primary
+    )
+  ) +
+  labs(x = "Estimated mean activity (minutes/week)", y = "Count", fill = NULL) +
+  theme(legend.position = "top")
+```
+
+```{r}
+#| label: fig-pct
+#| echo: false
+#| fig-cap: "Estimated smoking prevalence under the same two mechanisms. Dashed line = true prevalence."
+
+bind_rows(
+  est_unrelated |> mutate(mechanism = "Unrelated to outcome"),
+  est_related |> mutate(mechanism = "Related to outcome")
+) |>
+  mutate(mechanism = fct_relevel(mechanism, "Unrelated to outcome")) |>
+  ggplot(aes(smoke, fill = mechanism)) +
+  geom_histogram(bins = 45, alpha = 0.7, position = "identity") +
+  geom_vline(
+    xintercept = true_smoke,
+    linetype = "dashed",
+    color = color_reference
+  ) +
+  scale_fill_manual(
+    values = c(
+      "Unrelated to outcome" = color_secondary,
+      "Related to outcome" = color_primary
+    )
+  ) +
+  scale_x_continuous(labels = scales::percent) +
+  labs(x = "Estimated smoking prevalence", y = "Count", fill = NULL) +
+  theme(legend.position = "top")
+```
+
+The two mechanisms lose the same fraction of the sample, but only the health-related one is biased: it overstates activity (healthy people are over-represented) and understates smoking (smokers are under-represented). The unrelated mechanism is centred on the truth despite an identical response rate. Non-response by itself does nothing; non-response **correlated with the outcome** is the whole problem.
+
+Because the gap is outcome-specific, the same survey is biased for some estimates and fine for others. Groves & Peytcheva's (2008) meta-analysis of 59 methodological studies makes this concrete: across their estimates, the response rate explained almost none of the variation in bias, and most of the variation lay *within* surveys, across different items, rather than between surveys. There is no single "bias of this survey" — only the bias of a particular estimate.
+
+## How big is the gap likely to be, and how would you know?
+
+The trouble is structural: the bias depends on $\bar Y_{nr}$, the mean among people who didn't answer, and you have no measurements from them. The gap is not identified by the respondent data alone. Every method for pinning it down brings in information from somewhere else.
+
+**Compare respondents to known frame or register data.** If the sampling frame carries variables for everyone (age, sex, region, sometimes register-linked income or education), compare the respondent distribution to the known population. It is cheap and routine, but it only sees the auxiliary variables you happen to have, and it detects bias in the outcome only to the extent the outcome is correlated with those variables. Being balanced on age does not mean being unbiased on health.
+
+We can show that limitation directly. Under the health-related mechanism, we compare respondents to the population on the observable (age) and on the target (activity).
+
+```{r}
+#| label: frame-check
+
+resp <- population[runif(N) < population$p_related, ]
+
+frame_check <- tibble(
+  quantity = c("Mean age", "Mean activity"),
+  population = c(mean(population$age), mean(population$activity)),
+  respondents = c(mean(resp$age), mean(resp$activity))
+) |>
+  mutate(difference = respondents - population)
+
+frame_check
+```
+
+Respondents are only mildly younger than the population but substantially more active. A frame check on age alone would barely flag a problem, while the estimate you actually care about is off by `r round(mean(resp$activity) - mean(population$activity))` minutes. Worse, adjusting for the observable only removes the part of the bias that flows through it. Post-stratifying on age moves the estimate part of the way and then stops:
+
+```{r}
+#| label: poststratify
+
+pop_bands <- population |>
+  mutate(
+    band = cut(age, c(18, 30, 40, 50, 60, 70, 90), include.lowest = TRUE)
+  ) |>
+  count(band, name = "pop_n") |>
+  mutate(pop_prop = pop_n / sum(pop_n))
+
+ps_estimate <- resp |>
+  mutate(
+    band = cut(age, c(18, 30, 40, 50, 60, 70, 90), include.lowest = TRUE)
+  ) |>
+  group_by(band) |>
+  summarise(mean_activity = mean(activity), .groups = "drop") |>
+  left_join(pop_bands, by = "band") |>
+  summarise(est = weighted.mean(mean_activity, pop_prop)) |>
+  pull(est)
+
+tibble(
+  estimate = c("Truth", "Respondents (naive)", "Post-stratified on age"),
+  activity = c(true_activity, mean(resp$activity), ps_estimate)
+)
+```
+
+The residual gap survives because response depends on health, not just age. Weighting on observed variables removes non-response bias only under a missing-at-random assumption — that within the adjustment cells, responders and non-responders no longer differ. When response is driven by the outcome itself, no amount of weighting on background variables fixes it.
+
+**Follow up a sample of non-responders.** Chase a random subset of non-responders with extra effort and measure them directly. This is the only method that observes the gap rather than assuming it away, which makes it the most trustworthy — and the most expensive. A cheaper cousin compares early to late responders (the "continuum of resistance" idea, treating reluctant responders as stand-ins for non-responders), but Groves & Peytcheva (2008) found little empirical support for it: the bias in easy-to-reach and hard-to-reach respondents was often similar, so late responders are not reliable proxies.
+
+**Benchmark against a gold standard.** Compare your estimate to a high-quality probability survey or an administrative total for the same quantity. This validates one estimate at a time and inherits whatever bias the benchmark carries.
+
+The honest summary is that follow-up studies are the best evidence when you can afford them, frame and register comparisons are a useful but partial screen, and wave-based shortcuts rest on an assumption that often fails. For most estimates in most surveys you will have none of this, and even the meta-analytic evidence says the gap is both real and highly variable from one item to the next. That is the situation sensitivity analysis is built for.
+
+## Sensitivity analysis: reasoning without the missing data
+
+If the responder–non-responder gap cannot be measured, the next best thing is to be explicit about not knowing it: sweep the gap across a plausible range and see whether the conclusion you care about holds throughout. Rearranging the bias identity gives the implied true mean directly from quantities you do observe:
+
+$$\bar Y_N = \bar Y_r - (1 - r)\,(\bar Y_r - \bar Y_{nr})$$
+
+You observe the respondent mean $\bar Y_r$ and the response rate $r$. The one unknown is the gap. We express it in standard-deviation units, $\delta$, so the range can be anchored to outside evidence.
+
+```{r}
+#| label: sensitivity-mean
+
+obs_activity <- mean(resp$activity)
+sigma_activity <- sd(population$activity)
+r_rate <- response_rate
+threshold <- 150 # physical-activity guideline (minutes/week)
+
+sens_mean <- tibble(gap_sd = seq(0, 0.5, by = 0.005)) |>
+  mutate(
+    gap = gap_sd * sigma_activity,
+    implied_true = obs_activity - (1 - r_rate) * gap
+  )
+```
+
+Groves & Peytcheva (2008) give an empirical anchor: standardised responder–non-responder differences averaged roughly 0.1 SD, reaching about 0.25 SD for attitudinal items. We shade that range and mark the physical-activity guideline of 150 minutes as the decision at stake: does the population meet it on average?
+
+```{r}
+#| label: fig-sensitivity-mean
+#| echo: false
+#| fig-cap: "Implied true mean activity as a function of the assumed responder–non-responder gap. Shaded band = empirically typical gap range (0.1–0.25 SD); dashed line = 150-minute guideline."
+
+ggplot(sens_mean, aes(gap_sd, implied_true)) +
+  annotate(
+    "rect",
+    xmin = 0.1,
+    xmax = 0.25,
+    ymin = -Inf,
+    ymax = Inf,
+    alpha = 0.12,
+    fill = color_primary
+  ) +
+  geom_line(color = color_primary, linewidth = 1) +
+  geom_hline(
+    yintercept = threshold,
+    linetype = "dashed",
+    color = color_reference
+  ) +
+  geom_hline(
+    yintercept = true_activity,
+    linetype = "dotted",
+    color = color_secondary
+  ) +
+  labs(
+    x = "Assumed responder–non-responder gap (SD units)",
+    y = "Implied true mean activity (minutes/week)"
+  )
+```
+
+Reading the curve against the threshold answers the question without ever measuring the non-responders. The gap that would pull the population mean down to the guideline is the tipping point:
+
+```{r}
+#| label: tipping-mean
+
+gap_tip_sd <- (obs_activity - threshold) / ((1 - r_rate) * sigma_activity)
+gap_tip_sd
+```
+
+The conclusion "the population clears the guideline" only flips if the gap exceeds `r round(gap_tip_sd, 2)` SD — well beyond the typical range — so it is robust to plausible non-response bias. The same machinery works for the percentage, with the gap in percentage points and the decision being whether smoking prevalence sits below a 25% target:
+
+```{r}
+#| label: sensitivity-pct
+
+obs_smoke <- mean(resp$smoker)
+sd_smoke <- sd(population$smoker)
+smoke_threshold <- 0.25
+
+sens_pct <- tibble(gap_pp = seq(0, 0.15, by = 0.005)) |>
+  mutate(implied_true = obs_smoke + (1 - r_rate) * gap_pp)
+```
+
+```{r}
+#| label: fig-sensitivity-pct
+#| echo: false
+#| fig-cap: "Implied true smoking prevalence as a function of the assumed gap (responders smoke less than non-responders, in percentage points). Shaded band = typical gap range (0.1–0.25 SD); dashed line = 25% target; dotted line = true prevalence."
+
+ggplot(sens_pct, aes(gap_pp, implied_true)) +
+  annotate(
+    "rect",
+    xmin = 0.1 * sd_smoke,
+    xmax = 0.25 * sd_smoke,
+    ymin = -Inf,
+    ymax = Inf,
+    alpha = 0.12,
+    fill = color_primary
+  ) +
+  geom_line(color = color_primary, linewidth = 1) +
+  geom_hline(
+    yintercept = smoke_threshold,
+    linetype = "dashed",
+    color = color_reference
+  ) +
+  geom_hline(
+    yintercept = true_smoke,
+    linetype = "dotted",
+    color = color_secondary
+  ) +
+  scale_x_continuous(labels = scales::percent) +
+  scale_y_continuous(labels = scales::percent) +
+  labs(
+    x = "Assumed responder–non-responder gap (percentage points)",
+    y = "Implied true smoking prevalence"
+  )
+```
+
+```{r}
+#| label: tipping-pct
+
+gap_tip_pp <- (smoke_threshold - obs_smoke) / (1 - r_rate)
+c(pp = gap_tip_pp, sd = gap_tip_pp / sd_smoke)
+```
+
+The respondent estimate of `r round(100 * obs_smoke)`% sits below the 25% target, but the conclusion flips once the gap reaches only `r round(100 * gap_tip_pp, 1)` percentage points — about `r round(gap_tip_pp / sd_smoke, 2)` SD, squarely inside the range of gaps routinely observed. So this conclusion is *fragile*: a modest, entirely plausible level of non-response bias is enough to overturn it, and in this simulation the true prevalence of `r round(100 * true_smoke)`% is in fact on the wrong side of the target. The sensitivity analysis does not tell you the true value, but it tells you which conclusions you can defend and which depend on assumptions you cannot check.
+
+The appeal of this approach is what it does not require. It needs no register linkage, no follow-up field effort, and no missing-at-random assumption. It asks only that you state a range for the gap and reason about the range honestly — and the meta-analytic literature gives you defensible ranges to start from.

@@ -61,6 +61,7 @@
         - path: statistics/group-differences/sequential-analyses
     - title: Representativeness
       items:
+        - path: statistics/representativeness/non-response
         - path: statistics/representativeness/non-probability-sampling
         - path: statistics/representativeness/survey-estimation
     - title: Meta-Analysis
